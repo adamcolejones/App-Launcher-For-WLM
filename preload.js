@@ -5,25 +5,54 @@
 // Preload script to expose "saveData" function to the renderer process
 const { contextBridge, ipcMain, ipcRenderer } = require("electron");
 
-// Expose ipcRenderer to the renderer process via contextBridge
-// contextBridge.exposeInMainWorld("electron", {
-//     ipcRenderer: ipcRenderer,
-// });
-
 // Expose the "saveData" function to the renderer process
-let saveData = (firstName, middleName, lastName) => {
+let saveName = (firstName, middleName, lastName) => {
     let data = { firstName, middleName, lastName };
     console.log(data);
-    console.log('preload.js.before');
-    ipcRenderer.send("saveData", data);
-    console.log('preload.js.after');
+    ipcRenderer.send("saveName", data);
 };
 
-let bridge = {
-    saveData,
+let nameBridge = {
+    saveName,
 };
 
 // window.Bridge = bridge;
-contextBridge.exposeInMainWorld("Bridge", bridge);
+contextBridge.exposeInMainWorld("nameBridge", nameBridge);
+
+let saveMedia = (Name, ReleaseDate, System, RunCommand, Tags) => {
+    const customFieldsContainer = document.getElementById('customFieldsContainer');
+    const labelInputs = customFieldsContainer.querySelectorAll('input[type="text"][placeholder*="Label"]');
+    const valueInputs = customFieldsContainer.querySelectorAll('input[type="text"][placeholder*="Value"]');
+  
+    // Collect the custom field values into an object
+    const customData = {};
+    for (let i = 0; i < labelInputs.length; i++) {
+      const label = labelInputs[i].value.trim();
+      const value = valueInputs[i].value.trim();
+      if (label && value) {
+        customData[label] = value;
+      }
+    }
+  
+    let data = {
+      "Name": Name,
+      "Release Date": ReleaseDate,
+      "System": System,
+      "Run Command": RunCommand,
+      "Tags": Tags,
+      ...customData // Include the custom fields in the data object
+    };
+  
+    console.log(data);
+    ipcRenderer.send("saveMedia", data);
+  };
+  
+
+let mediaBridge = {
+    saveMedia,
+};
+
+// window.Bridge = bridge;
+contextBridge.exposeInMainWorld("mediaBridge", mediaBridge);
 
 

@@ -1,1 +1,115 @@
-{"firstName":"a","middleName":"a","lastName":"a"}
+{
+  "Media": [
+    {
+      "1": "1",
+      "3": "3",
+      "Name": "a",
+      "Release Date": "a",
+      "System": "a",
+      "Run Command": "a",
+      "Tags": "a"
+    },
+    {
+      "Name": "Donkey Kong Country: Tropical Freeze",
+      "Release Date": "May 4, 2018",
+      "System": "Nintendo Switch",
+      "Run Command": null,
+      "Tags": null
+    },
+    {
+      "Name": "Kirby and the Forgotten Land",
+      "Release Date": "March 25, 2022",
+      "System": "Nintendo Switch",
+      "Run Command": "",
+      "Tags": [
+        "a",
+        "b",
+        "c"
+      ]
+    },
+    {
+      "Name": "Mario Kart 8 Deluxe",
+      "Release Date": null,
+      "System": null,
+      "Run Command": null,
+      "Tags": null
+    },
+    {
+      "Name": "Mario Odyssey",
+      "Release Date": "October 27, 2017",
+      "System": "Nintendo Switch",
+      "Run Command": "",
+      "Tags": [
+        "a",
+        "b",
+        "c"
+      ]
+    },
+    {
+      "Name": "Pokemon Legends: Arceus",
+      "Release Date": "January 28, 2022",
+      "System": "Nintendo Switch",
+      "Run Command": "",
+      "Tags": [
+        "a",
+        "b",
+        "c"
+      ]
+    },
+    {
+      "Name": "tags test",
+      "Release Date": null,
+      "System": null,
+      "Run Command": null,
+      "Tags": "test2"
+    },
+    {
+      "Name": "The Legend of Zelda: Breath of the Wild",
+      "Release Date": "March 3, 2017",
+      "System": "Nintendo Switch",
+      "Run Command": "",
+      "Tags": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  ],
+  "Names": [
+    {
+      "firstName": "Adam",
+      "middleName": "Cole",
+      "lastName": "Jones"
+    },
+    {
+      "firstName": "Noah",
+      "middleName": "Cole",
+      "lastName": "Jones"
+    },
+    {
+      "firstName": "Kathleen",
+      "middleName": "Marie",
+      "lastName": "Jones"
+    },
+    {
+      "firstName": "Joshua",
+      "middleName": "Graham",
+      "lastName": "Jones"
+    },
+    {
+      "firstName": "Caroline",
+      "middleName": "Grace",
+      "lastName": "Jones"
+    },
+    {
+      "firstName": "Andrew",
+      "middleName": "Nelson",
+      "lastName": "Ozanich"
+    },
+    {
+      "firstName": "Jesse",
+      "middleName": "Lee",
+      "lastName": "Spence"
+    }
+  ]
+}

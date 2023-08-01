@@ -16,15 +16,15 @@ const createWindow = () => {
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
-    }
-  })
+      preload: path.join(__dirname, 'preload.js'), // 1. Backend Communication
+      // nodeIntegration: false,
+      // contextIsolation: true,
+      // enableRemoteModule: false,
+    },
+  });
 
   // and load the index.html of the app.
-  mainWindow.loadFile('main.html')
-
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.loadFile('main.html')  // 2. Backend Communication
 }
 
 // This method will be called when Electron has finished
@@ -51,11 +51,52 @@ app.on('window-all-closed', () => {
 // code. You can also put them in separate files and require them here.
 
 // Add the following IPC handler to save data to "data.json"
-ipcMain.on("saveData", (sender, data) => {
-    console.log(data);
-    console.log('main.js.test');
-    let sData = JSON.stringify(data);
-    fs.writeFileSync("data.json", sData);
-    console.log("Data Saved");
+
+// 5. Backend Communication
+ipcMain.on("saveName", (sender, newData) => {
+    try {
+        // Read the existing data from the file, or initialize an empty array if the file doesn't exist
+        let existingData = fs.existsSync("data.json")
+            ? fs.readFileSync("data.json", "utf8")
+            : '{"games":[],"media":[],"movies":[],"names":[],"shows":[],"songs":[]}';
+        // Parse the existing JSON data into a JavaScript object
+        let jsonData = JSON.parse(existingData);
+        // Get the "names" array from the jsonData
+        let namesArray = jsonData.Names;
+        // Add the new data to the "names" array
+        namesArray.push(newData);
+        // Sort the "names" array alphabetically by "firstName"
+        namesArray.sort((a, b) => a.lastName.localeCompare(b.lastName));
+        // Convert the modified jsonData back to JSON string
+        let updatedData = JSON.stringify(jsonData, null, 2);
+        // Write the updated JSON string back to the file
+        fs.writeFileSync("data.json", updatedData);
+        console.log("Data Saved");
+    } catch (error) {
+        console.error("Error while saving data:", error.message);
+    }
 });
 
+ipcMain.on("saveMedia", (sender, newData) => {
+  try {
+      // Read the existing data from the file, or initialize an empty array if the file doesn't exist
+      let existingData = fs.existsSync("data.json")
+          ? fs.readFileSync("data.json", "utf8")
+          : '{"games":[],"movies":[],"names":[],"shows":[],"songs":[]}';
+      // Parse the existing JSON data into a JavaScript object
+      let jsonData = JSON.parse(existingData);
+      // Get the "names" array from the jsonData
+      let mediaArray = jsonData.Media;
+      // Add the new data to the "names" array
+      mediaArray.push(newData);
+      // Sort the "names" array alphabetically by "firstName"
+      mediaArray.sort((a, b) => a.Name.localeCompare(b.Name));
+      // Convert the modified jsonData back to JSON string
+      let updatedData = JSON.stringify(jsonData, null, 2);
+      // Write the updated JSON string back to the file
+      fs.writeFileSync("data.json", updatedData);
+      console.log("Data Saved");
+  } catch (error) {
+      console.error("Error while saving data:", error.message);
+  }
+});
