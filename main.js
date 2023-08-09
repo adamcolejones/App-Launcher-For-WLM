@@ -8,11 +8,12 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
+let mainWindow;
 // const Store = require('store.js');
 
 const createWindow = () => {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
@@ -82,7 +83,7 @@ ipcMain.on("saveMedia", (sender, newData) => {
       // Read the existing data from the file, or initialize an empty array if the file doesn't exist
       let existingData = fs.existsSync("data.json")
           ? fs.readFileSync("data.json", "utf8")
-          : '{"games":[],"movies":[],"names":[],"shows":[],"songs":[]}';
+          : '';
       // Parse the existing JSON data into a JavaScript object
       let jsonData = JSON.parse(existingData);
       // Get the "names" array from the jsonData
@@ -96,7 +97,13 @@ ipcMain.on("saveMedia", (sender, newData) => {
       // Write the updated JSON string back to the file
       fs.writeFileSync("data.json", updatedData);
       console.log("Data Saved");
+      // window.location.reload();
   } catch (error) {
       console.error("Error while saving data:", error.message);
   }
+  // window.location.reload();
+});
+
+ipcMain.on('reload-window', () => {
+  mainWindow.reload();
 });

@@ -1,22 +1,19 @@
 {
   "Media": [
     {
-      "1": "1",
-      "3": "3",
-      "Name": "a",
-      "Release Date": "a",
-      "System": "a",
-      "Run Command": "a",
-      "Tags": "a"
+      "id": 4,
+      "Name": "b",
+      "Run Command": "b",
+      "Tags": "b"
     },
     {
-      "Name": "Donkey Kong Country: Tropical Freeze",
-      "Release Date": "May 4, 2018",
-      "System": "Nintendo Switch",
-      "Run Command": null,
-      "Tags": null
+      "id": 5,
+      "Name": "c",
+      "Run Command": "c",
+      "Tags": "c"
     },
     {
+      "id": 1,
       "Name": "Kirby and the Forgotten Land",
       "Release Date": "March 25, 2022",
       "System": "Nintendo Switch",
@@ -28,13 +25,7 @@
       ]
     },
     {
-      "Name": "Mario Kart 8 Deluxe",
-      "Release Date": null,
-      "System": null,
-      "Run Command": null,
-      "Tags": null
-    },
-    {
+      "id": 2,
       "Name": "Mario Odyssey",
       "Release Date": "October 27, 2017",
       "System": "Nintendo Switch",
@@ -46,24 +37,7 @@
       ]
     },
     {
-      "Name": "Pokemon Legends: Arceus",
-      "Release Date": "January 28, 2022",
-      "System": "Nintendo Switch",
-      "Run Command": "",
-      "Tags": [
-        "a",
-        "b",
-        "c"
-      ]
-    },
-    {
-      "Name": "tags test",
-      "Release Date": null,
-      "System": null,
-      "Run Command": null,
-      "Tags": "test2"
-    },
-    {
+      "id": 3,
       "Name": "The Legend of Zelda: Breath of the Wild",
       "Release Date": "March 3, 2017",
       "System": "Nintendo Switch",
@@ -73,6 +47,12 @@
         "b",
         "c"
       ]
+    },
+    {
+      "id": 6,
+      "Name": "z",
+      "Run Command": "z",
+      "Tags": "z"
     }
   ],
   "Names": [
@@ -110,6 +90,17 @@
       "firstName": "Jesse",
       "middleName": "Lee",
       "lastName": "Spence"
+    }
+  ],
+  "Settings": [
+    {
+      "Square": true,
+      "Portrait": false,
+      "Landscape": false,
+      "Custom": false
+    },
+    {
+      "Scale": "100%"
     }
   ]
 }

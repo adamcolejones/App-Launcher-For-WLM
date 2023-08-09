@@ -20,7 +20,7 @@ a {
 }
 
 a:hover {
-    background-color: #555;
+    background-color: #357838;
 }
 
 /* ---------------------------------------------------------------------------------------------- M ---------------------------------------------------------------------------------------------- */
@@ -43,8 +43,8 @@ body {
   /* display: flex; */
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin: 0;
+  /* height: 100vh; */
+  margin: 0 auto;
   padding: 0;
 }
 
@@ -122,6 +122,71 @@ body {
  ██░░░░░░░░░░██
  ██████████████
 */
+
+.gridcontainer {
+  width: 100%;
+  display: block;
+  /* height: 100px; */
+  /* padding: 5px; */
+}
+
+.griddata {
+  display: flex;
+  flex-direction: column;
+}
+
+#gridDisplay {
+  width: 100%;
+  margin: 0 0;
+}
+
+.griditem {
+  flex: 0 0 100px; /* Set your desired width */
+  height: 150px;
+  width: 100px;
+  display: inline-block;
+  margin: 0% 20px 20px 0%;
+  vertical-align: top;
+  /* background-color: gray; */
+  border-radius: 5px;
+  overflow: hidden;
+  /* padding-right: 5px; */
+}
+
+.griditemcontainer {
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 0% 0% 0% 20px;
+  overflow-wrap: break-word;
+  flex-wrap: wrap;
+}
+
+.griditempicture {
+  height: 100px;
+  width: 100px;
+  vertical-align: top;
+  background-color: rgb(63, 63, 63);
+  border-radius: 5px;
+}
+
+.gridkey {
+  display: inline-block;
+  padding-right: 5px;
+}
+
+.gridtype {
+  font-size: 2em;
+  font-weight: 600;
+  padding: 0% 0% 0% 20px;
+}
+
+.gridvalue {
+  display: inline-block;
+  padding-right: 5px;
+  /* margin: 0% 5% 0% 5%; */
+}
 
 /* ---------------------------------------------------------------------------------------------- M ---------------------------------------------------------------------------------------------- */
 /* 
@@ -294,7 +359,7 @@ li:last-child {
  */
 
 nav {
-    background-color: #333;
+    background-color: #45a049;
     padding: 10px;
 }
 

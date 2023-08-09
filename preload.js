@@ -19,7 +19,7 @@ let nameBridge = {
 // window.Bridge = bridge;
 contextBridge.exposeInMainWorld("nameBridge", nameBridge);
 
-let saveMedia = (Name, ReleaseDate, System, RunCommand, Tags) => {
+let saveMedia = (newId, Name, RunCommand, Tags) => {
     const customFieldsContainer = document.getElementById('customFieldsContainer');
     const labelInputs = customFieldsContainer.querySelectorAll('input[type="text"][placeholder*="Label"]');
     const valueInputs = customFieldsContainer.querySelectorAll('input[type="text"][placeholder*="Value"]');
@@ -35,9 +35,8 @@ let saveMedia = (Name, ReleaseDate, System, RunCommand, Tags) => {
     }
   
     let data = {
+      "id": newId,
       "Name": Name,
-      "Release Date": ReleaseDate,
-      "System": System,
       "Run Command": RunCommand,
       "Tags": Tags,
       ...customData // Include the custom fields in the data object
@@ -45,6 +44,8 @@ let saveMedia = (Name, ReleaseDate, System, RunCommand, Tags) => {
   
     console.log(data);
     ipcRenderer.send("saveMedia", data);
+    ipcRenderer.send('reload-window');
+    // window.location.reload();
   };
   
 
