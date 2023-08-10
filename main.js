@@ -78,30 +78,24 @@ ipcMain.on("saveName", (sender, newData) => {
     }
 });
 
-ipcMain.on("saveMedia", (sender, newData) => {
+ipcMain.on("saveMedia", (sender, newData, imagePath) => {
   try {
       // Read the existing data from the file, or initialize an empty array if the file doesn't exist
       let existingData = fs.existsSync("data.json")
-          ? fs.readFileSync("data.json", "utf8")
-          : '';
-      // Parse the existing JSON data into a JavaScript object
-      let jsonData = JSON.parse(existingData);
-      // Get the "names" array from the jsonData
-      let mediaArray = jsonData.Media;
-      // Add the new data to the "names" array
-      mediaArray.push(newData);
-      // Sort the "names" array alphabetically by "firstName"
-      mediaArray.sort((a, b) => a.Name.localeCompare(b.Name));
-      // Convert the modified jsonData back to JSON string
-      let updatedData = JSON.stringify(jsonData, null, 2);
-      // Write the updated JSON string back to the file
-      fs.writeFileSync("data.json", updatedData);
-      console.log("Data Saved");
-      // window.location.reload();
-  } catch (error) {
-      console.error("Error while saving data:", error.message);
-  }
-  // window.location.reload();
+          ? fs.readFileSync("data.json", "utf8") : '';
+      let jsonData = JSON.parse(existingData);  // Parse the existing JSON data into a JavaScript object
+      let mediaArray = jsonData.Media; // Get the "names" array from the jsonData
+      mediaArray.push(newData); // Add the new data to the "names" array
+      mediaArray.sort((a, b) => a.Name.localeCompare(b.Name));  // Sort the "names" array alphabetically by "firstName"
+      let updatedData = JSON.stringify(jsonData, null, 2);  // Convert the modified jsonData back to JSON string
+      fs.writeFileSync("data.json", updatedData);  // Write the updated JSON string back to the file
+      if (imagePath) {
+        const newPath = path.join(__dirname, 'assets', 'media', `${newData.id}.png`);
+        fs.copyFileSync(imagePath, newPath);
+      }
+  
+      console.log(`${newData.id} Data Saved`);
+  } catch (error) {console.error("Error while saving data:", error.message);}
 });
 
 ipcMain.on('reload-window', () => {

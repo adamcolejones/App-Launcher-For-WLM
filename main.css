@@ -141,11 +141,13 @@ body {
 }
 
 .griditem {
-  flex: 0 0 100px; /* Set your desired width */
-  height: 150px;
-  width: 100px;
+  /* 135 + 2(border pxs) = 137 */
+  flex: 0 0 137px;
+  max-height: 210px;
+  min-height: 155px;
+  width: 137px;
   display: inline-block;
-  margin: 0% 20px 20px 0%;
+  margin: 0% 15px 15px 0%;
   vertical-align: top;
   /* background-color: gray; */
   border-radius: 5px;
@@ -164,11 +166,18 @@ body {
 }
 
 .griditempicture {
-  height: 100px;
-  width: 100px;
+  min-height: 135px;
+  max-height: 190px;
+  height: 190px;
+  width: 135px;
+  min-width: 135px;
   vertical-align: top;
   background-color: rgb(63, 63, 63);
   border-radius: 5px;
+  /* background-image: url('assets/media/default.png'); Set the path to your default image */
+  background-size: cover;
+  background-position: center;
+  border:1px solid #000000;
 }
 
 .gridkey {

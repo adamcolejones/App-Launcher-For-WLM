@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Keep track of the number of custom fields added
     let customFieldCount = 0;
-    let labelInput, valueInput;
+    let labelInput, valueInput; // it is in use
 
     // Hide the customFieldsContainer initially
     updateCustomFieldsVisibility();
@@ -90,10 +90,10 @@ document.addEventListener('DOMContentLoaded', () => {
     addCustomFieldButton.addEventListener('click', addCustomField);
 
     // Function to calculate the highest ID from media data
-    function calculateHighestId(data) {
-      const existingIds = data.map((item) => item.id || 0);
-      return existingIds.length > 0 ? Math.max(...existingIds) : 0;
-    }
+    // function calculateHighestId(data) {
+    //   const existingIds = data.map((item) => item.id || 0);
+    //   return existingIds.length > 0 ? Math.max(...existingIds) : 0;
+    // }
 
     // Attach a submit event listener to the form
     mediaform.addEventListener('submit', (event) => {
@@ -109,19 +109,26 @@ document.addEventListener('DOMContentLoaded', () => {
       const highestId = Math.max(...existingIds);
       const newId = highestId + 1;
 
+      // Get the selected image file
+      const imageInput = document.getElementById('inputimage');
+      const imageFile = imageInput.files && imageInput.files[0]; // Check if files exist
+      const imagePath = imageFile ? imageFile.path : null; // Get the path if the file exists
+
+
       // Do something with the collected data
       console.log("Name:", Name);
       console.log("Run Command:", RunCommand);
       console.log("Tags:", Tags);
+      console.log("Image:", imagePath);
       // console.log("Release Date:", ReleaseDate);
       // console.log("System:", System);
 
-      window.mediaBridge.saveMedia(newId, Name, RunCommand, Tags);
+      window.mediaBridge.saveMedia(newId, Name, RunCommand, Tags, imagePath);
       // window.location.reload();
 
     // For the sake of this example, we'll just reset the form.
       mediaform.reset();
-      window.location.reload();
+      // window.location.reload();
     });
 
     // Generic function to display data for any user-named array
@@ -178,15 +185,24 @@ document.addEventListener('DOMContentLoaded', () => {
       // Create data rows
       for (const item of data) {
         gridHTML += '<div class="griditem">';
-        gridHTML += '<div class="griditempicture"></div>';
+        if (item.id && item.Image == true) {
+          const imageUrl = item.id ? `assets/media/${item.id}.png` : 'assets/media/default.png';
+          gridHTML += `<img src="${imageUrl}" alt="Image ${item.id}" class="griditempicture" />`;
+        } else {
+          const defaultImageUrl = 'assets/media/default.png';
+          gridHTML += `<img src="${defaultImageUrl}" alt="Default Image" class="griditempicture" />`;
+        }
+        // gridHTML += '<div class="griditempicture"></div>';
         for (const key of allKeys) {
-          gridHTML += '<div class="gridvalue">' + (item[key] || '') + '</div>';
+          if (key == "Name" || key == "firstName") {
+            gridHTML += '<div class="gridvalue">' + (item[key] || '') + '</div>';
+          }
         }
         gridHTML += '<br></div>';
       }
 
       gridHTML += '</div>'; // class="griditemcontainer"
-      gridHTML += '</div><br>'; // class="gridkeycontainer"
+      gridHTML += '</div>'; // class="gridkeycontainer"
       
       return gridHTML;
     }

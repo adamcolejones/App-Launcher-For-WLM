@@ -2,19 +2,8 @@
   "Media": [
     {
       "id": 4,
-      "Name": "b",
-      "Run Command": "b",
-      "Tags": "b"
-    },
-    {
-      "id": 5,
-      "Name": "c",
-      "Run Command": "c",
-      "Tags": "c"
-    },
-    {
-      "id": 1,
       "Name": "Kirby and the Forgotten Land",
+      "Image": false,
       "Release Date": "March 25, 2022",
       "System": "Nintendo Switch",
       "Run Command": "",
@@ -22,11 +11,24 @@
         "a",
         "b",
         "c"
+      ],
+      "Children": [
+        "1",
+        "2",
+        "3"
       ]
+    },
+    {
+      "id": 1,
+      "Name": "Mario Kart Wii",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": "na"
     },
     {
       "id": 2,
       "Name": "Mario Odyssey",
+      "Image": false,
       "Release Date": "October 27, 2017",
       "System": "Nintendo Switch",
       "Run Command": "",
@@ -39,6 +41,7 @@
     {
       "id": 3,
       "Name": "The Legend of Zelda: Breath of the Wild",
+      "Image": false,
       "Release Date": "March 3, 2017",
       "System": "Nintendo Switch",
       "Run Command": "",
@@ -47,12 +50,6 @@
         "b",
         "c"
       ]
-    },
-    {
-      "id": 6,
-      "Name": "z",
-      "Run Command": "z",
-      "Tags": "z"
     }
   ],
   "Names": [
