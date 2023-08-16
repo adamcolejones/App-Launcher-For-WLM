@@ -40,12 +40,15 @@ let saveMedia = (newId, Name, RunCommand, Tags, imagePath) => {
     }
   }
 
+  const tagsInput = document.getElementById('Tags');
+  const tagsArray = tagsInput.value.split(',').map(tag => tag.trim());
+
   let data = {
     "id": newId,
     "Name": Name,
     "Image": imageStatus,
     "Run Command": RunCommand,
-    "Tags": Tags,
+    "Tags": tagsArray,
     ...customData // Include the custom fields in the data object
   };
 

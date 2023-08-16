@@ -1,4 +1,5 @@
 // app.js
+
 // 4. Backend Communication
 document.addEventListener('DOMContentLoaded', () => {    
     const mediaform = document.getElementById('mediaForm');
@@ -105,6 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const Tags = document.getElementById('Tags').value || null;
 
       // Calculate the highest ID
+      // Calculating the highest ID will allow us to add 1 and assign the new highest value to the new media giving it a unique value
       const existingIds = mediaData.Media.map(item => item.id);
       const highestId = Math.max(...existingIds);
       const newId = highestId + 1;
@@ -113,6 +115,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const imageInput = document.getElementById('inputimage');
       const imageFile = imageInput.files && imageInput.files[0]; // Check if files exist
       const imagePath = imageFile ? imageFile.path : null; // Get the path if the file exists
+      // Getting the image path now allows us to take this sensitive data to the main.js file
+      // from here we can use ipc to look up the path and sync the file of the path to a new location of our choice
 
 
       // Do something with the collected data
@@ -149,6 +153,38 @@ document.addEventListener('DOMContentLoaded', () => {
       const dataDisplayDiv = document.getElementById('gridDisplay');
       dataDisplayDiv.innerHTML = ''; // Clear any previous content
 
+      const tagSections = {}; // Create an object to store items by tags
+
+      for (const key in data) {
+        if (Array.isArray(data[key])) {
+          for (const item of data[key]) {
+            if (item.Tags && Array.isArray(item.Tags)) {
+              for (const tag of item.Tags) {
+                if (!tagSections[tag]) {
+                  tagSections[tag] = [];
+                }
+                tagSections[tag].push(item);
+              }
+            }
+          }
+        }
+      }
+
+      const sortedTags = Object.keys(tagSections).sort(); // Sort tags alphabetically
+
+      // Display tags in the side menu
+      const sideMenuDiv = document.getElementById('sideMenu');
+      sideMenuDiv.innerHTML = ''; // Clear any previous content
+      for (const tag of sortedTags) {
+        sideMenuDiv.innerHTML += `<div class="sidemenu-item">${tag}</div>`;
+      }
+
+      for (const tag of sortedTags) {
+        dataDisplayDiv.innerHTML += `<div class="gridtype">${tag}:</div>`;
+        dataDisplayDiv.innerHTML += createGrid(tagSections[tag]);
+      }
+    
+
       for (const key in data) {
         if (Array.isArray(data[key])) {
           dataDisplayDiv.innerHTML += `<div class="gridtype">${key}:</div>`;
@@ -172,13 +208,6 @@ document.addEventListener('DOMContentLoaded', () => {
           allKeys.add(key);
         }
       }
-
-      // Create header row based on the unique keys (field names)
-      // gridHTML += '<div class="gridkeycontainer">';
-      // for (const key of allKeys) {
-      //   gridHTML += `<div class="gridkey">${key}</div>`;
-      // }
-      // gridHTML += '</div>';
 
       gridHTML += '<div class="griditemcontainer">';
 

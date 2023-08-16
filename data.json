@@ -1,6 +1,33 @@
 {
   "Media": [
     {
+      "id": 25,
+      "Name": "Are You My Neighbor?",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": [
+        "Veggie Tales"
+      ]
+    },
+    {
+      "id": 27,
+      "Name": "Dave and the Giant Pickle",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": [
+        "Veggie Tales"
+      ]
+    },
+    {
+      "id": 24,
+      "Name": "God Wants Me to Forgive Them!?!",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": [
+        "Veggie Tales"
+      ]
+    },
+    {
       "id": 4,
       "Name": "Kirby and the Forgotten Land",
       "Image": false,
@@ -8,9 +35,9 @@
       "System": "Nintendo Switch",
       "Run Command": "",
       "Tags": [
-        "a",
-        "b",
-        "c"
+        "Kirby",
+        "Nintendo Switch",
+        "Nintendo"
       ],
       "Children": [
         "1",
@@ -19,36 +46,276 @@
       ]
     },
     {
+      "id": 9,
+      "Name": "Luigi's Mansion",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": [
+        "Nintendo GameCube"
+      ]
+    },
+    {
+      "id": 13,
+      "Name": "Mario & Luigi: Superstar Saga",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": [
+        "Gameboy Advance"
+      ]
+    },
+    {
+      "id": 22,
+      "Name": "Mario Kart 64",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": [
+        "Nintendo",
+        "Nintendo 64",
+        "Mario Kart"
+      ]
+    },
+    {
+      "id": 20,
+      "Name": "Mario Kart DS",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": [
+        "Nintendo",
+        "Nintendo DS",
+        "Mario Kart"
+      ]
+    },
+    {
       "id": 1,
       "Name": "Mario Kart Wii",
       "Image": true,
       "Run Command": "na",
-      "Tags": "na"
-    },
-    {
-      "id": 2,
-      "Name": "Mario Odyssey",
-      "Image": false,
-      "Release Date": "October 27, 2017",
-      "System": "Nintendo Switch",
-      "Run Command": "",
       "Tags": [
-        "a",
-        "b",
-        "c"
+        "Nintendo",
+        "Nintendo Wii",
+        "Mario Kart"
       ]
     },
     {
-      "id": 3,
-      "Name": "The Legend of Zelda: Breath of the Wild",
-      "Image": false,
-      "Release Date": "March 3, 2017",
-      "System": "Nintendo Switch",
-      "Run Command": "",
+      "id": 8,
+      "Name": "Mario Party 4",
+      "Image": true,
+      "Run Command": "na",
       "Tags": [
-        "a",
-        "b",
-        "c"
+        "Nintendo",
+        "Nintendo GameCube",
+        "Mario Party"
+      ]
+    },
+    {
+      "id": 6,
+      "Name": "Mario Party 7",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": [
+        "Nintendo",
+        "Nintendo GameCube",
+        "Mario Party"
+      ]
+    },
+    {
+      "id": 10,
+      "Name": "Mario Superstar Baseball",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": [
+        "Nintendo",
+        "Nintendo GameCube"
+      ]
+    },
+    {
+      "id": 33,
+      "Name": "new",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": null
+    },
+    {
+      "id": 34,
+      "Name": "New Game",
+      "Image": true,
+      "Run Command": "NA",
+      "Tags": [
+        "Test",
+        "Apple",
+        "Nintendo"
+      ],
+      "custom 1 key": "custom 1 value"
+    },
+    {
+      "id": 19,
+      "Name": "New Super Mario Bros.",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": [
+        "Nintendo",
+        "Nintendo DS",
+        "Mario"
+      ]
+    },
+    {
+      "id": 35,
+      "Name": "One Tag Test",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": [
+        "One Tag"
+      ]
+    },
+    {
+      "id": 7,
+      "Name": "Paper Mario: The Thousand-Year Door",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": [
+        "Nintendo",
+        "Nintendo GameCube",
+        "Paper Mario"
+      ]
+    },
+    {
+      "id": 32,
+      "Name": "PlayStation Plus",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": [
+        "PlayStation",
+        "Launchers"
+      ]
+    },
+    {
+      "id": 21,
+      "Name": "Pokémon Yellow: Special Pikachu Edition",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": [
+        "Pokemon",
+        "Nintendo",
+        "Nintendo Gameboy Color"
+      ]
+    },
+    {
+      "id": 26,
+      "Name": "Rack, Shack & Benny",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": [
+        "Veggie Tales"
+      ]
+    },
+    {
+      "id": 18,
+      "Name": "Super Mario 3D Land",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": [
+        "Mario",
+        "Nintendo",
+        "Nintendo 3DS"
+      ]
+    },
+    {
+      "id": 17,
+      "Name": "Super Mario 64",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": [
+        "Mario",
+        "Nintendo",
+        "Nintendo 64"
+      ]
+    },
+    {
+      "id": 16,
+      "Name": "Super Mario Odyssey",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": [
+        "Mario",
+        "Nintendo",
+        "Nintendo Switch"
+      ]
+    },
+    {
+      "id": 11,
+      "Name": "Super Mario Strikers",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": [
+        "Mario",
+        "Nintendo",
+        "Nintendo GameCube"
+      ]
+    },
+    {
+      "id": 5,
+      "Name": "Super Mario Sunshine",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": [
+        "Mario",
+        "Nintendo",
+        "Nintendo GameCube"
+      ]
+    },
+    {
+      "id": 12,
+      "Name": "Super Smash Bros. Melee",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": [
+        "Nintendo",
+        "Nintendo GameCube"
+      ]
+    },
+    {
+      "id": 31,
+      "Name": "test",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": [
+        "Test"
+      ]
+    },
+    {
+      "id": 30,
+      "Name": "The Chosen",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": [
+        "Shows"
+      ]
+    },
+    {
+      "id": 28,
+      "Name": "The Prince of Egypt",
+      "Image": true,
+      "Run Command": "NA",
+      "Tags": [
+        "Movies"
+      ]
+    },
+    {
+      "id": 29,
+      "Name": "Veggie Tales",
+      "Image": true,
+      "Run Command": "NA",
+      "Tags": [
+        "Shows"
+      ]
+    },
+    {
+      "id": 23,
+      "Name": "Where’s God When I’m S-scared?",
+      "Image": true,
+      "Run Command": "na",
+      "Tags": [
+        "Veggie Tales"
       ]
     }
   ],

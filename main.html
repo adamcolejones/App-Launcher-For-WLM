@@ -1,3 +1,24 @@
+<!--
+// ********************************************************
+// * A DESCRIPTION OF THE FUNCTIONALITY OF THE CODE BELOW *
+// ********************************************************
+// + This is the landing page for umrfventures.com
+// + The menu.php file loads at the top of the page for navigation
+// + head.php handles all of the head tag details to reduce repetitive information
+// + the scrollableContent Class contains all the information on the page adjusting height based on the window and the menu bar above
+// + The video container will adjust its orientation based on the width and heigh of the window along with its text
+// + The Home video will autoplay on most browsers if it's muted on start
+// + What we Do Section with link
+// + Partner Logos, change on hover
+// + The partner logo image dimensions are specific. If they are changed they will need to match the prior dimensions to display correctly.
+// + Partner with us Section with link
+// + Join our team Section with link
+// + Did you know facts, pressing the next button will shuffle a new fact stored in the array
+// + Social Media Links
+// + Contact footer signifies the end of the page.  Initially this was supposed to store additional contact info.
+// ********************************************************
+-->
+
 <!--index.html-->
 
 <!DOCTYPE html>
@@ -10,6 +31,7 @@
     <link rel="stylesheet" href="main.css">
   </head>
   <body>
+
     <nav>
       <ul>
         <li><a href="main.html">Home</a></li>
@@ -20,36 +42,49 @@
         <li><a href="#">Documents</a></li>
         <li><a href="#">Games</a></li>
         <li><a href="#">Videos</a></li>
-
       </ul>
     </nav>
 
-    <h1>New Media</h1>
-    <form id="mediaForm">
-      <label for="Name">Name: </label>
-      <input type="text" id="Name" required><br>
 
-      <label for="Run Command">Run Command: </label>
-      <input type="text" id="Run Command"><br>
+    <div id="sideMenu"></div>
 
-      <label for="Tags">Tags: </label>
-      <input type="text" id="Tags"><br>
+    <div class="scrollableContent">
+      <div id="gridDisplay"></div>
+      <div id="dataDisplay"></div>
+      <button id="openPopup">Open Popup</button>
+    </div>
 
-      <label for="Image">Image: </label> <!-- Add an input field for uploading images -->
-      <input type="file" id="inputimage" accept="image/*"><br>
 
-      <!-- Add a container for custom fields -->
-      <div id="customFieldsContainer"></div>
+    <!-- Hidden popup container -->
+    <div id="popupContainer" class="popup">
+      <!-- <div class="popup-content"></div> -->
+      <div id="mediaForm">
+        <h1>New Media</h1>
+        <form>
+          <label for="Name">Name: </label>
+          <input type="text" id="Name" required><br>
 
-      <button type="button" id="addCustomField">Add Custom Field</button>
-      <button type="submit" id="mediaSubmit">Media Submit</button>
-    </form>    
+          <label for="Run Command">Run Command: </label>
+          <input type="text" id="Run Command"><br>
 
+          <label for="Tags">Tags: </label>
+          <input type="text" id="Tags" placeholder="Separate values by a comma"><br>
+
+          <label for="Image">Image: </label> <!-- Add an input field for uploading images -->
+          <input type="file" id="inputimage" accept="image/*"><br>
+
+          <!-- Add a container for custom fields -->
+          <div id="customFieldsContainer"></div>
+
+          <button type="button" id="addCustomField">Add Custom Field</button>
+          <button type="submit" id="mediaSubmit">Media Submit</button>
+        </form>
+        <button id="closePopupButton">Close</button>
+      </div>
+    </div>  
     <br>
 
-    <div id="gridDisplay"></div>
-
-    <div id="dataDisplay"></div>
+    <script src="popup.js"></script> 
 
     <script src="app.js"></script> 
     <!-- // 3. Backend Communication -->

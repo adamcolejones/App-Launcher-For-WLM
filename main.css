@@ -40,12 +40,13 @@ a:hover {
 
 body {
   font-family: Arial, sans-serif;
-  /* display: flex; */
-  justify-content: center;
-  align-items: center;
+  display: flex;
+  /* justify-content: center; */
+  /* align-items: center; */
   /* height: 100vh; */
   margin: 0 auto;
   padding: 0;
+  flex-wrap: wrap;
 }
 
 /* ---------------------------------------------------------------------------------------------- M ---------------------------------------------------------------------------------------------- */
@@ -77,6 +78,10 @@ body {
  ██░░░░░░░░████
  ████████████
 */
+
+#dataDisplay {
+  overflow: scroll;
+}
 
 /* ---------------------------------------------------------------------------------------------- M ---------------------------------------------------------------------------------------------- */
 /* 
@@ -142,10 +147,13 @@ body {
 
 .griditem {
   /* 135 + 2(border pxs) = 137 */
-  flex: 0 0 137px;
-  max-height: 210px;
-  min-height: 155px;
-  width: 137px;
+  /* flex: 0 0 auto; */
+  /* max-height: 212px; disabling to keep content at the bottom */
+  /* min-height: 155px; */ /* Removed width for horizontal content */
+  position: relative;
+  width: auto;
+  min-width: auto;
+  /* max-width: 273px; */
   display: inline-block;
   margin: 0% 15px 15px 0%;
   vertical-align: top;
@@ -153,6 +161,7 @@ body {
   border-radius: 5px;
   overflow: hidden;
   /* padding-right: 5px; */
+  /* margin: 0 auto; */
 }
 
 .griditemcontainer {
@@ -163,21 +172,27 @@ body {
   padding: 0% 0% 0% 20px;
   overflow-wrap: break-word;
   flex-wrap: wrap;
+  align-items: flex-end;
 }
 
+/* This image class determines the shape dimensions, portrait, landscape, square, or full width content */
 .griditempicture {
-  min-height: 135px;
-  max-height: 190px;
-  height: 190px;
-  width: 135px;
-  min-width: 135px;
-  vertical-align: top;
+  /* min-height: 135px; */ /* Removed width for horizontal content */
+  /* max-height: 190px; 2px of top and bottom border do not effect this */
+  /* width: 100%; */
+  /* height: 100%; */
+  height: 189px;  /* Removed height for square content */
+  /* width: 135px; */ /* Removed width for thin content */
+  max-width: 273px;
+  /* vertical-align: top; */
   background-color: rgb(63, 63, 63);
   border-radius: 5px;
   /* background-image: url('assets/media/default.png'); Set the path to your default image */
   background-size: cover;
   background-position: center;
   border:1px solid #000000;
+  display: block;
+  object-fit: cover; /* Use contain to ensure the entire image is visible */
 }
 
 .gridkey {
@@ -192,9 +207,17 @@ body {
 }
 
 .gridvalue {
-  display: inline-block;
-  padding-right: 5px;
-  /* margin: 0% 5% 0% 5%; */
+  /* display: inline-block; */
+  /* padding-right: 5px; */
+  /* Set maximum width for a single line */
+  position: absolute;
+  max-width: 100%;
+  /* Ensure text doesn't wrap to the next line */
+  white-space: nowrap;
+  /* Hide overflow content */
+  overflow: hidden;
+  /* Add ellipsis (...) when text overflows */
+  text-overflow: ellipsis;
 }
 
 /* ---------------------------------------------------------------------------------------------- M ---------------------------------------------------------------------------------------------- */
@@ -315,6 +338,12 @@ li:last-child {
   flex-direction: column;
   align-items: center;
   margin: 0 auto; /* This will center the form horizontally */
+  background-color: white;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 #mediaForm label,
@@ -369,7 +398,12 @@ li:last-child {
 
 nav {
     background-color: #45a049;
+    height: 50px;
+    width: 100%;
     padding: 10px;
+    position: fixed;
+    z-index: 1;
+    display: flex;
 }
 
 /* ---------------------------------------------------------------------------------------------- P ---------------------------------------------------------------------------------------------- */
@@ -386,6 +420,12 @@ nav {
 ██░░░░░░░░░░██
 ██████████████
 */
+
+#openPopup {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+}
 
 /* ---------------------------------------------------------------------------------------------- P ---------------------------------------------------------------------------------------------- */
 /* 
@@ -405,6 +445,22 @@ nav {
 p {
   text-align: center;
 }
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.popup-content {
+  
+}
+
 
 /* ---------------------------------------------------------------------------------------------- S ---------------------------------------------------------------------------------------------- */
 /* 
@@ -450,6 +506,25 @@ p {
  ██████████████
  */
 
+ .scrollableContent {
+  position: relative;
+  width: calc(100% - 200px); /* 100% - sideMenu Width */
+  top: calc(50px + 20px); /* nav height + nav Padding */
+  left: 200px; /* sideMenu Width */
+ }
+
+ #sideMenu {
+  background-color: #dfdfdf;
+  top: calc(50px + 20px); /* nav height + nav Padding */
+  width: 200px;
+  height: calc(100vh - 50px - 20px); /* full view height - nav height - nav padding */
+  position: fixed;
+ }
+
+ .sidemenu-item {
+  padding: 0 0 0 5px;
+ }
+
 /* ---------------------------------------------------------------------------------------------- S ---------------------------------------------------------------------------------------------- */
 /* 
  ██████████████
@@ -468,6 +543,11 @@ p {
 table {
     border-collapse: collapse;
     width: 100%;
+    /* overflow: scroll; */
+}
+
+tbody {
+  overflow: scroll;
 }
   
 th, td {
@@ -501,6 +581,8 @@ ul {
     margin: 0;
     padding: 0;
     display: flex;
+    align-items: center;
+    flex-direction: row;
 }
 
 /* ---------------------------------------------------------------------------------------------- S ---------------------------------------------------------------------------------------------- */
