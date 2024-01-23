@@ -2,20 +2,9 @@
 // ********************************************************
 // * A DESCRIPTION OF THE FUNCTIONALITY OF THE CODE BELOW *
 // ********************************************************
-// + This is the landing page for umrfventures.com
-// + The menu.php file loads at the top of the page for navigation
-// + head.php handles all of the head tag details to reduce repetitive information
-// + the scrollableContent Class contains all the information on the page adjusting height based on the window and the menu bar above
-// + The video container will adjust its orientation based on the width and heigh of the window along with its text
-// + The Home video will autoplay on most browsers if it's muted on start
-// + What we Do Section with link
-// + Partner Logos, change on hover
-// + The partner logo image dimensions are specific. If they are changed they will need to match the prior dimensions to display correctly.
-// + Partner with us Section with link
-// + Join our team Section with link
-// + Did you know facts, pressing the next button will shuffle a new fact stored in the array
-// + Social Media Links
-// + Contact footer signifies the end of the page.  Initially this was supposed to store additional contact info.
+// +
+// + 
+// + 
 // ********************************************************
 -->
 
@@ -35,13 +24,9 @@
     <nav>
       <ul>
         <li><a href="main.html">Home</a></li>
-        <li><a href="newname.html">Test</a></li>
         <li><a href="settings.html">Settings</a></li>
-        <li><a href="#">All</a></li>
-        <li><a href="#">Audio</a></li>
-        <li><a href="#">Documents</a></li>
-        <li><a href="#">Games</a></li>
-        <li><a href="#">Videos</a></li>
+        <li><a href="todo.html">Todo</a></li>
+        <li><a href="button.html">Button</a></li>
       </ul>
     </nav>
 
@@ -49,8 +34,11 @@
     <div id="sideMenu"></div>
 
     <div class="scrollableContent">
+      <!-- Displays the game list -->
       <div id="gridDisplay"></div>
-      <div id="dataDisplay"></div>
+      <!-- Displays the Game content -->
+      <div id="contentDisplay"></div>
+      <!-- New Media popup -->
       <button id="openPopup">Open Popup</button>
     </div>
 
@@ -66,6 +54,8 @@
 
           <label for="Run Command">Run Command: </label>
           <input type="text" id="Run Command"><br>
+
+          <div id="error-message"></div>
 
           <label for="Tags">Tags: </label>
           <input type="text" id="Tags" placeholder="Separate values by a comma"><br>
@@ -85,8 +75,9 @@
     <br>
 
     <script src="popup.js"></script> 
-
     <script src="app.js"></script> 
+    <!-- <script src="renderer.js"></script> -->
+
     <!-- // 3. Backend Communication -->
     <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
     <!-- <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script> -->

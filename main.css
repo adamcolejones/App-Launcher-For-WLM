@@ -43,10 +43,11 @@ body {
   display: flex;
   /* justify-content: center; */
   /* align-items: center; */
-  /* height: 100vh; */
+  height: 100vh;
   margin: 0 auto;
   padding: 0;
   flex-wrap: wrap;
+  /* position: fixed; */
 }
 
 /* ---------------------------------------------------------------------------------------------- M ---------------------------------------------------------------------------------------------- */
@@ -63,6 +64,10 @@ body {
  ██░░░░░░░░░░██
  ██████████████
 */
+
+#contentDisplay {
+  display: none;
+}
 
 /* ---------------------------------------------------------------------------------------------- M ---------------------------------------------------------------------------------------------- */
 /* 
@@ -80,7 +85,7 @@ body {
 */
 
 #dataDisplay {
-  overflow: scroll;
+  /* overflow: scroll; */
 }
 
 /* ---------------------------------------------------------------------------------------------- M ---------------------------------------------------------------------------------------------- */
@@ -97,6 +102,11 @@ body {
  ██░░░░░░░░░░██
  ██████████████
 */
+
+#error-message {
+  color: rgb(247, 72, 72); 
+  display: none;
+}
 
 /* ---------------------------------------------------------------------------------------------- M ---------------------------------------------------------------------------------------------- */
 /* 
@@ -159,7 +169,7 @@ body {
   vertical-align: top;
   /* background-color: gray; */
   border-radius: 5px;
-  overflow: hidden;
+  /* overflow: hidden; */
   /* padding-right: 5px; */
   /* margin: 0 auto; */
 }
@@ -193,6 +203,15 @@ body {
   border:1px solid #000000;
   display: block;
   object-fit: cover; /* Use contain to ensure the entire image is visible */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  transition: box-shadow 0.1s ease-in-out, filter 0.1s ease-in-out, border 0.1s ease-in-out;
+}
+
+.griditempicture:hover {
+  /* Increase the box-shadow to create a glow effect */
+  /* filter: brightness(1.05); Adjust the value to control brightness */
+  border:1px solid #ffffff;
+  box-shadow: 0 0 20px rgba(84, 255, 130, 0.8);
 }
 
 .gridkey {
@@ -218,6 +237,7 @@ body {
   overflow: hidden;
   /* Add ellipsis (...) when text overflows */
   text-overflow: ellipsis;
+  padding: 5px 0 0 0;
 }
 
 /* ---------------------------------------------------------------------------------------------- M ---------------------------------------------------------------------------------------------- */
@@ -402,7 +422,7 @@ nav {
     width: 100%;
     padding: 10px;
     position: fixed;
-    z-index: 1;
+    z-index: 10;
     display: flex;
 }
 
@@ -420,6 +440,12 @@ nav {
 ██░░░░░░░░░░██
 ██████████████
 */
+
+#openCmdBtn {
+  height: 100px;
+  width: 100px;
+  z-index: 100;
+}
 
 #openPopup {
   position: fixed;
@@ -508,9 +534,14 @@ p {
 
  .scrollableContent {
   position: relative;
+  overflow-y: auto;
+  overflow-x: none;
+  display: block;
+  height: calc(100vh - 70px); /* 100 view height - 70px of menu height */
   width: calc(100% - 200px); /* 100% - sideMenu Width */
   top: calc(50px + 20px); /* nav height + nav Padding */
   left: 200px; /* sideMenu Width */
+  /* overflow-y: scroll; */
  }
 
  #sideMenu {
@@ -523,7 +554,17 @@ p {
 
  .sidemenu-item {
   padding: 0 0 0 5px;
+  cursor: pointer;
+  user-select: none; /* Prevent text selection */
  }
+
+ .sidemenu-item:hover {
+  background-color: #ececec; /* Lighter background color */
+ }
+
+ .sidemenu-item.selected {
+  background-color: #ffffff; /* Lighter background color */
+}
 
 /* ---------------------------------------------------------------------------------------------- S ---------------------------------------------------------------------------------------------- */
 /* 
@@ -548,6 +589,17 @@ table {
 
 tbody {
   overflow: scroll;
+}
+
+.test {
+    height: 200px;
+    width: 200px;
+    animation: loadingOverlay 3s ease infinite;
+    background: linear-gradient(
+    150deg,rgba(245,247,248,0) 20%,#fff 35%,rgba(245,247,248,0) 50%,rgba(245,247,248,0) 55%,#fff 65%,rgba(245,247,248,0) 75%),#edeeef;
+    background-repeat: no-repeat;
+    background-size: 400% 400%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Added shadow offsets */
 }
   
 th, td {

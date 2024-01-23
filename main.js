@@ -1,11 +1,16 @@
-// Distribute Application
-// https://www.electronjs.org/docs/latest/tutorial/quick-start
-// https://www.youtube.com/watch?v=5ofY0UHHtLY&ab_channel=coderJeet
+// ********************************************************
+// * A DESCRIPTION OF THE FUNCTIONALITY OF THE CODE BELOW *
+// ********************************************************
+// + This file is the starting point for json file access
+// + main.js >> preload.js >> app.js >> next reference...
+// ********************************************************
+
 
 // main.js
 
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain} = require('electron');
+const { exec } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 let mainWindow;
@@ -18,7 +23,8 @@ const createWindow = () => {
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'), // 1. Backend Communication
-      // nodeIntegration: false,
+      nodeIntegration: true,
+      // webSecurity: false, // Disable web security to allow cross-origin requests
       // contextIsolation: true,
       // enableRemoteModule: false,
     },
@@ -26,6 +32,20 @@ const createWindow = () => {
 
   // and load the index.html of the app.
   mainWindow.loadFile('main.html')  // 2. Backend Communication
+  ipcMain.on('run-cmd-file', (event, filePath) => {
+    // Use child_process to execute the CMD file
+    exec(filePath, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error executing CMD file: ${error.message}`);
+        return;
+      }
+      if (stderr) {
+        console.error(`CMD file execution error: ${stderr}`);
+        return;
+      }
+      console.log(`CMD file executed successfully: ${stdout}`);
+    });
+  });
 }
 
 // This method will be called when Electron has finished
@@ -97,6 +117,45 @@ ipcMain.on("saveMedia", (sender, newData, imagePath) => {
       console.log(`${newData.id} Data Saved`);
   } catch (error) {console.error("Error while saving data:", error.message);}
 });
+
+ipcMain.on("updateMedia", (sender, newData, imagePath) => {
+  try {
+    let existingData = fs.existsSync("data.json") ? fs.readFileSync("data.json", "utf8") : '';
+    let jsonData = JSON.parse(existingData);
+    let mediaArray = jsonData.Media;
+
+    // Find the index of the item with the matching id
+    const indexToUpdate = mediaArray.findIndex(item => item.id === newData.id);
+
+    if (indexToUpdate !== -1) {
+      // If an item with the matching id is found, update it
+      mediaArray[indexToUpdate] = newData;
+    } else {
+      // If no matching id is found, simply add the new data to the array
+      mediaArray.push(newData);
+    }
+
+    mediaArray.sort((a, b) => a.Name.localeCompare(b.Name));
+    let updatedData = JSON.stringify(jsonData, null, 2);
+    fs.writeFileSync("data.json", updatedData);
+
+    if (imagePath !== "null") {
+      const newPath = path.join(__dirname, 'assets', 'media', `${newData.id}.png`);
+      fs.copyFileSync(imagePath, newPath);
+    } else {
+      // If imagePath is null or "null", retain the existing Image value
+      // newData.Image = mediaArray[indexToUpdate].Image;
+    }
+
+    console.log(`${newData.id} Data Saved`);
+  } catch (error) {
+    console.error("Error while saving data:", error.message);
+  }
+});
+
+
+
+
 
 ipcMain.on('reload-window', () => {
   mainWindow.reload();

@@ -1,12 +1,88 @@
 {
   "Media": [
     {
+      "id": 54,
+      "Name": "3-2-1 Penguins!",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Shows"
+      ]
+    },
+    {
+      "id": 64,
+      "Name": "A Charlie Brown Christmas",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Movies",
+        "Christmas",
+        "Peanuts"
+      ]
+    },
+    {
+      "id": 66,
+      "Name": "A Charlie Brown Thanksgiving",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Movies",
+        "Peanuts",
+        "Fall"
+      ]
+    },
+    {
+      "id": 50,
+      "Name": "Adventures in Odyssey",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Shows"
+      ]
+    },
+    {
+      "id": 48,
+      "Name": "Apple TV",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Launchers"
+      ]
+    },
+    {
       "id": 25,
       "Name": "Are You My Neighbor?",
       "Image": true,
       "Run Command": "na",
       "Tags": [
         "Veggie Tales"
+      ]
+    },
+    {
+      "id": 56,
+      "Name": "Bibleman",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Shows"
+      ]
+    },
+    {
+      "id": 57,
+      "Name": "Bibleman: The Animated Adventures",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Shows"
+      ]
+    },
+    {
+      "id": 70,
+      "Name": "Buck Denver Asks...What's in the Bible?",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Shows"
       ]
     },
     {
@@ -19,12 +95,78 @@
       ]
     },
     {
+      "id": 77,
+      "Name": "Diary of a Wimpy Kid",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Books"
+      ]
+    },
+    {
+      "id": 38,
+      "Name": "ed",
+      "Image": false,
+      "RunCommand": "undefined",
+      "Tags": [
+        ""
+      ]
+    },
+    {
+      "id": 34,
+      "Name": "ed",
+      "Image": false,
+      "RunCommand": "undefined",
+      "Tags": [
+        "eded"
+      ]
+    },
+    {
+      "id": 47,
+      "Name": "Epic Games",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Launchers"
+      ]
+    },
+    {
       "id": 24,
       "Name": "God Wants Me to Forgive Them!?!",
       "Image": true,
       "Run Command": "na",
       "Tags": [
         "Veggie Tales"
+      ]
+    },
+    {
+      "id": 68,
+      "Name": "It's Christmastime Again, Charlie Brown",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Movies",
+        "Peanuts"
+      ]
+    },
+    {
+      "id": 65,
+      "Name": "It's the Great Pumpkin, Charlie Brown",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Movies",
+        "Fall",
+        "Peanuts"
+      ]
+    },
+    {
+      "id": 51,
+      "Name": "Joseph: King of Dreams",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Movies"
       ]
     },
     {
@@ -43,6 +185,33 @@
         "1",
         "2",
         "3"
+      ]
+    },
+    {
+      "id": 59,
+      "Name": "Larry Boy in the Amazing Brain-Twister",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Books"
+      ]
+    },
+    {
+      "id": 58,
+      "Name": "Larry Boy: The Cartoon Adventures",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Shows"
+      ]
+    },
+    {
+      "id": 75,
+      "Name": "Lose My Soul",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Songs"
       ]
     },
     {
@@ -136,18 +305,6 @@
       "Tags": null
     },
     {
-      "id": 34,
-      "Name": "New Game",
-      "Image": true,
-      "Run Command": "NA",
-      "Tags": [
-        "Test",
-        "Apple",
-        "Nintendo"
-      ],
-      "custom 1 key": "custom 1 value"
-    },
-    {
       "id": 19,
       "Name": "New Super Mario Bros.",
       "Image": true,
@@ -159,12 +316,30 @@
       ]
     },
     {
-      "id": 35,
-      "Name": "One Tag Test",
+      "id": 74,
+      "Name": "Newsboys",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Artists"
+      ]
+    },
+    {
+      "id": 36,
+      "Name": "No tags",
       "Image": true,
       "Run Command": "na",
       "Tags": [
-        "One Tag"
+        ""
+      ]
+    },
+    {
+      "id": 35,
+      "Name": "One Tag Test",
+      "Image": true,
+      "RunCommand": "na",
+      "Tags": [
+        ""
       ]
     },
     {
@@ -179,6 +354,42 @@
       ]
     },
     {
+      "id": 39,
+      "Name": "Pikmin 1",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Wishlist"
+      ]
+    },
+    {
+      "id": 40,
+      "Name": "Pikmin 2",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Wishlist"
+      ]
+    },
+    {
+      "id": 41,
+      "Name": "Pikmin 3 Deluxe",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Wishlist"
+      ]
+    },
+    {
+      "id": 42,
+      "Name": "Pikmin 4",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Wishlist"
+      ]
+    },
+    {
       "id": 32,
       "Name": "PlayStation Plus",
       "Image": true,
@@ -186,6 +397,16 @@
       "Tags": [
         "PlayStation",
         "Launchers"
+      ]
+    },
+    {
+      "id": 79,
+      "Name": "Pokemon FireRed",
+      "Image": true,
+      "Run Command": "C:\\\\Users\\\\adamc\\\\Documents\\\\Games\\\\Nintendo\\\\GameBoyAdvance\\\\Other\\\\CMD Files\\\\Pokemon Fire Red.cmd",
+      "Tags": [
+        "Pokemon",
+        "Nintendo Gameboy Advance"
       ]
     },
     {
@@ -200,12 +421,40 @@
       ]
     },
     {
+      "id": 72,
+      "Name": "Portable Sounds (With Bonus Remixes)",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Albums"
+      ]
+    },
+    {
+      "id": 49,
+      "Name": "Pure Flix",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Launchers"
+      ]
+    },
+    {
       "id": 26,
       "Name": "Rack, Shack & Benny",
       "Image": true,
       "Run Command": "na",
       "Tags": [
         "Veggie Tales"
+      ]
+    },
+    {
+      "id": 45,
+      "Name": "Snoopy VS. The Red Baron",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "PlayStation 2",
+        "Peanuts"
       ]
     },
     {
@@ -228,6 +477,24 @@
         "Mario",
         "Nintendo",
         "Nintendo 64"
+      ]
+    },
+    {
+      "id": 76,
+      "Name": "Super Mario 64 Original Soundtrack",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Albums"
+      ]
+    },
+    {
+      "id": 44,
+      "Name": "Super Mario Bros. Wonder",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Wishlist"
       ]
     },
     {
@@ -274,12 +541,39 @@
       ]
     },
     {
+      "id": 52,
+      "Name": "Superbook 1981",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Shows"
+      ]
+    },
+    {
+      "id": 53,
+      "Name": "Superbook 2011",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Shows"
+      ]
+    },
+    {
       "id": 31,
       "Name": "test",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "na",
       "Tags": [
-        "Test"
+        ""
+      ]
+    },
+    {
+      "id": 46,
+      "Name": "test's",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        ""
       ]
     },
     {
@@ -292,12 +586,122 @@
       ]
     },
     {
+      "id": 63,
+      "Name": "The Chronicles of Narnia: The Lion, The Witch, and the Wardrobe",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Movies"
+      ]
+    },
+    {
+      "id": 43,
+      "Name": "The Legend of Zelda: Link's Awakening",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Wishlist"
+      ]
+    },
+    {
+      "id": 69,
+      "Name": "The Peanuts Movie",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Movies",
+        "Peanuts"
+      ]
+    },
+    {
+      "id": 78,
+      "Name": "The Pilgrim's Progress",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Movies"
+      ]
+    },
+    {
       "id": 28,
       "Name": "The Prince of Egypt",
       "Image": true,
       "Run Command": "NA",
       "Tags": [
         "Movies"
+      ]
+    },
+    {
+      "id": 55,
+      "Name": "The Story Keepers",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Shows"
+      ]
+    },
+    {
+      "id": 60,
+      "Name": "The Torchlighters: Heroes of the Faith",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Shows"
+      ]
+    },
+    {
+      "id": 61,
+      "Name": "The Wingfeather Saga",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Shows"
+      ]
+    },
+    {
+      "id": 62,
+      "Name": "The Wingfeather Saga: On the Edge of the Dark Sea of Darkness",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Books"
+      ]
+    },
+    {
+      "id": 71,
+      "Name": "Theo",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Shows"
+      ]
+    },
+    {
+      "id": 67,
+      "Name": "This is America, Charlie Brown",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Shows",
+        "Peanuts"
+      ]
+    },
+    {
+      "id": 73,
+      "Name": "Toby Mac",
+      "Image": true,
+      "Run Command": null,
+      "Tags": [
+        "Artists"
+      ]
+    },
+    {
+      "id": 37,
+      "Name": "Uncategorized",
+      "Image": false,
+      "RunCommand": "null",
+      "Tags": [
+        ""
       ]
     },
     {

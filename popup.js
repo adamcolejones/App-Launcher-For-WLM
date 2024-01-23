@@ -1,3 +1,9 @@
+// ********************************************************
+// * A DESCRIPTION OF THE FUNCTIONALITY OF THE CODE BELOW *
+// ********************************************************
+// + 
+// ********************************************************
+
 const openPopupButton = document.getElementById('openPopup');
 const closePopupButton = document.getElementById('closePopup');
 const popupContainer = document.getElementById('popupContainer');
