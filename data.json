@@ -4,7 +4,7 @@
       "id": 54,
       "Name": "3-2-1 Penguins!",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Shows"
       ]
@@ -13,7 +13,7 @@
       "id": 64,
       "Name": "A Charlie Brown Christmas",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Movies",
         "Christmas",
@@ -24,7 +24,7 @@
       "id": 66,
       "Name": "A Charlie Brown Thanksgiving",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Movies",
         "Peanuts",
@@ -35,7 +35,7 @@
       "id": 50,
       "Name": "Adventures in Odyssey",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Shows"
       ]
@@ -44,7 +44,7 @@
       "id": 48,
       "Name": "Apple TV",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Launchers"
       ]
@@ -53,7 +53,7 @@
       "id": 25,
       "Name": "Are You My Neighbor?",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "na",
       "Tags": [
         "Veggie Tales"
       ]
@@ -62,7 +62,7 @@
       "id": 56,
       "Name": "Bibleman",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Shows"
       ]
@@ -71,7 +71,7 @@
       "id": 57,
       "Name": "Bibleman: The Animated Adventures",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Shows"
       ]
@@ -80,7 +80,7 @@
       "id": 70,
       "Name": "Buck Denver Asks...What's in the Bible?",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Shows"
       ]
@@ -89,7 +89,7 @@
       "id": 27,
       "Name": "Dave and the Giant Pickle",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "na",
       "Tags": [
         "Veggie Tales"
       ]
@@ -98,34 +98,34 @@
       "id": 77,
       "Name": "Diary of a Wimpy Kid",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Books"
-      ]
-    },
-    {
-      "id": 38,
-      "Name": "ed",
-      "Image": false,
-      "RunCommand": "undefined",
-      "Tags": [
-        ""
       ]
     },
     {
       "id": 34,
       "Name": "ed",
       "Image": false,
-      "RunCommand": "undefined",
+      "RunCommand": "This was edited",
       "Tags": [
-        "eded"
+        ""
       ]
+    },
+    {
+      "id": 38,
+      "Name": "Edited Media Test",
+      "RunCommand": "blah blah blah",
+      "Tags": [
+        ""
+      ],
+      "Image": true
     },
     {
       "id": 47,
       "Name": "Epic Games",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Launchers"
       ]
@@ -134,7 +134,7 @@
       "id": 24,
       "Name": "God Wants Me to Forgive Them!?!",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "na",
       "Tags": [
         "Veggie Tales"
       ]
@@ -143,7 +143,7 @@
       "id": 68,
       "Name": "It's Christmastime Again, Charlie Brown",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Movies",
         "Peanuts"
@@ -153,7 +153,7 @@
       "id": 65,
       "Name": "It's the Great Pumpkin, Charlie Brown",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Movies",
         "Fall",
@@ -164,7 +164,7 @@
       "id": 51,
       "Name": "Joseph: King of Dreams",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Movies"
       ]
@@ -173,25 +173,18 @@
       "id": 4,
       "Name": "Kirby and the Forgotten Land",
       "Image": false,
-      "Release Date": "March 25, 2022",
-      "System": "Nintendo Switch",
-      "Run Command": "",
+      "RunCommand": "",
       "Tags": [
         "Kirby",
         "Nintendo Switch",
         "Nintendo"
-      ],
-      "Children": [
-        "1",
-        "2",
-        "3"
       ]
     },
     {
       "id": 59,
       "Name": "Larry Boy in the Amazing Brain-Twister",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Books"
       ]
@@ -200,7 +193,7 @@
       "id": 58,
       "Name": "Larry Boy: The Cartoon Adventures",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Shows"
       ]
@@ -209,7 +202,7 @@
       "id": 75,
       "Name": "Lose My Soul",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Songs"
       ]
@@ -218,7 +211,7 @@
       "id": 9,
       "Name": "Luigi's Mansion",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "na",
       "Tags": [
         "Nintendo GameCube"
       ]
@@ -227,16 +220,17 @@
       "id": 13,
       "Name": "Mario & Luigi: Superstar Saga",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "C:\\Users\\adamc\\Documents\\Games\\Nintendo\\GameBoyAdvance\\Other\\CMD Files\\Mario And Luigi Superstar Saga.cmd",
       "Tags": [
-        "Gameboy Advance"
+        "Nintendo Gameboy Advance",
+        "All Playable"
       ]
     },
     {
       "id": 22,
       "Name": "Mario Kart 64",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "na",
       "Tags": [
         "Nintendo",
         "Nintendo 64",
@@ -247,7 +241,7 @@
       "id": 20,
       "Name": "Mario Kart DS",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "na",
       "Tags": [
         "Nintendo",
         "Nintendo DS",
@@ -258,7 +252,7 @@
       "id": 1,
       "Name": "Mario Kart Wii",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "na",
       "Tags": [
         "Nintendo",
         "Nintendo Wii",
@@ -269,7 +263,7 @@
       "id": 8,
       "Name": "Mario Party 4",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "na",
       "Tags": [
         "Nintendo",
         "Nintendo GameCube",
@@ -280,7 +274,7 @@
       "id": 6,
       "Name": "Mario Party 7",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "na",
       "Tags": [
         "Nintendo",
         "Nintendo GameCube",
@@ -291,7 +285,7 @@
       "id": 10,
       "Name": "Mario Superstar Baseball",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "na",
       "Tags": [
         "Nintendo",
         "Nintendo GameCube"
@@ -301,14 +295,14 @@
       "id": 33,
       "Name": "new",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "na",
       "Tags": null
     },
     {
       "id": 19,
       "Name": "New Super Mario Bros.",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "na",
       "Tags": [
         "Nintendo",
         "Nintendo DS",
@@ -319,7 +313,7 @@
       "id": 74,
       "Name": "Newsboys",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Artists"
       ]
@@ -328,7 +322,7 @@
       "id": 36,
       "Name": "No tags",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "na",
       "Tags": [
         ""
       ]
@@ -346,7 +340,7 @@
       "id": 7,
       "Name": "Paper Mario: The Thousand-Year Door",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "na",
       "Tags": [
         "Nintendo",
         "Nintendo GameCube",
@@ -357,7 +351,7 @@
       "id": 39,
       "Name": "Pikmin 1",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Wishlist"
       ]
@@ -366,7 +360,7 @@
       "id": 40,
       "Name": "Pikmin 2",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Wishlist"
       ]
@@ -375,7 +369,7 @@
       "id": 41,
       "Name": "Pikmin 3 Deluxe",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Wishlist"
       ]
@@ -384,7 +378,7 @@
       "id": 42,
       "Name": "Pikmin 4",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Wishlist"
       ]
@@ -393,7 +387,7 @@
       "id": 32,
       "Name": "PlayStation Plus",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "na",
       "Tags": [
         "PlayStation",
         "Launchers"
@@ -403,17 +397,18 @@
       "id": 79,
       "Name": "Pokemon FireRed",
       "Image": true,
-      "Run Command": "C:\\\\Users\\\\adamc\\\\Documents\\\\Games\\\\Nintendo\\\\GameBoyAdvance\\\\Other\\\\CMD Files\\\\Pokemon Fire Red.cmd",
+      "RunCommand": "C:\\\\Users\\\\adamc\\\\Documents\\\\Games\\\\Nintendo\\\\GameBoyAdvance\\\\Other\\\\CMD Files\\\\Pokemon Fire Red.cmd",
       "Tags": [
         "Pokemon",
-        "Nintendo Gameboy Advance"
+        "Nintendo Gameboy Advance",
+        "All Playable"
       ]
     },
     {
       "id": 21,
       "Name": "Pokémon Yellow: Special Pikachu Edition",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "na",
       "Tags": [
         "Pokemon",
         "Nintendo",
@@ -424,7 +419,7 @@
       "id": 72,
       "Name": "Portable Sounds (With Bonus Remixes)",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Albums"
       ]
@@ -433,7 +428,7 @@
       "id": 49,
       "Name": "Pure Flix",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Launchers"
       ]
@@ -442,7 +437,7 @@
       "id": 26,
       "Name": "Rack, Shack & Benny",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "na",
       "Tags": [
         "Veggie Tales"
       ]
@@ -451,7 +446,7 @@
       "id": 45,
       "Name": "Snoopy VS. The Red Baron",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "PlayStation 2",
         "Peanuts"
@@ -461,7 +456,7 @@
       "id": 18,
       "Name": "Super Mario 3D Land",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "na",
       "Tags": [
         "Mario",
         "Nintendo",
@@ -472,18 +467,19 @@
       "id": 17,
       "Name": "Super Mario 64",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "C:\\Users\\adamc\\Documents\\Games\\Nintendo\\64\\Other\\CMD Files\\Super Mario 64.cmd",
       "Tags": [
         "Mario",
         "Nintendo",
-        "Nintendo 64"
+        "Nintendo 64",
+        "All Playable"
       ]
     },
     {
       "id": 76,
       "Name": "Super Mario 64 Original Soundtrack",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Albums"
       ]
@@ -492,7 +488,7 @@
       "id": 44,
       "Name": "Super Mario Bros. Wonder",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Wishlist"
       ]
@@ -501,7 +497,7 @@
       "id": 16,
       "Name": "Super Mario Odyssey",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "na",
       "Tags": [
         "Mario",
         "Nintendo",
@@ -512,7 +508,7 @@
       "id": 11,
       "Name": "Super Mario Strikers",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "na",
       "Tags": [
         "Mario",
         "Nintendo",
@@ -523,7 +519,7 @@
       "id": 5,
       "Name": "Super Mario Sunshine",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "na",
       "Tags": [
         "Mario",
         "Nintendo",
@@ -534,7 +530,7 @@
       "id": 12,
       "Name": "Super Smash Bros. Melee",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "na",
       "Tags": [
         "Nintendo",
         "Nintendo GameCube"
@@ -544,7 +540,7 @@
       "id": 52,
       "Name": "Superbook 1981",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Shows"
       ]
@@ -553,7 +549,7 @@
       "id": 53,
       "Name": "Superbook 2011",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Shows"
       ]
@@ -571,7 +567,7 @@
       "id": 46,
       "Name": "test's",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         ""
       ]
@@ -580,7 +576,7 @@
       "id": 30,
       "Name": "The Chosen",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "na",
       "Tags": [
         "Shows"
       ]
@@ -589,7 +585,7 @@
       "id": 63,
       "Name": "The Chronicles of Narnia: The Lion, The Witch, and the Wardrobe",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Movies"
       ]
@@ -598,7 +594,7 @@
       "id": 43,
       "Name": "The Legend of Zelda: Link's Awakening",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Wishlist"
       ]
@@ -607,7 +603,7 @@
       "id": 69,
       "Name": "The Peanuts Movie",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Movies",
         "Peanuts"
@@ -617,7 +613,7 @@
       "id": 78,
       "Name": "The Pilgrim's Progress",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Movies"
       ]
@@ -626,7 +622,7 @@
       "id": 28,
       "Name": "The Prince of Egypt",
       "Image": true,
-      "Run Command": "NA",
+      "RunCommand": "NA",
       "Tags": [
         "Movies"
       ]
@@ -635,7 +631,7 @@
       "id": 55,
       "Name": "The Story Keepers",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Shows"
       ]
@@ -644,7 +640,7 @@
       "id": 60,
       "Name": "The Torchlighters: Heroes of the Faith",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Shows"
       ]
@@ -653,7 +649,7 @@
       "id": 61,
       "Name": "The Wingfeather Saga",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Shows"
       ]
@@ -662,7 +658,7 @@
       "id": 62,
       "Name": "The Wingfeather Saga: On the Edge of the Dark Sea of Darkness",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Books"
       ]
@@ -671,7 +667,7 @@
       "id": 71,
       "Name": "Theo",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Shows"
       ]
@@ -680,7 +676,7 @@
       "id": 67,
       "Name": "This is America, Charlie Brown",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Shows",
         "Peanuts"
@@ -690,7 +686,7 @@
       "id": 73,
       "Name": "Toby Mac",
       "Image": true,
-      "Run Command": null,
+      "RunCommand": null,
       "Tags": [
         "Artists"
       ]
@@ -708,7 +704,7 @@
       "id": 29,
       "Name": "Veggie Tales",
       "Image": true,
-      "Run Command": "NA",
+      "RunCommand": "NA",
       "Tags": [
         "Shows"
       ]
@@ -717,7 +713,7 @@
       "id": 23,
       "Name": "Where’s God When I’m S-scared?",
       "Image": true,
-      "Run Command": "na",
+      "RunCommand": "na",
       "Tags": [
         "Veggie Tales"
       ]

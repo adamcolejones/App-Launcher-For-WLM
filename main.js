@@ -74,6 +74,9 @@ app.on('window-all-closed', () => {
 // Add the following IPC handler to save data to "data.json"
 
 // 5. Backend Communication
+//
+//
+//
 ipcMain.on("saveName", (sender, newData) => {
     try {
         // Read the existing data from the file, or initialize an empty array if the file doesn't exist
@@ -98,6 +101,10 @@ ipcMain.on("saveName", (sender, newData) => {
     }
 });
 
+// SAVE MEDIA
+//
+//
+//
 ipcMain.on("saveMedia", (sender, newData, imagePath) => {
   try {
       // Read the existing data from the file, or initialize an empty array if the file doesn't exist
@@ -118,6 +125,10 @@ ipcMain.on("saveMedia", (sender, newData, imagePath) => {
   } catch (error) {console.error("Error while saving data:", error.message);}
 });
 
+// UPDATE MEDIA
+//
+//
+//
 ipcMain.on("updateMedia", (sender, newData, imagePath) => {
   try {
     let existingData = fs.existsSync("data.json") ? fs.readFileSync("data.json", "utf8") : '';
@@ -129,7 +140,7 @@ ipcMain.on("updateMedia", (sender, newData, imagePath) => {
 
     if (indexToUpdate !== -1) {
       // If an item with the matching id is found, update it
-      mediaArray[indexToUpdate] = newData;
+      mediaArray[indexToUpdate] = { ...mediaArray[indexToUpdate], ...newData };
     } else {
       // If no matching id is found, simply add the new data to the array
       mediaArray.push(newData);
@@ -152,10 +163,6 @@ ipcMain.on("updateMedia", (sender, newData, imagePath) => {
     console.error("Error while saving data:", error.message);
   }
 });
-
-
-
-
 
 ipcMain.on('reload-window', () => {
   mainWindow.reload();

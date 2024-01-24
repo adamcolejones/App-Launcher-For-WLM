@@ -71,7 +71,7 @@ let saveMedia = (newId, Name, RunCommand, Tags, imagePath) => {
     "id": newId,
     "Name": Name,
     "Image": imageStatus,
-    "Run Command": RunCommand,
+    "RunCommand": RunCommand, // Don't have a space between Run & command, causes problems when updating values with json
     "Tags": tagsArray,
     ...customData // Include the custom fields in the data object
   };
@@ -94,12 +94,35 @@ let mediaBridge = {
 contextBridge.exposeInMainWorld("mediaBridge", mediaBridge);
 
 // function called to update existing media from data.json
-let updateMedia = (formData, imageFile) => {
-  if (imageFile) {
-      ipcRenderer.send("updateMedia", formData, imageFile);
-  } else {
-      ipcRenderer.send("updateMedia", formData, null); // Send null for image data
+let updateMedia = (id, Name, RunCommand, Tags, imagePath) => {
+  console.log('Update Check 1');
+  let imageStatus;
+  let newData;
+  if (imagePath != null) {
+    imageStatus = true;
+    newData = {
+      "id": id,
+      "Name": Name,
+      "Image": imageStatus,
+      "RunCommand": RunCommand, // Don't have a space between Run & command, causes problems when updating values with json
+      "Tags": Tags
+    };
   }
+  else {
+    imageStatus = false;
+    newData = {
+      "id": id,
+      "Name": Name,
+      // "Image": imageStatus, // remove imageStatus to prevent overwriting the old image
+      "RunCommand": RunCommand, // Don't have a space between Run & command, causes problems when updating values with json
+      "Tags": Tags
+    };
+  }
+  // const tagsInput = document.getElementById('Tags');
+  // const tagsArray = Tags.value.split(',').map(tag => tag.trim());
+  
+  console.log('New Data: ', newData);
+  ipcRenderer.send("updateMedia", newData, imagePath);
   ipcRenderer.send('reload-window');
 };
 

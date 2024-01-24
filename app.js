@@ -17,6 +17,7 @@
 // + function createGrid(data) {
 // + function createTable(data) {
 // + function displayGridItemData(item) { // Shows game items after pic click
+// + Updating a media entry APP.JS >> PRELOAD.JS >> MAIN.JS
 
 // ********************************************************
 
@@ -168,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // console.log("Release Date:", ReleaseDate);
       // console.log("System:", System);
 
-      window.mediaBridge.saveMedia(newId, Name, RunCommand, Tags, imagePath);
+      window.mediaBridge.saveMedia(newId, Name, RunCommand, Tags, imagePath); 
       // window.location.reload();
 
     // For the sake of this example, we'll just reset the form.
@@ -338,26 +339,25 @@ document.addEventListener('DOMContentLoaded', () => {
         contentDisplayDiv.style.display = 'block'; // Or 'flex', 'grid', etc. depending on your layout
         const itemDataDiv = document.createElement('div');
         itemDataDiv.innerHTML = `
+          <img src="assets/media/${item.id}.png" alt="Image ${item.id}" class="griditempicture">
           <p>ID: ${item.id}</p>
           <p>Name: ${item.Name}</p>
           <p>Image: ${item.Image}</p>
-          <p>Run Command: ${item['Run Command']}</p>
+          <p>Run Command: ${item.RunCommand}</p>
           <p>Tags: ${item.Tags.join(', ')}</p>
-          <p>Place Game Button Here</p>
           <button id="editButton">Edit</button>
-          <button id="openCmdButton">Open CMD</button> 
+          <button id="openCmdButton">Play</button> 
         `;
         contentDisplayDiv.innerHTML = '';
         contentDisplayDiv.appendChild(itemDataDiv);
         const editButton = document.getElementById('editButton');
         editButton.addEventListener('click', () => {
-          console.log('Edit button clicked');
           displayEditForm(item);
         });
         const openCmdButton = document.getElementById('openCmdButton');
         openCmdButton.addEventListener('click', () => {
           // console.log('Open CMD button clicked');
-          handleOpenCmdButtonClick(item['Run Command']); // Assuming filePath is a property of the item object
+          handleOpenCmdButtonClick(item['RunCommand']); // Assuming filePath is a property of the item object
         });
       }
 
@@ -391,12 +391,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const editForm = document.createElement('div');
         editForm.innerHTML = `
           <form id="editForm">
+            <input type="hidden" id="id" value="${updatedItem.id}">
             <label for="name">Name:</label>
             <input type="text" id="name" value="${updatedItem.Name}"><br>
             <label for="image">Image:</label>
             <input type="file" id="image"><br>
-            <label for="runCommand">Run Command:</label>
-            <input type="text" id="runCommand" value="${updatedItem['Run Command']}"><br>
+            <label for="RunCommand">Run Command:</label>
+            <input type="text" id="RunCommand" value="${updatedItem.RunCommand}"><br>
             <label for="tags">Tags:</label>
             <input type="text" id="tags" value="${updatedItem.Tags.join(', ')}"><br>
             <input type="submit" value="Save">
@@ -408,19 +409,26 @@ document.addEventListener('DOMContentLoaded', () => {
         editFormElement.addEventListener('submit', (event) => {
           event.preventDefault();
           // Get form elements
+          // const id = document.getElementById('id').value;
+          const id = Number(document.getElementById('id').value);
           const name = document.getElementById('name').value;
-          const imageFile = document.getElementById('image').files[0];
-          const runCommand = document.getElementById('runCommand').value;
+          // const imagePath = document.getElementById('image').files[0];
+          const imageInput = document.getElementById('image');
+          const imageFile = imageInput.files && imageInput.files[0]; // Check if files exist
+          const imagePath = imageFile ? imageFile.path : null; // Get the path if the file exists
+          const RunCommand = document.getElementById('RunCommand').value;
           const tags = document.getElementById('tags').value.split(',').map(tag => tag.trim());
-          const updatedData = {
-            id: updatedItem.id,
-            Name: name,
-            Image: imageFile ? true : false,
-            RunCommand: runCommand,
-            Tags: tags,
-          };
-          console.log('Updated Item:', updatedData);
-          window.updateBridge.updateMedia(updatedData, imageFile);
+          // const updatedData = {
+          //   id: updatedItem.id,
+          //   Name: name,
+          //   Image: imageFile ? true : false,
+          //   RunCommand: RunCommand,
+          //   Tags: tags,
+          // };
+          // console.log('Updated Item:', updatedData);
+          console.log('Updated Image Path:', imagePath);
+          window.updateBridge.updateMedia(id, name, RunCommand, tags, imagePath);
+          // window.updateBridge.updateMedia(updatedData, imageFile);
         });
       }      
     }
