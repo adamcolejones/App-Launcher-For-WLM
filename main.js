@@ -130,6 +130,7 @@ ipcMain.on("saveMedia", (sender, newData, imagePath) => {
 //
 //
 ipcMain.on("updateMedia", (sender, newData, imagePath) => {
+  console.log(newData, imagePath);
   try {
     let existingData = fs.existsSync("data.json") ? fs.readFileSync("data.json", "utf8") : '';
     let jsonData = JSON.parse(existingData);

@@ -95,28 +95,19 @@ contextBridge.exposeInMainWorld("mediaBridge", mediaBridge);
 
 // function called to update existing media from data.json
 let updateMedia = (id, Name, RunCommand, Tags, imagePath) => {
-  console.log('Update Check 1');
-  let imageStatus;
-  let newData;
+  let newData = {
+    "id": id,
+    "Name": Name,
+    "Tags": Tags
+  };
+  // ADD NEW DATA TO newData IF THEY ARE NOT NULL
+  // IN OTHER WORDS WE DONT WANT TO REPLACE OLD DATA IF THERE IS NOTHING NEW
   if (imagePath != null) {
-    imageStatus = true;
-    newData = {
-      "id": id,
-      "Name": Name,
-      "Image": imageStatus,
-      "RunCommand": RunCommand, // Don't have a space between Run & command, causes problems when updating values with json
-      "Tags": Tags
-    };
+    newData.Image = true;
   }
-  else {
-    imageStatus = false;
-    newData = {
-      "id": id,
-      "Name": Name,
-      // "Image": imageStatus, // remove imageStatus to prevent overwriting the old image
-      "RunCommand": RunCommand, // Don't have a space between Run & command, causes problems when updating values with json
-      "Tags": Tags
-    };
+  if (RunCommand != null) {
+    // console.log('if Triggered: ', RunCommand);
+    newData.RunCommand = RunCommand;
   }
   // const tagsInput = document.getElementById('Tags');
   // const tagsArray = Tags.value.split(',').map(tag => tag.trim());

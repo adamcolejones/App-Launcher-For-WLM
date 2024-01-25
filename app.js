@@ -18,6 +18,8 @@
 // + function createTable(data) {
 // + function displayGridItemData(item) { // Shows game items after pic click
 // + Updating a media entry APP.JS >> PRELOAD.JS >> MAIN.JS
+// + Main.html consists of multiple divs, app.js will only display one at a time and hide the rest for the sake of back button features
+// + Need to clean and organize this code again
 
 // ********************************************************
 
@@ -278,6 +280,9 @@ document.addEventListener('DOMContentLoaded', () => {
       displayContentForTag("All");
 
       // Add a click event listener to tagDivs to switch content
+      //
+      //
+      //
       const tagDivs = document.querySelectorAll('.sidemenu-item');
       tagDivs.forEach(tagDiv => {
           tagDiv.addEventListener('click', () => {
@@ -313,8 +318,6 @@ document.addEventListener('DOMContentLoaded', () => {
         gridItemPictures.forEach(gridItemPicture => {
           gridItemPicture.addEventListener('click', () => {
             const itemData = JSON.parse(gridItemPicture.parentElement.dataset.item); // Access data from parent element
-            // console.log(itemData); 
-
             displayGridItemData(itemData);
 
             const scrollableContentDiv = document.querySelector('.scrollableContent');
@@ -347,8 +350,9 @@ document.addEventListener('DOMContentLoaded', () => {
           <p>Tags: ${item.Tags.join(', ')}</p>
           <button id="editButton">Edit</button>
           <button id="openCmdButton">Play</button> 
+          <button id="backtogrid">Back</button> 
         `;
-        contentDisplayDiv.innerHTML = '';
+        // contentDisplayDiv.innerHTML = '';
         contentDisplayDiv.appendChild(itemDataDiv);
         const editButton = document.getElementById('editButton');
         editButton.addEventListener('click', () => {
@@ -358,6 +362,13 @@ document.addEventListener('DOMContentLoaded', () => {
         openCmdButton.addEventListener('click', () => {
           // console.log('Open CMD button clicked');
           handleOpenCmdButtonClick(item['RunCommand']); // Assuming filePath is a property of the item object
+        });
+        const backGridButton = document.getElementById('backtogrid');
+        backGridButton.addEventListener('click', function () {
+          // Show the original content
+          gridDisplayDiv.style.display = 'block';
+          // Remove the edit form
+          contentDisplayDiv.removeChild(itemDataDiv);
         });
       }
 
@@ -388,6 +399,8 @@ document.addEventListener('DOMContentLoaded', () => {
     //
       function displayEditForm(updatedItem) {
         const contentDisplayDiv = document.getElementById('contentDisplay');
+        const editDisplayDiv = document.getElementById('editDisplay');
+        contentDisplayDiv.style.display = 'none';
         const editForm = document.createElement('div');
         editForm.innerHTML = `
           <form id="editForm">
@@ -397,14 +410,18 @@ document.addEventListener('DOMContentLoaded', () => {
             <label for="image">Image:</label>
             <input type="file" id="image"><br>
             <label for="RunCommand">Run Command:</label>
-            <input type="text" id="RunCommand" value="${updatedItem.RunCommand}"><br>
+            <input type="file" id="RunCommand"><br>
+            <label for="RunCommand2">Old Run Command: ${updatedItem.RunCommand}</label><br>
             <label for="tags">Tags:</label>
             <input type="text" id="tags" value="${updatedItem.Tags.join(', ')}"><br>
-            <input type="submit" value="Save">
+            <input type="submit" value="Save"><br>
+            <button id="backButton" type="button">Back</button><br>
+            <button id="deleteButton" type="button">Delete Media</button><br>
           </form>
         `;
-        contentDisplayDiv.innerHTML = '';
-        contentDisplayDiv.appendChild(editForm);
+        // contentDisplayDiv.innerHTML = '';
+        // document.body.appendChild(editForm);
+        editDisplayDiv.appendChild(editForm);
         const editFormElement = document.getElementById('editForm');
         editFormElement.addEventListener('submit', (event) => {
           event.preventDefault();
@@ -416,7 +433,11 @@ document.addEventListener('DOMContentLoaded', () => {
           const imageInput = document.getElementById('image');
           const imageFile = imageInput.files && imageInput.files[0]; // Check if files exist
           const imagePath = imageFile ? imageFile.path : null; // Get the path if the file exists
-          const RunCommand = document.getElementById('RunCommand').value;
+          // const RunCommand = document.getElementById('RunCommand').value;
+          const RunCommandInput = document.getElementById('RunCommand');
+          const RunCommandFile = RunCommandInput.files && RunCommandInput.files[0]; // Check if files exist
+          const RunCommandPath = RunCommandFile ? RunCommandFile.path : null; // Get the path if the file exists
+          console.log('Run Command Path:', RunCommandPath);
           const tags = document.getElementById('tags').value.split(',').map(tag => tag.trim());
           // const updatedData = {
           //   id: updatedItem.id,
@@ -427,10 +448,17 @@ document.addEventListener('DOMContentLoaded', () => {
           // };
           // console.log('Updated Item:', updatedData);
           console.log('Updated Image Path:', imagePath);
-          window.updateBridge.updateMedia(id, name, RunCommand, tags, imagePath);
+          window.updateBridge.updateMedia(id, name, RunCommandPath, tags, imagePath);
           // window.updateBridge.updateMedia(updatedData, imageFile);
         });
-      }      
+        const backButton = document.getElementById('backButton');
+        backButton.addEventListener('click', function () {
+          // Show the original content
+          contentDisplayDiv.style.display = 'block';
+          // Remove the edit form
+          editDisplayDiv.removeChild(editForm);
+        });
+      }   
     }
 
   // Function to create the table for any array

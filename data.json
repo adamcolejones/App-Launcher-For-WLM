@@ -115,9 +115,9 @@
     {
       "id": 38,
       "Name": "Edited Media Test",
-      "RunCommand": "blah blah blah",
+      "RunCommand": "C:\\Users\\adamc\\Documents\\Games\\Nintendo\\GameBoyAdvance\\Other\\CMD Files\\Pokemon Fire Red.cmd",
       "Tags": [
-        ""
+        "123"
       ],
       "Image": true
     },
@@ -456,11 +456,12 @@
       "id": 18,
       "Name": "Super Mario 3D Land",
       "Image": true,
-      "RunCommand": "na",
+      "RunCommand": "C:\\Users\\adamc\\Documents\\Games\\Nintendo\\3DS\\Other\\CMD Files\\Super Mario 3D Land.cmd",
       "Tags": [
         "Mario",
         "Nintendo",
-        "Nintendo 3DS"
+        "Nintendo 3DS",
+        "All Playable"
       ]
     },
     {
