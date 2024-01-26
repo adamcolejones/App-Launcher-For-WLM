@@ -1,7 +1,8 @@
 // ********************************************************
 // * A DESCRIPTION OF THE FUNCTIONALITY OF THE CODE BELOW *
 // ********************************************************
-// + 
+// + See if the media Bridge cam absorb the updateBridge.  
+// + The other two bridges are combined, maybe I could combine all of them into one?
 // ********************************************************
 
 // All the Node.js APIs are available in the preload process.
@@ -117,8 +118,14 @@ let updateMedia = (id, Name, RunCommand, Tags, imagePath) => {
   ipcRenderer.send('reload-window');
 };
 
+let deleteMedia = (idToDelete) => {
+  ipcRenderer.send("deleteMedia", idToDelete);
+  ipcRenderer.send('reload-window');
+};
+
 let updateBridge = {
   updateMedia,
+  deleteMedia,
 };
 
 contextBridge.exposeInMainWorld("updateBridge", updateBridge);

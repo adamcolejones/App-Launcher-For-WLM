@@ -168,3 +168,33 @@ ipcMain.on("updateMedia", (sender, newData, imagePath) => {
 ipcMain.on('reload-window', () => {
   mainWindow.reload();
 });
+
+// DELETE MEDIA
+//
+//
+//
+ipcMain.on("deleteMedia", (sender, idToDelete) => {
+  try {
+    let existingData = fs.existsSync("data.json") ? fs.readFileSync("data.json", "utf8") : '';
+    let jsonData = JSON.parse(existingData);
+    let mediaArray = jsonData.Media;
+
+    // Find the index of the item with the matching id
+    const indexToDelete = mediaArray.findIndex(item => item.id === idToDelete);
+
+    if (indexToDelete !== -1) {
+      // If an item with the matching id is found, remove it from the array
+      mediaArray.splice(indexToDelete, 1);
+
+      // Update the JSON file
+      let updatedData = JSON.stringify(jsonData, null, 2);
+      fs.writeFileSync("data.json", updatedData);
+
+      console.log(`${idToDelete} Data Deleted`);
+    } else {
+      console.log(`Item with id ${idToDelete} not found.`);
+    }
+  } catch (error) {
+    console.error("Error while deleting data:", error.message);
+  }
+});

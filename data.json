@@ -104,20 +104,11 @@
       ]
     },
     {
-      "id": 34,
-      "Name": "ed",
-      "Image": false,
-      "RunCommand": "This was edited",
-      "Tags": [
-        ""
-      ]
-    },
-    {
       "id": 38,
       "Name": "Edited Media Test",
       "RunCommand": "C:\\Users\\adamc\\Documents\\Games\\Nintendo\\GameBoyAdvance\\Other\\CMD Files\\Pokemon Fire Red.cmd",
       "Tags": [
-        "123"
+        ""
       ],
       "Image": true
     },
@@ -172,7 +163,7 @@
     {
       "id": 4,
       "Name": "Kirby and the Forgotten Land",
-      "Image": false,
+      "Image": true,
       "RunCommand": "",
       "Tags": [
         "Kirby",
@@ -223,7 +214,7 @@
       "RunCommand": "C:\\Users\\adamc\\Documents\\Games\\Nintendo\\GameBoyAdvance\\Other\\CMD Files\\Mario And Luigi Superstar Saga.cmd",
       "Tags": [
         "Nintendo Gameboy Advance",
-        "All Playable"
+        "Playable"
       ]
     },
     {
@@ -238,6 +229,16 @@
       ]
     },
     {
+      "id": 84,
+      "Name": "Mario Kart 7",
+      "Image": true,
+      "RunCommand": "C:\\Users\\adamc\\Documents\\Games\\Nintendo\\3DS\\Other\\CMD Files\\Mario Kart 7.cmd",
+      "Tags": [
+        "Mario Kart",
+        "Nintendo 3DS"
+      ]
+    },
+    {
       "id": 20,
       "Name": "Mario Kart DS",
       "Image": true,
@@ -249,14 +250,37 @@
       ]
     },
     {
+      "id": 85,
+      "Name": "Mario Kart Super Circuit",
+      "Image": true,
+      "RunCommand": "C:\\Users\\adamc\\Documents\\Games\\Nintendo\\GameBoyAdvance\\Other\\CMD Files\\Mario Kart Super Circuit.cmd",
+      "Tags": [
+        "Mario Kart",
+        "Nintendo Gameboy Advance"
+      ]
+    },
+    {
       "id": 1,
       "Name": "Mario Kart Wii",
       "Image": true,
-      "RunCommand": "na",
+      "RunCommand": "C:\\Users\\adamc\\Documents\\Games\\Nintendo\\Wii\\Other\\CMD Files\\MarioKartWii.cmd",
       "Tags": [
         "Nintendo",
         "Nintendo Wii",
-        "Mario Kart"
+        "Mario Kart",
+        "Playable"
+      ]
+    },
+    {
+      "id": 80,
+      "Name": "Mario Kart Wii Deluxe v8",
+      "Image": true,
+      "RunCommand": "C:\\Users\\adamc\\Documents\\Games\\Nintendo\\Wii\\Other\\CMD Files\\MarioKartWiiDeluxe.cmd",
+      "Tags": [
+        "Mario Kart",
+        "Mods",
+        "Nintendo Wii",
+        "Playable"
       ]
     },
     {
@@ -282,6 +306,16 @@
       ]
     },
     {
+      "id": 82,
+      "Name": "Mario Party Superstars",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Nintendo Switch",
+        "Mario Party"
+      ]
+    },
+    {
       "id": 10,
       "Name": "Mario Superstar Baseball",
       "Image": true,
@@ -292,21 +326,15 @@
       ]
     },
     {
-      "id": 33,
-      "Name": "new",
-      "Image": true,
-      "RunCommand": "na",
-      "Tags": null
-    },
-    {
       "id": 19,
       "Name": "New Super Mario Bros.",
       "Image": true,
-      "RunCommand": "na",
+      "RunCommand": "C:\\Users\\adamc\\Documents\\Games\\Nintendo\\DS\\Other\\CMD Files\\NewSuperMarioBros.cmd",
       "Tags": [
         "Nintendo",
         "Nintendo DS",
-        "Mario"
+        "Mario",
+        "Playable"
       ]
     },
     {
@@ -316,24 +344,6 @@
       "RunCommand": null,
       "Tags": [
         "Artists"
-      ]
-    },
-    {
-      "id": 36,
-      "Name": "No tags",
-      "Image": true,
-      "RunCommand": "na",
-      "Tags": [
-        ""
-      ]
-    },
-    {
-      "id": 35,
-      "Name": "One Tag Test",
-      "Image": true,
-      "RunCommand": "na",
-      "Tags": [
-        ""
       ]
     },
     {
@@ -380,7 +390,7 @@
       "Image": true,
       "RunCommand": null,
       "Tags": [
-        "Wishlist"
+        "Nintendo Switch"
       ]
     },
     {
@@ -401,7 +411,7 @@
       "Tags": [
         "Pokemon",
         "Nintendo Gameboy Advance",
-        "All Playable"
+        "Playable"
       ]
     },
     {
@@ -461,7 +471,7 @@
         "Mario",
         "Nintendo",
         "Nintendo 3DS",
-        "All Playable"
+        "Playable"
       ]
     },
     {
@@ -473,7 +483,7 @@
         "Mario",
         "Nintendo",
         "Nintendo 64",
-        "All Playable"
+        "Playable"
       ]
     },
     {
@@ -491,7 +501,17 @@
       "Image": true,
       "RunCommand": null,
       "Tags": [
-        "Wishlist"
+        "Nintendo Switch"
+      ]
+    },
+    {
+      "id": 83,
+      "Name": "Super Mario Kart",
+      "Image": true,
+      "RunCommand": "C:\\Users\\adamc\\Documents\\Games\\Nintendo\\SNES\\Other\\CMD Files\\SuperMarioKart.cmd",
+      "Tags": [
+        "Mario Kart",
+        "Super Nintendo Entertainment System"
       ]
     },
     {
@@ -520,11 +540,12 @@
       "id": 5,
       "Name": "Super Mario Sunshine",
       "Image": true,
-      "RunCommand": "na",
+      "RunCommand": "C:\\Users\\adamc\\Documents\\Games\\Nintendo\\GameCube\\Other\\CMD Files\\SuperMarioSunshine.cmd",
       "Tags": [
         "Mario",
         "Nintendo",
-        "Nintendo GameCube"
+        "Nintendo GameCube",
+        "Playable"
       ]
     },
     {
@@ -553,24 +574,6 @@
       "RunCommand": null,
       "Tags": [
         "Shows"
-      ]
-    },
-    {
-      "id": 31,
-      "Name": "test",
-      "Image": true,
-      "RunCommand": "na",
-      "Tags": [
-        ""
-      ]
-    },
-    {
-      "id": 46,
-      "Name": "test's",
-      "Image": true,
-      "RunCommand": null,
-      "Tags": [
-        ""
       ]
     },
     {
@@ -690,15 +693,6 @@
       "RunCommand": null,
       "Tags": [
         "Artists"
-      ]
-    },
-    {
-      "id": 37,
-      "Name": "Uncategorized",
-      "Image": false,
-      "RunCommand": "null",
-      "Tags": [
-        ""
       ]
     },
     {

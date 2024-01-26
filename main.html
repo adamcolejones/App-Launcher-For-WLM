@@ -2,7 +2,7 @@
 // ********************************************************
 // * A DESCRIPTION OF THE FUNCTIONALITY OF THE CODE BELOW *
 // ********************************************************
-// +
+// + Popup should be moved to another file, only keep classes and IDs here
 // + 
 // + 
 // ********************************************************
@@ -34,13 +34,19 @@
     <div id="sideMenu"></div>
 
     <div class="scrollableContent">
-      <!-- Displays the game list -->
+
+      <!-- Displays the entire list of games per tag -->
       <div id="gridDisplay"></div>
-      <!-- Displays the Game content -->
+
+      <!-- Displays the individual Game's information -->
       <div id="contentDisplay"></div>
+
+      <!-- Displays the edit menu -->
       <div id="editDisplay"></div>
+
       <!-- New Media popup -->
       <button id="openPopup">Open Popup</button>
+
     </div>
 
 
@@ -53,8 +59,11 @@
           <label for="Name">Name: </label>
           <input type="text" id="Name" required><br>
 
-          <label for="Run Command">Run Command: </label>
-          <input type="text" id="Run Command"><br>
+          <!-- <label for="RunCommand">Run Command: </label> -->
+          <!-- <input type="text" id="RunCommand"><br> -->
+
+          <label for="RunCommand">Run Command: </label>
+          <input type="file" id="RunCommand"><br>
 
           <div id="error-message"></div>
 

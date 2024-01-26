@@ -131,7 +131,10 @@ document.addEventListener('DOMContentLoaded', () => {
   
       // Get the values entered by the user
       const Name = document.getElementById('Name').value || null;
-      const RunCommand = document.getElementById('Run Command').value || null;
+      // const RunCommand = document.getElementById('RunCommand').value || null;
+      const RunCommand = document.getElementById('RunCommand');
+      const RunCommandFile = RunCommand.files && RunCommand.files[0]; // Check if files exist
+      const RunCommandPath = RunCommandFile ? RunCommandFile.path : null; // Get the path if the file exists
       const Tags = document.getElementById('Tags').value || null;
 
       // Prevent user from using 'All' or 'Uncategorized' Tags
@@ -171,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // console.log("Release Date:", ReleaseDate);
       // console.log("System:", System);
 
-      window.mediaBridge.saveMedia(newId, Name, RunCommand, Tags, imagePath); 
+      window.mediaBridge.saveMedia(newId, Name, RunCommandPath, Tags, imagePath); 
       // window.location.reload();
 
     // For the sake of this example, we'll just reset the form.
@@ -291,6 +294,8 @@ document.addEventListener('DOMContentLoaded', () => {
             
             gridDisplayDiv.style.display = 'block'; // show grid again
             contentDisplayDiv.style.display = 'none'; // hide any other selected content within the grid
+            contentDisplayDiv.innerHTML = '';
+
             // Remove the 'selected' class from all tags
             tagDivs.forEach(tag => {
               tag.classList.remove('selected');
@@ -340,17 +345,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const gridDisplayDiv = document.getElementById('gridDisplay');
         gridDisplayDiv.style.display = 'none'; // Hide gridDisplay div
         contentDisplayDiv.style.display = 'block'; // Or 'flex', 'grid', etc. depending on your layout
+        // This itemDataDiv might be unnecessary, just add inner html to contentDisplayDiv and append to scrollable content?  When I have more time
         const itemDataDiv = document.createElement('div');
+        // Check for image if the value is true on the json entry
+        let imagePath = item.Image ? `assets/media/${item.id}.png` : 'assets/media/default.png';
+        let imageTag = `<img src="${imagePath}" alt="Image ${item.id}" class="griditempicture">`;
         itemDataDiv.innerHTML = `
-          <img src="assets/media/${item.id}.png" alt="Image ${item.id}" class="griditempicture">
+          ${imageTag}
           <p>ID: ${item.id}</p>
           <p>Name: ${item.Name}</p>
           <p>Image: ${item.Image}</p>
           <p>Run Command: ${item.RunCommand}</p>
           <p>Tags: ${item.Tags.join(', ')}</p>
+          <button id="backtogrid">Back</button> 
           <button id="editButton">Edit</button>
           <button id="openCmdButton">Play</button> 
-          <button id="backtogrid">Back</button> 
         `;
         // contentDisplayDiv.innerHTML = '';
         contentDisplayDiv.appendChild(itemDataDiv);
@@ -457,6 +466,37 @@ document.addEventListener('DOMContentLoaded', () => {
           contentDisplayDiv.style.display = 'block';
           // Remove the edit form
           editDisplayDiv.removeChild(editForm);
+        });
+        const deleteButton = document.getElementById('deleteButton');
+        deleteButton.addEventListener('click', function () {
+            const idToDelete = Number(document.getElementById('id').value);
+
+            // Create the confirmation dialog
+            const confirmationDialog = document.createElement('div');
+            confirmationDialog.innerHTML = `
+                <div id="confirmationDialog" class="confirmation-dialog">
+                    <p>Are you sure you want to delete this entry?</p>
+                    <button id="confirmDelete">Yes</button>
+                    <button id="cancelDelete">No</button>
+                </div>
+            `;
+            editFormElement.appendChild(confirmationDialog);
+
+            // Set up event listeners for confirm and cancel buttons
+            const confirmDeleteButton = document.getElementById('confirmDelete');
+            const cancelDeleteButton = document.getElementById('cancelDelete');
+
+            confirmDeleteButton.addEventListener('click', function () {
+                window.updateBridge.deleteMedia(idToDelete);
+
+                // Remove the confirmation dialog after deletion
+                confirmationDialog.parentNode.removeChild(confirmationDialog);
+            });
+
+            cancelDeleteButton.addEventListener('click', function () {
+                // Remove the confirmation dialog if the user cancels
+                confirmationDialog.parentNode.removeChild(confirmationDialog);
+            });
         });
       }   
     }
