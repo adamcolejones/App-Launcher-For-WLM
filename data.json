@@ -37,7 +37,7 @@
       "Image": false,
       "RunCommand": null,
       "Tags": [
-        "ABC"
+        "abc"
       ]
     },
     {
@@ -109,7 +109,7 @@
       "Image": false,
       "RunCommand": null,
       "Tags": [
-        "DEF"
+        "def"
       ]
     },
     {
@@ -837,6 +837,12 @@
     },
     {
       "Name": "ABC"
+    },
+    {
+      "Name": "abc"
+    },
+    {
+      "Name": "def"
     }
   ],
   "Names": [

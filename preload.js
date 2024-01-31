@@ -121,14 +121,37 @@ let updateMedia = (id, Name, RunCommand, Tags, imagePath) => {
   ipcRenderer.send('reload-window');
 };
 
+
+// *************************************************************************************************************************************************
+//
+//
+//
+let editTag = (Tag) => {
+  let newTag = {
+    "Name": Tag
+  };
+  ipcRenderer.send("editTag", newTag);
+  ipcRenderer.send('reload-window');
+}
+
+// *************************************************************************************************************************************************
+//
+//
+//
 let deleteMedia = (idToDelete) => {
   ipcRenderer.send("deleteMedia", idToDelete);
   ipcRenderer.send('reload-window');
 };
 
+
+// *************************************************************************************************************************************************
+//
+//
+//
 let updateBridge = {
   updateMedia,
   deleteMedia,
+  editTag,
 };
 
 contextBridge.exposeInMainWorld("updateBridge", updateBridge);

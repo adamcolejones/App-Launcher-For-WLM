@@ -148,8 +148,8 @@ ipcMain.on("saveMedia", (sender, newData, imagePath) => {
 
 // *************************************************************************************************************************************************
 // UPDATE MEDIA
-//
-//
+// If user has custom settings for an empty tag, those settings should not be lost.
+// Need separate button for deleting Tag Key entries.
 //
 ipcMain.on("updateMedia", (sender, newData, imagePath) => {
   try {
@@ -166,14 +166,14 @@ ipcMain.on("updateMedia", (sender, newData, imagePath) => {
       const existingTags = mediaArray[indexToUpdate].Tags;
 
       // Check for removed tags
-      const removedTags = existingTags.filter(tag => !newData.Tags.includes(tag));
-      removedTags.forEach(removedTag => {
-        const isTagUsed = mediaArray.some(entry => entry.id !== newData.id && entry.Tags.includes(removedTag));
-        if (!isTagUsed) {
-          // Remove the tag entry from Tags key if not used by any other media entry
-          jsonData.Tags = jsonData.Tags.filter(tagEntry => tagEntry.Name !== removedTag);
-        }
-      });
+      // const removedTags = existingTags.filter(tag => !newData.Tags.includes(tag));
+      // removedTags.forEach(removedTag => {
+      //   const isTagUsed = mediaArray.some(entry => entry.id !== newData.id && entry.Tags.includes(removedTag));
+      //   if (!isTagUsed) {
+      //     // Remove the tag entry from Tags key if not used by any other media entry
+      //     jsonData.Tags = jsonData.Tags.filter(tagEntry => tagEntry.Name !== removedTag);
+      //   }
+      // });
 
       // Check for added tags
       const addedTags = newData.Tags.filter(tag => !existingTags.includes(tag));
