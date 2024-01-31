@@ -3,10 +3,10 @@
 // ********************************************************
 // + This file is the starting point for json file access
 // + main.js >> preload.js >> app.js >> next reference...
+// + When I update this file, I have to restart the application entirely for the changes to apply
 // ********************************************************
 
 
-// main.js
 // *************************************************************************************************************************************************
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, ipcMain} = require('electron');
@@ -16,6 +16,11 @@ const fs = require('fs');
 let mainWindow;
 // const Store = require('store.js');
 
+
+// *************************************************************************************************************************************************
+//
+//
+//
 const createWindow = () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
@@ -51,6 +56,10 @@ const createWindow = () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
+// *************************************************************************************************************************************************
+//
+//
+//
 app.whenReady().then(() => {
   createWindow()
 
@@ -68,10 +77,6 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()
 })
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
-
-// Add the following IPC handler to save data to "data.json"
 // *************************************************************************************************************************************************
 // 5. Backend Communication
 //
@@ -100,33 +105,15 @@ ipcMain.on("saveName", (sender, newData) => {
         console.error("Error while saving data:", error.message);
     }
 });
+
 // *************************************************************************************************************************************************
 // SAVE MEDIA
 //
 //
 //
-// ipcMain.on("saveMedia", (sender, newData, imagePath) => {
-//   try {
-//       // Read the existing data from the file, or initialize an empty array if the file doesn't exist
-//       let existingData = fs.existsSync("data.json")
-//           ? fs.readFileSync("data.json", "utf8") : '';
-//       let jsonData = JSON.parse(existingData);  // Parse the existing JSON data into a JavaScript object
-//       let mediaArray = jsonData.Media; // Get the "names" array from the jsonData
-//       mediaArray.push(newData); // Add the new data to the "names" array
-//       mediaArray.sort((a, b) => a.Name.localeCompare(b.Name));  // Sort the "names" array alphabetically by "firstName"
-//       let updatedData = JSON.stringify(jsonData, null, 2);  // Convert the modified jsonData back to JSON string
-//       fs.writeFileSync("data.json", updatedData);  // Write the updated JSON string back to the file
-//       if (imagePath) {
-//         const newPath = path.join(__dirname, 'assets', 'media', `${newData.id}.png`);
-//         fs.copyFileSync(imagePath, newPath);
-//       }
-  
-//       console.log(`${newData.id} Data Saved`);
-//   } catch (error) {console.error("Error while saving data:", error.message);}
-// });
-// main.js
 ipcMain.on("saveMedia", (sender, newData, imagePath) => {
   try {
+    // existing data variable assignments
     let existingData = fs.existsSync("data.json")
       ? fs.readFileSync("data.json", "utf8")
       : '';
@@ -135,8 +122,8 @@ ipcMain.on("saveMedia", (sender, newData, imagePath) => {
 
     // Check if any tags from newData already exist, if not, add them to the Tags array
     newData.Tags.forEach((newTag) => {
-      if (!jsonData.Tags.some((existingTag) => existingTag.tag === newTag)) {
-        jsonData.Tags.push({ "tag": newTag });
+      if (!jsonData.Tags.some((existingTag) => existingTag.Name === newTag)) {
+        jsonData.Tags.push({ "Name": newTag });
       }
     });
 
@@ -165,8 +152,8 @@ ipcMain.on("saveMedia", (sender, newData, imagePath) => {
 //
 //
 ipcMain.on("updateMedia", (sender, newData, imagePath) => {
-  console.log(newData, imagePath);
   try {
+    // existing data variable assignments
     let existingData = fs.existsSync("data.json") ? fs.readFileSync("data.json", "utf8") : '';
     let jsonData = JSON.parse(existingData);
     let mediaArray = jsonData.Media;
@@ -176,7 +163,30 @@ ipcMain.on("updateMedia", (sender, newData, imagePath) => {
 
     if (indexToUpdate !== -1) {
       // If an item with the matching id is found, update it
-      mediaArray[indexToUpdate] = { ...mediaArray[indexToUpdate], ...newData };
+      const existingTags = mediaArray[indexToUpdate].Tags;
+
+      // Check for removed tags
+      const removedTags = existingTags.filter(tag => !newData.Tags.includes(tag));
+      removedTags.forEach(removedTag => {
+        const isTagUsed = mediaArray.some(entry => entry.id !== newData.id && entry.Tags.includes(removedTag));
+        if (!isTagUsed) {
+          // Remove the tag entry from Tags key if not used by any other media entry
+          jsonData.Tags = jsonData.Tags.filter(tagEntry => tagEntry.Name !== removedTag);
+        }
+      });
+
+      // Check for added tags
+      const addedTags = newData.Tags.filter(tag => !existingTags.includes(tag));
+      addedTags.forEach(addedTag => {
+        const isTagUsed = mediaArray.some(entry => entry.id !== newData.id && entry.Tags.includes(addedTag));
+        if (!isTagUsed) {
+          // Add a new tag entry if the tag is not used by any other media entry
+          jsonData.Tags.push({ "Name": addedTag });
+        }
+      });
+
+      // Update the Tags array for the specific media entry
+      mediaArray[indexToUpdate].Tags = newData.Tags;
     } else {
       // If no matching id is found, simply add the new data to the array
       mediaArray.push(newData);
@@ -194,15 +204,12 @@ ipcMain.on("updateMedia", (sender, newData, imagePath) => {
       // newData.Image = mediaArray[indexToUpdate].Image;
     }
 
-    console.log(`${newData.id} Data Saved`);
+    console.log(`${newData.id} Data Updated`);
   } catch (error) {
-    console.error("Error while saving data:", error.message);
+    console.error("Error while updating data:", error.message);
   }
 });
 
-ipcMain.on('reload-window', () => {
-  mainWindow.reload();
-});
 
 // *************************************************************************************************************************************************
 // DELETE MEDIA
@@ -233,4 +240,12 @@ ipcMain.on("deleteMedia", (sender, idToDelete) => {
   } catch (error) {
     console.error("Error while deleting data:", error.message);
   }
+});
+
+// *************************************************************************************************************************************************
+// RELOAD WINDOW
+//
+//
+ipcMain.on('reload-window', () => {
+  mainWindow.reload();
 });

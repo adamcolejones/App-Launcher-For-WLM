@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Hide the customFieldsContainer initially
     updateCustomFieldsVisibility();
+
 // *************************************************************************************************************************************************
     // Function to add a new custom field
     function addCustomField() {
@@ -92,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Update the visibility of customFieldsContainer
       updateCustomFieldsVisibility();
     }
+
 // *************************************************************************************************************************************************
     // Function to remove a custom field
     function removeCustomField(container) {
@@ -110,6 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Update the visibility of customFieldsContainer
       updateCustomFieldsVisibility();
     }
+
 // *************************************************************************************************************************************************
     function updateCustomFieldsVisibility() {
       customFieldsContainer.style.display = customFieldCount > 0 ? 'block' : 'none';
@@ -188,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data && Array.isArray(data.Tags)) {
         for (const item of data.Tags) {
             // Check if the item has no tags or empty tags
-            const isUntagged = !item.tag || item.tag.trim() === "";
+            const isUntagged = !item.Name || item.Name.trim() === "";
 
             // Add the item to the 'All' tag section
             const allMediaKey = 'All';
@@ -206,13 +209,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 tagSections[untaggedKey].push(item);
             } else {
                 // Categorize items by their tags
-                if (item.tag) {
-                    const tags = item.tag.split(',').map(tag => tag.trim());
-                    for (const tag of tags) {
-                        if (!tagSections[tag]) {
-                            tagSections[tag] = [];
+                if (item.Name) {
+                    const tagNames = item.Name.split(',').map(Name => Name.trim());
+                    for (const Name of tagNames) {
+                        if (!tagSections[Name]) {
+                            tagSections[Name] = [];
                         }
-                        tagSections[tag].push(item);
+                        tagSections[Name].push(item);
                     }
                 }
             }
@@ -248,6 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         sideMenuDiv.appendChild(tagDiv);
       }
+
 // *************************************************************************************************************************************************
       // Function to display content based on the selected tag
       //
@@ -306,6 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
           });
       });
+
 // *************************************************************************************************************************************************
     // When user clicks on a media image, display the media JSON information
     //
@@ -327,6 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       // ADD click listener when page initially loads
       addClickListenersToGridItems();
+
 // *************************************************************************************************************************************************
     // Function to display grid item data in contentDisplay div
     //
@@ -373,6 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
           contentDisplayDiv.removeChild(itemDataDiv);
         });
       }
+
 // *************************************************************************************************************************************************
     // When openCmdButton is clicked, run this function to open the run command file 
     //
@@ -394,6 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
           console.error('File path not found');
         }
       }
+
 // ************************************************************************************************************************************************* 
     // Display the edit form to update the json information for selected media
     //
@@ -531,5 +539,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
 // *************************************************************************************************************************************************
-    
+// This is the closing section of the doc listener up at the top of the page // document.addEventListener('DOMContentLoaded', () => { 
 })

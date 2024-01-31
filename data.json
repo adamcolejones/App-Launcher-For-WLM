@@ -32,7 +32,7 @@
       ]
     },
     {
-      "id": 86,
+      "id": 89,
       "Name": "ABC",
       "Image": false,
       "RunCommand": null,
@@ -101,6 +101,15 @@
       "RunCommand": "na",
       "Tags": [
         "Veggie Tales"
+      ]
+    },
+    {
+      "id": 87,
+      "Name": "DEF",
+      "Image": false,
+      "RunCommand": null,
+      "Tags": [
+        "DEF"
       ]
     },
     {
@@ -725,109 +734,109 @@
   ],
   "Tags": [
     {
-      "tag": "Albums"
+      "Name": "Albums"
     },
     {
-      "tag": "All"
+      "Name": "All"
     },
     {
-      "tag": "Artists"
+      "Name": "Artists"
     },
     {
-      "tag": "Books"
+      "Name": "Books"
     },
     {
-      "tag": "Christmas"
+      "Name": "Christmas"
     },
     {
-      "tag": "Fall"
+      "Name": "Fall"
     },
     {
-      "tag": "Kirby"
+      "Name": "Kirby"
     },
     {
-      "tag": "Launchers"
+      "Name": "Launchers"
     },
     {
-      "tag": "Mario"
+      "Name": "Mario"
     },
     {
-      "tag": "Mario Kart"
+      "Name": "Mario Kart"
     },
     {
-      "tag": "Mario Party"
+      "Name": "Mario Party"
     },
     {
-      "tag": "Movies"
+      "Name": "Movies"
     },
     {
-      "tag": "Nintendo"
+      "Name": "Nintendo"
     },
     {
-      "tag": "Nintendo 3DS"
+      "Name": "Nintendo 3DS"
     },
     {
-      "tag": "Nintendo 64"
+      "Name": "Nintendo 64"
     },
     {
-      "tag": "Nintendo GameCube"
+      "Name": "Nintendo GameCube"
     },
     {
-      "tag": "Nintendo Gameboy Advance"
+      "Name": "Nintendo Gameboy Advance"
     },
     {
-      "tag": "Nintendo Gameboy Color"
+      "Name": "Nintendo Gameboy Color"
     },
     {
-      "tag": "Nintendo Switch"
+      "Name": "Nintendo Switch"
     },
     {
-      "tag": "Nintendo Wii"
+      "Name": "Nintendo Wii"
     },
     {
-      "tag": "Paper Mario"
+      "Name": "Paper Mario"
     },
     {
-      "tag": "Peanuts"
+      "Name": "Peanuts"
     },
     {
-      "tag": "PlayStation"
+      "Name": "PlayStation"
     },
     {
-      "tag": "PlayStation 2"
+      "Name": "PlayStation 2"
     },
     {
-      "tag": "Pokemon"
+      "Name": "Pokemon"
     },
     {
-      "tag": "Playable"
+      "Name": "Playable"
     },
     {
-      "tag": "Shows"
+      "Name": "Shows"
     },
     {
-      "tag": "Songs"
+      "Name": "Songs"
     },
     {
-      "tag": "Super Nintendo Entertainment System"
+      "Name": "Super Nintendo Entertainment System"
     },
     {
-      "tag": "Uncategorized"
+      "Name": "Uncategorized"
     },
     {
-      "tag": "Veggie Tales"
+      "Name": "Veggie Tales"
     },
     {
-      "tag": "Wishlist"
+      "Name": "Wishlist"
     },
     {
-      "tag": "Updating Tag Test4"
+      "Name": "Updating Tag Test4"
     },
     {
-      "tag": "ABC"
+      "Name": "DEF"
     },
     {
-      "tag": "Test"
+      "Name": "ABC"
     }
   ],
   "Names": [
