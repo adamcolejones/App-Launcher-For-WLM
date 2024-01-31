@@ -24,7 +24,7 @@
 // ********************************************************
 
 
-
+// *************************************************************************************************************************************************
 // 4. Backend Communication
 document.addEventListener('DOMContentLoaded', () => {
     const mediaform = document.getElementById('mediaForm');
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Hide the customFieldsContainer initially
     updateCustomFieldsVisibility();
-
+// *************************************************************************************************************************************************
     // Function to add a new custom field
     function addCustomField() {
       const customFieldsContainer = document.getElementById('customFieldsContainer');
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Update the visibility of customFieldsContainer
       updateCustomFieldsVisibility();
     }
-
+// *************************************************************************************************************************************************
     // Function to remove a custom field
     function removeCustomField(container) {
       const customFieldsContainer = document.getElementById('customFieldsContainer');
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Update the visibility of customFieldsContainer
       updateCustomFieldsVisibility();
     }
-
+// *************************************************************************************************************************************************
     function updateCustomFieldsVisibility() {
       customFieldsContainer.style.display = customFieldCount > 0 ? 'block' : 'none';
     }
@@ -119,12 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const addCustomFieldButton = document.getElementById('addCustomField');
     addCustomFieldButton.addEventListener('click', addCustomField);
 
-    // Function to calculate the highest ID from media data
-    // function calculateHighestId(data) {
-    //   const existingIds = data.map((item) => item.id || 0);
-    //   return existingIds.length > 0 ? Math.max(...existingIds) : 0;
-    // }
-
+// *************************************************************************************************************************************************
     // Attach a submit event listener to the form
     mediaform.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -182,19 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // window.location.reload();
     });
 
-    // Generic function to display data for any user-named array
-    function displayData(data) {
-      const dataDisplayDiv = document.getElementById('dataDisplay');
-      dataDisplayDiv.innerHTML = ''; // Clear any previous content
-
-      for (const key in data) {
-        if (Array.isArray(data[key])) {
-          dataDisplayDiv.innerHTML += `<h2>${key}:</h2>`;
-          dataDisplayDiv.innerHTML += createTable(data[key]);
-        }
-      }
-    }
-
+// *************************************************************************************************************************************************
     // Generic function to display data for any user-named array
     function displayGrid(data) {
       const dataDisplayDiv = document.getElementById('gridDisplay');
@@ -202,41 +185,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const tagSections = {}; // Create an object to store items by tags
 
-      for (const key in data) {
-        if (key === 'Media' && Array.isArray(data[key])) {
-          for (const item of data[key]) {
+      if (data && Array.isArray(data.Tags)) {
+        for (const item of data.Tags) {
             // Check if the item has no tags or empty tags
-            const isUntagged =
-              item.Tags === null ||
-              (Array.isArray(item.Tags) && item.Tags.length === 0) ||
-              (Array.isArray(item.Tags) && item.Tags.length === 1 && item.Tags[0] === "");
-      
+            const isUntagged = !item.tag || item.tag.trim() === "";
+
             // Add the item to the 'All' tag section
             const allMediaKey = 'All';
             if (!tagSections[allMediaKey]) {
-              tagSections[allMediaKey] = [];
+                tagSections[allMediaKey] = [];
             }
             tagSections[allMediaKey].push(item);
-      
+
             if (isUntagged) {
-              // Categorize items without tags as 'Uncategorized'
-              const untaggedKey = 'Uncategorized';
-              if (!tagSections[untaggedKey]) {
-                tagSections[untaggedKey] = [];
-              }
-              tagSections[untaggedKey].push(item);
-            } else {
-              // Categorize items by their tags
-              if (Array.isArray(item.Tags)) {
-                for (const tag of item.Tags) {
-                  if (!tagSections[tag]) {
-                    tagSections[tag] = [];
-                  }
-                  tagSections[tag].push(item);
+                // Categorize items without tags as 'Uncategorized'
+                const untaggedKey = 'Uncategorized';
+                if (!tagSections[untaggedKey]) {
+                    tagSections[untaggedKey] = [];
                 }
-              }
+                tagSections[untaggedKey].push(item);
+            } else {
+                // Categorize items by their tags
+                if (item.tag) {
+                    const tags = item.tag.split(',').map(tag => tag.trim());
+                    for (const tag of tags) {
+                        if (!tagSections[tag]) {
+                            tagSections[tag] = [];
+                        }
+                        tagSections[tag].push(item);
+                    }
+                }
             }
-          }
         }
       }
        
@@ -269,19 +248,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         sideMenuDiv.appendChild(tagDiv);
       }
-
+// *************************************************************************************************************************************************
       // Function to display content based on the selected tag
       //
       //
       //
-      function displayContentForTag(tag) {
+      // function displayContentForTag(tag) {
+      //   dataDisplayDiv.innerHTML = `<div class="gridtype">${tag}</div>`;
+      //   dataDisplayDiv.innerHTML += createGrid(tagSections[tag]);
+      // }
+      function displayContentForTag(tag, jsondata) {
+        const dataDisplayDiv = document.getElementById('gridDisplay');
         dataDisplayDiv.innerHTML = `<div class="gridtype">${tag}</div>`;
-        dataDisplayDiv.innerHTML += createGrid(tagSections[tag]);
+      
+        const mediaData = jsondata.Media || [];
+        
+        const items = tag === 'All' ? mediaData : mediaData.filter(item => item.Tags.includes(tag));
+      
+        dataDisplayDiv.innerHTML += createGrid(items);
       }
+      
+    
 
       // Display content for 'All' tag by default
-      displayContentForTag("All");
+      // displayContentForTag("All");
+      displayContentForTag("All", data);
 
+// *************************************************************************************************************************************************
       // Add a click event listener to tagDivs to switch content
       //
       //
@@ -304,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Add the 'selected' class to the clicked tag
             tagDiv.classList.add('selected');
             const selectedTag = tagDiv.textContent;
-            displayContentForTag(selectedTag);
+            displayContentForTag(selectedTag, data);
             addClickListenersToGridItems(); // Call the function to reapply click listeners to grid items
             // Scroll to the top of the scrollable-content div
             const scrollableContentDiv = document.querySelector('.scrollableContent');
@@ -313,7 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
           });
       });
-
+// *************************************************************************************************************************************************
     // When user clicks on a media image, display the media JSON information
     //
     //
@@ -334,7 +327,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       // ADD click listener when page initially loads
       addClickListenersToGridItems();
-
+// *************************************************************************************************************************************************
     // Function to display grid item data in contentDisplay div
     //
     //
@@ -380,7 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
           contentDisplayDiv.removeChild(itemDataDiv);
         });
       }
-
+// *************************************************************************************************************************************************
     // When openCmdButton is clicked, run this function to open the run command file 
     //
     //
@@ -401,7 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
           console.error('File path not found');
         }
       }
-      
+// ************************************************************************************************************************************************* 
     // Display the edit form to update the json information for selected media
     //
     //
@@ -500,7 +493,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }   
     }
-
+// *************************************************************************************************************************************************
   // Function to create the table for any array
   //
   //
@@ -537,38 +530,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return gridHTML;
     }
     
-
-    // Function to create the table for any array
-    //
-    //
-    //
-    function createTable(data) {
-      if (data.length === 0) {
-        return '<p>No data available.</p>';
-      }
-      let tableHTML = '<table>';
-      // Collect all unique keys (field names) from the array
-      const allKeys = new Set();
-      for (const item of data) {
-        for (const key in item) {
-          allKeys.add(key);
-        }
-      }
-      // Create header row based on the unique keys (field names)
-      tableHTML += '<tr>';
-      for (const key of allKeys) {
-        tableHTML += `<th>${key}</th>`;
-      }
-      tableHTML += '</tr>';
-      // Create data rows
-      for (const item of data) {
-        tableHTML += '<tr>';
-        for (const key of allKeys) {
-          tableHTML += '<td>' + (item[key] || '') + '</td>';
-        }
-        tableHTML += '</tr>';
-      }
-      tableHTML += '</table>';
-      return tableHTML;
-    }
+// *************************************************************************************************************************************************
+    
 })

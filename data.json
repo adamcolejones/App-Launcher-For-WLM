@@ -32,6 +32,15 @@
       ]
     },
     {
+      "id": 86,
+      "Name": "ABC",
+      "Image": false,
+      "RunCommand": null,
+      "Tags": [
+        "ABC"
+      ]
+    },
+    {
       "id": 50,
       "Name": "Adventures in Odyssey",
       "Image": true,
@@ -278,8 +287,8 @@
       "RunCommand": "C:\\Users\\adamc\\Documents\\Games\\Nintendo\\Wii\\Other\\CMD Files\\MarioKartWiiDeluxe.cmd",
       "Tags": [
         "Mario Kart",
-        "Mods",
         "Nintendo Wii",
+        "Mods",
         "Playable"
       ]
     },
@@ -712,6 +721,113 @@
       "Tags": [
         "Veggie Tales"
       ]
+    }
+  ],
+  "Tags": [
+    {
+      "tag": "Albums"
+    },
+    {
+      "tag": "All"
+    },
+    {
+      "tag": "Artists"
+    },
+    {
+      "tag": "Books"
+    },
+    {
+      "tag": "Christmas"
+    },
+    {
+      "tag": "Fall"
+    },
+    {
+      "tag": "Kirby"
+    },
+    {
+      "tag": "Launchers"
+    },
+    {
+      "tag": "Mario"
+    },
+    {
+      "tag": "Mario Kart"
+    },
+    {
+      "tag": "Mario Party"
+    },
+    {
+      "tag": "Movies"
+    },
+    {
+      "tag": "Nintendo"
+    },
+    {
+      "tag": "Nintendo 3DS"
+    },
+    {
+      "tag": "Nintendo 64"
+    },
+    {
+      "tag": "Nintendo GameCube"
+    },
+    {
+      "tag": "Nintendo Gameboy Advance"
+    },
+    {
+      "tag": "Nintendo Gameboy Color"
+    },
+    {
+      "tag": "Nintendo Switch"
+    },
+    {
+      "tag": "Nintendo Wii"
+    },
+    {
+      "tag": "Paper Mario"
+    },
+    {
+      "tag": "Peanuts"
+    },
+    {
+      "tag": "PlayStation"
+    },
+    {
+      "tag": "PlayStation 2"
+    },
+    {
+      "tag": "Pokemon"
+    },
+    {
+      "tag": "Playable"
+    },
+    {
+      "tag": "Shows"
+    },
+    {
+      "tag": "Songs"
+    },
+    {
+      "tag": "Super Nintendo Entertainment System"
+    },
+    {
+      "tag": "Uncategorized"
+    },
+    {
+      "tag": "Veggie Tales"
+    },
+    {
+      "tag": "Wishlist"
+    },
+    {
+      "tag": "Updating Tag Test4"
+    },
+    {
+      "tag": "ABC"
+    },
+    {
+      "tag": "Test"
     }
   ],
   "Names": [

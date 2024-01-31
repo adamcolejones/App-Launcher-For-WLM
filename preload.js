@@ -27,7 +27,7 @@ const { contextBridge, ipcMain, ipcRenderer, shell} = require("electron");
 contextBridge.exposeInMainWorld('electron', {
   shell: shell,
 });
-
+// *************************************************************************************************************************************************
 // Expose the "saveData" function to the renderer process
 let saveName = (firstName, middleName, lastName) => {
     let data = { firstName, middleName, lastName };
@@ -42,6 +42,12 @@ let nameBridge = {
 // window.Bridge = bridge;
 contextBridge.exposeInMainWorld("nameBridge", nameBridge);
 
+
+
+// *************************************************************************************************************************************************
+//
+//
+//
 let saveMedia = (newId, Name, RunCommand, Tags, imagePath) => {
   const customFieldsContainer = document.getElementById('customFieldsContainer');
   const labelInputs = customFieldsContainer.querySelectorAll('input[type="text"][placeholder*="Label"]');
@@ -52,7 +58,6 @@ let saveMedia = (newId, Name, RunCommand, Tags, imagePath) => {
   } else {
     imageStatus = false;
   }
-
   // Collect the custom field values into an object
   const customData = {};
   for (let i = 0; i < labelInputs.length; i++) {
@@ -62,12 +67,10 @@ let saveMedia = (newId, Name, RunCommand, Tags, imagePath) => {
       customData[label] = value;
     }
   }
-
-  
-
   const tagsInput = document.getElementById('Tags');
   const tagsArray = tagsInput.value.split(',').map(tag => tag.trim());
-
+  // I turned off this feature that capitalizes each tag element.  I think it should be up to the user how they name their games
+  // const tagsArray = tagsInput.value.split(',').map(tag => tag.trim().replace(/\b\w/g, c => c.toUpperCase())); // Capitalize the start of each word in tags
   let data = {
     "id": newId,
     "Name": Name,
@@ -76,24 +79,24 @@ let saveMedia = (newId, Name, RunCommand, Tags, imagePath) => {
     "Tags": tagsArray,
     ...customData // Include the custom fields in the data object
   };
-
   // data = JSON.stringify(data); // Convert data to a JSON string
-
-
   console.log(data, imagePath);
   ipcRenderer.send("saveMedia", data, imagePath);
   ipcRenderer.send('reload-window');
   // window.location.reload();
 };
-
-
 let mediaBridge = {
   saveMedia,
 };
-
 // window.Bridge = bridge;
 contextBridge.exposeInMainWorld("mediaBridge", mediaBridge);
 
+
+
+// *************************************************************************************************************************************************
+//
+//
+//
 // function called to update existing media from data.json
 let updateMedia = (id, Name, RunCommand, Tags, imagePath) => {
   let newData = {
