@@ -250,3 +250,28 @@
     // }
 
 // *************************************************************************************************************************************************
+// function displayContentForTag(tag) {
+      //   dataDisplayDiv.innerHTML = `<div class="gridtype">${tag}</div>`;
+      //   dataDisplayDiv.innerHTML += createGrid(tagSections[tag]);
+      // }
+      // function displayContentForTag(tag, jsondata) {
+      //   const dataDisplayDiv = document.getElementById('gridDisplay');
+      //   dataDisplayDiv.innerHTML = `
+      //     <div class="TagSelection">${tag}</div>
+      //     <button id="editTagButton">Edit Tag</button><br>
+
+      //   `;
+      //   const mediaData = jsondata.Media || [];
+      //   const items = tag === 'All' ? mediaData : mediaData.filter(item => item.Tags.includes(tag));
+      //   dataDisplayDiv.innerHTML += createGrid(items);
+      //   const editTagButton = document.getElementById('editTagButton');
+      //   editTagButton.addEventListener('click', () => {
+      //       // Call a function to handle the tag editing
+      //       // handleEditTagButtonClick(tag);
+      //       displayTagEditForm(tag);
+      //       // window.updateBridge.editTag(tag);
+      //   });
+      // }
+
+// *************************************************************************************************************************************************
+ 

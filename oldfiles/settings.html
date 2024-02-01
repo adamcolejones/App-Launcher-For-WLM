@@ -1,14 +1,10 @@
-<!--
+<!-- 
 // ********************************************************
 // * A DESCRIPTION OF THE FUNCTIONALITY OF THE CODE BELOW *
 // ********************************************************
-// + Popup should be moved to another file, only keep classes and IDs here
-// + 
 // + 
 // ********************************************************
 -->
-
-<!--index.html-->
 
 <!DOCTYPE html>
 <html>
@@ -20,35 +16,24 @@
     <link rel="stylesheet" href="main.css">
   </head>
   <body>
-
-    <!-- <nav>
+    <nav>
       <ul>
         <li><a href="main.html">Home</a></li>
         <li><a href="settings.html">Settings</a></li>
         <li><a href="todo.html">Todo</a></li>
       </ul>
-    </nav> -->
+    </nav>
 
 
     <div id="sideMenu"></div>
 
     <div class="scrollableContent">
-
-      <!-- Displays the entire list of games per tag -->
-      <div id="gridDisplay"></div>
-
-      <!-- Displays the individual Game's information -->
-      <div id="contentDisplay"></div>
-
-      <!-- Displays the edit menu -->
-      <div id="editDisplay"></div>
-
-      <!-- New Media popup -->
+      <!-- <div id="gridDisplay"></div> -->
+      <div id="dataDisplay"></div>
       <button id="openPopup">Open Popup</button>
-
     </div>
 
-    <!-- EVENTUALLY NEED TO MOVE THIS POPUP CONTAINER TO THE APP.JS FILE TO KEEP THE BASE HTML FILE CLEAN -->
+
     <!-- Hidden popup container -->
     <div id="popupContainer" class="popup">
       <!-- <div class="popup-content"></div> -->
@@ -58,11 +43,8 @@
           <label for="Name">Name: </label>
           <input type="text" id="Name" required><br>
 
-          <!-- <label for="RunCommand">Run Command: </label> -->
-          <!-- <input type="text" id="RunCommand"><br> -->
-
-          <label for="RunCommand">Run Command: </label>
-          <input type="file" id="RunCommand"><br>
+          <label for="Run Command">Run Command: </label>
+          <input type="text" id="Run Command"><br>
 
           <div id="error-message"></div>
 
@@ -84,9 +66,27 @@
     <br>
 
     <script src="popup.js"></script> 
-    <script src="app.js"></script> 
-    <!-- <script src="renderer.js"></script> -->
 
+    <script src="app2.js"></script> 
+    <!-- <nav>
+      <ul>
+        <li><a href="main.html">Home</a></li>
+        <li><a href="settings.html">Settings</a></li>
+        <li><a href="#">Test</a></li>
+      </ul>
+    </nav>
+    <div class="scrollableContent">
+      <h1>Settings</h1>
+      <p>main.html -> app.js -> main.js -> preload.js -> main.js -> data.json</p>
+      <div class="test">
+        <p>main.html -> app.js -> main.js -> preload.js -> main.js -> data.json</p>
+      </div>
+      <img src="assets/media/13.png" alt="Image 13" class="test">
+    </div>
+
+    
+    
+    <script src="app.js"></script>  -->
     <!-- // 3. Backend Communication -->
     <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
     <!-- <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script> -->

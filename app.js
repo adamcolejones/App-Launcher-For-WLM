@@ -257,83 +257,71 @@ document.addEventListener('DOMContentLoaded', () => {
       //
       //
       //
-      // function displayContentForTag(tag) {
-      //   dataDisplayDiv.innerHTML = `<div class="gridtype">${tag}</div>`;
-      //   dataDisplayDiv.innerHTML += createGrid(tagSections[tag]);
-      // }
-      // function displayContentForTag(tag, jsondata) {
-      //   const dataDisplayDiv = document.getElementById('gridDisplay');
-      //   dataDisplayDiv.innerHTML = `
-      //     <div class="TagSelection">${tag}</div>
-      //     <button id="editTagButton">Edit Tag</button><br>
-
-      //   `;
-      //   const mediaData = jsondata.Media || [];
-      //   const items = tag === 'All' ? mediaData : mediaData.filter(item => item.Tags.includes(tag));
-      //   dataDisplayDiv.innerHTML += createGrid(items);
-      //   const editTagButton = document.getElementById('editTagButton');
-      //   editTagButton.addEventListener('click', () => {
-      //       // Call a function to handle the tag editing
-      //       // handleEditTagButtonClick(tag);
-      //       displayTagEditForm(tag);
-      //       // window.updateBridge.editTag(tag);
-      //   });
-      // }
       function displayContentForTag(tag, jsondata) {
           const dataDisplayDiv = document.getElementById('gridDisplay');
           dataDisplayDiv.innerHTML = `
-              <div class="TagSelection" id="tagSelection">${tag}</div>
-              <button id="editTagButton">Edit Tag</button><br>
+              <div id="tagNameContainer">
+                <div id="tagSelection">${tag}</div>
+                <img src="assets/app/settings.svg" id="editTagImage">
+              </div>
           `;
-      
+        
           const mediaData = jsondata.Media || [];
           const items = tag === 'All' ? mediaData : mediaData.filter(item => item.Tags.includes(tag));
           dataDisplayDiv.innerHTML += createGrid(items);
-      
-          const editTagButton = document.getElementById('editTagButton');
-          editTagButton.addEventListener('click', () => {
-              const tagSelectionDiv = document.getElementById('tagSelection');
-              const originalTag = tagSelectionDiv.innerHTML;
-      
-              const form = document.createElement('form');
-              const input = document.createElement('input');
-              input.type = 'text';
-              input.value = originalTag;
-              form.appendChild(input);
-      
-              const cancelButton = document.createElement('button');
-              cancelButton.textContent = 'Cancel';
-              cancelButton.addEventListener('click', () => {
-                  dataDisplayDiv.removeChild(form);
-                  dataDisplayDiv.insertBefore(tagSelectionDiv, editTagButton);
-                  tagSelectionDiv.style.display = 'block';
-                  editTagButton.style.display = 'block';
-              });
-              form.appendChild(cancelButton);
-      
-              const submitButton = document.createElement('button');
-              submitButton.type = 'submit';
-              submitButton.textContent = 'Save';
-              form.appendChild(submitButton);
-      
-              dataDisplayDiv.replaceChild(form, tagSelectionDiv);
-              tagSelectionDiv.style.display = 'none';
-              editTagButton.style.display = 'none';
-      
-              form.addEventListener('submit', (event) => {
-                  event.preventDefault();
-                  const updatedTag = input.value;
-                  // Handle the updated tag as needed (e.g., save it, update UI)
-                  console.log(updatedTag);
-      
-                  // After handling the updated tag, you can display the original div and edit button again
-                  tagSelectionDiv.innerHTML = updatedTag;
-                  dataDisplayDiv.replaceChild(tagSelectionDiv, form);
-                  tagSelectionDiv.style.display = 'block';
-                  editTagButton.style.display = 'block';
-              });
+        
+          const editTagImage = document.getElementById('editTagImage');
+          editTagImage.addEventListener('click', () => {
+            const tagNameContainer = document.getElementById('tagNameContainer');
+            const tagSelectionDiv = document.getElementById('tagSelection');
+            const originalTag = tagSelectionDiv.innerHTML;
+        
+            const form = document.createElement('form');
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = originalTag;
+            form.appendChild(input);
+        
+            const cancelButton = document.createElement('button');
+            cancelButton.textContent = 'Cancel';
+            cancelButton.addEventListener('click', (event) => {
+              event.preventDefault();
+              tagNameContainer.removeChild(form);
+              tagNameContainer.insertBefore(tagSelectionDiv, editTagImage);
+        
+              // Adjust styles dynamically to keep them on the same line
+              tagSelectionDiv.style.display = 'inline-block';
+              editTagImage.style.display = 'inline-block';
+            });
+            form.appendChild(cancelButton);
+        
+            const submitButton = document.createElement('button');
+            submitButton.type = 'submit';
+            submitButton.textContent = 'Save';
+            form.appendChild(submitButton);
+        
+            tagNameContainer.replaceChild(form, tagSelectionDiv);
+            tagSelectionDiv.style.display = 'none';
+            editTagImage.style.display = 'none';
+        
+            // Adjust styles dynamically to keep them on the same line
+            form.style.display = 'inline-block';
+        
+            form.addEventListener('submit', (event) => {
+              event.preventDefault();
+              const updatedTag = input.value;
+              console.log(updatedTag);
+        
+              tagSelectionDiv.innerHTML = updatedTag;
+              tagNameContainer.replaceChild(tagSelectionDiv, form);
+              tagSelectionDiv.style.display = 'inline-block';
+              editTagImage.style.display = 'inline-block';
+            });
           });
-      }
+        }
+      
+    
+    
     
       // Display content for 'All' tag by default
       // displayContentForTag("All");

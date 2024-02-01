@@ -13,6 +13,10 @@
  ██████  ██████
 */
 
+* {
+  user-select: none;
+}
+
 a {
     text-decoration: none;
     color: #fff;
@@ -102,6 +106,11 @@ body {
  ██░░░░░░░░░░██
  ██████████████
 */
+
+#editTagImage {
+  display: inline-block;
+  vertical-align: middle; /* Adjust vertical alignment as needed */
+}
 
 #error-message {
   color: rgb(247, 72, 72); 
@@ -531,18 +540,18 @@ p {
   overflow-y: auto;
   overflow-x: none;
   display: block;
-  height: calc(100vh - 70px); /* 100 view height - 70px of menu height */
+  height: calc(100vh); /* 100 view height - 70px of menu height */
   width: calc(100% - 200px); /* 100% - sideMenu Width */
-  top: calc(50px + 20px); /* nav height + nav Padding */
+  /* top: calc(50px + 20px); nav height + nav Padding */
   left: 200px; /* sideMenu Width */
   /* overflow-y: scroll; */
  }
 
  #sideMenu {
   background-color: #dfdfdf;
-  top: calc(50px + 20px); /* nav height + nav Padding */
+  /* top: calc(50px + 20px); nav height + nav Padding */
   width: 200px;
-  height: calc(100vh - 50px - 20px); /* full view height - nav height - nav padding */
+  height: calc(100vh); /* full view height - nav height - nav padding */
   position: fixed;
  }
 
@@ -581,10 +590,17 @@ table {
     /* overflow: scroll; */
 }
 
-.TagSelection {
+#tagSelection {
   font-size: 2em;
   font-weight: 600;
+  display: inline-block;
+  vertical-align: middle; /* Adjust vertical alignment as needed */
+  margin-right: 20px; /* Adjust the margin between the tag and the image */
   padding: 0% 0% 0% 20px;
+}
+
+#tagNameContainer {
+  height: 50px;
 }
 
 tbody {
