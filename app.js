@@ -256,86 +256,106 @@ document.addEventListener('DOMContentLoaded', () => {
       // Function to display content based on the selected tag
       //
       //
-      //
-      function displayContentForTag(tag, jsondata) {
-          const dataDisplayDiv = document.getElementById('gridDisplay');
-          dataDisplayDiv.innerHTML = `
-              <div id="tagNameContainer">
-                <div id="tagSelection">${tag}</div>
-                <img src="assets/app/settings.svg" id="editTagImage">
-              </div>
-          `;
-        
-          const mediaData = jsondata.Media || [];
-          const items = tag === 'All' ? mediaData : mediaData.filter(item => item.Tags.includes(tag));
-          dataDisplayDiv.innerHTML += createGrid(items);
-        
-          const editTagImage = document.getElementById('editTagImage');
-          editTagImage.addEventListener('click', () => {
-            const tagNameContainer = document.getElementById('tagNameContainer');
-            const tagSelectionDiv = document.getElementById('tagSelection');
-            const originalTag = tagSelectionDiv.innerHTML;
-        
-            const form = document.createElement('form');
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.value = originalTag;
-            form.appendChild(input);
-        
-            const cancelButton = document.createElement('button');
-            cancelButton.textContent = 'Cancel';
-            cancelButton.addEventListener('click', (event) => {
-              event.preventDefault();
-              tagNameContainer.removeChild(form);
-              tagNameContainer.insertBefore(tagSelectionDiv, editTagImage);
-        
-              // Adjust styles dynamically to keep them on the same line
-              tagSelectionDiv.style.display = 'inline-block';
-              editTagImage.style.display = 'inline-block';
-            });
-            form.appendChild(cancelButton);
-        
-            const submitButton = document.createElement('button');
-            submitButton.type = 'submit';
-            submitButton.textContent = 'Save';
-            form.appendChild(submitButton);
-        
-            tagNameContainer.replaceChild(form, tagSelectionDiv);
-            tagSelectionDiv.style.display = 'none';
-            editTagImage.style.display = 'none';
-        
-            // Adjust styles dynamically to keep them on the same line
-            form.style.display = 'inline-block';
-        
-            form.addEventListener('submit', (event) => {
-              event.preventDefault();
-              const updatedTag = input.value;
-              console.log(updatedTag);
-        
-              tagSelectionDiv.innerHTML = updatedTag;
-              tagNameContainer.replaceChild(tagSelectionDiv, form);
-              tagSelectionDiv.style.display = 'inline-block';
-              editTagImage.style.display = 'inline-block';
-            });
-          });
-        }
-      
-    
-    
-    
-      // Display content for 'All' tag by default
-      // displayContentForTag("All");
+      // Initially, display the default data, The All Tag, that displays all media content
       displayContentForTag("All", data);
 
-// *************************************************************************************************************************************************
-      // function handleEditTagButtonClick(tag) {
-      //   // Call a function to display the tag edit form or take appropriate action
-      //   displayTagEditForm(tag);
-      // }
-      function displayTagEditForm(tag) {
-        window.updateBridge.editTag(tag);
+      function displayContentForTag(tag, jsondata) {
+          const scrollableContentDiv = document.querySelector('.scrollableContent');
+          const gridDisplayDiv = document.getElementById('gridDisplay');
+          
+          // Show grid display and hide others
+          gridDisplayDiv.style.display = 'block';
+          document.getElementById('editTagSettings').style.display = 'none';
+          document.getElementById('contentDisplay').style.display = 'none';
+          document.getElementById('editDisplay').style.display = 'none';
+      
+          gridDisplayDiv.innerHTML = `
+              <div id="tagNameContainer">
+                  <div id="tagSelection">${tag}</div>
+                  <img src="assets/app/settings.svg" id="editTagImage">
+              </div>
+          `;
+      
+          const mediaData = jsondata.Media || [];
+          // If Tag selected is all, show all media data.  If not, only show media data where the media entries include the selected Tag.
+          const items = tag === 'All' ? mediaData : mediaData.filter(item => item.Tags.includes(tag));
+          gridDisplayDiv.innerHTML += createGrid(items);
+      
+          // Add event listener for the settings image/button
+          const editTagImage = document.getElementById('editTagImage');
+          editTagImage.addEventListener('click', () => {
+              displayTagSettings(tag, jsondata);
+          });
       }
+      
+// *************************************************************************************************************************************************
+//
+//
+//
+      // Function that displays the settings page for an individual tag
+      // function displayTagSettings(tag, jsondata) {
+      //     const gridDisplayDiv = document.getElementById('gridDisplay');
+      //     const editTagSettingsDiv = document.getElementById('editTagSettings');
+          
+      //     // Show edit tag settings and hide others
+      //     gridDisplayDiv.style.display = 'none';
+      //     editTagSettingsDiv.style.display = 'block';
+      //     document.getElementById('contentDisplay').style.display = 'none';
+      //     document.getElementById('editDisplay').style.display = 'none';
 
+      //     const mediaData = jsondata.Media || [];
+
+      //     editTagSettingsDiv.innerHTML = `
+
+      //       <img src="assets/app/back.svg" id="backTagButton">
+      //     `;
+      
+      //     editTagSettingsDiv.addEventListener('click', function (event) {
+      //       if (event.target.id === 'backTagButton') {
+      //           gridDisplayDiv.style.display = 'block';
+      //           editTagSettingsDiv.style.display = 'none';
+      //       }
+      //   });
+      // }
+      function displayTagSettings(tag, jsondata) {
+          const gridDisplayDiv = document.getElementById('gridDisplay');
+          const editTagSettingsDiv = document.getElementById('editTagSettings');
+      
+          // Show edit tag settings and hide others
+          gridDisplayDiv.style.display = 'none';
+          editTagSettingsDiv.style.display = 'block';
+          document.getElementById('contentDisplay').style.display = 'none';
+          document.getElementById('editDisplay').style.display = 'none';
+      
+          // const mediaData = jsondata.Media || [];
+      
+          // Find the first tag with the selected name
+          const selectedTag = jsondata.Tags.find(item => item.Name === tag);
+
+          // Back button for tag settings
+          editTagSettingsDiv.innerHTML += `
+              <div id="backContainer">
+                <img id="backTagButton" src="assets/app/back.svg">
+                <div id="backTagText">Back</div>
+              </div>
+              <div class="tagContent">
+                  <p>Name: ${selectedTag.Name}</p>
+                  <p>Intro to Category, Video / Music / Transitions</p>
+                  <p>Background Music / Sound Effects</p>
+                  <p>Overall themes, fonts, etc.</p>
+                  <p>Date: Media Height and Width</p>
+                  <p>Device: </p>
+              </div>
+          `;
+      
+          const backContainer = document.getElementById('backContainer');
+          backContainer.addEventListener('click', function () {
+              gridDisplayDiv.style.display = 'block';
+              editTagSettingsDiv.style.display = 'none';
+              // Clear previous content when going back
+              editTagSettingsDiv.innerHTML = '';
+          });
+      }
 
 // *************************************************************************************************************************************************
       // Add a click event listener to tagDivs to switch content
@@ -347,10 +367,15 @@ document.addEventListener('DOMContentLoaded', () => {
           tagDiv.addEventListener('click', () => {
             const contentDisplayDiv = document.getElementById('contentDisplay');
             const gridDisplayDiv = document.getElementById('gridDisplay');
+            const editDisplayDiv = document.getElementById('editDisplay');
             
             gridDisplayDiv.style.display = 'block'; // show grid again
             contentDisplayDiv.style.display = 'none'; // hide any other selected content within the grid
             contentDisplayDiv.innerHTML = '';
+            // In the event user has the edit form up and clicks on the side menu to change the display
+            // probably should look into some function that hides all unused divs
+            editDisplayDiv.style.display = 'none';
+            editDisplayDiv.innerHTML = '';
 
             // Remove the 'selected' class from all tags
             tagDivs.forEach(tag => {
@@ -409,34 +434,72 @@ document.addEventListener('DOMContentLoaded', () => {
         let imagePath = item.Image ? `assets/media/${item.id}.png` : 'assets/media/default.png';
         let imageTag = `<img src="${imagePath}" alt="Image ${item.id}" class="griditempicture">`;
         itemDataDiv.innerHTML = `
+          <div id="backContainer">
+            <img src="assets/app/back.svg">
+            <div>Back</div>
+          </div>
+          
           ${imageTag}
+          <div class = "editContainer">
+            <img src="assets/app/edit.svg" id="editButton">
+            <div>Edit</div>
+          </div>
           <p>ID: ${item.id}</p>
           <p>Name: ${item.Name}</p>
           <p>Image: ${item.Image}</p>
           <p>Run Command: ${item.RunCommand}</p>
           <p>Tags: ${item.Tags.join(', ')}</p>
-          <button id="backtogrid">Back</button> 
-          <button id="editButton">Edit</button>
-          <button id="openCmdButton">Play</button> 
+          <p>Game Information</p>
+          <p>Related Titles</p>
+          <p>Gallery (Screenshots, videos, etc)</p>
+          <p>Sub Categories</p>
+          <p>Activity for individual game, also with Link to full Activity Page</p>
+          <p>Background Videos?  Background Music?  Special Fonts?  </p>
+          <p>Other Tags this media belongs to, related</p>
+          
         `;
-        // contentDisplayDiv.innerHTML = '';
+        
+        // Add the Play button if there is a run command
+        if (item.RunCommand !== null) {
+          itemDataDiv.innerHTML += `
+            <div class = "playContainer">
+              <img src="assets/app/play.svg" id="openCmdButton">
+              <div>Play</div>
+            </div>
+          `;
+        }
+
+        // Add all innerHTML and potential play button
         contentDisplayDiv.appendChild(itemDataDiv);
+
+        // Run the if statement again to create listener event after it was added to the innerHTML
+        if (item.RunCommand !== null) {
+          const openCmdButton = document.getElementById('openCmdButton');
+          openCmdButton.addEventListener('click', () => {
+            // console.log('Open CMD button clicked');
+            handleOpenCmdButtonClick(item['RunCommand']); // Assuming filePath is a property of the item object
+          });
+        }
+
         const editButton = document.getElementById('editButton');
         editButton.addEventListener('click', () => {
           displayEditForm(item);
         });
-        const openCmdButton = document.getElementById('openCmdButton');
-        openCmdButton.addEventListener('click', () => {
-          // console.log('Open CMD button clicked');
-          handleOpenCmdButtonClick(item['RunCommand']); // Assuming filePath is a property of the item object
-        });
-        const backGridButton = document.getElementById('backtogrid');
-        backGridButton.addEventListener('click', function () {
-          // Show the original content
-          gridDisplayDiv.style.display = 'block';
-          // Remove the edit form
-          contentDisplayDiv.removeChild(itemDataDiv);
-        });
+        
+        // const backGridButton = document.getElementById('backtogrid');
+        // backGridButton.addEventListener('click', function () {
+        //   // Show the original content
+        //   gridDisplayDiv.style.display = 'block';
+        //   // Remove the edit form
+        //   contentDisplayDiv.removeChild(itemDataDiv);
+        // });
+
+        const backContainer = document.getElementById('backContainer');
+          backContainer.addEventListener('click', function () {
+            gridDisplayDiv.style.display = 'block';
+            // Remove the edit form
+            contentDisplayDiv.removeChild(itemDataDiv);
+          });
       }
 
 // *************************************************************************************************************************************************
@@ -470,6 +533,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const contentDisplayDiv = document.getElementById('contentDisplay');
         const editDisplayDiv = document.getElementById('editDisplay');
         contentDisplayDiv.style.display = 'none';
+        editDisplayDiv.style.display = 'block';
         const editForm = document.createElement('div');
         editForm.innerHTML = `
           <form id="editForm">
@@ -560,6 +624,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }   
     }
+
+
 // *************************************************************************************************************************************************
   // Function to create the table for any array
   //

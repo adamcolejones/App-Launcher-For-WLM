@@ -62,7 +62,7 @@
       "id": 25,
       "Name": "Are You My Neighbor?",
       "Image": true,
-      "RunCommand": "na",
+      "RunCommand": null,
       "Tags": [
         "Veggie Tales"
       ]
@@ -98,7 +98,7 @@
       "id": 27,
       "Name": "Dave and the Giant Pickle",
       "Image": true,
-      "RunCommand": "na",
+      "RunCommand": null,
       "Tags": [
         "Veggie Tales"
       ]
@@ -143,7 +143,7 @@
       "id": 24,
       "Name": "God Wants Me to Forgive Them!?!",
       "Image": true,
-      "RunCommand": "na",
+      "RunCommand": null,
       "Tags": [
         "Veggie Tales"
       ]
@@ -182,7 +182,7 @@
       "id": 4,
       "Name": "Kirby and the Forgotten Land",
       "Image": true,
-      "RunCommand": "",
+      "RunCommand": null,
       "Tags": [
         "Kirby",
         "Nintendo Switch",
@@ -220,7 +220,7 @@
       "id": 9,
       "Name": "Luigi's Mansion",
       "Image": true,
-      "RunCommand": "na",
+      "RunCommand": null,
       "Tags": [
         "Nintendo GameCube"
       ]
@@ -239,7 +239,7 @@
       "id": 22,
       "Name": "Mario Kart 64",
       "Image": true,
-      "RunCommand": "na",
+      "RunCommand": null,
       "Tags": [
         "Nintendo",
         "Nintendo 64",
@@ -260,7 +260,7 @@
       "id": 20,
       "Name": "Mario Kart DS",
       "Image": true,
-      "RunCommand": "na",
+      "RunCommand": null,
       "Tags": [
         "Nintendo",
         "Nintendo DS",
@@ -305,7 +305,7 @@
       "id": 8,
       "Name": "Mario Party 4",
       "Image": true,
-      "RunCommand": "na",
+      "RunCommand": null,
       "Tags": [
         "Nintendo",
         "Nintendo GameCube",
@@ -316,7 +316,7 @@
       "id": 6,
       "Name": "Mario Party 7",
       "Image": true,
-      "RunCommand": "na",
+      "RunCommand": null,
       "Tags": [
         "Nintendo",
         "Nintendo GameCube",
@@ -337,7 +337,7 @@
       "id": 10,
       "Name": "Mario Superstar Baseball",
       "Image": true,
-      "RunCommand": "na",
+      "RunCommand": null,
       "Tags": [
         "Nintendo",
         "Nintendo GameCube"
@@ -368,7 +368,7 @@
       "id": 7,
       "Name": "Paper Mario: The Thousand-Year Door",
       "Image": true,
-      "RunCommand": "na",
+      "RunCommand": null,
       "Tags": [
         "Nintendo",
         "Nintendo GameCube",
@@ -415,7 +415,7 @@
       "id": 32,
       "Name": "PlayStation Plus",
       "Image": true,
-      "RunCommand": "na",
+      "RunCommand": null,
       "Tags": [
         "PlayStation",
         "Launchers"
@@ -436,7 +436,7 @@
       "id": 21,
       "Name": "Pokémon Yellow: Special Pikachu Edition",
       "Image": true,
-      "RunCommand": "na",
+      "RunCommand": null,
       "Tags": [
         "Pokemon",
         "Nintendo",
@@ -465,7 +465,7 @@
       "id": 26,
       "Name": "Rack, Shack & Benny",
       "Image": true,
-      "RunCommand": "na",
+      "RunCommand": null,
       "Tags": [
         "Veggie Tales"
       ]
@@ -536,7 +536,7 @@
       "id": 16,
       "Name": "Super Mario Odyssey",
       "Image": true,
-      "RunCommand": "na",
+      "RunCommand": null,
       "Tags": [
         "Mario",
         "Nintendo",
@@ -547,7 +547,7 @@
       "id": 11,
       "Name": "Super Mario Strikers",
       "Image": true,
-      "RunCommand": "na",
+      "RunCommand": null,
       "Tags": [
         "Mario",
         "Nintendo",
@@ -570,7 +570,7 @@
       "id": 12,
       "Name": "Super Smash Bros. Melee",
       "Image": true,
-      "RunCommand": "na",
+      "RunCommand": null,
       "Tags": [
         "Nintendo",
         "Nintendo GameCube"
@@ -598,7 +598,7 @@
       "id": 30,
       "Name": "The Chosen",
       "Image": true,
-      "RunCommand": "na",
+      "RunCommand": null,
       "Tags": [
         "Shows"
       ]
@@ -644,7 +644,7 @@
       "id": 28,
       "Name": "The Prince of Egypt",
       "Image": true,
-      "RunCommand": "NA",
+      "RunCommand": null,
       "Tags": [
         "Movies"
       ]
@@ -717,7 +717,7 @@
       "id": 29,
       "Name": "Veggie Tales",
       "Image": true,
-      "RunCommand": "NA",
+      "RunCommand": null,
       "Tags": [
         "Shows"
       ]
@@ -726,7 +726,7 @@
       "id": 23,
       "Name": "Where’s God When I’m S-scared?",
       "Image": true,
-      "RunCommand": "na",
+      "RunCommand": null,
       "Tags": [
         "Veggie Tales"
       ]

@@ -42,6 +42,29 @@ a:hover {
  ████████████████
 */
 
+#backContainer {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  width: fit-content;
+  background-color: gray;
+  cursor: pointer;
+
+}
+
+#backTagButton {
+  width: fit-content;
+}
+
+#backTagText {
+  width: fit-content;
+}
+
+#backtogrid {
+  cursor: pointer;
+  display: inline-block;
+}
+
 body {
   font-family: Arial, sans-serif;
   display: flex;
@@ -107,9 +130,25 @@ body {
  ██████████████
 */
 
+#editButton {
+  cursor: pointer;
+  /* width: fit-content; */
+}
+
+.editContainer {
+  display: flex;
+  align-items: center;
+}
+
 #editTagImage {
   display: inline-block;
   vertical-align: middle; /* Adjust vertical alignment as needed */
+  cursor: pointer;
+}
+
+#editTagSettings {
+  width: 100%;
+  margin: 0 0;
 }
 
 #error-message {
@@ -178,6 +217,7 @@ body {
   vertical-align: top;
   /* background-color: gray; */
   border-radius: 5px;
+  cursor: pointer;
   /* overflow: hidden; */
   /* padding-right: 5px; */
   /* margin: 0 auto; */
@@ -214,6 +254,7 @@ body {
   object-fit: cover; /* Use contain to ensure the entire image is visible */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   transition: box-shadow 0.1s ease-in-out, filter 0.1s ease-in-out, border 0.1s ease-in-out;
+  /* cursor: pointer; */
 }
 
 .griditempicture:hover {
@@ -444,16 +485,18 @@ nav {
 ██████████████
 */
 
-#openCmdBtn {
-  height: 100px;
+#openCmdButton {
+  /* height: 100px;
   width: 100px;
-  z-index: 100;
+  z-index: 100; */
+  cursor: pointer;
 }
 
 #openPopup {
   position: fixed;
   bottom: 20px;
   left: 20px;
+  cursor: pointer;
 }
 
 /* ---------------------------------------------------------------------------------------------- P ---------------------------------------------------------------------------------------------- */
@@ -473,6 +516,11 @@ nav {
 
 p {
   text-align: center;
+}
+
+.playContainer {
+  display: flex;
+  align-items: center;
 }
 
 .popup {

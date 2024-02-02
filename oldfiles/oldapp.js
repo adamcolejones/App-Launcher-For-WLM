@@ -274,4 +274,76 @@
       // }
 
 // *************************************************************************************************************************************************
- 
+ // function displayContentForTag(tag, jsondata) {
+      //     const dataDisplayDiv = document.getElementById('gridDisplay');
+      //     dataDisplayDiv.innerHTML = `
+      //         <div id="tagNameContainer">
+      //           <div id="tagSelection">${tag}</div>
+      //           <img src="assets/app/settings.svg" id="editTagImage">
+      //         </div>
+      //     `;
+        
+      //     const mediaData = jsondata.Media || [];
+      //     const items = tag === 'All' ? mediaData : mediaData.filter(item => item.Tags.includes(tag));
+      //     dataDisplayDiv.innerHTML += createGrid(items);
+        
+      //     // const editTagImage = document.getElementById('editTagImage');
+      //     // editTagImage.addEventListener('click', () => {
+      //     //   const tagNameContainer = document.getElementById('tagNameContainer');
+      //     //   const tagSelectionDiv = document.getElementById('tagSelection');
+      //     //   const originalTag = tagSelectionDiv.innerHTML;
+        
+      //     //   const form = document.createElement('form');
+      //     //   const input = document.createElement('input');
+      //     //   input.type = 'text';
+      //     //   input.value = originalTag;
+      //     //   form.appendChild(input);
+        
+      //     //   const cancelButton = document.createElement('button');
+      //     //   cancelButton.textContent = 'Cancel';
+      //     //   cancelButton.addEventListener('click', (event) => {
+      //     //     event.preventDefault();
+      //     //     tagNameContainer.removeChild(form);
+      //     //     tagNameContainer.insertBefore(tagSelectionDiv, editTagImage);
+        
+      //     //     // Adjust styles dynamically to keep them on the same line
+      //     //     tagSelectionDiv.style.display = 'inline-block';
+      //     //     editTagImage.style.display = 'inline-block';
+      //     //   });
+      //     //   form.appendChild(cancelButton);
+        
+      //     //   const submitButton = document.createElement('button');
+      //     //   submitButton.type = 'submit';
+      //     //   submitButton.textContent = 'Save';
+      //     //   form.appendChild(submitButton);
+        
+      //     //   tagNameContainer.replaceChild(form, tagSelectionDiv);
+      //     //   tagSelectionDiv.style.display = 'none';
+      //     //   editTagImage.style.display = 'none';
+        
+      //     //   // Adjust styles dynamically to keep them on the same line
+      //     //   form.style.display = 'inline-block';
+        
+      //     //   form.addEventListener('submit', (event) => {
+      //     //     event.preventDefault();
+      //     //     const updatedTag = input.value;
+      //     //     console.log(updatedTag);
+        
+      //     //     tagSelectionDiv.innerHTML = updatedTag;
+      //     //     tagNameContainer.replaceChild(tagSelectionDiv, form);
+      //     //     tagSelectionDiv.style.display = 'inline-block';
+      //     //     editTagImage.style.display = 'inline-block';
+      //     //   });
+      //     // });
+      //   }
+
+// *************************************************************************************************************************************************
+      // function handleEditTagButtonClick(tag) {
+      //   // Call a function to display the tag edit form or take appropriate action
+      //   displayTagEditForm(tag);
+      // }
+      // function displayTagEditForm(tag) {
+      //   window.updateBridge.editTag(tag);
+      // }
+
+// *************************************************************************************************************************************************
