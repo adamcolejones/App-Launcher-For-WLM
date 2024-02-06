@@ -265,7 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
           
           // Show grid display and hide others
           gridDisplayDiv.style.display = 'block';
-          document.getElementById('editTagSettings').style.display = 'none';
+          document.getElementById('showTagSettings').style.display = 'none';
           document.getElementById('contentDisplay').style.display = 'none';
           document.getElementById('editDisplay').style.display = 'none';
       
@@ -293,37 +293,13 @@ document.addEventListener('DOMContentLoaded', () => {
 //
 //
       // Function that displays the settings page for an individual tag
-      // function displayTagSettings(tag, jsondata) {
-      //     const gridDisplayDiv = document.getElementById('gridDisplay');
-      //     const editTagSettingsDiv = document.getElementById('editTagSettings');
-          
-      //     // Show edit tag settings and hide others
-      //     gridDisplayDiv.style.display = 'none';
-      //     editTagSettingsDiv.style.display = 'block';
-      //     document.getElementById('contentDisplay').style.display = 'none';
-      //     document.getElementById('editDisplay').style.display = 'none';
-
-      //     const mediaData = jsondata.Media || [];
-
-      //     editTagSettingsDiv.innerHTML = `
-
-      //       <img src="assets/app/back.svg" id="backTagButton">
-      //     `;
-      
-      //     editTagSettingsDiv.addEventListener('click', function (event) {
-      //       if (event.target.id === 'backTagButton') {
-      //           gridDisplayDiv.style.display = 'block';
-      //           editTagSettingsDiv.style.display = 'none';
-      //       }
-      //   });
-      // }
       function displayTagSettings(tag, jsondata) {
           const gridDisplayDiv = document.getElementById('gridDisplay');
-          const editTagSettingsDiv = document.getElementById('editTagSettings');
+          const showTagSettingsDiv = document.getElementById('showTagSettings');
       
           // Show edit tag settings and hide others
           gridDisplayDiv.style.display = 'none';
-          editTagSettingsDiv.style.display = 'block';
+          showTagSettingsDiv.style.display = 'block';
           document.getElementById('contentDisplay').style.display = 'none';
           document.getElementById('editDisplay').style.display = 'none';
       
@@ -333,29 +309,112 @@ document.addEventListener('DOMContentLoaded', () => {
           const selectedTag = jsondata.Tags.find(item => item.Name === tag);
 
           // Back button for tag settings
-          editTagSettingsDiv.innerHTML += `
-              <div id="backContainer">
-                <img id="backTagButton" src="assets/app/back.svg">
-                <div id="backTagText">Back</div>
+          showTagSettingsDiv.innerHTML += `
+              <div id=buttonContainer>
+                <div id="backContainer">
+                  <img src="assets/app/back.svg">
+                  <div>Back</div>
+                </div>
+                <div id="editContainer">
+                  <img src="assets/app/edit.svg" id="editButton">
+                  <div>Edit</div>
+                </div>
               </div>
               <div class="tagContent">
                   <p>Name: ${selectedTag.Name}</p>
+                  <p>Media's Display Ratio: ${selectedTag.Width} x ${selectedTag.Height}</p>
                   <p>Intro to Category, Video / Music / Transitions</p>
                   <p>Background Music / Sound Effects</p>
                   <p>Overall themes, fonts, etc.</p>
-                  <p>Date: Media Height and Width</p>
-                  <p>Device: </p>
+                  <p>Ability to Delete entire Category, the delete option should only be available through an enabled setting with password</p>
+                  <p>DEFAULT RATIOS 1:1 Square 1080 x 1080, 2:3 Vertical Steam Hero 600 x 900, 4:5 Vertical 1080 x 1350, 16:9 Horizontal 1920 x 1080</p>
+                  <p>?:? Custom ? x ? (Include decimals if user needs specifics) Do not exceed 100, create math that sorts the correct sizing on page.</p>
+                  <p>?:? Match the uploaded Media with a set height to keep the entries in line</p>
+                  <p>Don't use pixels as metrics as the height should scale with the users screen size.  Instead just record the ratio</p>
+                  <p>Borders, hover effects</p>
+                  <p>SNES: 2100x1534 Gamecube: 1158x1617? PSP: 1146x1980 Switch: 872x1420 N64: 2100x1532 DS: 1532x1370 3DS: 640x570? (Maybe double to 1280x1140 for a better quality size) NES: 1534x2100</p>
+                  <p>File Path to Transition Media and subsequent media</p>
+                  <p>Layouts: Nintendo Switch, 3DS, Wiiu, Wii</p>
+                  <p>I need to save a default value in the event user wants every category to look the same without setting them all</p>
+                  <p>Give the user the ability to add custom values ot the json file, if user wants to create a Date or other text value, that should be here (Speedruns)</p>
+                  <p>Custom values might be easier to use if they are saved with the actual media in question and not the tag / category</p>
+                  <p></p>
               </div>
           `;
       
           const backContainer = document.getElementById('backContainer');
           backContainer.addEventListener('click', function () {
               gridDisplayDiv.style.display = 'block';
-              editTagSettingsDiv.style.display = 'none';
+              showTagSettingsDiv.style.display = 'none';
               // Clear previous content when going back
-              editTagSettingsDiv.innerHTML = '';
+              showTagSettingsDiv.innerHTML = '';
           });
+          const editButton = document.getElementById('editContainer');
+          editButton.addEventListener('click', () => {
+            editCategoryTagSettings(selectedTag);
+          });
+          
+          
       }
+// *************************************************************************************************************************************************
+//
+//
+//
+      function editCategoryTagSettings(selectedTag) {
+        const editCategorySettings = document.getElementById('editCategorySettings');
+        const showTagSettingsDiv = document.getElementById('showTagSettings');
+        // hide current div, show new edit category div
+        editCategorySettings.style.display = 'block';
+        showTagSettingsDiv.style.display = 'none';
+        // display new content for the edit page
+        editCategorySettings.innerHTML += `
+          <div id="backContainer2">
+            <img src="assets/app/back.svg">
+            <div>Back</div>
+          </div>
+          <p>${selectedTag.Name}</p>
+        `;
+        const backContainer = document.getElementById('backContainer2');
+        backContainer.addEventListener('click', function () {
+          
+          editCategorySettings.style.display = 'none';
+          // Clear previous content when going back
+          editCategorySettings.innerHTML = '';
+          showTagSettingsDiv.style.display = 'block';
+        });
+          // const deleteButton = document.getElementById('deleteButton');
+          // deleteButton.addEventListener('click', function () {
+          //     const idToDelete = Number(document.getElementById('id').value);
+
+          //     // Create the confirmation dialog
+          //     const confirmationDialog = document.createElement('div');
+          //     confirmationDialog.innerHTML = `
+          //         <div id="confirmationDialog" class="confirmation-dialog">
+          //             <p>Are you sure you want to delete this entry?</p>
+          //             <button id="confirmDelete">Yes</button>
+          //             <button id="cancelDelete">No</button>
+          //         </div>
+          //     `;
+          //     editFormElement.appendChild(confirmationDialog);
+
+          //     // Set up event listeners for confirm and cancel buttons
+          //     const confirmDeleteButton = document.getElementById('confirmDelete');
+          //     const cancelDeleteButton = document.getElementById('cancelDelete');
+
+          //     confirmDeleteButton.addEventListener('click', function () {
+          //         window.updateBridge.deleteMedia(idToDelete);
+
+          //         // Remove the confirmation dialog after deletion
+          //         confirmationDialog.parentNode.removeChild(confirmationDialog);
+          //     });
+
+          //     cancelDeleteButton.addEventListener('click', function () {
+          //         // Remove the confirmation dialog if the user cancels
+          //         confirmationDialog.parentNode.removeChild(confirmationDialog);
+          //     });
+          // });
+      }
+
 
 // *************************************************************************************************************************************************
       // Add a click event listener to tagDivs to switch content
@@ -368,6 +427,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const contentDisplayDiv = document.getElementById('contentDisplay');
             const gridDisplayDiv = document.getElementById('gridDisplay');
             const editDisplayDiv = document.getElementById('editDisplay');
+            const showTagSettingsDiv = document.getElementById('showTagSettings');
+
+            
             
             gridDisplayDiv.style.display = 'block'; // show grid again
             contentDisplayDiv.style.display = 'none'; // hide any other selected content within the grid
@@ -376,6 +438,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // probably should look into some function that hides all unused divs
             editDisplayDiv.style.display = 'none';
             editDisplayDiv.innerHTML = '';
+            showTagSettingsDiv.style.display = 'none';
+            showTagSettingsDiv.innerHTML = '';
 
             // Remove the 'selected' class from all tags
             tagDivs.forEach(tag => {
@@ -430,20 +494,51 @@ document.addEventListener('DOMContentLoaded', () => {
         contentDisplayDiv.style.display = 'block'; // Or 'flex', 'grid', etc. depending on your layout
         // This itemDataDiv might be unnecessary, just add inner html to contentDisplayDiv and append to scrollable content?  When I have more time
         const itemDataDiv = document.createElement('div');
+
+        // Add the Play button if there is a run command
+        // THE REASON I HAVE DUPLICATE HTML HERE IS BECAUSE THE BUTTON CONTAINER DIV AUTOMATICALLY CLOSES BEFORE THE PLAY BUTTON IF STATEMENT IS CHECKED
+        // THIS RESULTS ON THE PLAY BUTTON APPEARING ON THE LINE BELOW OTHERWISE
+        if (item.RunCommand !== null) {
+          itemDataDiv.innerHTML += `
+            <div id=buttonContainer>
+              <div id="backContainer">
+                <img src="assets/app/back.svg">
+                <div>Back</div>
+              </div>
+              <div id="editContainer">
+                <img src="assets/app/edit.svg" id="editButton">
+                <div>Edit</div>
+              </div>
+              <div id="playContainer">
+                <img src="assets/app/play.svg" id="openCmdButton">
+                <div>Play</div>
+              </div>
+            </div>
+          `;
+        }
+        else {
+          itemDataDiv.innerHTML += `
+            <div id=buttonContainer>
+              <div id="backContainer">
+                <img src="assets/app/back.svg">
+                <div>Back</div>
+              </div>
+              <div id="editContainer">
+                <img src="assets/app/edit.svg" id="editButton">
+                <div>Edit</div>
+              </div>
+            </div>
+          `;
+        }
+
         // Check for image if the value is true on the json entry
         let imagePath = item.Image ? `assets/media/${item.id}.png` : 'assets/media/default.png';
         let imageTag = `<img src="${imagePath}" alt="Image ${item.id}" class="griditempicture">`;
-        itemDataDiv.innerHTML = `
-          <div id="backContainer">
-            <img src="assets/app/back.svg">
-            <div>Back</div>
-          </div>
           
-          ${imageTag}
-          <div class = "editContainer">
-            <img src="assets/app/edit.svg" id="editButton">
-            <div>Edit</div>
+        itemDataDiv.innerHTML += `
           </div>
+          <br>
+          ${imageTag}
           <p>ID: ${item.id}</p>
           <p>Name: ${item.Name}</p>
           <p>Image: ${item.Image}</p>
@@ -459,29 +554,19 @@ document.addEventListener('DOMContentLoaded', () => {
           
         `;
         
-        // Add the Play button if there is a run command
-        if (item.RunCommand !== null) {
-          itemDataDiv.innerHTML += `
-            <div class = "playContainer">
-              <img src="assets/app/play.svg" id="openCmdButton">
-              <div>Play</div>
-            </div>
-          `;
-        }
-
         // Add all innerHTML and potential play button
         contentDisplayDiv.appendChild(itemDataDiv);
 
         // Run the if statement again to create listener event after it was added to the innerHTML
         if (item.RunCommand !== null) {
-          const openCmdButton = document.getElementById('openCmdButton');
+          const openCmdButton = document.getElementById('playContainer');
           openCmdButton.addEventListener('click', () => {
             // console.log('Open CMD button clicked');
             handleOpenCmdButtonClick(item['RunCommand']); // Assuming filePath is a property of the item object
           });
         }
 
-        const editButton = document.getElementById('editButton');
+        const editButton = document.getElementById('editContainer');
         editButton.addEventListener('click', () => {
           displayEditForm(item);
         });
@@ -495,11 +580,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // });
 
         const backContainer = document.getElementById('backContainer');
-          backContainer.addEventListener('click', function () {
-            gridDisplayDiv.style.display = 'block';
-            // Remove the edit form
-            contentDisplayDiv.removeChild(itemDataDiv);
-          });
+        backContainer.addEventListener('click', function () {
+          gridDisplayDiv.style.display = 'block';
+          // Remove the edit form
+          contentDisplayDiv.removeChild(itemDataDiv);
+        });
       }
 
 // *************************************************************************************************************************************************
@@ -548,8 +633,21 @@ document.addEventListener('DOMContentLoaded', () => {
             <label for="tags">Tags:</label>
             <input type="text" id="tags" value="${updatedItem.Tags.join(', ')}"><br>
             <input type="submit" value="Save"><br>
-            <button id="backButton" type="button">Back</button><br>
             <button id="deleteButton" type="button">Delete Media</button><br>
+            <div id=buttonContainer>
+                <div id="backContainer2">
+                  <img src="assets/app/back.svg">
+                  <div>Back</div>
+                </div>
+                <div id="saveContainer">
+                  <img src="assets/app/save.svg" id="saveButton">
+                  <div>Save</div>
+                </div>
+                <div id="deleteContainer">
+                  <img src="assets/app/delete.svg" id="deleteButton">
+                  <div>Delete</div>
+                </div>
+              </div>
           </form>
         `;
         // contentDisplayDiv.innerHTML = '';
@@ -584,7 +682,7 @@ document.addEventListener('DOMContentLoaded', () => {
           window.updateBridge.updateMedia(id, name, RunCommandPath, tags, imagePath);
           // window.updateBridge.updateMedia(updatedData, imageFile);
         });
-        const backButton = document.getElementById('backButton');
+        const backButton = document.getElementById('backContainer2');
         backButton.addEventListener('click', function () {
           // Show the original content
           contentDisplayDiv.style.display = 'block';

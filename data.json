@@ -734,7 +734,20 @@
   ],
   "Tags": [
     {
-      "Name": "Albums"
+      "Name": "Albums",
+      "Width": 16,
+      "Height": 9,
+      "BorderColor": "red",
+      "BorderRadius": 4,
+      "BorderSize": 0,
+      "Margin": 0,
+      "Rows": 1,
+      "Columns": 15,
+      "Title": true,
+      "Description": false,
+      "Date": false,
+      "showCustomValue1": true,
+      "showCustomValue2": false
     },
     {
       "Name": "All"

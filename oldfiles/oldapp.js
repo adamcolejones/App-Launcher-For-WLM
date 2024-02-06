@@ -347,3 +347,30 @@
       // }
 
 // *************************************************************************************************************************************************
+// function displayTagSettings(tag, jsondata) {
+      //     const gridDisplayDiv = document.getElementById('gridDisplay');
+      //     const editTagSettingsDiv = document.getElementById('editTagSettings');
+          
+      //     // Show edit tag settings and hide others
+      //     gridDisplayDiv.style.display = 'none';
+      //     editTagSettingsDiv.style.display = 'block';
+      //     document.getElementById('contentDisplay').style.display = 'none';
+      //     document.getElementById('editDisplay').style.display = 'none';
+
+      //     const mediaData = jsondata.Media || [];
+
+      //     editTagSettingsDiv.innerHTML = `
+
+      //       <img src="assets/app/back.svg" id="backTagButton">
+      //     `;
+      
+      //     editTagSettingsDiv.addEventListener('click', function (event) {
+      //       if (event.target.id === 'backTagButton') {
+      //           gridDisplayDiv.style.display = 'block';
+      //           editTagSettingsDiv.style.display = 'none';
+      //       }
+      //   });
+      // }
+
+// *************************************************************************************************************************************************
+

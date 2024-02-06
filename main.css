@@ -47,9 +47,17 @@ a:hover {
   align-items: center;
   padding: 10px;
   width: fit-content;
-  background-color: gray;
+  background-color: #dfdfdf;
   cursor: pointer;
+}
 
+#backContainer2 {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  width: fit-content;
+  background-color: #dfdfdf;
+  cursor: pointer;
 }
 
 #backTagButton {
@@ -75,6 +83,10 @@ body {
   padding: 0;
   flex-wrap: wrap;
   /* position: fixed; */
+}
+
+#buttonContainer {
+  display: flex;
 }
 
 /* ---------------------------------------------------------------------------------------------- M ---------------------------------------------------------------------------------------------- */
@@ -115,6 +127,16 @@ body {
   /* overflow: scroll; */
 }
 
+#deleteContainer {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  width: fit-content;
+  background-color: #dfdfdf;
+  cursor: pointer;
+
+}
+
 /* ---------------------------------------------------------------------------------------------- M ---------------------------------------------------------------------------------------------- */
 /* 
  ██████████████
@@ -135,9 +157,24 @@ body {
   /* width: fit-content; */
 }
 
-.editContainer {
+#editCategorySettings {
+  width: 100%;
+  margin: 0 0;
+}
+
+/* .editContainer {
   display: flex;
   align-items: center;
+} */
+
+#editContainer {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  width: fit-content;
+  background-color: #dfdfdf;
+  cursor: pointer;
+
 }
 
 #editTagImage {
@@ -146,10 +183,10 @@ body {
   cursor: pointer;
 }
 
-#editTagSettings {
+/* #editTagSettings {
   width: 100%;
   margin: 0 0;
-}
+} */
 
 #error-message {
   color: rgb(247, 72, 72); 
@@ -518,9 +555,19 @@ p {
   text-align: center;
 }
 
-.playContainer {
+/* .playContainer {
   display: flex;
   align-items: center;
+} */
+
+#playContainer {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  width: fit-content;
+  background-color: #dfdfdf;
+  cursor: pointer;
+
 }
 
 .popup {
@@ -583,6 +630,16 @@ p {
  ██████████████
  */
 
+#saveContainer {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  width: fit-content;
+  background-color: #dfdfdf;
+  cursor: pointer;
+
+}
+
  .scrollableContent {
   position: relative;
   overflow-y: auto;
@@ -594,6 +651,11 @@ p {
   left: 200px; /* sideMenu Width */
   /* overflow-y: scroll; */
  }
+
+#showTagSettings {
+  width: 100%;
+  margin: 0 0;
+}
 
  #sideMenu {
   background-color: #dfdfdf;
