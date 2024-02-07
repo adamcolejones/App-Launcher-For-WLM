@@ -10,13 +10,13 @@
 // + function updateCustomFieldsVisibility() {
 // + mediaform.addEventListener('submit', (event) => {
 // + function displayData(data) {
-// + function displayGrid(data) {
+// + function displayMedia(data) {
 // + function displayContentForTag(tag) {
 // + tagDiv.addEventListener('click', () => { (sidemenu-item)
-// + gridItemPicture.addEventListener('click', () => { (griditempicture)
-// + function createGrid(data) {
+// + mediaItemPicture.addEventListener('click', () => { (mediaitempicture)
+// + function createMedia(data) {
 // + function createTable(data) {
-// + function displayGridItemData(item) { // Shows game items after pic click
+// + function displayMediaItemData(item) { // Shows game items after pic click
 // + Updating a media entry APP.JS >> PRELOAD.JS >> MAIN.JS
 // + Main.html consists of multiple divs, app.js will only display one at a time and hide the rest for the sake of back button features
 // + Need to clean and organize this code again
@@ -31,7 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorMessageElement = document.getElementById('error-message');
     const mediaSubmit = document.getElementById('mediaSubmit');
 
-    const gridDisplay = document.getElementById('gridDisplay');
+    // const gridDisplay = document.getElementById('gridDisplay');
+    const mediaDisplay = document.getElementById('mediaDisplay');
     const contentDisplay = document.getElementById('contentDisplay');    
 
     // Fetch data from data.json
@@ -41,9 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
       mediaData = data;
       // Assuming the data in data.json is an object with user-named arrays.
       // displayData(data);
-      displayGrid(data);
+      displayMedia(data);
     })
-    .catch(error => console.error('Error fetching grid data:', error));
+    .catch(error => console.error('Error fetching media data:', error));
 
     // Hide the customFieldsContainer initially
     customFieldsContainer.style.display = 'none';
@@ -182,8 +183,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // *************************************************************************************************************************************************
     // Generic function to display data for any user-named array
-    function displayGrid(data) {
-      const dataDisplayDiv = document.getElementById('gridDisplay');
+    function displayMedia(data) {
+      const dataDisplayDiv = document.getElementById('mediaDisplay');
       dataDisplayDiv.innerHTML = ''; // Clear any previous content
 
       const tagSections = {}; // Create an object to store items by tags
@@ -261,15 +262,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
       function displayContentForTag(tag, jsondata) {
           const scrollableContentDiv = document.querySelector('.scrollableContent');
-          const gridDisplayDiv = document.getElementById('gridDisplay');
+          const mediaDisplayDiv = document.getElementById('mediaDisplay');
           
-          // Show grid display and hide others
-          gridDisplayDiv.style.display = 'block';
+          // Show media display and hide others
+          mediaDisplayDiv.style.display = 'block';
           document.getElementById('showTagSettings').style.display = 'none';
           document.getElementById('contentDisplay').style.display = 'none';
           document.getElementById('editDisplay').style.display = 'none';
       
-          gridDisplayDiv.innerHTML = `
+          mediaDisplayDiv.innerHTML = `
               <div id="tagNameContainer">
                   <div id="tagSelection">${tag}</div>
                   <img src="assets/app/settings.svg" id="editTagImage">
@@ -279,7 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const mediaData = jsondata.Media || [];
           // If Tag selected is all, show all media data.  If not, only show media data where the media entries include the selected Tag.
           const items = tag === 'All' ? mediaData : mediaData.filter(item => item.Tags.includes(tag));
-          gridDisplayDiv.innerHTML += createGrid(items);
+          mediaDisplayDiv.innerHTML += createMedia(items);
       
           // Add event listener for the settings image/button
           const editTagImage = document.getElementById('editTagImage');
@@ -294,11 +295,11 @@ document.addEventListener('DOMContentLoaded', () => {
 //
       // Function that displays the settings page for an individual tag
       function displayTagSettings(tag, jsondata) {
-          const gridDisplayDiv = document.getElementById('gridDisplay');
+          const mediaDisplayDiv = document.getElementById('mediaDisplay');
           const showTagSettingsDiv = document.getElementById('showTagSettings');
       
           // Show edit tag settings and hide others
-          gridDisplayDiv.style.display = 'none';
+          mediaDisplayDiv.style.display = 'none';
           showTagSettingsDiv.style.display = 'block';
           document.getElementById('contentDisplay').style.display = 'none';
           document.getElementById('editDisplay').style.display = 'none';
@@ -356,14 +357,14 @@ document.addEventListener('DOMContentLoaded', () => {
       
           const backContainer = document.getElementById('backContainer');
           backContainer.addEventListener('click', function () {
-              gridDisplayDiv.style.display = 'block';
+              mediaDisplayDiv.style.display = 'block';
               showTagSettingsDiv.style.display = 'none';
               // Clear previous content when going back
               showTagSettingsDiv.innerHTML = '';
           });
           const editButton = document.getElementById('editContainer');
           editButton.addEventListener('click', () => {
-            editCategoryTagSettings(selectedTag);
+            editCategorySettings(selectedTag);
           });
           
           
@@ -372,20 +373,68 @@ document.addEventListener('DOMContentLoaded', () => {
 //
 //
 //
-      function editCategoryTagSettings(selectedTag) {
+      function editCategorySettings(selectedTag) {
         const editCategorySettings = document.getElementById('editCategorySettings');
         const showTagSettingsDiv = document.getElementById('showTagSettings');
         // hide current div, show new edit category div
         editCategorySettings.style.display = 'block';
         showTagSettingsDiv.style.display = 'none';
         // display new content for the edit page
+        
         editCategorySettings.innerHTML += `
           <div id="backContainer2">
             <img src="assets/app/back.svg">
             <div>Back</div>
           </div>
-          <p>${selectedTag.Name}</p>
+          <p>Name: ${selectedTag.Name}</p>
+          <p>Width: ${selectedTag.Width}</p>
+          <p>Height: ${selectedTag.Height}</p>
+          <p>Border: ${selectedTag.Border}</p>
+          <p>Gap: ${selectedTag.Gap}</p>
+          <p>Wrap: ${selectedTag.Wrap}</p>
+          <div class="testMediaContainer">
+            <div class="testMedia"></div>
+            <div class="testMedia"></div>
+            <div class="testMedia"></div>
+            <div class="testMedia"></div>
+            <div class="testMedia"></div>
+            <div class="testMedia"></div>
+            <div class="testMedia"></div>
+            <div class="testMedia"></div>
+            <div class="testMedia"></div>
+            <div class="testMedia"></div>
+            <div class="testMedia"></div>
+            <div class="testMedia"></div>
+            <div class="testMedia"></div>
+            <div class="testMedia"></div>
+            <div class="testMedia"></div>
+            <div class="testMedia"></div>
+            <div class="testMedia"></div>
+            <div class="testMedia"></div>
+            <div class="testMedia"></div>
+            <div class="testMedia"></div>
+          </div>
+          
         `;
+
+        // Here I am taking Data values from JSON and implementing them into CSS through JS
+        const testMediaContainers = document.querySelectorAll('testMediaContainer');
+        testMediaContainers.forEach(container => {
+          container.style.gap = `${selectedTag.Gap}px`;
+          container.style['flex-wrap'] = selectedTag.Wrap;
+        });
+
+        const height = 200; // Fixed height
+        const ratio = selectedTag.Width / selectedTag.Height;
+        let width = height * ratio;
+        const testMediaElements = document.querySelectorAll('.testMedia');
+        testMediaElements.forEach(testMedia => {
+          testMedia.style.width = `${width}px`;
+          testMedia.style.height = `${height}px`;
+          testMedia.style.border = `${selectedTag.BorderSize}px solid ${selectedTag.BorderColor}`;
+          testMedia.style['border-radius'] = `${selectedTag.BorderRadius}px`;
+        });
+
         const backContainer = document.getElementById('backContainer2');
         backContainer.addEventListener('click', function () {
           
@@ -437,21 +486,22 @@ document.addEventListener('DOMContentLoaded', () => {
       tagDivs.forEach(tagDiv => {
           tagDiv.addEventListener('click', () => {
             const contentDisplayDiv = document.getElementById('contentDisplay');
-            const gridDisplayDiv = document.getElementById('gridDisplay');
+            const mediaDisplayDiv = document.getElementById('mediaDisplay');
             const editDisplayDiv = document.getElementById('editDisplay');
             const showTagSettingsDiv = document.getElementById('showTagSettings');
+            const editCategorySettings = document.getElementById('editCategorySettings');
 
-            
-            
-            gridDisplayDiv.style.display = 'block'; // show grid again
-            contentDisplayDiv.style.display = 'none'; // hide any other selected content within the grid
-            contentDisplayDiv.innerHTML = '';
             // In the event user has the edit form up and clicks on the side menu to change the display
             // probably should look into some function that hides all unused divs
+            mediaDisplayDiv.style.display = 'block'; // show media again
+            contentDisplayDiv.style.display = 'none'; // hide any other selected content within the media 
+            contentDisplayDiv.innerHTML = '';
             editDisplayDiv.style.display = 'none';
             editDisplayDiv.innerHTML = '';
             showTagSettingsDiv.style.display = 'none';
             showTagSettingsDiv.innerHTML = '';
+            editCategorySettings.style.display = 'none';
+            editCategorySettings.innerHTML = '';
 
             // Remove the 'selected' class from all tags
             tagDivs.forEach(tag => {
@@ -462,7 +512,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tagDiv.classList.add('selected');
             const selectedTag = tagDiv.textContent;
             displayContentForTag(selectedTag, data);
-            addClickListenersToGridItems(); // Call the function to reapply click listeners to grid items
+            addClickListenersToMediaItems(); // Call the function to reapply click listeners to Media items
             // Scroll to the top of the scrollable-content div
             const scrollableContentDiv = document.querySelector('.scrollableContent');
             if (scrollableContentDiv) {
@@ -476,12 +526,12 @@ document.addEventListener('DOMContentLoaded', () => {
     //
     //
     //
-      function addClickListenersToGridItems() {
-        const gridItemPictures = document.querySelectorAll('.griditempicture');
-        gridItemPictures.forEach(gridItemPicture => {
-          gridItemPicture.addEventListener('click', () => {
-            const itemData = JSON.parse(gridItemPicture.parentElement.dataset.item); // Access data from parent element
-            displayGridItemData(itemData);
+      function addClickListenersToMediaItems() {
+        const mediaItemPictures = document.querySelectorAll('.mediaitempicture');
+        mediaItemPictures.forEach(mediaItemPicture => {
+          mediaItemPicture.addEventListener('click', () => {
+            const itemData = JSON.parse(mediaItemPicture.parentElement.dataset.item); // Access data from parent element
+            displayMediaItemData(itemData);
 
             const scrollableContentDiv = document.querySelector('.scrollableContent');
             if (scrollableContentDiv) {
@@ -491,19 +541,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
       // ADD click listener when page initially loads
-      addClickListenersToGridItems();
+      addClickListenersToMediaItems();
 
 // *************************************************************************************************************************************************
-    // Function to display grid item data in contentDisplay div
+    // Function to display media item data in contentDisplay div
     //
     //
     //
-      function displayGridItemData(item) {
-        // console.log('Displaying grid item data');
+      function displayMediaItemData(item) {
+        // console.log('Displaying media item data');
         const contentDisplayDiv = document.getElementById('contentDisplay');
-        const gridDisplayDiv = document.getElementById('gridDisplay');
-        gridDisplayDiv.style.display = 'none'; // Hide gridDisplay div
-        contentDisplayDiv.style.display = 'block'; // Or 'flex', 'grid', etc. depending on your layout
+        const mediaDisplayDiv = document.getElementById('mediaDisplay');
+        mediaDisplayDiv.style.display = 'none'; // Hide mediaDisplay div
+        contentDisplayDiv.style.display = 'block'; // Or 'flex', 'media', etc. depending on your layout
         // This itemDataDiv might be unnecessary, just add inner html to contentDisplayDiv and append to scrollable content?  When I have more time
         const itemDataDiv = document.createElement('div');
 
@@ -545,7 +595,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Check for image if the value is true on the json entry
         let imagePath = item.Image ? `assets/media/${item.id}.png` : 'assets/media/default.png';
-        let imageTag = `<img src="${imagePath}" alt="Image ${item.id}" class="griditempicture">`;
+        let imageTag = `<img src="${imagePath}" alt="Image ${item.id}" class="mediaitempicture">`;
           
         itemDataDiv.innerHTML += `
           </div>
@@ -563,6 +613,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <p>Activity for individual game, also with Link to full Activity Page</p>
           <p>Background Videos?  Background Music?  Special Fonts?  </p>
           <p>Other Tags this media belongs to, related</p>
+          <p>Add Last Played Date and Time to the JSON File Media Data, then give user the ability to sort by last played</p>
           
         `;
         
@@ -583,17 +634,17 @@ document.addEventListener('DOMContentLoaded', () => {
           displayEditForm(item);
         });
         
-        // const backGridButton = document.getElementById('backtogrid');
-        // backGridButton.addEventListener('click', function () {
+        // const backMediaButton = document.getElementById('backtomedia');
+        // backMediaButton.addEventListener('click', function () {
         //   // Show the original content
-        //   gridDisplayDiv.style.display = 'block';
+        //   mediaDisplayDiv.style.display = 'block';
         //   // Remove the edit form
         //   contentDisplayDiv.removeChild(itemDataDiv);
         // });
 
         const backContainer = document.getElementById('backContainer');
         backContainer.addEventListener('click', function () {
-          gridDisplayDiv.style.display = 'block';
+          mediaDisplayDiv.style.display = 'block';
           // Remove the edit form
           contentDisplayDiv.removeChild(itemDataDiv);
         });
@@ -741,11 +792,11 @@ document.addEventListener('DOMContentLoaded', () => {
   //
   //
   //
-    function createGrid(data) {
+    function createMedia(data) {
       if (data.length === 0) {
         return '<p>No data available.</p>';
       }
-      let gridHTML = '<div class="griddata">';
+      let mediaHTML = '<div class="mediadata">';
       // Collect all unique keys (field names) from the array
       const allKeys = new Set();
       for (const item of data) {
@@ -753,25 +804,25 @@ document.addEventListener('DOMContentLoaded', () => {
           allKeys.add(key);
         }
       }
-      gridHTML += '<div class="griditemcontainer">';
+      mediaHTML += '<div class="mediaitemcontainer">';
       // Create data rows
       for (const item of data) {
-        gridHTML += `<div class="griditem" data-item='${JSON.stringify(item).replace(/'/g, "&apos;")}'>`;
+        mediaHTML += `<div class="mediaitem" data-item='${JSON.stringify(item).replace(/'/g, "&apos;")}'>`;
         if (item.id && item.Image == true) {
           const imageUrl = item.id ? `assets/media/${item.id}.png` : 'assets/media/default.png';
-          gridHTML += `<img src="${imageUrl}" alt="Image ${item.id}" class="griditempicture" />`;
+          mediaHTML += `<img src="${imageUrl}" alt="Image ${item.id}" class="mediaitempicture" />`;
         } else {
           const defaultImageUrl = 'assets/media/default.png';
-          gridHTML += `<img src="${defaultImageUrl}" alt="Default Image" class="griditempicture" />`;
+          mediaHTML += `<img src="${defaultImageUrl}" alt="Default Image" class="mediaitempicture" />`;
         }
         const itemName = item.Name.replace(/'/g, "&apos;");
-        gridHTML += `<div class="gridvalue">${itemName}</div>`;
-        gridHTML += '<br></div>';
+        mediaHTML += `<div class="mediavalue">${itemName}</div>`;
+        mediaHTML += '<br></div>';
       }
-      gridHTML += '<br><p>Display Option to Add a category to this list, Example: Nintendo (Parent) N64, 3DS, GBC (Children)</p>'; // class="griditemcontainer"
-      gridHTML += '</div>'; // class="griditemcontainer"
-      gridHTML += '</div>'; // class="gridkeycontainer"
-      return gridHTML;
+      mediaHTML += '<br><p>Display Option to Add a category to this list, Example: Nintendo (Parent) N64, 3DS, GBC (Children)</p>'; // class="mediaitemcontainer"
+      mediaHTML += '</div>'; // class="mediaitemcontainer"
+      mediaHTML += '</div>'; // class="mediakeycontainer"
+      return mediaHTML;
     }
     
 // *************************************************************************************************************************************************

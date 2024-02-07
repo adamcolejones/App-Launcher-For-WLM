@@ -730,23 +730,43 @@
   ],
   "Tags": [
     {
-      "Name": "Albums",
+      "Name": "All",
       "Width": 1,
-      "Height": 1,
-      "Border": true,
+      "Height": 2,
+      "Border": 1,
       "BorderColor": "black",
-      "BorderRadius": 4,
-      "BorderSize": 1,
-      "Margin": 1,
+      "BorderRadius": 20,
+      "Gap": 1,
+      "Wrap": "wrap",
       "Rows": 1,
       "Columns": 15,
       "CustomValues": true
     },
     {
-      "Name": "All"
+      "Name": "Albums",
+      "Width": 2,
+      "Height": 1,
+      "Border": true,
+      "BorderColor": "black",
+      "BorderRadius": 4,
+      "Gap": 1,
+      "Wrap": "nowrap",
+      "Rows": 1,
+      "Columns": 15,
+      "CustomValues": true
     },
     {
-      "Name": "Artists"
+      "Name": "Artists",
+      "Width": 1,
+      "Height": 1,
+      "Border": true,
+      "BorderColor": "black",
+      "BorderRadius": 0,
+      "Gap": 1,
+      "Wrap": "wrap",
+      "Rows": 1,
+      "Columns": 15,
+      "CustomValues": true
     },
     {
       "Name": "Books"
