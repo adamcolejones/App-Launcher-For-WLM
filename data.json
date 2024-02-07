@@ -32,12 +32,13 @@
       ]
     },
     {
-      "id": 89,
-      "Name": "ABC",
+      "id": 86,
+      "Name": "abc",
       "Image": false,
       "RunCommand": null,
       "Tags": [
-        "abc"
+        "abc",
+        "ABC"
       ]
     },
     {
@@ -101,15 +102,6 @@
       "RunCommand": null,
       "Tags": [
         "Veggie Tales"
-      ]
-    },
-    {
-      "id": 87,
-      "Name": "DEF",
-      "Image": false,
-      "RunCommand": null,
-      "Tags": [
-        "def"
       ]
     },
     {
@@ -511,6 +503,10 @@
       "RunCommand": null,
       "Tags": [
         "Albums"
+      ],
+      "CustomValues": [
+        "Description: abcdefg",
+        "Number of songs: 17"
       ]
     },
     {
@@ -735,19 +731,16 @@
   "Tags": [
     {
       "Name": "Albums",
-      "Width": 16,
-      "Height": 9,
-      "BorderColor": "red",
+      "Width": 1,
+      "Height": 1,
+      "Border": true,
+      "BorderColor": "black",
       "BorderRadius": 4,
-      "BorderSize": 0,
-      "Margin": 0,
+      "BorderSize": 1,
+      "Margin": 1,
       "Rows": 1,
       "Columns": 15,
-      "Title": true,
-      "Description": false,
-      "Date": false,
-      "showCustomValue1": true,
-      "showCustomValue2": false
+      "CustomValues": true
     },
     {
       "Name": "All"
@@ -856,6 +849,12 @@
     },
     {
       "Name": "def"
+    },
+    {
+      "Name": "DEF"
+    },
+    {
+      "Name": "ABC"
     }
   ],
   "Names": [

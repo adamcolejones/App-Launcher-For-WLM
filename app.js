@@ -321,6 +321,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
               </div>
               <div class="tagContent">
+                  <p>------------------------------------------------------------------------------------</p>
+                  <p>CATEGORY SETTINGS</p>
+                  <p>------------------------------------------------------------------------------------</p>
                   <p>Name: ${selectedTag.Name}</p>
                   <p>Media's Display Ratio: ${selectedTag.Width} x ${selectedTag.Height}</p>
                   <p>Intro to Category, Video / Music / Transitions</p>
@@ -338,6 +341,15 @@ document.addEventListener('DOMContentLoaded', () => {
                   <p>I need to save a default value in the event user wants every category to look the same without setting them all</p>
                   <p>Give the user the ability to add custom values ot the json file, if user wants to create a Date or other text value, that should be here (Speedruns)</p>
                   <p>Custom values might be easier to use if they are saved with the actual media in question and not the tag / category</p>
+                  <br>
+                  <p>------------------------------------------------------------------------------------</p>
+                  <p>UNIVERSAL SETTINGS</p>
+                  <p>------------------------------------------------------------------------------------</p>
+                  <p>Side Bar Location / Style</p>
+                  <p>Give user the option for the side bar option to disappear after a moment, then wake up or display the option pressing the assigned button</p>
+                  <p>Consider the timing of switching between categories, some transition scenes may take up more time than they need to.  Should there be an option to skip directly to a cat and skip other transitions?</p>
+                  <p></p>
+                  <p></p>
                   <p></p>
               </div>
           `;
@@ -621,6 +633,20 @@ document.addEventListener('DOMContentLoaded', () => {
         editDisplayDiv.style.display = 'block';
         const editForm = document.createElement('div');
         editForm.innerHTML = `
+          <div id=buttonContainer>
+            <div id="backContainer2">
+              <img src="assets/app/back.svg">
+              <div>Back</div>
+            </div>
+            <div id="saveContainer">
+              <img src="assets/app/save.svg" id="saveButton">
+              <div>Save</div>
+            </div>
+            <div id="deleteContainer">
+              <img src="assets/app/delete.svg" id="deleteButton">
+              <div>Delete</div>
+            </div>
+          </div>
           <form id="editForm">
             <input type="hidden" id="id" value="${updatedItem.id}">
             <label for="name">Name:</label>
@@ -632,29 +658,15 @@ document.addEventListener('DOMContentLoaded', () => {
             <label for="RunCommand2">Old Run Command: ${updatedItem.RunCommand}</label><br>
             <label for="tags">Tags:</label>
             <input type="text" id="tags" value="${updatedItem.Tags.join(', ')}"><br>
-            <input type="submit" value="Save"><br>
-            <button id="deleteButton" type="button">Delete Media</button><br>
-            <div id=buttonContainer>
-                <div id="backContainer2">
-                  <img src="assets/app/back.svg">
-                  <div>Back</div>
-                </div>
-                <div id="saveContainer">
-                  <img src="assets/app/save.svg" id="saveButton">
-                  <div>Save</div>
-                </div>
-                <div id="deleteContainer">
-                  <img src="assets/app/delete.svg" id="deleteButton">
-                  <div>Delete</div>
-                </div>
-              </div>
+            
           </form>
         `;
         // contentDisplayDiv.innerHTML = '';
         // document.body.appendChild(editForm);
         editDisplayDiv.appendChild(editForm);
-        const editFormElement = document.getElementById('editForm');
-        editFormElement.addEventListener('submit', (event) => {
+        // const deleteContainer = document.getElementById('deleteContainer');
+        // editFormElement.addEventListener('submit', (event) => {
+        document.getElementById('saveContainer').addEventListener('click', (event) => {
           event.preventDefault();
           // Get form elements
           // const id = document.getElementById('id').value;
@@ -689,7 +701,7 @@ document.addEventListener('DOMContentLoaded', () => {
           // Remove the edit form
           editDisplayDiv.removeChild(editForm);
         });
-        const deleteButton = document.getElementById('deleteButton');
+        const deleteButton = document.getElementById('deleteContainer');
         deleteButton.addEventListener('click', function () {
             const idToDelete = Number(document.getElementById('id').value);
 
@@ -702,7 +714,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <button id="cancelDelete">No</button>
                 </div>
             `;
-            editFormElement.appendChild(confirmationDialog);
+            editForm.appendChild(confirmationDialog);
 
             // Set up event listeners for confirm and cancel buttons
             const confirmDeleteButton = document.getElementById('confirmDelete');
@@ -756,6 +768,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gridHTML += `<div class="gridvalue">${itemName}</div>`;
         gridHTML += '<br></div>';
       }
+      gridHTML += '<br><p>Display Option to Add a category to this list, Example: Nintendo (Parent) N64, 3DS, GBC (Children)</p>'; // class="griditemcontainer"
       gridHTML += '</div>'; // class="griditemcontainer"
       gridHTML += '</div>'; // class="gridkeycontainer"
       return gridHTML;
