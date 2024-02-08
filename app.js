@@ -342,6 +342,12 @@ document.addEventListener('DOMContentLoaded', () => {
                   <p>I need to save a default value in the event user wants every category to look the same without setting them all</p>
                   <p>Give the user the ability to add custom values ot the json file, if user wants to create a Date or other text value, that should be here (Speedruns)</p>
                   <p>Custom values might be easier to use if they are saved with the actual media in question and not the tag / category</p>
+                  <p>Hoverable Options</p>
+                  <p></p>
+                  <p></p>
+                  <p></p>
+                  <p></p>
+                  <p></p>
                   <br>
                   <p>------------------------------------------------------------------------------------</p>
                   <p>UNIVERSAL SETTINGS</p>
@@ -381,6 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showTagSettingsDiv.style.display = 'none';
         // display new content for the edit page
         
+        // Shows the editable settings for an individual category
         editCategorySettings.innerHTML += `
           <div id="backContainer2">
             <img src="assets/app/back.svg">
@@ -418,21 +425,68 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         // Here I am taking Data values from JSON and implementing them into CSS through JS
-        const testMediaContainers = document.querySelectorAll('testMediaContainer');
+        const testMediaContainers = document.querySelectorAll('.testMediaContainer');
         testMediaContainers.forEach(container => {
           container.style.gap = `${selectedTag.Gap}px`;
           container.style['flex-wrap'] = selectedTag.Wrap;
         });
 
-        const height = 200; // Fixed height
-        const ratio = selectedTag.Width / selectedTag.Height;
-        let width = height * ratio;
+        
         const testMediaElements = document.querySelectorAll('.testMedia');
+        const scrollableContent = document.querySelector('.scrollableContent');
         testMediaElements.forEach(testMedia => {
+          // Set initial styling
+          let height = 200; // Fixed height
+          let ratio = selectedTag.Width / selectedTag.Height;
+          let width = height * ratio;
           testMedia.style.width = `${width}px`;
           testMedia.style.height = `${height}px`;
-          testMedia.style.border = `${selectedTag.BorderSize}px solid ${selectedTag.BorderColor}`;
+          testMedia.style.border = `${selectedTag.Border}px solid ${selectedTag.BorderColor}`;
           testMedia.style['border-radius'] = `${selectedTag.BorderRadius}px`;
+          testMedia.style.zIndex = '2'; // Z-index for this element should be higher than its background border
+          // Create separate styling depending on whether or not the media is hovered over by the mouse
+          // Apply hoverable styling when mouse enters
+          testMedia.addEventListener('mouseenter', function() {
+            testMedia.style.border = `${selectedTag.Border}px solid ${selectedTag.HoverBorderColor}`;
+            testMedia.style['border-radius'] = `${selectedTag.HoverBorderRadius}px`;
+            const copy = testMedia.cloneNode(true);
+            copy.classList.add('testMediaCopy'); // Add a distinct class name
+            copy.style.position = 'absolute';
+            const rect = testMedia.getBoundingClientRect(); // Get position and size of original media item
+            // Use this to center the background div
+            let scrollDistanceLeft = scrollableContent.scrollLeft;
+            let scrollDistanceTop = scrollableContent.scrollTop;
+            // console.log("Horizontal scroll amount: " + scrollDistance + "px");
+            const sideMenuWidth = 200; // Width of the side menu
+            copy.style.top = `${rect.top - selectedTag.Border - selectedTag.Gap + scrollDistanceTop}px`; // Position the copy at the same top position as the original - border size - gap size
+            copy.style.left = `${rect.left - sideMenuWidth - selectedTag.Border - selectedTag.Gap + scrollDistanceLeft}px`; // Position the copy at the same left position as the original - the space taken up by the side bar - the border size 
+            copy.style.zIndex = '1';
+            copy.style.border = `${selectedTag.Border + selectedTag.Border}px solid ${selectedTag.BorderColor}`;
+            copy.style['border-radius'] = `${selectedTag.BorderRadius}px`;
+            copy.style.padding = `${selectedTag.Gap}px`;
+            copy.style['background-color'] = 'Green';
+            // height = 200 + selectedTag.Gap; // Fixed height
+            // ratio = selectedTag.Width / selectedTag.Height;
+            // width = height * ratio;
+            // copy.style.width = `${width}px`;
+            // copy.style.height = `${height}px`;
+            testMedia.parentNode.appendChild(copy);
+            
+          });
+          // Revert back to default non-hoverable styling when mouse leaves
+          testMedia.addEventListener('mouseleave', function() {
+            testMedia.style.border = `${selectedTag.Border}px solid ${selectedTag.BorderColor}`;
+            testMedia.style['border-radius'] = `${selectedTag.BorderRadius}px`;
+            const copies = testMedia.parentNode.querySelectorAll('.testMediaCopy');
+            copies.forEach(copy => {
+              copy.parentNode.removeChild(copy);
+            });
+            // height = 200; // Fixed height
+            // ratio = selectedTag.Width / selectedTag.Height;
+            // width = height * ratio;
+            // testMedia.style.width = `${width}px`;
+            // testMedia.style.height = `${height}px`;
+          });
         });
 
         const backContainer = document.getElementById('backContainer2');
@@ -596,7 +650,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Check for image if the value is true on the json entry
         let imagePath = item.Image ? `assets/media/${item.id}.png` : 'assets/media/default.png';
         let imageTag = `<img src="${imagePath}" alt="Image ${item.id}" class="mediaitempicture">`;
-          
+        
+        // Shows individual media data
         itemDataDiv.innerHTML += `
           </div>
           <br>

@@ -750,7 +750,7 @@ tbody {
   display: flex;
   width: fit-content;
   flex-wrap: wrap;
-  gap: 1px;
+  /* gap: 5px; */
 }
   
 th, td {
