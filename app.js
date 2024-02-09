@@ -444,8 +444,7 @@ document.addEventListener('DOMContentLoaded', () => {
           testMedia.style.border = `${selectedTag.Border}px solid ${selectedTag.BorderColor}`;
           testMedia.style['border-radius'] = `${selectedTag.BorderRadius}px`;
           testMedia.style.zIndex = '2'; // Z-index for this element should be higher than its background border
-          // Create separate styling depending on whether or not the media is hovered over by the mouse
-          // Apply hoverable styling when mouse enters
+          // Create separate styling depending on whether or not the media is hovered over by the mouse, Apply hoverable styling when mouse enters
           testMedia.addEventListener('mouseenter', function() {
             testMedia.style.border = `${selectedTag.Border}px solid ${selectedTag.HoverBorderColor}`;
             testMedia.style['border-radius'] = `${selectedTag.HoverBorderRadius}px`;
@@ -453,23 +452,18 @@ document.addEventListener('DOMContentLoaded', () => {
             copy.classList.add('testMediaCopy'); // Add a distinct class name
             copy.style.position = 'absolute';
             const rect = testMedia.getBoundingClientRect(); // Get position and size of original media item
-            // Use this to center the background div
             let scrollDistanceLeft = scrollableContent.scrollLeft;
             let scrollDistanceTop = scrollableContent.scrollTop;
-            // console.log("Horizontal scroll amount: " + scrollDistance + "px");
             const sideMenuWidth = 200; // Width of the side menu
-            copy.style.top = `${rect.top - selectedTag.Border - selectedTag.Gap + scrollDistanceTop}px`; // Position the copy at the same top position as the original - border size - gap size
-            copy.style.left = `${rect.left - sideMenuWidth - selectedTag.Border - selectedTag.Gap + scrollDistanceLeft}px`; // Position the copy at the same left position as the original - the space taken up by the side bar - the border size 
+            const padding = `${(selectedTag.Gap)}`;
+            console.log('padding' + padding);
             copy.style.zIndex = '1';
-            copy.style.border = `${selectedTag.Border + selectedTag.Border}px solid ${selectedTag.BorderColor}`;
+            copy.style.border = `${selectedTag.Border}px solid red`;
             copy.style['border-radius'] = `${selectedTag.BorderRadius}px`;
-            copy.style.padding = `${selectedTag.Gap}px`;
-            copy.style['background-color'] = 'Green';
-            // height = 200 + selectedTag.Gap; // Fixed height
-            // ratio = selectedTag.Width / selectedTag.Height;
-            // width = height * ratio;
-            // copy.style.width = `${width}px`;
-            // copy.style.height = `${height}px`;
+            copy.style.padding = padding + 'px';
+            copy.style.top = `${(rect.top) - (padding)  + (scrollDistanceTop)}px`; // Trying to place an element in the middle of an odd element will result in the value skewed to the left innacurately.
+            copy.style.left = `${(rect.left) - (padding) + (scrollDistanceLeft) - (sideMenuWidth)}px`; // +1
+            copy.style['background-color'] = 'Green'; // transparent middle, border could be larger?  Color the border instead
             testMedia.parentNode.appendChild(copy);
             
           });
@@ -481,11 +475,6 @@ document.addEventListener('DOMContentLoaded', () => {
             copies.forEach(copy => {
               copy.parentNode.removeChild(copy);
             });
-            // height = 200; // Fixed height
-            // ratio = selectedTag.Width / selectedTag.Height;
-            // width = height * ratio;
-            // testMedia.style.width = `${width}px`;
-            // testMedia.style.height = `${height}px`;
           });
         });
 
