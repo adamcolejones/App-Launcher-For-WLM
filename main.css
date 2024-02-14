@@ -746,7 +746,7 @@ tbody {
   background-color: rgb(255, 100, 100);
 }
 
-.testMediaContainer {
+#testMediaContainer {
   display: flex;
   width: fit-content;
   flex-wrap: wrap;

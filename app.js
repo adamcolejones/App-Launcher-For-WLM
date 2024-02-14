@@ -399,38 +399,42 @@ document.addEventListener('DOMContentLoaded', () => {
           <p>Border: ${selectedTag.Border}</p>
           <p>Gap: ${selectedTag.Gap}</p>
           <p>Wrap: ${selectedTag.Wrap}</p>
-          <div class="testMediaContainer">
-            <div class="testMedia"></div>
-            <div class="testMedia"></div>
-            <div class="testMedia"></div>
-            <div class="testMedia"></div>
-            <div class="testMedia"></div>
-            <div class="testMedia"></div>
-            <div class="testMedia"></div>
-            <div class="testMedia"></div>
-            <div class="testMedia"></div>
-            <div class="testMedia"></div>
-            <div class="testMedia"></div>
-            <div class="testMedia"></div>
-            <div class="testMedia"></div>
-            <div class="testMedia"></div>
-            <div class="testMedia"></div>
-            <div class="testMedia"></div>
-            <div class="testMedia"></div>
-            <div class="testMedia"></div>
-            <div class="testMedia"></div>
-            <div class="testMedia"></div>
+          <p>Gap</p><input id="gapCheckbox" type="checkbox" checked>
+          <br>
+          <p>Border</p><input id="borderCheckbox" type="checkbox" checked>
+          <br>
+          <div id="testMediaContainer">
+            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>
           </div>
           
         `;
-
         // Here I am taking Data values from JSON and implementing them into CSS through JS
-        const testMediaContainers = document.querySelectorAll('.testMediaContainer');
-        testMediaContainers.forEach(container => {
-          container.style.gap = `${selectedTag.Gap}px`;
-          container.style['flex-wrap'] = selectedTag.Wrap;
-        });
+        // const testMediaContainers = document.querySelectorAll('.testMediaContainer');
+        // testMediaContainers.forEach(container => {
+        //   container.style.gap = `${selectedTag.Gap}px`;
+        //   container.style['flex-wrap'] = selectedTag.Wrap;
+        // });
+        const testMediaContainer = document.getElementById('testMediaContainer');
+        const gapCheckbox = document.getElementById('gapCheckbox');
+        const borderCheckbox = document.getElementById('borderCheckbox');
+        // Default values for wrap and gap
+        testMediaContainer.style.gap = `${selectedTag.Gap}px`;
+        testMediaContainer.style['flex-wrap'] = selectedTag.Wrap;
 
+        // CHECKBOX VALUES UPDATE THE STYLING WHEN CHANGED
+        gapCheckbox.addEventListener('change', function() {
+          if (this.checked) {
+            // Checkbox is checked
+            // console.log('Gap checkbox checked');
+            testMediaContainer.style.gap = `${selectedTag.Gap}px`;
+            // Perform actions when checkbox is checked
+          } else {
+            // Checkbox is unchecked
+            // console.log('Gap checkbox unchecked');
+            testMediaContainer.style.gap = `0px`;
+            // Perform actions when checkbox is unchecked
+          }
+        });
         
         const testMediaElements = document.querySelectorAll('.testMedia');
         const scrollableContent = document.querySelector('.scrollableContent');
@@ -439,43 +443,102 @@ document.addEventListener('DOMContentLoaded', () => {
           let height = 200; // Fixed height
           let ratio = selectedTag.Width / selectedTag.Height;
           let width = height * ratio;
+          let border = selectedTag.Border;
+          // let backgroundBorder;
           testMedia.style.width = `${width}px`;
           testMedia.style.height = `${height}px`;
-          testMedia.style.border = `${selectedTag.Border}px solid ${selectedTag.BorderColor}`;
+          testMedia.style.border = `${border}px solid ${selectedTag.BorderColor}`;
           testMedia.style['border-radius'] = `${selectedTag.BorderRadius}px`;
           testMedia.style.zIndex = '2'; // Z-index for this element should be higher than its background border
           // Create separate styling depending on whether or not the media is hovered over by the mouse, Apply hoverable styling when mouse enters
+          // I should allow any dimensions to be applied to the custom tab, while using a fixed height.
+          // for new hovered border, include a "same size as gap" option
           testMedia.addEventListener('mouseenter', function() {
-            testMedia.style.border = `${selectedTag.Border}px solid ${selectedTag.HoverBorderColor}`;
+            // testMedia.style.border = `${selectedTag.Border}px solid ${selectedTag.HoverBorderColor}`;
+            updateBorder();
             testMedia.style['border-radius'] = `${selectedTag.HoverBorderRadius}px`;
+            testMedia.style.zIndex = '4'; // Z-index for this element should be higher than its background border
             const copy = testMedia.cloneNode(true);
             copy.classList.add('testMediaCopy'); // Add a distinct class name
             copy.style.position = 'absolute';
+
+            // TEST CODE
+            // Create and append style element for keyframes animation
+            // let style = document.createElement('style');
+            // style.innerHTML = `
+            //     @keyframes colorTransition {
+            //         0% { background-color: lightblue; }
+            //         100% { background-color: blue; }
+            //     }
+            //     .testMediaCopy {
+            //         animation: colorTransition 3s linear infinite alternate;
+            //     }
+            // `;
+            // document.head.appendChild(style);
+            // TEST CODE
             const rect = testMedia.getBoundingClientRect(); // Get position and size of original media item
             let scrollDistanceLeft = scrollableContent.scrollLeft;
             let scrollDistanceTop = scrollableContent.scrollTop;
             const sideMenuWidth = 200; // Width of the side menu
-            const padding = `${(selectedTag.Gap)}`;
-            console.log('padding' + padding);
-            copy.style.zIndex = '1';
-            copy.style.border = `${selectedTag.Border}px solid red`;
+            const padding = selectedTag.Gap;
+            copy.style.zIndex = '3';
+            // copy.style.border = `${backgroundBorder}px solid red`;
+            copy.style.border = `none`;
             copy.style['border-radius'] = `${selectedTag.BorderRadius}px`;
-            copy.style.padding = padding + 'px';
+            console.log(border);
+            copy.style.padding = (padding) + (border) + 'px';
             copy.style.top = `${(rect.top) - (padding)  + (scrollDistanceTop)}px`; // Trying to place an element in the middle of an odd element will result in the value skewed to the left innacurately.
             copy.style.left = `${(rect.left) - (padding) + (scrollDistanceLeft) - (sideMenuWidth)}px`; // +1
             copy.style['background-color'] = 'Green'; // transparent middle, border could be larger?  Color the border instead
             testMedia.parentNode.appendChild(copy);
             
           });
+          
+          // These listeners are placed after the media conatiners and copy backgrounds have been identified.
           // Revert back to default non-hoverable styling when mouse leaves
           testMedia.addEventListener('mouseleave', function() {
-            testMedia.style.border = `${selectedTag.Border}px solid ${selectedTag.BorderColor}`;
+            updateBorder();
+            // testMedia.style.border = `${selectedTag.Border}px solid ${selectedTag.BorderColor}`;
             testMedia.style['border-radius'] = `${selectedTag.BorderRadius}px`;
+            testMedia.style.zIndex = '2'; // Z-index for this element should be higher than its background border
             const copies = testMedia.parentNode.querySelectorAll('.testMediaCopy');
             copies.forEach(copy => {
               copy.parentNode.removeChild(copy);
             });
           });
+          // REMOVE AND ADD BORDERS
+          borderCheckbox.addEventListener('change', updateBorder);
+          function updateBorder() {
+            if (borderCheckbox.checked) {
+              // Checkbox is checked
+              // console.log('Border checkbox checked');
+              testMedia.style.border = `${selectedTag.Border}px solid ${selectedTag.BorderColor}`;
+              border = selectedTag.Border;
+              // backgroundBorder = selectedTag.Border; // enables background border if allowed
+              // Perform actions when checkbox is checked
+            } else {
+              // Checkbox is unchecked
+              // console.log('Border checkbox unchecked');
+              testMedia.style.border = `0px solid ${selectedTag.BorderColor}`;
+              border = 0; // disables background border if not checked
+              // copy.style.border = `0px solid red`;
+
+              // Perform actions when checkbox is unchecked
+            }
+          }
+          // borderCheckbox.addEventListener('change', function() {
+          //   if (this.checked) {
+          //     // Checkbox is checked
+          //     console.log('Border checkbox checked');
+          //     testMedia.style.border = `${selectedTag.Border}px solid ${selectedTag.BorderColor}`;
+          //     // Perform actions when checkbox is checked
+          //   } else {
+          //     // Checkbox is unchecked
+          //     console.log('Border checkbox unchecked');
+          //     testMedia.style.border = `0px solid ${selectedTag.BorderColor}`;
+          //     // Perform actions when checkbox is unchecked
+          //   }
+          // });
         });
 
         const backContainer = document.getElementById('backContainer2');
