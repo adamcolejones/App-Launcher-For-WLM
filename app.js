@@ -386,6 +386,8 @@ document.addEventListener('DOMContentLoaded', () => {
         editCategorySettings.style.display = 'block';
         showTagSettingsDiv.style.display = 'none';
         // display new content for the edit page
+        border = selectedTag.Border;
+        gap = selectedTag.Gap;
         
         // Shows the editable settings for an individual category
         editCategorySettings.innerHTML += `
@@ -396,13 +398,15 @@ document.addEventListener('DOMContentLoaded', () => {
           <p>Name: ${selectedTag.Name}</p>
           <p>Width: ${selectedTag.Width}</p>
           <p>Height: ${selectedTag.Height}</p>
-          <p>Gap: ${selectedTag.Gap}</p><input id="gapCheckbox" type="checkbox" checked>
+          <p>Gap: ${gap}</p><input id="gapCheckbox" type="checkbox" checked>
+          <input type="number" id="formGap" name="formBorder" value=${gap}>
           <br>
-          <p>Wrap: ${selectedTag.Wrap}</p><input id="wrapCheckbox" type="checkbox">
+          <p>Wrap: ${selectedTag.Wrap}</p><input id="wrapCheckbox" type="checkbox" checked>
           <br>
-          <p>Border: ${selectedTag.Border}</p><input id="borderCheckbox" type="checkbox">
+          <p>Border: ${border}</p><input id="borderCheckbox" type="checkbox" checked>
+          <input type="number" id="formBorder" name="formBorder" value=${border}>
           <br>
-          <p>Selected Border: ${selectedTag.SelectedBorder}</p><input id="selectedBorderCheckbox" type="checkbox" checked>
+          <p>Floating Border: ${selectedTag.SelectedBorder}</p><input id="selectedBorderCheckbox" type="checkbox" checked>
           <br>
           <p>Selected Background: ${selectedTag.SelectedBackground}</p><input id="selectedBackgroundCheckbox" type="checkbox">
           <br><br>
@@ -429,11 +433,28 @@ document.addEventListener('DOMContentLoaded', () => {
         gapCheckbox.addEventListener('change', gapChange);
         function gapChange() {
           if (gapCheckbox.checked) {
-            testMediaContainer.style.gap = `${selectedTag.Gap}px`;
+            // gap = selectedTag.Gap;
+            testMediaContainer.style.gap = `${gap}px`;
+            border = parseInt(document.getElementById("formBorder").value);
           } else {
             testMediaContainer.style.gap = `0px`;
+            gap = 0;
           }
         }
+        document.getElementById("formGap").addEventListener("input", function() {
+          var inputValue = parseInt(this.value);
+          // Check if the value is greater than 999
+          if (inputValue > 999) {
+              // If so, set it to 999
+              this.value = 999;
+              inputValue = 999; // Update inputValue as well
+          }
+          // Update the border variable with the input value
+          gap = inputValue;
+          gap = this.value !== null ? this.value : 0;
+          this.value = gap;
+          gapChange(); // apply to all media items
+        });
         wrapCheckbox.addEventListener('change', wrapChange);
         function wrapChange() {
           if (wrapCheckbox.checked) {
@@ -452,11 +473,13 @@ document.addEventListener('DOMContentLoaded', () => {
           let height = 200; // Fixed height
           let ratio = selectedTag.Width / selectedTag.Height;
           let width = height * ratio;
-          let border = selectedTag.Border;
-          let bordercopyborder = selectedTag.SelectedBorder;
+          // let border = selectedTag.Border;
+          let padding = gap;
+          // let border = document.getElementById("formBorder").value;
+          let floatingBorder = selectedTag.SelectedBorder;
           let selectedBackgroundColor = selectedTag.SelectedBorder;
           updateBorder();
-          updateSelectedBorder();
+          updateFloatingBorder();
           updateSelectedBackground();
           // let backgroundBorder;
           testMedia.style.width = `${width}px`;
@@ -468,18 +491,17 @@ document.addEventListener('DOMContentLoaded', () => {
           // I should allow any dimensions to be applied to the custom tab, while using a fixed height.
           // for new hovered border, include a "same size as gap" option
           testMedia.addEventListener('mouseenter', function() {
+            // on mouse enter, play a sound effect.  This would be where to put it.
+            // You could make a function that times the sound effects to have different pitches based on how many are hovered in a breif moment.  Musical selection menus.
             // testMedia.style.border = `${selectedTag.Border}px solid ${selectedTag.HoverBorderColor}`;
             // POSSIBLE IDEA, I could create a copy of the media and position it in the middle to enlarge it without affecting the flex box order and layout: Enlarge selected media
-            // updateBorder();
-            // updateSelectedBorder();
-            // updateSelectedBackground();
             const rect = testMedia.getBoundingClientRect(); // Get position and size of original media item
             let scrollDistanceLeft = scrollableContent.scrollLeft;
             let scrollDistanceTop = scrollableContent.scrollTop;
             const sideMenuWidth = 200; // Width of the side menu
-            const padding = selectedTag.Gap;
+            // const padding = selectedTag.Gap;
             const copy = testMedia.cloneNode(true);
-            const bordercopy = testMedia.cloneNode(true);
+            const floatingBorderElement = testMedia.cloneNode(true);
             // testMedia.style['border-radius'] = `${selectedTag.HoverBorderRadius}px`;
             testMedia.style.zIndex = '5'; // Z-index for this element should be higher than its background border
             copy.classList.add('testMediaCopy'); // Add a distinct class name
@@ -491,19 +513,19 @@ document.addEventListener('DOMContentLoaded', () => {
             copy.style.top = `${(rect.top) - (padding)  + (scrollDistanceTop)}px`; // Trying to place an element in the middle of an odd element will result in the value skewed to the left innacurately.
             copy.style.left = `${(rect.left) - (padding) + (scrollDistanceLeft) - (sideMenuWidth)}px`; // +1
             copy.style['background-color'] = selectedBackgroundColor;
-            bordercopy.classList.add('testMediaCopy'); // Add a distinct class name
-            bordercopy.style.position = 'absolute';
-            bordercopy.style.zIndex = '4';
-            bordercopy.style['background-color'] = 'transparent';
-            bordercopy.style.border = bordercopyborder + 'px solid blue'; // custom per user
-            // bordercopy.style.borderRadius = '10px';
+            floatingBorderElement.classList.add('testMediaCopy'); // Add a distinct class name
+            floatingBorderElement.style.position = 'absolute';
+            floatingBorderElement.style.zIndex = '4';
+            floatingBorderElement.style['background-color'] = 'transparent';
+            floatingBorderElement.style.border = floatingBorder + 'px solid blue'; // custom per user
+            // floatingBorderElement.style.borderRadius = '10px';
             // need to turn calculations into named variables to help showcase what is actually being done per value
             let gapMiddle = Math.ceil(selectedTag.Gap / 4); // round up to prevent decimal padding.  Round up keeps border closer to element, down spreads it out further
-            bordercopy.style.padding = (padding) + (border) - bordercopyborder - gapMiddle + 'px'; // - 2 custom per user border settings
-            bordercopy.style.top = `${(rect.top) - (padding)  + (scrollDistanceTop) + gapMiddle}px`; // Trying to place an element in the middle of an odd element will result in the value skewed to the left innacurately.
-            bordercopy.style.left = `${(rect.left) - (padding) + (scrollDistanceLeft) - (sideMenuWidth) + gapMiddle}px`; // +1
+            floatingBorderElement.style.padding = (padding) + (border) - floatingBorder - gapMiddle + 'px'; // - 2 custom per user border settings
+            floatingBorderElement.style.top = `${(rect.top) - (padding)  + (scrollDistanceTop) + gapMiddle}px`; // Trying to place an element in the middle of an odd element will result in the value skewed to the left innacurately.
+            floatingBorderElement.style.left = `${(rect.left) - (padding) + (scrollDistanceLeft) - (sideMenuWidth) + gapMiddle}px`; // +1
             testMedia.parentNode.appendChild(copy);
-            testMedia.parentNode.appendChild(bordercopy);
+            testMedia.parentNode.appendChild(floatingBorderElement);
             // Border Gap, space between the original item and the border
             // IF I have a border gap, then I would have to narrow the padding to be exactly the same as the original item
             // if I do that, then there wouldn't be any point of having the copied item as a customizable object
@@ -529,21 +551,39 @@ document.addEventListener('DOMContentLoaded', () => {
           borderCheckbox.addEventListener('change', updateBorder);
           function updateBorder() {
             if (borderCheckbox.checked) {
-              testMedia.style.border = `${selectedTag.Border}px solid ${selectedTag.BorderColor}`;
-              border = selectedTag.Border;
+              border = parseInt(document.getElementById("formBorder").value);
+              // border = 10;
+              console.log(border);
+              testMedia.style.border = `${border}px solid ${selectedTag.BorderColor}`;
+              // border = selectedTag.Border;
             } else {
               testMedia.style.border = `0px solid ${selectedTag.BorderColor}`;
               border = 0;
             }
           }
+          // UPDATE BORDER SIZE BASED ON FORM INPUT
+          document.getElementById("formBorder").addEventListener("input", function() {
+            var inputValue = parseInt(this.value);
+            // Check if the value is greater than 999
+            if (inputValue > 999) {
+                // If so, set it to 999
+                this.value = 999;
+                inputValue = 999; // Update inputValue as well
+            }
+            // Update the border variable with the input value
+            border = inputValue;
+            border = this.value !== null ? this.value : 0;
+            this.value = border;
+            updateBorder(); // apply to all media items
+          });
           // FLOATING BORDER FOR SELECTED MATERIAL
           // These hovered elements dont exist until the original is hovered, you can't reference them directly you have to use variables.
-          selectedBorderCheckbox.addEventListener('change', updateSelectedBorder);
-          function updateSelectedBorder() {
+          selectedBorderCheckbox.addEventListener('change', updateFloatingBorder);
+          function updateFloatingBorder() {
             if (selectedBorderCheckbox.checked) {
-              bordercopyborder = selectedTag.SelectedBorder;
+              floatingBorder = selectedTag.SelectedBorder;
             } else {
-              bordercopyborder = 0;
+              floatingBorder = 0;
             }
           }
           // SELECTED BACKGROUND COLOR
