@@ -396,54 +396,68 @@ document.addEventListener('DOMContentLoaded', () => {
           <p>Name: ${selectedTag.Name}</p>
           <p>Width: ${selectedTag.Width}</p>
           <p>Height: ${selectedTag.Height}</p>
-          <p>Border: ${selectedTag.Border}</p>
-          <p>Gap: ${selectedTag.Gap}</p>
-          <p>Wrap: ${selectedTag.Wrap}</p>
-          <p>Gap</p><input id="gapCheckbox" type="checkbox" checked>
+          <p>Gap: ${selectedTag.Gap}</p><input id="gapCheckbox" type="checkbox" checked>
           <br>
-          <p>Border</p><input id="borderCheckbox" type="checkbox" checked>
+          <p>Wrap: ${selectedTag.Wrap}</p><input id="wrapCheckbox" type="checkbox">
           <br>
+          <p>Border: ${selectedTag.Border}</p><input id="borderCheckbox" type="checkbox">
+          <br>
+          <p>Selected Border: ${selectedTag.SelectedBorder}</p><input id="selectedBorderCheckbox" type="checkbox" checked>
+          <br>
+          <p>Selected Background: ${selectedTag.SelectedBackground}</p><input id="selectedBackgroundCheckbox" type="checkbox">
+          <br><br>
           <div id="testMediaContainer">
             <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>
           </div>
           
         `;
         // Here I am taking Data values from JSON and implementing them into CSS through JS
-        // const testMediaContainers = document.querySelectorAll('.testMediaContainer');
-        // testMediaContainers.forEach(container => {
-        //   container.style.gap = `${selectedTag.Gap}px`;
-        //   container.style['flex-wrap'] = selectedTag.Wrap;
-        // });
         const testMediaContainer = document.getElementById('testMediaContainer');
         const gapCheckbox = document.getElementById('gapCheckbox');
+        const wrapCheckbox = document.getElementById('wrapCheckbox');
         const borderCheckbox = document.getElementById('borderCheckbox');
+        const selectedBorderCheckbox = document.getElementById('selectedBorderCheckbox');
+        const selectedBackgroundCheckbox = document.getElementById('selectedBackgroundCheckbox');
+        // NEXT: Need to implement custom input fields for users to customize styling values
+
         // Default values for wrap and gap
-        testMediaContainer.style.gap = `${selectedTag.Gap}px`;
-        testMediaContainer.style['flex-wrap'] = selectedTag.Wrap;
+        gapChange();
+        wrapChange();
 
         // CHECKBOX VALUES UPDATE THE STYLING WHEN CHANGED
-        gapCheckbox.addEventListener('change', function() {
-          if (this.checked) {
-            // Checkbox is checked
-            // console.log('Gap checkbox checked');
+        // Placed before the media elements are created, as the container controls the gaps, not the media itself
+        gapCheckbox.addEventListener('change', gapChange);
+        function gapChange() {
+          if (gapCheckbox.checked) {
             testMediaContainer.style.gap = `${selectedTag.Gap}px`;
-            // Perform actions when checkbox is checked
           } else {
-            // Checkbox is unchecked
-            // console.log('Gap checkbox unchecked');
             testMediaContainer.style.gap = `0px`;
-            // Perform actions when checkbox is unchecked
           }
-        });
+        }
+        wrapCheckbox.addEventListener('change', wrapChange);
+        function wrapChange() {
+          if (wrapCheckbox.checked) {
+            testMediaContainer.style['flex-wrap'] = `${selectedTag.Wrap}`;
+          } else {
+            testMediaContainer.style['flex-wrap'] = `nowrap`;
+          }
+        }
         
         const testMediaElements = document.querySelectorAll('.testMedia');
         const scrollableContent = document.querySelector('.scrollableContent');
         testMediaElements.forEach(testMedia => {
           // Set initial styling
+          // Prevent user from setting odd numbered values for borders and padding, this will keep content evenly spaced when calculating positioning
+          // This actually wouldn't help when we have to divide the values, 10 would become 5, 6 - 3, etc.
           let height = 200; // Fixed height
           let ratio = selectedTag.Width / selectedTag.Height;
           let width = height * ratio;
           let border = selectedTag.Border;
+          let bordercopyborder = selectedTag.SelectedBorder;
+          let selectedBackgroundColor = selectedTag.SelectedBorder;
+          updateBorder();
+          updateSelectedBorder();
+          updateSelectedBackground();
           // let backgroundBorder;
           testMedia.style.width = `${width}px`;
           testMedia.style.height = `${height}px`;
@@ -455,42 +469,48 @@ document.addEventListener('DOMContentLoaded', () => {
           // for new hovered border, include a "same size as gap" option
           testMedia.addEventListener('mouseenter', function() {
             // testMedia.style.border = `${selectedTag.Border}px solid ${selectedTag.HoverBorderColor}`;
-            updateBorder();
-            testMedia.style['border-radius'] = `${selectedTag.HoverBorderRadius}px`;
-            testMedia.style.zIndex = '4'; // Z-index for this element should be higher than its background border
-            const copy = testMedia.cloneNode(true);
-            copy.classList.add('testMediaCopy'); // Add a distinct class name
-            copy.style.position = 'absolute';
-
-            // TEST CODE
-            // Create and append style element for keyframes animation
-            // let style = document.createElement('style');
-            // style.innerHTML = `
-            //     @keyframes colorTransition {
-            //         0% { background-color: lightblue; }
-            //         100% { background-color: blue; }
-            //     }
-            //     .testMediaCopy {
-            //         animation: colorTransition 3s linear infinite alternate;
-            //     }
-            // `;
-            // document.head.appendChild(style);
-            // TEST CODE
+            // POSSIBLE IDEA, I could create a copy of the media and position it in the middle to enlarge it without affecting the flex box order and layout: Enlarge selected media
+            // updateBorder();
+            // updateSelectedBorder();
+            // updateSelectedBackground();
             const rect = testMedia.getBoundingClientRect(); // Get position and size of original media item
             let scrollDistanceLeft = scrollableContent.scrollLeft;
             let scrollDistanceTop = scrollableContent.scrollTop;
             const sideMenuWidth = 200; // Width of the side menu
             const padding = selectedTag.Gap;
+            const copy = testMedia.cloneNode(true);
+            const bordercopy = testMedia.cloneNode(true);
+            // testMedia.style['border-radius'] = `${selectedTag.HoverBorderRadius}px`;
+            testMedia.style.zIndex = '5'; // Z-index for this element should be higher than its background border
+            copy.classList.add('testMediaCopy'); // Add a distinct class name
+            copy.style.position = 'absolute';
             copy.style.zIndex = '3';
-            // copy.style.border = `${backgroundBorder}px solid red`;
             copy.style.border = `none`;
             copy.style['border-radius'] = `${selectedTag.BorderRadius}px`;
-            console.log(border);
             copy.style.padding = (padding) + (border) + 'px';
             copy.style.top = `${(rect.top) - (padding)  + (scrollDistanceTop)}px`; // Trying to place an element in the middle of an odd element will result in the value skewed to the left innacurately.
             copy.style.left = `${(rect.left) - (padding) + (scrollDistanceLeft) - (sideMenuWidth)}px`; // +1
-            copy.style['background-color'] = 'Green'; // transparent middle, border could be larger?  Color the border instead
+            copy.style['background-color'] = selectedBackgroundColor;
+            bordercopy.classList.add('testMediaCopy'); // Add a distinct class name
+            bordercopy.style.position = 'absolute';
+            bordercopy.style.zIndex = '4';
+            bordercopy.style['background-color'] = 'transparent';
+            bordercopy.style.border = bordercopyborder + 'px solid blue'; // custom per user
+            // bordercopy.style.borderRadius = '10px';
+            // need to turn calculations into named variables to help showcase what is actually being done per value
+            let gapMiddle = Math.ceil(selectedTag.Gap / 4); // round up to prevent decimal padding.  Round up keeps border closer to element, down spreads it out further
+            bordercopy.style.padding = (padding) + (border) - bordercopyborder - gapMiddle + 'px'; // - 2 custom per user border settings
+            bordercopy.style.top = `${(rect.top) - (padding)  + (scrollDistanceTop) + gapMiddle}px`; // Trying to place an element in the middle of an odd element will result in the value skewed to the left innacurately.
+            bordercopy.style.left = `${(rect.left) - (padding) + (scrollDistanceLeft) - (sideMenuWidth) + gapMiddle}px`; // +1
             testMedia.parentNode.appendChild(copy);
+            testMedia.parentNode.appendChild(bordercopy);
+            // Border Gap, space between the original item and the border
+            // IF I have a border gap, then I would have to narrow the padding to be exactly the same as the original item
+            // if I do that, then there wouldn't be any point of having the copied item as a customizable object
+            // there would need to be a toggle that let the user switch between what is most important to them, Or I could have another copied item... and layer it accordingly
+            // one copied item would always be transparent but have a border of varying distance from the original and thickness, roundness customizable
+            // copy.style.border = `${backgroundBorder}px solid red`;
+            // console.log(border);
             
           });
           
@@ -498,47 +518,45 @@ document.addEventListener('DOMContentLoaded', () => {
           // Revert back to default non-hoverable styling when mouse leaves
           testMedia.addEventListener('mouseleave', function() {
             updateBorder();
-            // testMedia.style.border = `${selectedTag.Border}px solid ${selectedTag.BorderColor}`;
-            testMedia.style['border-radius'] = `${selectedTag.BorderRadius}px`;
+            // testMedia.style['border-radius'] = `${selectedTag.BorderRadius}px`;
             testMedia.style.zIndex = '2'; // Z-index for this element should be higher than its background border
             const copies = testMedia.parentNode.querySelectorAll('.testMediaCopy');
             copies.forEach(copy => {
               copy.parentNode.removeChild(copy);
             });
           });
-          // REMOVE AND ADD BORDERS
+          // REMOVE AND ADD BORDERS based on whether the associated box is checked
           borderCheckbox.addEventListener('change', updateBorder);
           function updateBorder() {
             if (borderCheckbox.checked) {
-              // Checkbox is checked
-              // console.log('Border checkbox checked');
               testMedia.style.border = `${selectedTag.Border}px solid ${selectedTag.BorderColor}`;
               border = selectedTag.Border;
-              // backgroundBorder = selectedTag.Border; // enables background border if allowed
-              // Perform actions when checkbox is checked
             } else {
-              // Checkbox is unchecked
-              // console.log('Border checkbox unchecked');
               testMedia.style.border = `0px solid ${selectedTag.BorderColor}`;
-              border = 0; // disables background border if not checked
-              // copy.style.border = `0px solid red`;
-
-              // Perform actions when checkbox is unchecked
+              border = 0;
             }
           }
-          // borderCheckbox.addEventListener('change', function() {
-          //   if (this.checked) {
-          //     // Checkbox is checked
-          //     console.log('Border checkbox checked');
-          //     testMedia.style.border = `${selectedTag.Border}px solid ${selectedTag.BorderColor}`;
-          //     // Perform actions when checkbox is checked
-          //   } else {
-          //     // Checkbox is unchecked
-          //     console.log('Border checkbox unchecked');
-          //     testMedia.style.border = `0px solid ${selectedTag.BorderColor}`;
-          //     // Perform actions when checkbox is unchecked
-          //   }
-          // });
+          // FLOATING BORDER FOR SELECTED MATERIAL
+          // These hovered elements dont exist until the original is hovered, you can't reference them directly you have to use variables.
+          selectedBorderCheckbox.addEventListener('change', updateSelectedBorder);
+          function updateSelectedBorder() {
+            if (selectedBorderCheckbox.checked) {
+              bordercopyborder = selectedTag.SelectedBorder;
+            } else {
+              bordercopyborder = 0;
+            }
+          }
+          // SELECTED BACKGROUND COLOR
+          selectedBackgroundCheckbox.addEventListener('change', updateSelectedBackground);
+          function updateSelectedBackground() {
+            if (selectedBackgroundCheckbox.checked) {
+              selectedBackgroundColor = selectedTag.SelectedBackground;
+              // border radius should go here
+            } else {
+              selectedBackgroundColor = 'transparent';
+              // border radius
+            }
+          }
         });
 
         const backContainer = document.getElementById('backContainer2');
