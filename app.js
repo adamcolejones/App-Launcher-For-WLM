@@ -388,6 +388,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // display new content for the edit page
         border = selectedTag.Border;
         gap = selectedTag.Gap;
+        floatingBorder = selectedTag.FloatingBorder;
+        floatingBorderGap = selectedTag.FloatingBorderGap;
+        // console.log("Border:", border);
+        // console.log("Gap:", gap);
+        // console.log("Floating Border:", floatingBorder);
         
         // Shows the editable settings for an individual category
         editCategorySettings.innerHTML += `
@@ -398,18 +403,21 @@ document.addEventListener('DOMContentLoaded', () => {
           <p>Name: ${selectedTag.Name}</p>
           <p>Width: ${selectedTag.Width}</p>
           <p>Height: ${selectedTag.Height}</p>
-          <p>Gap: ${gap}</p><input id="gapCheckbox" type="checkbox" checked>
+          <p id="gapValue">Gap: ${gap}</p><input id="gapCheckbox" type="checkbox" checked>
           <input type="number" id="formGap" name="formBorder" value=${gap}>
           <br>
           <p>Wrap: ${selectedTag.Wrap}</p><input id="wrapCheckbox" type="checkbox" checked>
           <br>
-          <p>Border: ${border}</p><input id="borderCheckbox" type="checkbox" checked>
+          <p id="borderValue">Border: ${border}</p><input id="borderCheckbox" type="checkbox" checked>
           <input type="number" id="formBorder" name="formBorder" value=${border}>
           <br>
-          <p>Floating Border: ${selectedTag.SelectedBorder}</p><input id="selectedBorderCheckbox" type="checkbox" checked>
+          <p id="floatingBorderValue">Floating Border Size: ${floatingBorder}</p><input id="floatingBorderCheckbox" type="checkbox" checked>
+          <input type="number" id="formFloatingBorder" name="formFloatingBorder" value=${floatingBorder}>
           <br>
-          <p>Selected Background: ${selectedTag.SelectedBackground}</p><input id="selectedBackgroundCheckbox" type="checkbox">
-          <br><br>
+          <p id="floatingBorderGapValue">Floating Border Gap Size: ${floatingBorderGap}</p><input id="floatingBorderGapCheckbox" type="checkbox" checked>
+          <input type="number" id="formFloatingBorderGap" name="formFloatingBorderGap" value=${floatingBorderGap}>
+          <br>
+          <br>
           <div id="testMediaContainer">
             <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>
           </div>
@@ -420,29 +428,47 @@ document.addEventListener('DOMContentLoaded', () => {
         const gapCheckbox = document.getElementById('gapCheckbox');
         const wrapCheckbox = document.getElementById('wrapCheckbox');
         const borderCheckbox = document.getElementById('borderCheckbox');
-        const selectedBorderCheckbox = document.getElementById('selectedBorderCheckbox');
-        const selectedBackgroundCheckbox = document.getElementById('selectedBackgroundCheckbox');
+        const floatingBorderCheckbox = document.getElementById('floatingBorderCheckbox');
+        const floatingBorderGapCheckbox = document.getElementById('floatingBorderGapCheckbox');
         // NEXT: Need to implement custom input fields for users to customize styling values
 
         // Default values for wrap and gap
         gapChange();
         wrapChange();
 
+        //-----------------------------------------------------------------------------------------
         // CHECKBOX VALUES UPDATE THE STYLING WHEN CHANGED
         // Placed before the media elements are created, as the container controls the gaps, not the media itself
+        // 
+        //
+        //
+        //
         gapCheckbox.addEventListener('change', gapChange);
         function gapChange() {
           if (gapCheckbox.checked) {
-            // gap = selectedTag.Gap;
+            gap = parseInt(document.getElementById('formGap').value);
             testMediaContainer.style.gap = `${gap}px`;
             border = parseInt(document.getElementById("formBorder").value);
           } else {
             testMediaContainer.style.gap = `0px`;
             gap = 0;
           }
+          document.getElementById("gapValue").textContent = `Gap: ${gap}`;
         }
+        //-----------------------------------------------------------------------------------------
+
+        //-----------------------------------------------------------------------------------------
+        // FORM GAP LISTENER
+        //
+        //
+        //
         document.getElementById("formGap").addEventListener("input", function() {
           var inputValue = parseInt(this.value);
+          // Ensure the value does not go below 0
+          if (inputValue < 0) {
+            this.value = 0;
+            inputValue = 0; // Update inputValue as well
+          }
           // Check if the value is greater than 999
           if (inputValue > 999) {
               // If so, set it to 999
@@ -455,6 +481,13 @@ document.addEventListener('DOMContentLoaded', () => {
           this.value = gap;
           gapChange(); // apply to all media items
         });
+        //-----------------------------------------------------------------------------------------
+
+        //-----------------------------------------------------------------------------------------
+        // WRAP LISTENER
+        //
+        //
+        //
         wrapCheckbox.addEventListener('change', wrapChange);
         function wrapChange() {
           if (wrapCheckbox.checked) {
@@ -463,7 +496,13 @@ document.addEventListener('DOMContentLoaded', () => {
             testMediaContainer.style['flex-wrap'] = `nowrap`;
           }
         }
+        //-----------------------------------------------------------------------------------------
         
+        //-----------------------------------------------------------------------------------------
+        // Loop of all Media Elements
+        //
+        //
+        //
         const testMediaElements = document.querySelectorAll('.testMedia');
         const scrollableContent = document.querySelector('.scrollableContent');
         testMediaElements.forEach(testMedia => {
@@ -474,13 +513,13 @@ document.addEventListener('DOMContentLoaded', () => {
           let ratio = selectedTag.Width / selectedTag.Height;
           let width = height * ratio;
           // let border = selectedTag.Border;
-          let padding = gap;
+          // let padding = gap;
           // let border = document.getElementById("formBorder").value;
-          let floatingBorder = selectedTag.SelectedBorder;
-          let selectedBackgroundColor = selectedTag.SelectedBorder;
+          // let floatingBorder = selectedTag.FloatingBorder;
+          // let selectedBackgroundColor = selectedTag.SelectedBackground;
           updateBorder();
           updateFloatingBorder();
-          updateSelectedBackground();
+          updateFloatingBorderGap();
           // let backgroundBorder;
           testMedia.style.width = `${width}px`;
           testMedia.style.height = `${height}px`;
@@ -500,19 +539,19 @@ document.addEventListener('DOMContentLoaded', () => {
             let scrollDistanceTop = scrollableContent.scrollTop;
             const sideMenuWidth = 200; // Width of the side menu
             // const padding = selectedTag.Gap;
-            const copy = testMedia.cloneNode(true);
+            // const copy = testMedia.cloneNode(true);
             const floatingBorderElement = testMedia.cloneNode(true);
             // testMedia.style['border-radius'] = `${selectedTag.HoverBorderRadius}px`;
             testMedia.style.zIndex = '5'; // Z-index for this element should be higher than its background border
-            copy.classList.add('testMediaCopy'); // Add a distinct class name
-            copy.style.position = 'absolute';
-            copy.style.zIndex = '3';
-            copy.style.border = `none`;
-            copy.style['border-radius'] = `${selectedTag.BorderRadius}px`;
-            copy.style.padding = (padding) + (border) + 'px';
-            copy.style.top = `${(rect.top) - (padding)  + (scrollDistanceTop)}px`; // Trying to place an element in the middle of an odd element will result in the value skewed to the left innacurately.
-            copy.style.left = `${(rect.left) - (padding) + (scrollDistanceLeft) - (sideMenuWidth)}px`; // +1
-            copy.style['background-color'] = selectedBackgroundColor;
+            // copy.classList.add('testMediaCopy'); // Add a distinct class name
+            // copy.style.position = 'absolute';
+            // copy.style.zIndex = '3';
+            // copy.style.border = `none`;
+            // copy.style['border-radius'] = `${selectedTag.BorderRadius}px`;
+            // copy.style.padding = (padding) + (border) + 'px';
+            // copy.style.top = `${(rect.top) - (padding)  + (scrollDistanceTop)}px`; // Trying to place an element in the middle of an odd element will result in the value skewed to the left innacurately.
+            // copy.style.left = `${(rect.left) - (padding) + (scrollDistanceLeft) - (sideMenuWidth)}px`; // +1
+            // copy.style['background-color'] = selectedBackgroundColor;
             floatingBorderElement.classList.add('testMediaCopy'); // Add a distinct class name
             floatingBorderElement.style.position = 'absolute';
             floatingBorderElement.style.zIndex = '4';
@@ -520,11 +559,11 @@ document.addEventListener('DOMContentLoaded', () => {
             floatingBorderElement.style.border = floatingBorder + 'px solid blue'; // custom per user
             // floatingBorderElement.style.borderRadius = '10px';
             // need to turn calculations into named variables to help showcase what is actually being done per value
-            let gapMiddle = Math.ceil(selectedTag.Gap / 4); // round up to prevent decimal padding.  Round up keeps border closer to element, down spreads it out further
-            floatingBorderElement.style.padding = (padding) + (border) - floatingBorder - gapMiddle + 'px'; // - 2 custom per user border settings
-            floatingBorderElement.style.top = `${(rect.top) - (padding)  + (scrollDistanceTop) + gapMiddle}px`; // Trying to place an element in the middle of an odd element will result in the value skewed to the left innacurately.
-            floatingBorderElement.style.left = `${(rect.left) - (padding) + (scrollDistanceLeft) - (sideMenuWidth) + gapMiddle}px`; // +1
-            testMedia.parentNode.appendChild(copy);
+            // let gapMiddle = Math.ceil(selectedTag.Gap / 4); // round up to prevent decimal padding.  Round up keeps border closer to element, down spreads it out further
+            floatingBorderElement.style.padding = (border) + (floatingBorderGap) +  'px'; // - 2 custom per user border settings
+            floatingBorderElement.style.top = `${(rect.top) - (floatingBorder) - (floatingBorderGap) + (scrollDistanceTop) + 0}px`; // Trying to place an element in the middle of an odd element will result in the value skewed to the left innacurately.
+            floatingBorderElement.style.left = `${(rect.left) - (floatingBorder) - (floatingBorderGap) + (scrollDistanceLeft) - (sideMenuWidth) + 0}px`; // +1
+            // testMedia.parentNode.appendChild(copy);
             testMedia.parentNode.appendChild(floatingBorderElement);
             // Border Gap, space between the original item and the border
             // IF I have a border gap, then I would have to narrow the padding to be exactly the same as the original item
@@ -536,6 +575,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
           });
           
+          //-----------------------------------------------------------------------------------------
           // These listeners are placed after the media conatiners and copy backgrounds have been identified.
           // Revert back to default non-hoverable styling when mouse leaves
           testMedia.addEventListener('mouseleave', function() {
@@ -547,23 +587,34 @@ document.addEventListener('DOMContentLoaded', () => {
               copy.parentNode.removeChild(copy);
             });
           });
+          //-----------------------------------------------------------------------------------------
+
+          //-----------------------------------------------------------------------------------------
           // REMOVE AND ADD BORDERS based on whether the associated box is checked
           borderCheckbox.addEventListener('change', updateBorder);
           function updateBorder() {
             if (borderCheckbox.checked) {
               border = parseInt(document.getElementById("formBorder").value);
               // border = 10;
-              console.log(border);
+              // console.log(border);
               testMedia.style.border = `${border}px solid ${selectedTag.BorderColor}`;
               // border = selectedTag.Border;
             } else {
               testMedia.style.border = `0px solid ${selectedTag.BorderColor}`;
               border = 0;
             }
+            document.getElementById("borderValue").textContent = `Border: ${border}`;
           }
+          //-----------------------------------------------------------------------------------------
+
+          //-----------------------------------------------------------------------------------------
           // UPDATE BORDER SIZE BASED ON FORM INPUT
           document.getElementById("formBorder").addEventListener("input", function() {
             var inputValue = parseInt(this.value);
+            if (inputValue < 0) {
+              this.value = 0;
+              inputValue = 0; // Update inputValue as well
+            }
             // Check if the value is greater than 999
             if (inputValue > 999) {
                 // If so, set it to 999
@@ -576,29 +627,90 @@ document.addEventListener('DOMContentLoaded', () => {
             this.value = border;
             updateBorder(); // apply to all media items
           });
+          //-----------------------------------------------------------------------------------------
+
+          //-----------------------------------------------------------------------------------------
           // FLOATING BORDER FOR SELECTED MATERIAL
           // These hovered elements dont exist until the original is hovered, you can't reference them directly you have to use variables.
-          selectedBorderCheckbox.addEventListener('change', updateFloatingBorder);
+          floatingBorderCheckbox.addEventListener('change', updateFloatingBorder);
           function updateFloatingBorder() {
-            if (selectedBorderCheckbox.checked) {
-              floatingBorder = selectedTag.SelectedBorder;
+            if (floatingBorderCheckbox.checked) {
+              // floatingBorder = selectedTag.FloatingBorder;
+              floatingBorder = parseInt(document.getElementById("formFloatingBorder").value);
+              // floatingBorderElement.style.border = `${floatingBorder}px solid ${selectedTag.BorderColor}`;
+              // also increase padding 1:1 per increase in 
+              floatingBorderPadding = border;
             } else {
               floatingBorder = 0;
             }
+            document.getElementById("floatingBorderValue").textContent = `Floating Border Size: ${floatingBorder}`;
           }
-          // SELECTED BACKGROUND COLOR
-          selectedBackgroundCheckbox.addEventListener('change', updateSelectedBackground);
-          function updateSelectedBackground() {
-            if (selectedBackgroundCheckbox.checked) {
-              selectedBackgroundColor = selectedTag.SelectedBackground;
-              // border radius should go here
-            } else {
-              selectedBackgroundColor = 'transparent';
-              // border radius
+          //-----------------------------------------------------------------------------------------
+
+          //-----------------------------------------------------------------------------------------
+          // UPDATE FLOATING BORDER SIZE BASED ON FORM INPUT
+          document.getElementById("formFloatingBorder").addEventListener("input", function() {
+            var inputValue = parseInt(this.value);
+            if (inputValue < 0) {
+              this.value = 0;
+              inputValue = 0; // Update inputValue as well
             }
+            // Check if the value is greater than 999
+            if (inputValue > 999) {
+                // If so, set it to 999
+                this.value = 999;
+                inputValue = 999; // Update inputValue as well
+            }
+            // Update the border variable with the input value
+            floatingBorder = inputValue;
+            floatingBorder = this.value !== null ? this.value : 0;
+            this.value = floatingBorder;
+            updateFloatingBorder(); // apply to all media items
+          });
+          //-----------------------------------------------------------------------------------------
+
+          //-----------------------------------------------------------------------------------------
+          // FLOATING BORDER GAP FOR SELECTED MATERIAL
+          // These hovered elements dont exist until the original is hovered, you can't reference them directly you have to use variables.
+          floatingBorderGapCheckbox.addEventListener('change', updateFloatingBorderGap);
+          function updateFloatingBorderGap() {
+            if (floatingBorderGapCheckbox.checked) {
+              // floatingBorderGap = selectedTag.FloatingBorderGap;
+              floatingBorderGap = parseInt(document.getElementById("formFloatingBorderGap").value);
+              // floatingBorderElement.style.border = `${floatingBorderGap}px solid ${selectedTag.BorderColor}`;
+              // also increase padding 1:1 per increase in 
+              // floatingBorderPadding = border
+            } else {
+              floatingBorderGap = 0;
+            }
+            document.getElementById("floatingBorderGapValue").textContent = `Floating Border Gap Size: ${floatingBorderGap}`;
           }
+          //-----------------------------------------------------------------------------------------
+
+          //-----------------------------------------------------------------------------------------
+          // UPDATE FLOATING BORDER GAP SIZE BASED ON FORM INPUT
+          document.getElementById("formFloatingBorderGap").addEventListener("input", function() {
+            var inputValue = parseInt(this.value);
+            if (inputValue < 0) {
+              this.value = 0;
+              inputValue = 0; // Update inputValue as well
+            }
+            // Check if the value is greater than 999
+            if (inputValue > 999) {
+                // If so, set it to 999
+                this.value = 999;
+                inputValue = 999; // Update inputValue as well
+            }
+            // Update the border variable with the input value
+            floatingBorderGap = inputValue;
+            floatingBorderGap = this.value !== null ? this.value : 0;
+            this.value = floatingBorderGap;
+            updateFloatingBorderGap(); // apply to all media items
+          });
+          //-----------------------------------------------------------------------------------------
         });
 
+        //-----------------------------------------------------------------------------------------
         const backContainer = document.getElementById('backContainer2');
         backContainer.addEventListener('click', function () {
           
@@ -607,6 +719,7 @@ document.addEventListener('DOMContentLoaded', () => {
           editCategorySettings.innerHTML = '';
           showTagSettingsDiv.style.display = 'block';
         });
+        //-----------------------------------------------------------------------------------------
           // const deleteButton = document.getElementById('deleteButton');
           // deleteButton.addEventListener('click', function () {
           //     const idToDelete = Number(document.getElementById('id').value);

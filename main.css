@@ -743,6 +743,7 @@ tbody {
   /* Default Values before content is overwritten */
   height: 200px; 
   width: 200px;
+  /* background-color: transparent; */
   background-color: rgb(255, 100, 100);
 }
 
