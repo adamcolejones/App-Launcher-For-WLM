@@ -387,33 +387,66 @@ document.addEventListener('DOMContentLoaded', () => {
         showTagSettingsDiv.style.display = 'none';
         // display new content for the edit page
         border = selectedTag.Border;
+        borderRadius = selectedTag.BorderRadius;
         gap = selectedTag.Gap;
         floatingBorder = selectedTag.FloatingBorder;
         floatingBorderGap = selectedTag.FloatingBorderGap;
+        height = selectedTag.Height;
+        width = selectedTag.Width;
+        ({width, height} = simplifyRatio(width, height));
+        // If user saved 1920 x 1080 as the height and width of the ratio, user will only see the simplified version after saving
+        // ratio = width / height;
+        // simplifiedRatio = simplifyRatio(width, height);
+
+        //-----------------------------------------------------------------------------------------
+        // Greatest Common Denominator for height and width ratios of media content
+        //
+        //
+        function simplifyRatio(width, height) {
+          let gcd = findGCD(width, height);
+          return {width: width / gcd, height: height / gcd};
+        }
+
+        function findGCD(a, b) {
+          // Euclidean algorithm for finding GCD
+          while (b !== 0) {
+              let temp = b;
+              b = a % b;
+              a = temp;
+          }
+          return a;
+        }
+        //-----------------------------------------------------------------------------------------
+
         // console.log("Border:", border);
         // console.log("Gap:", gap);
         // console.log("Floating Border:", floatingBorder);
-        
+        //-----------------------------------------------------------------------------------------
         // Shows the editable settings for an individual category
         editCategorySettings.innerHTML += `
           <div id="backContainer2">
             <img src="assets/app/back.svg">
             <div>Back</div>
           </div>
-          <p>Name: ${selectedTag.Name}</p>
-          <p>Width: ${selectedTag.Width}</p>
-          <p>Height: ${selectedTag.Height}</p>
+          <p>Category Name: ${selectedTag.Name}</p>
+          <p id="aspectRatioDisplay">Aspect Ratio: ${width}:${height}</p>
+          <input type="number" id="formRatioWidth" name="formRatioWidth" value=${width}>
+          <input type="number" id="formRatioHeight" name="formRatioHeight" value=${height}>
+          <br><br>
           <p id="gapValue">Gap: ${gap}</p><input id="gapCheckbox" type="checkbox" checked>
           <input type="number" id="formGap" name="formBorder" value=${gap}>
-          <br>
+          <br><br>
           <p>Wrap: ${selectedTag.Wrap}</p><input id="wrapCheckbox" type="checkbox" checked>
-          <br>
+          <br><br>
           <p id="borderValue">Border: ${border}</p><input id="borderCheckbox" type="checkbox" checked>
           <input type="number" id="formBorder" name="formBorder" value=${border}>
-          <br>
+          <br><br>
+          <p id="borderRadiusValue">Border Radius: ${borderRadius}</p><input id="borderRadiusCheckbox" type="checkbox" checked>
+          <input type="number" id="formBorderRadius" name="formBorderRadius" value=${borderRadius}>
+          <br><br>
           <p id="floatingBorderValue">Floating Border Size: ${floatingBorder}</p><input id="floatingBorderCheckbox" type="checkbox" checked>
           <input type="number" id="formFloatingBorder" name="formFloatingBorder" value=${floatingBorder}>
-          <br>
+          <br><br>
           <p id="floatingBorderGapValue">Floating Border Gap Size: ${floatingBorderGap}</p><input id="floatingBorderGapCheckbox" type="checkbox" checked>
           <input type="number" id="formFloatingBorderGap" name="formFloatingBorderGap" value=${floatingBorderGap}>
           <br>
@@ -421,8 +454,9 @@ document.addEventListener('DOMContentLoaded', () => {
           <div id="testMediaContainer">
             <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>
           </div>
-          
         `;
+        //-----------------------------------------------------------------------------------------
+
         // Here I am taking Data values from JSON and implementing them into CSS through JS
         const testMediaContainer = document.getElementById('testMediaContainer');
         const gapCheckbox = document.getElementById('gapCheckbox');
@@ -448,7 +482,8 @@ document.addEventListener('DOMContentLoaded', () => {
           if (gapCheckbox.checked) {
             gap = parseInt(document.getElementById('formGap').value);
             testMediaContainer.style.gap = `${gap}px`;
-            border = parseInt(document.getElementById("formBorder").value);
+            // border = parseInt(document.getElementById("formBorder").value);
+            // when border is disabled and gap is checked, the border is off center
           } else {
             testMediaContainer.style.gap = `0px`;
             gap = 0;
@@ -509,20 +544,22 @@ document.addEventListener('DOMContentLoaded', () => {
           // Set initial styling
           // Prevent user from setting odd numbered values for borders and padding, this will keep content evenly spaced when calculating positioning
           // This actually wouldn't help when we have to divide the values, 10 would become 5, 6 - 3, etc.
-          let height = 200; // Fixed height
-          let ratio = selectedTag.Width / selectedTag.Height;
-          let width = height * ratio;
-          // let border = selectedTag.Border;
-          // let padding = gap;
-          // let border = document.getElementById("formBorder").value;
-          // let floatingBorder = selectedTag.FloatingBorder;
-          // let selectedBackgroundColor = selectedTag.SelectedBackground;
           updateBorder();
           updateFloatingBorder();
           updateFloatingBorderGap();
+          updateAspectRatio();
+          updateBorderRadius();
+          let setHeight = 200; // Fixed height
+          ratio = width / height; // why does resetting the ratio effect the content?
+          ratioedWidth = setHeight * ratio;
+          console.log('height: ' + height);
+          console.log('width: ' + width);
+          console.log('setHeight: ' + setHeight);
+          console.log('ratio: ' + ratio);
+          console.log('ratioedWidth: ' + ratioedWidth);
           // let backgroundBorder;
-          testMedia.style.width = `${width}px`;
-          testMedia.style.height = `${height}px`;
+          testMedia.style.width = `${ratioedWidth}px`;
+          testMedia.style.height = `${setHeight}px`;
           testMedia.style.border = `${border}px solid ${selectedTag.BorderColor}`;
           testMedia.style['border-radius'] = `${selectedTag.BorderRadius}px`;
           testMedia.style.zIndex = '2'; // Z-index for this element should be higher than its background border
@@ -590,6 +627,43 @@ document.addEventListener('DOMContentLoaded', () => {
           //-----------------------------------------------------------------------------------------
 
           //-----------------------------------------------------------------------------------------
+          // Update Aspect Ratio Function
+          document.getElementById("formRatioWidth").addEventListener('change', updateAspectRatio);
+          document.getElementById("formRatioHeight").addEventListener('change', updateAspectRatio);
+          function updateAspectRatio() {
+            width = parseInt(document.getElementById("formRatioWidth").value);
+            height = parseInt(document.getElementById("formRatioHeight").value);
+            
+            // Validate and adjust width if necessary
+            if (width < 0) {
+                widthInput.value = 0;
+                width = 0; // Update width as well
+            } else if (width > 10000) {
+                widthInput.value = 10000;
+                width = 10000; // Update width as well
+            }
+
+            // Validate and adjust height if necessary
+            if (height < 0) {
+                heightInput.value = 0;
+                height = 0; // Update height as well
+            } else if (height > 10000) {
+                heightInput.value = 10000;
+                height = 10000; // Update height as well
+            }
+            ({width, height} = simplifyRatio(width, height));
+            let setHeight = 200; // Fixed height
+            ratio = width / height; // why does resetting the ratio effect the content?
+            ratioedWidth = setHeight * ratio;
+            testMedia.style.width = `${ratioedWidth}px`;
+            testMedia.style.height = `${setHeight}px`;
+            // Update the Aspect Ratio Display
+            document.getElementById("aspectRatioDisplay").textContent = `Aspect Ratio: ${width}:${height}`;
+          }
+          //-----------------------------------------------------------------------------------------
+
+
+          //-----------------------------------------------------------------------------------------
           // REMOVE AND ADD BORDERS based on whether the associated box is checked
           borderCheckbox.addEventListener('change', updateBorder);
           function updateBorder() {
@@ -626,6 +700,46 @@ document.addEventListener('DOMContentLoaded', () => {
             border = this.value !== null ? this.value : 0;
             this.value = border;
             updateBorder(); // apply to all media items
+          });
+          //-----------------------------------------------------------------------------------------
+
+          //-----------------------------------------------------------------------------------------
+          // REMOVE AND ADD BORDERS based on whether the associated box is checked
+          borderRadiusCheckbox.addEventListener('change', updateBorderRadius);
+          function updateBorderRadius() {
+            if (borderRadiusCheckbox.checked) {
+              borderRadius = parseInt(document.getElementById("formBorderRadius").value);
+              // border = 10;
+              // console.log(border);
+              testMedia.style['border-radius'] = `${borderRadius}px`;
+              // border = selectedTag.Border;
+            } else {
+              testMedia.style['border-radius'] = `0px`;
+              borderRadius = 0;
+            }
+            document.getElementById("borderRadiusValue").textContent = `Border Radius: ${borderRadius}`;
+          }
+          //-----------------------------------------------------------------------------------------
+
+          //-----------------------------------------------------------------------------------------
+          // UPDATE BORDER RADIUS SIZE BASED ON FORM INPUT
+          document.getElementById("formBorderRadius").addEventListener("input", function() {
+            var inputValue = parseInt(this.value);
+            if (inputValue < 0) {
+              this.value = 0;
+              inputValue = 0; // Update inputValue as well
+            }
+            // Check if the value is greater than 999
+            if (inputValue > 999) {
+                // If so, set it to 999
+                this.value = 999;
+                inputValue = 999; // Update inputValue as well
+            }
+            // Update the border variable with the input value
+            borderRadius = inputValue;
+            borderRadius = this.value !== null ? this.value : 0;
+            this.value = borderRadius;
+            updateBorderRadius(); // apply to all media items
           });
           //-----------------------------------------------------------------------------------------
 

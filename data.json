@@ -731,8 +731,8 @@
   "Tags": [
     {
       "Name": "All",
-      "Width": 1,
-      "Height": 2,
+      "Width": 1920,
+      "Height": 1080,
       "Border": 10,
       "BorderColor": "blue",
       "BorderRadius": 10,
