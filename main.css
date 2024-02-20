@@ -58,6 +58,8 @@ a:hover {
   width: fit-content;
   background-color: #dfdfdf;
   cursor: pointer;
+  position: fixed;
+  z-index: 7;
 }
 
 #backTagButton {
@@ -538,6 +540,8 @@ nav {
   cursor: pointer;
 }
 
+
+
 /* ---------------------------------------------------------------------------------------------- P ---------------------------------------------------------------------------------------------- */
 /* 
 ██████████████
@@ -555,7 +559,7 @@ nav {
 
 p {
   text-align: center;
-  background-color: #dfdfdf;
+  /* background-color: #dfdfdf; */
   width: fit-content;
   margin: 0px;
 }
@@ -657,6 +661,38 @@ p {
   /* overflow-y: scroll; */
  }
 
+.settingsContainer {
+  height: fit-content;
+  position: fixed;
+  top: 0px;
+  left: 200px;
+  right: 17px;
+  display: flex;
+  flex-direction: column;
+  padding-top: 50px;
+  z-index: 6;
+  background-color: white;
+  box-sizing: border-box;
+}
+
+.settingsOption {
+  height: 60px;
+  width: 175px;
+  padding: 10px;
+  background-color: #cccccc;
+  /* width: fit-content; */
+  /* height: fit-content; */
+  border: 1px solid black;
+  margin-right: -1px;
+}
+
+.settingsOptionContainer {
+  display: flex;
+  flex-direction: row;
+  margin-right: 1px;
+  
+}
+
 #showTagSettings {
   width: 100%;
   margin: 0 0;
@@ -751,6 +787,7 @@ tbody {
   display: flex;
   width: fit-content;
   flex-wrap: wrap;
+  position: relative;
   /* gap: 5px; */
 }
   

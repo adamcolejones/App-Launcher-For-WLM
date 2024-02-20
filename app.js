@@ -382,21 +382,23 @@ document.addEventListener('DOMContentLoaded', () => {
       function editCategorySettings(selectedTag) {
         const editCategorySettings = document.getElementById('editCategorySettings');
         const showTagSettingsDiv = document.getElementById('showTagSettings');
-        // hide current div, show new edit category div
-        editCategorySettings.style.display = 'block';
-        showTagSettingsDiv.style.display = 'none';
-        // display new content for the edit page
+        editCategorySettings.style.display = 'block'; // display new content for the edit page
+        showTagSettingsDiv.style.display = 'none'; // hide current div, show new edit category div
         border = selectedTag.Border;
         borderRadius = selectedTag.BorderRadius;
+        borderColor = selectedTag.BorderColor;
+        wrap = selectedTag.Wrap;
         gap = selectedTag.Gap;
         floatingBorder = selectedTag.FloatingBorder;
+        floatingBorderRadius = selectedTag.FloatingBorderRadius;
         floatingBorderGap = selectedTag.FloatingBorderGap;
         height = selectedTag.Height;
         width = selectedTag.Width;
         ({width, height} = simplifyRatio(width, height));
+        // there needs to be a default that sets the height and width based on the content provided. In the event user wants different sized media placed together. 
         // If user saved 1920 x 1080 as the height and width of the ratio, user will only see the simplified version after saving
-        // ratio = width / height;
-        // simplifiedRatio = simplifyRatio(width, height);
+        // I will need to make a separate border radius for the floating border and then a checkbox that says to match existing border.  
+        // Also need a button that sets the size and gap of the floating border to be automatically sized and centered.
 
         //-----------------------------------------------------------------------------------------
         // Greatest Common Denominator for height and width ratios of media content
@@ -407,8 +409,7 @@ document.addEventListener('DOMContentLoaded', () => {
           return {width: width / gcd, height: height / gcd};
         }
 
-        function findGCD(a, b) {
-          // Euclidean algorithm for finding GCD
+        function findGCD(a, b) { // Euclidean algorithm for finding GCD
           while (b !== 0) {
               let temp = b;
               b = a % b;
@@ -418,9 +419,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         //-----------------------------------------------------------------------------------------
 
-        // console.log("Border:", border);
-        // console.log("Gap:", gap);
-        // console.log("Floating Border:", floatingBorder);
         //-----------------------------------------------------------------------------------------
         // Shows the editable settings for an individual category
         editCategorySettings.innerHTML += `
@@ -428,29 +426,70 @@ document.addEventListener('DOMContentLoaded', () => {
             <img src="assets/app/back.svg">
             <div>Back</div>
           </div>
-          <p>Category Name: ${selectedTag.Name}</p>
-          <p id="aspectRatioDisplay">Aspect Ratio: ${width}:${height}</p>
-          <input type="number" id="formRatioWidth" name="formRatioWidth" value=${width}>
-          <input type="number" id="formRatioHeight" name="formRatioHeight" value=${height}>
-          <br><br>
-          <p id="gapValue">Gap: ${gap}</p><input id="gapCheckbox" type="checkbox" checked>
-          <input type="number" id="formGap" name="formBorder" value=${gap}>
-          <br><br>
-          <p>Wrap: ${selectedTag.Wrap}</p><input id="wrapCheckbox" type="checkbox" checked>
-          <br><br>
-          <p id="borderValue">Border: ${border}</p><input id="borderCheckbox" type="checkbox" checked>
-          <input type="number" id="formBorder" name="formBorder" value=${border}>
-          <br><br>
-          <p id="borderRadiusValue">Border Radius: ${borderRadius}</p><input id="borderRadiusCheckbox" type="checkbox" checked>
-          <input type="number" id="formBorderRadius" name="formBorderRadius" value=${borderRadius}>
-          <br><br>
-          <p id="floatingBorderValue">Floating Border Size: ${floatingBorder}</p><input id="floatingBorderCheckbox" type="checkbox" checked>
-          <input type="number" id="formFloatingBorder" name="formFloatingBorder" value=${floatingBorder}>
-          <br><br>
-          <p id="floatingBorderGapValue">Floating Border Gap Size: ${floatingBorderGap}</p><input id="floatingBorderGapCheckbox" type="checkbox" checked>
-          <input type="number" id="formFloatingBorderGap" name="formFloatingBorderGap" value=${floatingBorderGap}>
-          <br>
-          <br>
+
+          <div class="settingsContainer">
+            <p>Category Name: ${selectedTag.Name}</p>
+            <br>
+
+            <p>ASPECT RATIO / POSITION</p>
+            <div class="settingsOptionContainer">
+              <div class="settingsOption">
+                <p id="aspectRatioDisplay">Aspect Ratio: ${width}:${height}</p>
+                <input type="number" id="formRatioWidth" name="formRatioWidth" value=${width}>
+                <input type="number" id="formRatioHeight" name="formRatioHeight" value=${height}>
+              </div>
+              <div class="settingsOption">
+                <p id="gapValue">Gap</p><input id="gapCheckbox" type="checkbox" checked>
+                <input type="number" id="formGap" name="formGap" value=${gap}>
+              </div>
+              <div class="settingsOption">
+                <p id="wrapValue">Wrap</p><input id="wrapCheckbox" type="checkbox" checked>
+              </div>
+            </div>
+            <br>
+
+            <p>BORDER</p>
+            <div class="settingsOptionContainer">
+              <div class="settingsOption">
+                <p id="borderValue">Size</p><input id="borderCheckbox" type="checkbox" checked>
+                <input type="number" id="formBorder" name="formBorder" value=${border}>
+              </div>
+              <div class="settingsOption">
+                <p id="borderColorValue">Color</p><input id="borderColorCheckbox" type="checkbox" checked>
+                <input type="text" id="formBorderColor" name="formBorderColor" value=${borderColor}>
+              </div>
+              <div class="settingsOption">
+                <p id="borderRadiusValue">Radius</p><input id="borderRadiusCheckbox" type="checkbox" checked>
+                <input type="number" id="formBorderRadius" name="formBorderRadius" value=${borderRadius}>
+              </div>
+            </div>
+            <br>
+
+            <p>HOVERED BORDER</p>
+            <div class="settingsOptionContainer">
+              <div class="settingsOption">
+                <p id="floatingBorderValue">Size</p><input id="floatingBorderCheckbox" type="checkbox" checked>
+                <input type="number" id="formFloatingBorder" name="formFloatingBorder" value=${floatingBorder}>
+              </div>
+              <div class="settingsOption">
+                <p id="floatingBorderColorValue">Color</p><input id="floatingBorderColorCheckbox" type="checkbox" checked>
+                <input type="text" id="formFloatingBorderColor" name="formFloatingBorderColor" value=${borderColor}>
+              </div>
+              <div class="settingsOption">
+                <p id="floatingBorderRadiusValue">Radius</p><input id="floatingBorderRadiusCheckbox" type="checkbox" checked>
+                <input type="number" id="formFloatingBorderRadius" name="formFloatingBorderRadius" value=${floatingBorderRadius}>
+              </div>
+              <div class="settingsOption">
+                <p id="floatingBorderGapValue">Gap</p><input id="floatingBorderGapCheckbox" type="checkbox" checked>
+                <input type="number" id="formFloatingBorderGap" name="formFloatingBorderGap" value=${floatingBorderGap}>
+              </div>
+            </div>
+            <br>
+
+            <p>RESTORE DEFAULT SETTINGS</p>
+            <p>SAVE CHANGES</p>
+
+          </div>
           <div id="testMediaContainer">
             <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>
           </div>
@@ -463,11 +502,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const wrapCheckbox = document.getElementById('wrapCheckbox');
         const borderCheckbox = document.getElementById('borderCheckbox');
         const floatingBorderCheckbox = document.getElementById('floatingBorderCheckbox');
+        const floatingBorderRadiusCheckbox = document.getElementById('floatingBorderRadiusCheckbox');
         const floatingBorderGapCheckbox = document.getElementById('floatingBorderGapCheckbox');
-        // NEXT: Need to implement custom input fields for users to customize styling values
+        topAdjustment = 500;
+        testMediaContainer.style.top = '' + topAdjustment + 'px';
 
-        // Default values for wrap and gap
-        gapChange();
+        gapChange(); // Default values for wrap and gap
         wrapChange();
 
         //-----------------------------------------------------------------------------------------
@@ -476,19 +516,18 @@ document.addEventListener('DOMContentLoaded', () => {
         // 
         //
         //
-        //
         gapCheckbox.addEventListener('change', gapChange);
         function gapChange() {
           if (gapCheckbox.checked) {
             gap = parseInt(document.getElementById('formGap').value);
             testMediaContainer.style.gap = `${gap}px`;
-            // border = parseInt(document.getElementById("formBorder").value);
-            // when border is disabled and gap is checked, the border is off center
+            document.getElementById("formGap").disabled = false;
+            
           } else {
             testMediaContainer.style.gap = `0px`;
             gap = 0;
+            document.getElementById("formGap").disabled = true;
           }
-          document.getElementById("gapValue").textContent = `Gap: ${gap}`;
         }
         //-----------------------------------------------------------------------------------------
 
@@ -499,19 +538,15 @@ document.addEventListener('DOMContentLoaded', () => {
         //
         document.getElementById("formGap").addEventListener("input", function() {
           var inputValue = parseInt(this.value);
-          // Ensure the value does not go below 0
-          if (inputValue < 0) {
+          if (inputValue < 0) { // Ensure the value does not go below 0
             this.value = 0;
             inputValue = 0; // Update inputValue as well
           }
-          // Check if the value is greater than 999
-          if (inputValue > 999) {
-              // If so, set it to 999
+          if (inputValue > 999) { // Check if the value is greater than 999 // If so, set it to 999
               this.value = 999;
               inputValue = 999; // Update inputValue as well
           }
-          // Update the border variable with the input value
-          gap = inputValue;
+          gap = inputValue; // Update the border variable with the input value
           gap = this.value !== null ? this.value : 0;
           this.value = gap;
           gapChange(); // apply to all media items
@@ -526,10 +561,12 @@ document.addEventListener('DOMContentLoaded', () => {
         wrapCheckbox.addEventListener('change', wrapChange);
         function wrapChange() {
           if (wrapCheckbox.checked) {
-            testMediaContainer.style['flex-wrap'] = `${selectedTag.Wrap}`;
+            wrap = 'wrap';
+            testMediaContainer.style['flex-wrap'] = `${wrap}`;
           } else {
-            testMediaContainer.style['flex-wrap'] = `nowrap`;
-          }
+            wrap = 'nowrap';
+            testMediaContainer.style['flex-wrap'] = wrap;
+          } // document.getElementById("wrapValue").textContent = `Wrap: ${wrap}`;
         }
         //-----------------------------------------------------------------------------------------
         
@@ -542,10 +579,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const scrollableContent = document.querySelector('.scrollableContent');
         testMediaElements.forEach(testMedia => {
           // Set initial styling
-          // Prevent user from setting odd numbered values for borders and padding, this will keep content evenly spaced when calculating positioning
+          // Prevent user from setting odd numbered values for borders and padding, this will keep content evenly spaced when calculating positioning.  User can fix this by using bigger even numbers
           // This actually wouldn't help when we have to divide the values, 10 would become 5, 6 - 3, etc.
           updateBorder();
           updateFloatingBorder();
+          updateFloatingBorderRadius();
           updateFloatingBorderGap();
           updateAspectRatio();
           updateBorderRadius();
@@ -557,7 +595,6 @@ document.addEventListener('DOMContentLoaded', () => {
           console.log('setHeight: ' + setHeight);
           console.log('ratio: ' + ratio);
           console.log('ratioedWidth: ' + ratioedWidth);
-          // let backgroundBorder;
           testMedia.style.width = `${ratioedWidth}px`;
           testMedia.style.height = `${setHeight}px`;
           testMedia.style.border = `${border}px solid ${selectedTag.BorderColor}`;
@@ -569,47 +606,31 @@ document.addEventListener('DOMContentLoaded', () => {
           testMedia.addEventListener('mouseenter', function() {
             // on mouse enter, play a sound effect.  This would be where to put it.
             // You could make a function that times the sound effects to have different pitches based on how many are hovered in a breif moment.  Musical selection menus.
-            // testMedia.style.border = `${selectedTag.Border}px solid ${selectedTag.HoverBorderColor}`;
             // POSSIBLE IDEA, I could create a copy of the media and position it in the middle to enlarge it without affecting the flex box order and layout: Enlarge selected media
             const rect = testMedia.getBoundingClientRect(); // Get position and size of original media item
             let scrollDistanceLeft = scrollableContent.scrollLeft;
             let scrollDistanceTop = scrollableContent.scrollTop;
             const sideMenuWidth = 200; // Width of the side menu
-            // const padding = selectedTag.Gap;
-            // const copy = testMedia.cloneNode(true);
             const floatingBorderElement = testMedia.cloneNode(true);
-            // testMedia.style['border-radius'] = `${selectedTag.HoverBorderRadius}px`;
             testMedia.style.zIndex = '5'; // Z-index for this element should be higher than its background border
-            // copy.classList.add('testMediaCopy'); // Add a distinct class name
-            // copy.style.position = 'absolute';
-            // copy.style.zIndex = '3';
-            // copy.style.border = `none`;
-            // copy.style['border-radius'] = `${selectedTag.BorderRadius}px`;
-            // copy.style.padding = (padding) + (border) + 'px';
-            // copy.style.top = `${(rect.top) - (padding)  + (scrollDistanceTop)}px`; // Trying to place an element in the middle of an odd element will result in the value skewed to the left innacurately.
-            // copy.style.left = `${(rect.left) - (padding) + (scrollDistanceLeft) - (sideMenuWidth)}px`; // +1
-            // copy.style['background-color'] = selectedBackgroundColor;
             floatingBorderElement.classList.add('testMediaCopy'); // Add a distinct class name
             floatingBorderElement.style.position = 'absolute';
             floatingBorderElement.style.zIndex = '4';
             floatingBorderElement.style['background-color'] = 'transparent';
             floatingBorderElement.style.border = floatingBorder + 'px solid blue'; // custom per user
+            floatingBorderElement.style['border-radius'] = `${floatingBorderRadius}px`;
             // floatingBorderElement.style.borderRadius = '10px';
             // need to turn calculations into named variables to help showcase what is actually being done per value
             // let gapMiddle = Math.ceil(selectedTag.Gap / 4); // round up to prevent decimal padding.  Round up keeps border closer to element, down spreads it out further
             floatingBorderElement.style.padding = (border) + (floatingBorderGap) +  'px'; // - 2 custom per user border settings
-            floatingBorderElement.style.top = `${(rect.top) - (floatingBorder) - (floatingBorderGap) + (scrollDistanceTop) + 0}px`; // Trying to place an element in the middle of an odd element will result in the value skewed to the left innacurately.
+            floatingBorderElement.style.top = `${(rect.top) - (floatingBorder) - (floatingBorderGap) + (scrollDistanceTop) - topAdjustment}px`; // Trying to place an element in the middle of an odd element will result in the value skewed to the left innacurately.
             floatingBorderElement.style.left = `${(rect.left) - (floatingBorder) - (floatingBorderGap) + (scrollDistanceLeft) - (sideMenuWidth) + 0}px`; // +1
-            // testMedia.parentNode.appendChild(copy);
             testMedia.parentNode.appendChild(floatingBorderElement);
             // Border Gap, space between the original item and the border
             // IF I have a border gap, then I would have to narrow the padding to be exactly the same as the original item
             // if I do that, then there wouldn't be any point of having the copied item as a customizable object
             // there would need to be a toggle that let the user switch between what is most important to them, Or I could have another copied item... and layer it accordingly
             // one copied item would always be transparent but have a border of varying distance from the original and thickness, roundness customizable
-            // copy.style.border = `${backgroundBorder}px solid red`;
-            // console.log(border);
-            
           });
           
           //-----------------------------------------------------------------------------------------
@@ -617,7 +638,6 @@ document.addEventListener('DOMContentLoaded', () => {
           // Revert back to default non-hoverable styling when mouse leaves
           testMedia.addEventListener('mouseleave', function() {
             updateBorder();
-            // testMedia.style['border-radius'] = `${selectedTag.BorderRadius}px`;
             testMedia.style.zIndex = '2'; // Z-index for this element should be higher than its background border
             const copies = testMedia.parentNode.querySelectorAll('.testMediaCopy');
             copies.forEach(copy => {
@@ -627,30 +647,60 @@ document.addEventListener('DOMContentLoaded', () => {
           //-----------------------------------------------------------------------------------------
 
           //-----------------------------------------------------------------------------------------
+          // UPDATE WIDTH
+          //
+          //
+          document.getElementById("formRatioWidth").addEventListener("input", updateWidth);
+          function updateWidth() {
+            var widthInput = document.getElementById("formRatioWidth");
+            var widthValue = parseInt(widthInput.value);
+
+            // Ensure the width does not go below 1
+            if (widthValue < 1) {
+              widthInput.value = 1;
+              widthValue = 1; // Update widthValue as well
+            }
+
+            // Apply the width value directly or recalculate aspect ratio here if necessary
+            width = widthValue; // Assuming 'width' is used elsewhere in your script
+            // Optional: You might want to update related display elements or calculations here
+            updateAspectRatio();
+          }
+          //-----------------------------------------------------------------------------------------
+
+          //-----------------------------------------------------------------------------------------
+          // UPDATE HEIGHT
+          //
+          //
+          // UPDATE HEIGHT BASED ON FORM INPUT
+          document.getElementById("formRatioHeight").addEventListener("input", updateHeight);
+          function updateHeight() {
+            var heightInput = document.getElementById("formRatioHeight");
+            var heightValue = parseInt(heightInput.value);
+
+            // Ensure the height does not go below 1
+            if (heightValue < 1) {
+              heightInput.value = 1;
+              heightValue = 1; // Update heightValue as well
+            }
+
+            // Apply the height value directly or recalculate aspect ratio here if necessary
+            height = heightValue; // Assuming 'height' is used elsewhere in your script
+            // Optional: You might want to update related display elements or calculations here
+            updateAspectRatio();
+          }
+          //-----------------------------------------------------------------------------------------
+
+          //-----------------------------------------------------------------------------------------
           // Update Aspect Ratio Function
+          //
+          //
+          //
           document.getElementById("formRatioWidth").addEventListener('change', updateAspectRatio);
           document.getElementById("formRatioHeight").addEventListener('change', updateAspectRatio);
           function updateAspectRatio() {
-            width = parseInt(document.getElementById("formRatioWidth").value);
-            height = parseInt(document.getElementById("formRatioHeight").value);
-            
-            // Validate and adjust width if necessary
-            if (width < 0) {
-                widthInput.value = 0;
-                width = 0; // Update width as well
-            } else if (width > 10000) {
-                widthInput.value = 10000;
-                width = 10000; // Update width as well
-            }
-
-            // Validate and adjust height if necessary
-            if (height < 0) {
-                heightInput.value = 0;
-                height = 0; // Update height as well
-            } else if (height > 10000) {
-                heightInput.value = 10000;
-                height = 10000; // Update height as well
-            }
+            width = parseInt(document.getElementById("formRatioWidth").value, 10);
+            height = parseInt(document.getElementById("formRatioHeight").value, 10);
             ({width, height} = simplifyRatio(width, height));
             let setHeight = 200; // Fixed height
             ratio = width / height; // why does resetting the ratio effect the content?
@@ -662,22 +712,25 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           //-----------------------------------------------------------------------------------------
 
-
           //-----------------------------------------------------------------------------------------
           // REMOVE AND ADD BORDERS based on whether the associated box is checked
           borderCheckbox.addEventListener('change', updateBorder);
           function updateBorder() {
             if (borderCheckbox.checked) {
               border = parseInt(document.getElementById("formBorder").value);
-              // border = 10;
-              // console.log(border);
+              document.getElementById("formBorder").disabled = false;
+              document.getElementById("formBorderColor").disabled = false;
+              document.getElementById("borderColorCheckbox").disabled = false;
               testMedia.style.border = `${border}px solid ${selectedTag.BorderColor}`;
               // border = selectedTag.Border;
             } else {
               testMedia.style.border = `0px solid ${selectedTag.BorderColor}`;
               border = 0;
+              document.getElementById("formBorder").disabled = true;
+              document.getElementById("formBorderColor").disabled = true;
+              document.getElementById("borderColorCheckbox").disabled = true;
             }
-            document.getElementById("borderValue").textContent = `Border: ${border}`;
+            // document.getElementById("borderValue").textContent = `Border: ${border}`;
           }
           //-----------------------------------------------------------------------------------------
 
@@ -705,24 +758,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
           //-----------------------------------------------------------------------------------------
           // REMOVE AND ADD BORDERS based on whether the associated box is checked
+          //
+          //
+          //
           borderRadiusCheckbox.addEventListener('change', updateBorderRadius);
           function updateBorderRadius() {
             if (borderRadiusCheckbox.checked) {
               borderRadius = parseInt(document.getElementById("formBorderRadius").value);
-              // border = 10;
-              // console.log(border);
+              document.getElementById("formBorderRadius").disabled = false;
               testMedia.style['border-radius'] = `${borderRadius}px`;
-              // border = selectedTag.Border;
             } else {
               testMedia.style['border-radius'] = `0px`;
               borderRadius = 0;
+              document.getElementById("formBorderRadius").disabled = true;
             }
-            document.getElementById("borderRadiusValue").textContent = `Border Radius: ${borderRadius}`;
           }
           //-----------------------------------------------------------------------------------------
 
           //-----------------------------------------------------------------------------------------
           // UPDATE BORDER RADIUS SIZE BASED ON FORM INPUT
+          //
+          //
+          //
           document.getElementById("formBorderRadius").addEventListener("input", function() {
             var inputValue = parseInt(this.value);
             if (inputValue < 0) {
@@ -746,18 +803,38 @@ document.addEventListener('DOMContentLoaded', () => {
           //-----------------------------------------------------------------------------------------
           // FLOATING BORDER FOR SELECTED MATERIAL
           // These hovered elements dont exist until the original is hovered, you can't reference them directly you have to use variables.
+          //
+          //
+          //
           floatingBorderCheckbox.addEventListener('change', updateFloatingBorder);
           function updateFloatingBorder() {
             if (floatingBorderCheckbox.checked) {
               // floatingBorder = selectedTag.FloatingBorder;
               floatingBorder = parseInt(document.getElementById("formFloatingBorder").value);
+              document.getElementById("floatingBorderColorCheckbox").disabled = false;
+              document.getElementById("floatingBorderRadiusCheckbox").disabled = false;
+              document.getElementById("floatingBorderGapCheckbox").disabled = false;
+              document.getElementById("formFloatingBorder").disabled = false;
+              document.getElementById("formFloatingBorderColor").disabled = false;
+              // instead call these functions to check whether the checkbox has these inputs enabled or disabled
+              updateFloatingBorderRadius();
+              updateFloatingBorderGap();
+              // document.getElementById("formFloatingBorderRadius").disabled = false;
+              // document.getElementById("formFloatingBorderGap").disabled = false;
               // floatingBorderElement.style.border = `${floatingBorder}px solid ${selectedTag.BorderColor}`;
               // also increase padding 1:1 per increase in 
               floatingBorderPadding = border;
             } else {
               floatingBorder = 0;
+              document.getElementById("floatingBorderRadiusCheckbox").disabled = true;
+              document.getElementById("floatingBorderGapCheckbox").disabled = true;
+              document.getElementById("floatingBorderColorCheckbox").disabled = true;
+              document.getElementById("formFloatingBorder").disabled = true;
+              document.getElementById("formFloatingBorderColor").disabled = true;
+              document.getElementById("formFloatingBorderRadius").disabled = true;
+              document.getElementById("formFloatingBorderGap").disabled = true;
             }
-            document.getElementById("floatingBorderValue").textContent = `Floating Border Size: ${floatingBorder}`;
+            // document.getElementById("floatingBorderValue").textContent = `Floating Border Size: ${floatingBorder}`;
           }
           //-----------------------------------------------------------------------------------------
 
@@ -784,6 +861,48 @@ document.addEventListener('DOMContentLoaded', () => {
           //-----------------------------------------------------------------------------------------
 
           //-----------------------------------------------------------------------------------------
+          // FLOATING BORDER RADIUS FOR SELECTED MATERIAL
+          // These hovered elements dont exist until the original is hovered, you can't reference them directly you have to use variables.
+          floatingBorderRadiusCheckbox.addEventListener('change', updateFloatingBorderRadius);
+          function updateFloatingBorderRadius() {
+            if (floatingBorderRadiusCheckbox.checked) {
+              // floatingBorder = selectedTag.FloatingBorder;
+              floatingBorderRadius = parseInt(document.getElementById("formFloatingBorderRadius").value);
+              document.getElementById("formFloatingBorderRadius").disabled = false;
+              // floatingBorderElement.style.border = `${floatingBorder}px solid ${selectedTag.BorderColor}`;
+              // also increase padding 1:1 per increase in 
+              // floatingBorderPadding = border;
+            } else {
+              floatingBorderRadius = 0;
+              document.getElementById("formFloatingBorderRadius").disabled = true;
+            }
+            // document.getElementById("floatingBorderRadiusValue").textContent = `Floating Border Radius: ${floatingBorderRadius}`;
+          }
+          //-----------------------------------------------------------------------------------------
+
+          //-----------------------------------------------------------------------------------------
+          // UPDATE FLOATING BORDER Radius BASED ON FORM INPUT
+          document.getElementById("formFloatingBorderRadius").addEventListener("input", function() {
+            var inputValue = parseInt(this.value);
+            if (inputValue < 0) {
+              this.value = 0;
+              inputValue = 0; // Update inputValue as well
+            }
+            // Check if the value is greater than 999
+            if (inputValue > 999) {
+                // If so, set it to 999
+                this.value = 999;
+                inputValue = 999; // Update inputValue as well
+            }
+            // Update the border variable with the input value
+            floatingBorderRadius = inputValue;
+            floatingBorderRadius = this.value !== null ? this.value : 0;
+            this.value = floatingBorderRadius;
+            updateFloatingBorderRadius(); // apply to all media items
+          });
+          //-----------------------------------------------------------------------------------------
+
+          //-----------------------------------------------------------------------------------------
           // FLOATING BORDER GAP FOR SELECTED MATERIAL
           // These hovered elements dont exist until the original is hovered, you can't reference them directly you have to use variables.
           floatingBorderGapCheckbox.addEventListener('change', updateFloatingBorderGap);
@@ -791,13 +910,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (floatingBorderGapCheckbox.checked) {
               // floatingBorderGap = selectedTag.FloatingBorderGap;
               floatingBorderGap = parseInt(document.getElementById("formFloatingBorderGap").value);
+              document.getElementById("formFloatingBorderGap").disabled = false;
               // floatingBorderElement.style.border = `${floatingBorderGap}px solid ${selectedTag.BorderColor}`;
               // also increase padding 1:1 per increase in 
               // floatingBorderPadding = border
             } else {
               floatingBorderGap = 0;
+              document.getElementById("formFloatingBorderGap").disabled = true;
             }
-            document.getElementById("floatingBorderGapValue").textContent = `Floating Border Gap Size: ${floatingBorderGap}`;
+            // document.getElementById("floatingBorderGapValue").textContent = `Floating Border Gap Size: ${floatingBorderGap}`;
           }
           //-----------------------------------------------------------------------------------------
 

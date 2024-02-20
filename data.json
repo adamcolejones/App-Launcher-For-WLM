@@ -731,8 +731,8 @@
   "Tags": [
     {
       "Name": "All",
-      "Width": 1920,
-      "Height": 1080,
+      "Width": 16,
+      "Height": 9,
       "Border": 10,
       "BorderColor": "blue",
       "BorderRadius": 10,
@@ -743,6 +743,7 @@
       "HoverBorderRadius": 20,
       "SelectedBackground": "green",
       "FloatingBorder": 5,
+      "FloatingBorderRadius": 5,
       "FloatingBorderGap": 2,
       "Gap": 10,
       "Wrap": "wrap",
