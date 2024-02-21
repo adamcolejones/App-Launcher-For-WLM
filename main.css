@@ -540,7 +540,10 @@ nav {
   cursor: pointer;
 }
 
-
+#otherNotes {
+  height: fit-content;
+  position: relative;
+}
 
 /* ---------------------------------------------------------------------------------------------- P ---------------------------------------------------------------------------------------------- */
 /* 
@@ -690,7 +693,8 @@ p {
   display: flex;
   flex-direction: row;
   margin-right: 1px;
-  
+  width: 50%;
+  flex-wrap: nowrap;
 }
 
 #showTagSettings {
@@ -718,6 +722,15 @@ p {
 
  .sidemenu-item.selected {
   background-color: #ffffff; /* Lighter background color */
+}
+
+#simulatedCategory {
+  position: fixed;
+  background-color: white;
+  border: 1px solid black;
+  top: 10px;
+  right: 10px;
+  z-index: 7;
 }
 
 /* ---------------------------------------------------------------------------------------------- S ---------------------------------------------------------------------------------------------- */
@@ -788,6 +801,7 @@ tbody {
   width: fit-content;
   flex-wrap: wrap;
   position: relative;
+  /* left: 80px; */
   /* gap: 5px; */
 }
   

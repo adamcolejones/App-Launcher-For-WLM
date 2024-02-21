@@ -373,4 +373,88 @@
       // }
 
 // *************************************************************************************************************************************************
+// *************************************************************************************************************************************************
+//
+//
+//
+      // Function that displays the settings page for an individual tag
+    //   function displayTagSettings(tag, jsondata) {
+    //     const mediaDisplayDiv = document.getElementById('mediaDisplay');
+    //     const showTagSettingsDiv = document.getElementById('showTagSettings');
+    
+    //     // Show edit tag settings and hide others
+    //     mediaDisplayDiv.style.display = 'none';
+    //     showTagSettingsDiv.style.display = 'block';
+    //     document.getElementById('contentDisplay').style.display = 'none';
+    //     document.getElementById('editDisplay').style.display = 'none';
+    
+    //     // const mediaData = jsondata.Media || [];
+    
+    //     // Find the first tag with the selected name
+    //     const selectedTag = jsondata.Tags.find(item => item.Name === tag);
 
+    //     // Back button for tag settings
+    //     showTagSettingsDiv.innerHTML += `
+    //         <div id=buttonContainer>
+    //           <div id="backContainer">
+    //             <img src="assets/app/back.svg">
+    //             <div>Back</div>
+    //           </div>
+    //           <div id="editContainer">
+    //             <img src="assets/app/edit.svg" id="editButton">
+    //             <div>Edit</div>
+    //           </div>
+    //         </div>
+    //         <div class="tagContent">
+    //             <p>------------------------------------------------------------------------------------</p>
+    //             <p>CATEGORY SETTINGS</p>
+    //             <p>------------------------------------------------------------------------------------</p>
+    //             <p>Name: ${selectedTag.Name}</p>
+    //             <p>Media's Display Ratio: ${selectedTag.Width} x ${selectedTag.Height}</p>
+    //             <p>Intro to Category, Video / Music / Transitions</p>
+    //             <p>Background Music / Sound Effects</p>
+    //             <p>Overall themes, fonts, etc.</p>
+    //             <p>Ability to Delete entire Category, the delete option should only be available through an enabled setting with password</p>
+    //             <p>DEFAULT RATIOS 1:1 Square 1080 x 1080, 2:3 Vertical Steam Hero 600 x 900, 4:5 Vertical 1080 x 1350, 16:9 Horizontal 1920 x 1080</p>
+    //             <p>?:? Custom ? x ? (Include decimals if user needs specifics) Do not exceed 100, create math that sorts the correct sizing on page.</p>
+    //             <p>?:? Match the uploaded Media with a set height to keep the entries in line</p>
+    //             <p>Don't use pixels as metrics as the height should scale with the users screen size.  Instead just record the ratio</p>
+    //             <p>Borders, hover effects</p>
+    //             <p>SNES: 2100x1534 Gamecube: 1158x1617? PSP: 1146x1980 Switch: 872x1420 N64: 2100x1532 DS: 1532x1370 3DS: 640x570? (Maybe double to 1280x1140 for a better quality size) NES: 1534x2100</p>
+    //             <p>File Path to Transition Media and subsequent media</p>
+    //             <p>Layouts: Nintendo Switch, 3DS, Wiiu, Wii</p>
+    //             <p>I need to save a default value in the event user wants every category to look the same without setting them all</p>
+    //             <p>Give the user the ability to add custom values ot the json file, if user wants to create a Date or other text value, that should be here (Speedruns)</p>
+    //             <p>Custom values might be easier to use if they are saved with the actual media in question and not the tag / category</p>
+    //             <p>Hoverable Options</p>
+    //             <p></p>
+    //             <p></p>
+    //             <p></p>
+    //             <p></p>
+    //             <p></p>
+    //             <br>
+    //             <p>------------------------------------------------------------------------------------</p>
+    //             <p>UNIVERSAL SETTINGS</p>
+    //             <p>------------------------------------------------------------------------------------</p>
+    //             <p>Side Bar Location / Style</p>
+    //             <p>Give user the option for the side bar option to disappear after a moment, then wake up or display the option pressing the assigned button</p>
+    //             <p>Consider the timing of switching between categories, some transition scenes may take up more time than they need to.  Should there be an option to skip directly to a cat and skip other transitions?</p>
+    //             <p></p>
+    //             <p></p>
+    //             <p></p>
+    //         </div>
+    //     `;
+    
+    //     const backContainer = document.getElementById('backContainer');
+    //     backContainer.addEventListener('click', function () {
+    //         mediaDisplayDiv.style.display = 'block';
+    //         showTagSettingsDiv.style.display = 'none';
+    //         showTagSettingsDiv.innerHTML = '';
+    //     });
+    //     const editButton = document.getElementById('editContainer');
+    //     editButton.addEventListener('click', () => {
+    //       editCategorySettings(selectedTag);
+    //     });
+        
+        
+    // }
