@@ -794,6 +794,24 @@ tbody {
   width: 200px;
   /* background-color: transparent; */
   background-color: rgb(255, 100, 100);
+  background-size: cover;
+  background-position: center;
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
+}
+
+.testMediaItemPicture {
+  max-height: 100%;
+  max-width: 100%;
+  /* display: block; Removes bottom space associated with inline elements */
+  object-fit: cover; /* This will ensure the image is contained within the box, though it could leave empty space on the sides */
+  display: block;
+  margin: auto;
+}
+
+.testMediaValue {
+  top: 0px;
 }
 
 #testMediaContainer {

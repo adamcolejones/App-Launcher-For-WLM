@@ -458,3 +458,20 @@
         
         
     // }
+
+     //-----------------------------------------------------------------------------------------
+            // UPDATE IMAGE BORDER RADIUS WHEN BASE BORDER OR BORDER RADIUS IS UPDATED 
+            // limit the border radius to non negative numbers
+            // function updateTestMediaPicturesSizes() {
+            //   testMediaElements.forEach((testMedia, index) => {
+            //     // Assuming there's a one-to-one correspondence between testMedia and testMediaPictures
+            //     const testMediaPicture = testMediaPictures[index];
+            //     if (testMediaPicture) { // Check if the corresponding picture exists
+            //       const width = testMedia.style.width;
+            //       const height = testMedia.style.height;
+            //       testMediaPicture.style.width = width;
+            //       testMediaPicture.style.height = height;
+            //     }
+            //   });
+            // }
+            //-----------------------------------------------------------------------------------------

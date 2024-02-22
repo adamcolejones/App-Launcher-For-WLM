@@ -319,13 +319,15 @@ document.addEventListener('DOMContentLoaded', () => {
         floatingBorderColor = selectedTag.FloatingBorderColor;
         floatingBorderRadius = selectedTag.FloatingBorderRadius;
         floatingBorderGap = selectedTag.FloatingBorderGap;
-        height = selectedTag.Height;
-        width = selectedTag.Width;
+        var height = selectedTag.Height;
+        var width = selectedTag.Width;
         ({width, height} = simplifyRatio(width, height));
         // there needs to be a default that sets the height and width based on the content provided. In the event user wants different sized media placed together. 
         // If user saved 1920 x 1080 as the height and width of the ratio, user will only see the simplified version after saving
         // I will need to make a separate border radius for the floating border and then a checkbox that says to match existing border.  
         // Also need a button that sets the size and gap of the floating border to be automatically sized and centered.
+
+        
 
         //-----------------------------------------------------------------------------------------
         // Greatest Common Denominator for height and width ratios of media content
@@ -443,9 +445,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <p>SAVE CHANGES</p>
 
           </div>
-          <div id="testMediaContainer">
-            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>            <div class="testMedia"></div>
-          </div>
+          
 
           <div id="otherNotes">
             <p>------------------------------------------------------------------------------------</p>
@@ -453,8 +453,6 @@ document.addEventListener('DOMContentLoaded', () => {
             <p>------------------------------------------------------------------------------------</p>
             <p>Intro to Category, Video / Music / Transitions</p>
             <p>Ability to Delete entire Category, the delete option should only be available through an enabled setting with password</p>
-            <p>Selections for common ratios</p>
-            <p>SNES: 2100x1534 Gamecube: 1158x1617? PSP: 1146x1980 Switch: 872x1420 N64: 2100x1532 DS: 1532x1370 3DS: 640x570? (Maybe double to 1280x1140 for a better quality size) NES: 1534x2100</p>
             <p>File Path to Transition Media and subsequent media</p>
             <p>Layouts: Nintendo Switch, 3DS, Wiiu, Wii</p>
             <p>I need to save a default value in the event user wants every category to look the same without setting them all</p>
@@ -478,6 +476,46 @@ document.addEventListener('DOMContentLoaded', () => {
             <p></p>
           </div>
         `;
+        //-----------------------------------------------------------------------------------------
+
+        //-----------------------------------------------------------------------------------------
+        const mediaData = jsondata.Media || [];
+        // If Tag selected is all, show all media data.  If not, only show media data where the media entries include the selected Tag.
+        const items = tag === 'All' ? mediaData : mediaData.filter(item => item.Tags.includes(tag));
+        // console.log(items);
+        editCategorySettings.innerHTML += editableMedia(items);
+        function editableMedia(data) {
+          if (data.length === 0) {
+            return '<p>No data available.</p>';
+          }
+          let mediaHTML = '<div class="mediadata">';
+          // Collect all unique keys (field names) from the array
+          const allKeys = new Set();
+          for (const item of data) {
+            for (const key in item) {
+              allKeys.add(key);
+            }
+          }
+          mediaHTML += '<div id="testMediaContainer">';
+          // Create data rows
+          for (const item of data) {
+            mediaHTML += `<div class="testMedia" data-item='${JSON.stringify(item).replace(/'/g, "&apos;")}'>`;
+            if (item.id && item.Image == true) {
+              const imageUrl = item.id ? `assets/media/${item.id}.png` : 'assets/media/default.png';
+              mediaHTML += `<img src="${imageUrl}" alt="Image ${item.id}" class="testMediaItemPicture" />`;
+            } else {
+              const defaultImageUrl = 'assets/media/default.png';
+              mediaHTML += `<img src="${defaultImageUrl}" alt="Default Image" class="testMediaItemPicture" />`;
+            }
+            const itemName = item.Name.replace(/'/g, "&apos;");
+            mediaHTML += `<div class="testMediavalue">${itemName}</div>`;
+            mediaHTML += '<br></div>';
+          }
+          mediaHTML += '<br><p>Display Option to Add a category to this list, Example: Nintendo (Parent) N64, 3DS, GBC (Children)</p>'; // class="mediaitemcontainer"
+          mediaHTML += '</div>'; // class="mediaitemcontainer"
+          mediaHTML += '</div>'; // class="mediakeycontainer"
+          return mediaHTML;
+        }
         //-----------------------------------------------------------------------------------------
 
         
@@ -563,149 +601,97 @@ document.addEventListener('DOMContentLoaded', () => {
         //
         //
         //
-        const testMediaElements = document.querySelectorAll('.testMedia');
         const scrollableContent = document.querySelector('.scrollableContent');
-        testMediaElements.forEach(testMedia => {
-          // Set initial styling
-          // Prevent user from setting odd numbered values for borders and padding, this will keep content evenly spaced when calculating positioning.  User can fix this by using bigger even numbers
-          // This actually wouldn't help when we have to divide the values, 10 would become 5, 6 - 3, etc.
-          updateAspectRatio();
-          updateBorder();
-          updateBorderColor();
-          updateBorderRadius();
-          updateFloatingBorder();
-          updateFloatingBorderColor();
-          updateFloatingBorderRadius();
-          updateFloatingBorderGap();
-          let setHeight = 200; // Fixed height for displayed media
+        const testMediaElements = document.querySelectorAll('.testMedia');
+        const testMediaPictures = document.querySelectorAll('.testMediaItemPicture');
+
+        // Functions that don't need to loop
+        // You can set global variables here that apply to all media at once rather than repeating loops
+        //-----------------------------------------------------------------------------------------
+        updateAspectRatio();
+        document.getElementById("formRatioWidth").addEventListener('change', updateAspectRatio);
+        document.getElementById("formRatioHeight").addEventListener('change', updateAspectRatio);
+        function updateAspectRatio() {
+          console.log('Function: Aspect Ratio');
+          width = parseInt(document.getElementById("formRatioWidth").value, 10);
+          height = parseInt(document.getElementById("formRatioHeight").value, 10);
+          ({width, height} = simplifyRatio(width, height));
+          let setHeight = 200; // Fixed height
           ratio = width / height; // why does resetting the ratio effect the content?
           ratioedWidth = setHeight * ratio;
-          testMedia.style.width = `${ratioedWidth}px`;
-          testMedia.style.height = `${setHeight}px`;
-          testMedia.style.border = `${border}px solid ${borderColor}`;
-          testMedia.style['border-radius'] = `${selectedTag.BorderRadius}px`;
-          testMedia.style.zIndex = '2'; // Z-index for this element should be higher than its background border
-          // Create separate styling depending on whether or not the media is hovered over by the mouse, Apply hoverable styling when mouse enters
-          // I should allow any dimensions to be applied to the custom tab, while using a fixed height.
-          // for new hovered border, include a "same size as gap" option
-          testMedia.addEventListener('mouseenter', function() {
-            // on mouse enter, play a sound effect.  This would be where to put it.
-            // You could make a function that times the sound effects to have different pitches based on how many are hovered in a breif moment.  Musical selection menus.
-            // POSSIBLE IDEA, I could create a copy of the media and position it in the middle to enlarge it without affecting the flex box order and layout: Enlarge selected media
-            console.log("Width: " + window.innerWidth + ", Height: " + window.innerHeight);
-            const rect = testMedia.getBoundingClientRect(); // Get position and size of original media item
-            let scrollDistanceLeft = scrollableContent.scrollLeft;
-            let scrollDistanceTop = scrollableContent.scrollTop;
-            const sideMenuWidth = 200; // Width of the side menu
-            const floatingBorderElement = testMedia.cloneNode(true);
-            testMedia.style.zIndex = '5'; // Z-index for this element should be higher than its background border
-            floatingBorderElement.classList.add('testMediaCopy'); // Add a distinct class name
-            floatingBorderElement.style.position = 'absolute';
-            floatingBorderElement.style.zIndex = '4';
-            floatingBorderElement.style['background-color'] = 'transparent';
-            floatingBorderElement.style.border = `${floatingBorder}` + `px solid ` + `${floatingBorderColor}`; // custom per user
-            floatingBorderElement.style['border-radius'] = `${floatingBorderRadius}px`;
-            // need to turn calculations into named variables to help showcase what is actually being done per value
-            // let gapMiddle = Math.ceil(selectedTag.Gap / 4); // round up to prevent decimal padding.  Round up keeps border closer to element, down spreads it out further
-            floatingBorderElement.style.padding = (border) + (floatingBorderGap) +  'px'; // - 2 custom per user border settings
-            floatingBorderElement.style.top = `${(rect.top) - (floatingBorder) - (floatingBorderGap) + (scrollDistanceTop) - topAdjustment}px`; // Trying to place an element in the middle of an odd element will result in the value skewed to the left innacurately.
-            floatingBorderElement.style.left = `${(rect.left) - (floatingBorder) - (floatingBorderGap) + (scrollDistanceLeft) - (sideMenuWidth) + 0}px`; // +1
-            testMedia.parentNode.appendChild(floatingBorderElement);
-          });
-          
-          //-----------------------------------------------------------------------------------------
-          // These listeners are placed after the media conatiners and copy backgrounds have been identified.
-          // Revert back to default non-hoverable styling when mouse leaves
-          testMedia.addEventListener('mouseleave', function() {
-            updateBorder();
-            testMedia.style.zIndex = '2'; // Z-index for this element should be higher than its background border
-            const copies = testMedia.parentNode.querySelectorAll('.testMediaCopy');
-            copies.forEach(copy => {
-              copy.parentNode.removeChild(copy);
-            });
-          });
-        //-----------------------------------------------------------------------------------------
-
+          document.getElementById("aspectRatioDisplay").textContent = `Aspect Ratio: ${width}:${height}`;
+          updateMediaStyling(testMediaElements);
+        }
         //-----------------------------------------------------------------------------------------
         // UPDATE WIDTH, HEIGHT, and ASPECT RATIO
         //
         //
-          document.getElementById("formRatioWidth").addEventListener("input", updateWidth);
-          function updateWidth() {
-            var widthInput = document.getElementById("formRatioWidth");
-            var widthValue = parseInt(widthInput.value);
-            if (widthValue < 1) { // Ensure the width does not go below 1
-              widthInput.value = 1;
-              widthValue = 1; // Update widthValue as well
-            }
-            width = widthValue;
-            updateAspectRatio();
+        document.getElementById("formRatioWidth").addEventListener("input", updateWidth);
+        function updateWidth() {
+          console.log('Function: Update Width');
+          var widthInput = document.getElementById("formRatioWidth");
+          var widthValue = parseInt(widthInput.value);
+          if (widthValue < 1) { // Ensure the width does not go below 1
+            widthInput.value = 1;
+            widthValue = 1; // Update widthValue as well
           }
+          width = widthValue;
+          updateAspectRatio();
+        }
 
-          document.getElementById("formRatioHeight").addEventListener("input", updateHeight);
-          function updateHeight() {
-            var heightInput = document.getElementById("formRatioHeight");
-            var heightValue = parseInt(heightInput.value);
-            if (heightValue < 1) { // Ensure the height does not go below 1
-              heightInput.value = 1;
-              heightValue = 1; // Update heightValue as well
-            }
-            height = heightValue; 
-            updateAspectRatio();
+        document.getElementById("formRatioHeight").addEventListener("input", updateHeight);
+        function updateHeight() {
+          console.log('Function: Update Height');
+          var heightInput = document.getElementById("formRatioHeight");
+          var heightValue = parseInt(heightInput.value);
+          if (heightValue < 1) { // Ensure the height does not go below 1
+            heightInput.value = 1;
+            heightValue = 1; // Update heightValue as well
           }
-          
-          document.getElementById("formRatioWidth").addEventListener('change', updateAspectRatio);
-          document.getElementById("formRatioHeight").addEventListener('change', updateAspectRatio);
-          function updateAspectRatio() {
-            width = parseInt(document.getElementById("formRatioWidth").value, 10);
-            height = parseInt(document.getElementById("formRatioHeight").value, 10);
-            ({width, height} = simplifyRatio(width, height));
-            let setHeight = 200; // Fixed height
-            ratio = width / height; // why does resetting the ratio effect the content?
-            ratioedWidth = setHeight * ratio;
-            testMedia.style.width = `${ratioedWidth}px`;
-            testMedia.style.height = `${setHeight}px`;
-            document.getElementById("aspectRatioDisplay").textContent = `Aspect Ratio: ${width}:${height}`;
-          }
-        //-----------------------------------------------------------------------------------------
+          height = heightValue; 
+          updateAspectRatio();
+        }
 
         //-----------------------------------------------------------------------------------------
         // BORDERS SIZE
         //
         //
         //
-          borderCheckbox.addEventListener('change', updateBorder);
-          function updateBorder() {
-            if (borderCheckbox.checked) {
-              border = parseInt(document.getElementById("formBorder").value);
-              document.getElementById("formBorder").disabled = false;
-              document.getElementById("formBorderColor").disabled = false;
-              document.getElementById("borderColorCheckbox").disabled = false;
-              testMedia.style.border = `${border}px solid ${borderColor}`;
-            } else {
-              testMedia.style.border = `0px solid ${borderColor}`;
-              border = 0;
-              document.getElementById("formBorder").disabled = true;
-              document.getElementById("formBorderColor").disabled = true;
-              document.getElementById("borderColorCheckbox").disabled = true;
-            }
+        updateBorder();
+        borderCheckbox.addEventListener('change', updateBorder);
+        function updateBorder() {
+          console.log('Function: Update Border');
+          if (borderCheckbox.checked) {
+            border = parseInt(document.getElementById("formBorder").value);
+            document.getElementById("formBorder").disabled = false;
+            document.getElementById("formBorderColor").disabled = false;
+            document.getElementById("borderColorCheckbox").disabled = false;
+            // testMedia.style.border = `${border}px solid ${borderColor}`;
+          } else {
+            // testMedia.style.border = `0px solid ${borderColor}`;
+            border = 0;
+            document.getElementById("formBorder").disabled = true;
+            document.getElementById("formBorderColor").disabled = true;
+            document.getElementById("borderColorCheckbox").disabled = true;
           }
+          updateMediaStyling(testMediaElements);
+        }
 
-          document.getElementById("formBorder").addEventListener("input", function() {
-            var inputValue = parseInt(this.value);
-            if (inputValue < 0) {
-              this.value = 0;
-              inputValue = 0; // Update inputValue as well
-            } // Check if the value is greater than 999
-            if (inputValue > 999) { // If so, set it to 999
-                this.value = 999;
-                inputValue = 999; // Update inputValue as well
-            } // Update the border variable with the input value
-            border = inputValue;
-            border = this.value !== null ? this.value : 0;
-            this.value = border;
-            updateBorder(); // apply to all media items
-          });
+        document.getElementById("formBorder").addEventListener("input", function() {
+          var inputValue = parseInt(this.value);
+          if (inputValue < 0) {
+            this.value = 0;
+            inputValue = 0; // Update inputValue as well
+          } // Check if the value is greater than 999
+          if (inputValue > 999) { // If so, set it to 999
+              this.value = 999;
+              inputValue = 999; // Update inputValue as well
+          } // Update the border variable with the input value
+          border = inputValue;
+          border = this.value !== null ? this.value : 0;
+          this.value = border;
+          updateBorder(); // apply to all media items
+        });
         //-----------------------------------------------------------------------------------------
 
         //-----------------------------------------------------------------------------------------
@@ -713,25 +699,27 @@ document.addEventListener('DOMContentLoaded', () => {
         //
         //
         borderColorCheckbox.addEventListener('change', updateBorderColor);
-          function updateBorderColor() {
-            if (borderColorCheckbox.checked) {
-              borderColor = document.getElementById("formBorderColor").value;
-              document.getElementById("formBorderColor").disabled = false;
-              testMedia.style.border = `${border}px solid ${borderColor}`;
-            } else {
-              borderColor = 'black';
-              testMedia.style.border = `${border}px solid ${borderColor}`;
-              document.getElementById("formBorderColor").disabled = true;
-            }
+        function updateBorderColor() {
+          console.log('Function: Update Border Color');
+          if (borderColorCheckbox.checked) {
+            borderColor = document.getElementById("formBorderColor").value;
+            document.getElementById("formBorderColor").disabled = false;
+            // testMedia.style.border = `${border}px solid ${borderColor}`;
+          } else {
+            borderColor = 'black';
+            // testMedia.style.border = `${border}px solid ${borderColor}`;
+            document.getElementById("formBorderColor").disabled = true;
           }
+          updateMediaStyling(testMediaElements);
+        }
 
-          document.getElementById("formBorderColor").addEventListener("input", function() {
-            var inputValue = this.value;
-            borderColor = inputValue;
-            borderColor = this.value !== null ? this.value : 'black';
-            this.value = borderColor;
-            updateBorderColor(); // apply to all media items
-          });
+        document.getElementById("formBorderColor").addEventListener("input", function() {
+          var inputValue = this.value;
+          borderColor = inputValue;
+          borderColor = this.value !== null ? this.value : 'black';
+          this.value = borderColor;
+          updateBorderColor(); // apply to all media items
+        });
         
         //-----------------------------------------------------------------------------------------
 
@@ -740,81 +728,88 @@ document.addEventListener('DOMContentLoaded', () => {
         //
         //
         //
-          borderRadiusCheckbox.addEventListener('change', updateBorderRadius);
-          function updateBorderRadius() {
-            if (borderRadiusCheckbox.checked) {
-              borderRadius = parseInt(document.getElementById("formBorderRadius").value);
-              document.getElementById("formBorderRadius").disabled = false;
-              testMedia.style['border-radius'] = `${borderRadius}px`;
-            } else {
-              testMedia.style['border-radius'] = `0px`;
-              borderRadius = 0;
-              document.getElementById("formBorderRadius").disabled = true;
-            }
+        updateBorderRadius();
+        borderRadiusCheckbox.addEventListener('change', updateBorderRadius);
+        function updateBorderRadius() {
+          console.log('Function: Update Border Radius');
+          if (borderRadiusCheckbox.checked) {
+            borderRadius = parseInt(document.getElementById("formBorderRadius").value);
+            document.getElementById("formBorderRadius").disabled = false;
+            // testMedia.style['border-radius'] = `${borderRadius}px`;
+          } else {
+            // testMedia.style['border-radius'] = `0px`;
+            borderRadius = 0;
+            document.getElementById("formBorderRadius").disabled = true;
           }
+          updateTestMediaPicturesSizes();
+          updateMediaStyling(testMediaElements);
+        }
 
-          document.getElementById("formBorderRadius").addEventListener("input", function() {
-            var inputValue = parseInt(this.value);
-            if (inputValue < 0) {
-              this.value = 0;
-              inputValue = 0; // Update inputValue as well
-            } // Check if the value is greater than 999
-            if (inputValue > 999) { // If so, set it to 999
-                this.value = 999;
-                inputValue = 999; // Update inputValue as well
-            } // Update the border variable with the input value
-            borderRadius = inputValue;
-            borderRadius = this.value !== null ? this.value : 0;
-            this.value = borderRadius;
-            updateBorderRadius(); // apply to all media items
-          });
-          //-----------------------------------------------------------------------------------------
-
+        document.getElementById("formBorderRadius").addEventListener("input", function() {
+          var inputValue = parseInt(this.value);
+          if (inputValue < 0) {
+            this.value = 0;
+            inputValue = 0; // Update inputValue as well
+          } // Check if the value is greater than 999
+          if (inputValue > 999) { // If so, set it to 999
+              this.value = 999;
+              inputValue = 999; // Update inputValue as well
+          } // Update the border variable with the input value
+          borderRadius = inputValue;
+          borderRadius = this.value !== null ? this.value : 0;
+          this.value = borderRadius;
+          updateBorderRadius(); // apply to all media items
+        });
+        //-----------------------------------------------------------------------------------------
+        // STYLE EVERYTHING HERE DOWN BEFORE LAUNCHING AGAIN
         //-----------------------------------------------------------------------------------------
         // FLOATING BORDER FOR SELECTED MATERIAL
         // These hovered elements dont exist until the original is hovered, you can't reference them directly you have to use variables.
         //
         //
         //
-          floatingBorderCheckbox.addEventListener('change', updateFloatingBorder);
-          function updateFloatingBorder() {
-            if (floatingBorderCheckbox.checked) {
-              floatingBorder = parseInt(document.getElementById("formFloatingBorder").value);
-              document.getElementById("floatingBorderColorCheckbox").disabled = false;
-              document.getElementById("floatingBorderRadiusCheckbox").disabled = false;
-              document.getElementById("floatingBorderGapCheckbox").disabled = false;
-              document.getElementById("formFloatingBorder").disabled = false;
-              document.getElementById("formFloatingBorderColor").disabled = false;
-              updateFloatingBorderRadius(); // instead call these functions to check whether the checkbox has these inputs enabled or disabled
-              updateFloatingBorderGap();
-              floatingBorderPadding = border;
-            } else {
-              floatingBorder = 0;
-              document.getElementById("floatingBorderRadiusCheckbox").disabled = true;
-              document.getElementById("floatingBorderGapCheckbox").disabled = true;
-              document.getElementById("floatingBorderColorCheckbox").disabled = true;
-              document.getElementById("formFloatingBorder").disabled = true;
-              document.getElementById("formFloatingBorderColor").disabled = true;
-              document.getElementById("formFloatingBorderRadius").disabled = true;
-              document.getElementById("formFloatingBorderGap").disabled = true;
-            }
+        updateFloatingBorder();
+        floatingBorderCheckbox.addEventListener('change', updateFloatingBorder);
+        function updateFloatingBorder() {
+          console.log('Function: Update Floating Border');
+          if (floatingBorderCheckbox.checked) {
+            floatingBorder = parseInt(document.getElementById("formFloatingBorder").value);
+            document.getElementById("floatingBorderColorCheckbox").disabled = false;
+            document.getElementById("floatingBorderRadiusCheckbox").disabled = false;
+            document.getElementById("floatingBorderGapCheckbox").disabled = false;
+            document.getElementById("formFloatingBorder").disabled = false;
+            document.getElementById("formFloatingBorderColor").disabled = false;
+            updateFloatingBorderRadius(); // instead call these functions to check whether the checkbox has these inputs enabled or disabled
+            updateFloatingBorderGap();
+            floatingBorderPadding = border;
+          } else {
+            floatingBorder = 0;
+            document.getElementById("floatingBorderRadiusCheckbox").disabled = true;
+            document.getElementById("floatingBorderGapCheckbox").disabled = true;
+            document.getElementById("floatingBorderColorCheckbox").disabled = true;
+            document.getElementById("formFloatingBorder").disabled = true;
+            document.getElementById("formFloatingBorderColor").disabled = true;
+            document.getElementById("formFloatingBorderRadius").disabled = true;
+            document.getElementById("formFloatingBorderGap").disabled = true;
           }
+          updateMediaStyling(testMediaElements);
+        }
 
-          document.getElementById("formFloatingBorder").addEventListener("input", function() {
-            var inputValue = parseInt(this.value);
-            if (inputValue < 0) {
-              this.value = 0;
-              inputValue = 0; // Update inputValue as well
-            } // Check if the value is greater than 999
-            if (inputValue > 999) { // If so, set it to 999
-                this.value = 999;
-                inputValue = 999; // Update inputValue as well
-            } // Update the border variable with the input value
-            floatingBorder = inputValue;
-            floatingBorder = this.value !== null ? this.value : 0;
-            this.value = floatingBorder;
-            updateFloatingBorder(); // apply to all media items
-          });
+        document.getElementById("formFloatingBorder").addEventListener("input", function() {
+          var inputValue = parseInt(this.value);
+          if (inputValue < 0) {
+            this.value = 0;
+            inputValue = 0; // Update inputValue as well
+          } // Check if the value is greater than 999
+          if (inputValue > 999) { // If so, set it to 999
+              this.value = 999;
+              inputValue = 999; // Update inputValue as well
+          } // Update the border variable with the input value
+          floatingBorder = inputValue;
+          floatingBorder = this.value !== null ? this.value : 0;
+          this.value = floatingBorder;
+          updateFloatingBorder(); // apply to all media items
+        });
         //-----------------------------------------------------------------------------------------
 
         //-----------------------------------------------------------------------------------------
@@ -822,8 +817,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // These hovered elements dont exist until the original is hovered, you can't reference them directly you have to use variables.
         //
         //
+        updateFloatingBorderColor();
         floatingBorderColorCheckbox.addEventListener('change', updateFloatingBorderColor);
         function updateFloatingBorderColor() {
+          console.log('Function: Update Floating Border Color');
           if (floatingBorderColorCheckbox.checked) {
             floatingBorderColor = document.getElementById("formFloatingBorderColor").value;
             document.getElementById("formFloatingBorderColor").disabled = false;
@@ -831,6 +828,7 @@ document.addEventListener('DOMContentLoaded', () => {
             floatingBorderColor = 'black';
             document.getElementById("formFloatingBorderColor").disabled = true;
           } // document.getElementById("floatingBorderColorValue").textContent = `Floating Border Color Size: ${floatingBorderColor}`;
+          updateMediaStyling(testMediaElements);
         }
 
         document.getElementById("formFloatingBorderColor").addEventListener("input", function() {
@@ -840,39 +838,42 @@ document.addEventListener('DOMContentLoaded', () => {
           this.value = floatingBorderColor;
           updateFloatingBorderColor(); // apply to all media items
         });
-      //-----------------------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------
 
         //-----------------------------------------------------------------------------------------
         // FLOATING BORDER RADIUS FOR SELECTED MATERIAL
         // These hovered elements dont exist until the original is hovered, you can't reference them directly you have to use variables.
         //
         //
-          floatingBorderRadiusCheckbox.addEventListener('change', updateFloatingBorderRadius);
-          function updateFloatingBorderRadius() {
-            if (floatingBorderRadiusCheckbox.checked) {
-              floatingBorderRadius = parseInt(document.getElementById("formFloatingBorderRadius").value);
-              document.getElementById("formFloatingBorderRadius").disabled = false;
-            } else {
-              floatingBorderRadius = 0;
-              document.getElementById("formFloatingBorderRadius").disabled = true;
-            } // document.getElementById("floatingBorderRadiusValue").textContent = `Floating Border Radius: ${floatingBorderRadius}`;
-          }
-          
-          document.getElementById("formFloatingBorderRadius").addEventListener("input", function() {
-            var inputValue = parseInt(this.value);
-            if (inputValue < 0) {
-              this.value = 0;
-              inputValue = 0; // Update inputValue as well
-            } // Check if the value is greater than 999
-            if (inputValue > 999) { // If so, set it to 999
-                this.value = 999;
-                inputValue = 999; // Update inputValue as well
-            } // Update the border variable with the input value
-            floatingBorderRadius = inputValue;
-            floatingBorderRadius = this.value !== null ? this.value : 0;
-            this.value = floatingBorderRadius;
-            updateFloatingBorderRadius(); // apply to all media items
-          });
+        updateFloatingBorderRadius();
+        floatingBorderRadiusCheckbox.addEventListener('change', updateFloatingBorderRadius);
+        function updateFloatingBorderRadius() {
+          console.log('Function: Update Floating Border Radius');
+          if (floatingBorderRadiusCheckbox.checked) {
+            floatingBorderRadius = parseInt(document.getElementById("formFloatingBorderRadius").value);
+            document.getElementById("formFloatingBorderRadius").disabled = false;
+          } else {
+            floatingBorderRadius = 0;
+            document.getElementById("formFloatingBorderRadius").disabled = true;
+          } // document.getElementById("floatingBorderRadiusValue").textContent = `Floating Border Radius: ${floatingBorderRadius}`;
+          updateMediaStyling(testMediaElements);
+        }
+        
+        document.getElementById("formFloatingBorderRadius").addEventListener("input", function() {
+          var inputValue = parseInt(this.value);
+          if (inputValue < 0) {
+            this.value = 0;
+            inputValue = 0; // Update inputValue as well
+          } // Check if the value is greater than 999
+          if (inputValue > 999) { // If so, set it to 999
+              this.value = 999;
+              inputValue = 999; // Update inputValue as well
+          } // Update the border variable with the input value
+          floatingBorderRadius = inputValue;
+          floatingBorderRadius = this.value !== null ? this.value : 0;
+          this.value = floatingBorderRadius;
+          updateFloatingBorderRadius(); // apply to all media items
+        });
         //-----------------------------------------------------------------------------------------
 
         //-----------------------------------------------------------------------------------------
@@ -880,39 +881,128 @@ document.addEventListener('DOMContentLoaded', () => {
         // These hovered elements dont exist until the original is hovered, you can't reference them directly you have to use variables.
         //
         //
-          floatingBorderGapCheckbox.addEventListener('change', updateFloatingBorderGap);
-          function updateFloatingBorderGap() {
-            if (floatingBorderGapCheckbox.checked) {
-              floatingBorderGap = parseInt(document.getElementById("formFloatingBorderGap").value);
-              document.getElementById("formFloatingBorderGap").disabled = false;
-            } else {
-              floatingBorderGap = 0;
-              document.getElementById("formFloatingBorderGap").disabled = true;
-            } // document.getElementById("floatingBorderGapValue").textContent = `Floating Border Gap Size: ${floatingBorderGap}`;
-          }
+        updateFloatingBorderGap();
+        floatingBorderGapCheckbox.addEventListener('change', updateFloatingBorderGap);
+        function updateFloatingBorderGap() {
+          console.log('Function: Update Floating Border Gap');
+          if (floatingBorderGapCheckbox.checked) {
+            floatingBorderGap = parseInt(document.getElementById("formFloatingBorderGap").value);
+            document.getElementById("formFloatingBorderGap").disabled = false;
+          } else {
+            floatingBorderGap = 0;
+            document.getElementById("formFloatingBorderGap").disabled = true;
+          } // document.getElementById("floatingBorderGapValue").textContent = `Floating Border Gap Size: ${floatingBorderGap}`;
+          updateMediaStyling(testMediaElements);
+        }
 
-          document.getElementById("formFloatingBorderGap").addEventListener("input", function() {
-            var inputValue = parseInt(this.value);
-            if (inputValue < 0) {
-              this.value = 0;
-              inputValue = 0; // Update inputValue as well
-            } // Check if the value is greater than 999
-            if (inputValue > 999) { // If so, set it to 999
-                this.value = 999;
-                inputValue = 999; // Update inputValue as well
-            } // Update the border variable with the input value
-            floatingBorderGap = inputValue;
-            floatingBorderGap = this.value !== null ? this.value : 0;
-            this.value = floatingBorderGap;
-            updateFloatingBorderGap(); // apply to all media items
-          });
-        //-----------------------------------------------------------------------------------------
+        document.getElementById("formFloatingBorderGap").addEventListener("input", function() {
+          var inputValue = parseInt(this.value);
+          if (inputValue < 0) {
+            this.value = 0;
+            inputValue = 0; // Update inputValue as well
+          } // Check if the value is greater than 999
+          if (inputValue > 999) { // If so, set it to 999
+              this.value = 999;
+              inputValue = 999; // Update inputValue as well
+          } // Update the border variable with the input value
+          floatingBorderGap = inputValue;
+          floatingBorderGap = this.value !== null ? this.value : 0;
+          this.value = floatingBorderGap;
+          updateFloatingBorderGap(); // apply to all media items
         });
+        //-----------------------------------------------------------------------------------------
 
-      //-----------------------------------------------------------------------------------------
-      // BACK BUTTON
-      //
-      //
+        function updateMediaStyling(testMediaElements) {
+          console.log('------------------------------');
+          console.log('Function: Update Media Styling');
+          testMediaElements.forEach(testMedia => {
+            // Set initial styling
+            // Prevent user from setting odd numbered values for borders and padding, this will keep content evenly spaced when calculating positioning.  User can fix this by using bigger even numbers
+            // This actually wouldn't help when we have to divide the values, 10 would become 5, 6 - 3, etc.
+            
+            let setHeight = 200; // Fixed height for displayed media
+            ratio = width / height; // why does resetting the ratio effect the content?
+            ratioedWidth = setHeight * ratio;
+            testMedia.style.width = `${ratioedWidth}px`;
+            testMedia.style.height = `${setHeight}px`;
+            testMedia.style.width = `${ratioedWidth}px`;
+            testMedia.style.height = `${setHeight}px`;
+            testMedia.style.border = `${border}px solid ${borderColor}`;
+            testMedia.style['border-radius'] = `${borderRadius}px`;
+            testMedia.style.zIndex = '2'; // Z-index for this element should be higher than its background border
+            // Create separate styling depending on whether or not the media is hovered over by the mouse, Apply hoverable styling when mouse enters
+            // I should allow any dimensions to be applied to the custom tab, while using a fixed height.
+            // for new hovered border, include a "same size as gap" option
+            testMedia.addEventListener('mouseenter', function() {
+              // on mouse enter, play a sound effect.  This would be where to put it.
+              // You could make a function that times the sound effects to have different pitches based on how many are hovered in a breif moment.  Musical selection menus.
+              // POSSIBLE IDEA, I could create a copy of the media and position it in the middle to enlarge it without affecting the flex box order and layout: Enlarge selected media
+              const rect = testMedia.getBoundingClientRect(); // Get position and size of original media item
+              let scrollDistanceLeft = scrollableContent.scrollLeft;
+              let scrollDistanceTop = scrollableContent.scrollTop;
+              const sideMenuWidth = 200; // Width of the side menu
+              const floatingBorderElement = testMedia.cloneNode(true);
+              testMedia.style.zIndex = '5'; // Z-index for this element should be higher than its background border
+              floatingBorderElement.classList.add('testMediaCopy'); // Add a distinct class name
+              floatingBorderElement.style.position = 'absolute';
+              floatingBorderElement.style.zIndex = '4';
+              floatingBorderElement.style['background-color'] = 'transparent';
+              floatingBorderElement.style.border = `${floatingBorder}` + `px solid ` + `${floatingBorderColor}`; // custom per user
+              floatingBorderElement.style['border-radius'] = `${floatingBorderRadius}px`;
+              // need to turn calculations into named variables to help showcase what is actually being done per value
+              floatingBorderPadding = (border) + (floatingBorderGap) +  'px'; // - 2 custom per user border settings
+              floatingBorderTopAdjustment = `${(rect.top) - (floatingBorder) - (floatingBorderGap) + (scrollDistanceTop) - topAdjustment - 360}px`; // Trying to place an element in the middle of an odd element will result in the value skewed to the left innacurately.
+              floatingBorderLeftAdjustment = `${(rect.left) - (floatingBorder) - (floatingBorderGap) + (scrollDistanceLeft) - (sideMenuWidth) + 0}px`; // +1
+              floatingBorderElement.style.padding = floatingBorderPadding; // - 2 custom per user border settings
+              floatingBorderElement.style.top = floatingBorderTopAdjustment; // Trying to place an element in the middle of an odd element will result in the value skewed to the left innacurately.
+              floatingBorderElement.style.left = floatingBorderLeftAdjustment; // +1
+              testMedia.parentNode.appendChild(floatingBorderElement);
+            });
+            
+            //-----------------------------------------------------------------------------------------
+            // These listeners are placed after the media conatiners and copy backgrounds have been identified.
+            // Revert back to default non-hoverable styling when mouse leaves
+            testMedia.addEventListener('mouseleave', function() {
+              testMedia.style.zIndex = '2'; // Z-index for this element should be higher than its background border
+              const copies = testMedia.parentNode.querySelectorAll('.testMediaCopy');
+              copies.forEach(copy => {
+                copy.parentNode.removeChild(copy);
+              });
+            });
+          });
+        }
+        // everything within this for each loop is repeated per item
+        // need to move alot of these functions outside of this loop to prevent refiring 74 times over
+
+        // const testMediaPictures = document.querySelectorAll('.testMediaItemPicture');
+
+        //-----------------------------------------------------------------------------------------
+        //update the image sizes to match the content / border etc.
+          function updateTestMediaPicturesSizes() {
+            console.log('Function: updateTestMediaPicturesSizes');
+            testMediaPictures.forEach(testMediaPicture => {
+            // Assuming there's a one-to-one correspondence between testMedia and testMediaPictures
+              let setHeight = 200; // Fixed height
+              ratio = width / height; // why does resetting the ratio effect the content?
+              ratioedWidth = setHeight * ratio;
+              testMediaPicture.style.width = `${ratioedWidth}px`;
+              testMediaPicture.style.height = `${setHeight}px`;
+              // testMediaPicture.style.width = width;
+              // testMediaPicture.style.height = height;
+              testBorderRadius = borderRadius - border - 1;
+              if (testBorderRadius < 0) {
+                testBorderRadius = 0;
+              }
+              testMediaPicture.style['border-radius'] = testBorderRadius + `px`;
+          });
+        }
+        
+        //-----------------------------------------------------------------------------------------
+
+        //-----------------------------------------------------------------------------------------
+        // BACK BUTTON
+        //
+        //
         const backContainer = document.getElementById('backContainer2');
         backContainer.addEventListener('click', function () {
           const scrollableContentDiv = document.querySelector('.scrollableContent');

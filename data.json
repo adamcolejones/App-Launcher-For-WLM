@@ -731,11 +731,11 @@
   "Tags": [
     {
       "Name": "All",
-      "Width": 16,
-      "Height": 9,
+      "Width": 1,
+      "Height": 1,
       "Border": 10,
       "BorderColor": "blue",
-      "BorderRadius": 10,
+      "BorderRadius": 300,
       "HoverWidth": 1,
       "HoverHeight": 2,
       "HoverBorder": 2,
