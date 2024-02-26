@@ -735,7 +735,7 @@
       "Height": 1,
       "Border": 10,
       "BorderColor": "blue",
-      "BorderRadius": 300,
+      "BorderRadius": 5,
       "HoverWidth": 1,
       "HoverHeight": 2,
       "HoverBorder": 2,

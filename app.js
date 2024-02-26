@@ -322,6 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
         var height = selectedTag.Height;
         var width = selectedTag.Width;
         ({width, height} = simplifyRatio(width, height));
+        functionCount = 1;
         // there needs to be a default that sets the height and width based on the content provided. In the event user wants different sized media placed together. 
         // If user saved 1920 x 1080 as the height and width of the ratio, user will only see the simplified version after saving
         // I will need to make a separate border radius for the floating border and then a checkbox that says to match existing border.  
@@ -363,6 +364,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             <p>ASPECT RATIO / POSITION</p>
             <div class="settingsOptionContainer">
+              <div class="settingsOption">
+                <p id="originalDimensionsValue">Original Dimensions</p><input id="originalDimensionsCheckbox" type="checkbox">
+              </div>
               <div class="settingsOption">
                 <p id="aspectRatioDisplay">Aspect Ratio: ${width}:${height}</p>
                 <input type="number" id="formRatioWidth" name="formRatioWidth" value=${width}>
@@ -508,7 +512,7 @@ document.addEventListener('DOMContentLoaded', () => {
               mediaHTML += `<img src="${defaultImageUrl}" alt="Default Image" class="testMediaItemPicture" />`;
             }
             const itemName = item.Name.replace(/'/g, "&apos;");
-            mediaHTML += `<div class="testMediavalue">${itemName}</div>`;
+            // mediaHTML += `<div class="testMediavalue">${itemName}</div>`;
             mediaHTML += '<br></div>';
           }
           mediaHTML += '<br><p>Display Option to Add a category to this list, Example: Nintendo (Parent) N64, 3DS, GBC (Children)</p>'; // class="mediaitemcontainer"
@@ -518,10 +522,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         //-----------------------------------------------------------------------------------------
 
-        
-
-        // Here I am taking Data values from JSON and implementing them into CSS through JS
         const testMediaContainer = document.getElementById('testMediaContainer');
+        const originalDimensionsCheckbox = document.getElementById('originalDimensionsCheckbox');
+        // const originalDimensionsCheckbox = document.getElementById('originalDimensionsCheckbox');
         const gapCheckbox = document.getElementById('gapCheckbox');
         const wrapCheckbox = document.getElementById('wrapCheckbox');
         const borderCheckbox = document.getElementById('borderCheckbox');
@@ -529,7 +532,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const floatingBorderRadiusCheckbox = document.getElementById('floatingBorderRadiusCheckbox');
         const floatingBorderGapCheckbox = document.getElementById('floatingBorderGapCheckbox');
         const otherNotes = document.getElementById('otherNotes');
-        topAdjustment = 600;
+        topAdjustment = 50;
         testMediaContainer.style.top = '' + topAdjustment + 'px';
         otherNotes.style.top = '' + topAdjustment + 'px';
 
@@ -589,9 +592,11 @@ document.addEventListener('DOMContentLoaded', () => {
           if (wrapCheckbox.checked) {
             wrap = 'wrap';
             testMediaContainer.style['flex-wrap'] = `${wrap}`;
+            testMediaContainer.style.width = `auto`;
           } else {
             wrap = 'nowrap';
             testMediaContainer.style['flex-wrap'] = wrap;
+            testMediaContainer.style.width = `max-content`;
           } // document.getElementById("wrapValue").textContent = `Wrap: ${wrap}`;
         }
         //-----------------------------------------------------------------------------------------
@@ -650,6 +655,30 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           height = heightValue; 
           updateAspectRatio();
+        }
+
+        updateOriginalDimensions();
+        originalDimensionsCheckbox.addEventListener('change', updateOriginalDimensions);
+        function updateOriginalDimensions() {
+          console.log('Function: Update Original Dimensions');
+          if (originalDimensionsCheckbox.checked) {
+            // border = parseInt(document.getElementById("formBorder").value);
+            document.getElementById("formRatioWidth").disabled = true;
+            document.getElementById("formRatioHeight").disabled = true;
+            width = 'auto';
+            // document.getElementById("borderColorCheckbox").disabled = false;
+            // testMedia.style.border = `${border}px solid ${borderColor}`;
+          } else {
+            // testMedia.style.border = `0px solid ${borderColor}`;
+            // border = 0;
+            // update width = the width in the box
+            
+            document.getElementById("formRatioWidth").disabled = false;
+            document.getElementById("formRatioHeight").disabled = false;
+            updateWidth();
+            // document.getElementById("borderColorCheckbox").disabled = true;
+          }
+          updateMediaStyling(testMediaElements);
         }
 
         //-----------------------------------------------------------------------------------------
@@ -913,20 +942,36 @@ document.addEventListener('DOMContentLoaded', () => {
         //-----------------------------------------------------------------------------------------
 
         function updateMediaStyling(testMediaElements) {
+          updateTestMediaPicturesSizes();
           console.log('------------------------------');
           console.log('Function: Update Media Styling');
           testMediaElements.forEach(testMedia => {
+            console.log('Function: Update Media Styling For Each Test Media Item: ' + functionCount);
+            // functionCount += 1;
             // Set initial styling
             // Prevent user from setting odd numbered values for borders and padding, this will keep content evenly spaced when calculating positioning.  User can fix this by using bigger even numbers
             // This actually wouldn't help when we have to divide the values, 10 would become 5, 6 - 3, etc.
+
+            // If ratioed media width exceeds box width, allow the new width to be set to preserve original dimensions: if the user wants to display media this way
             
             let setHeight = 200; // Fixed height for displayed media
-            ratio = width / height; // why does resetting the ratio effect the content?
-            ratioedWidth = setHeight * ratio;
-            testMedia.style.width = `${ratioedWidth}px`;
+            // If width = auto, then skip the ratioed width and set it to auto
+            if (width === 'auto') {
+              testMedia.style.width = `auto`;
+              // testMediaPictures.style.width = `auto`;
+              // testMedia.style.height = `${setHeight}px`;
+            }
+            else {
+              ratio = width / height; // why does resetting the ratio effect the content?
+              ratioedWidth = setHeight * ratio;
+              testMedia.style.width = `${ratioedWidth}px`;
+              // testMediaPictures.style.width = `${ratioedWidth}px`;
+            }
             testMedia.style.height = `${setHeight}px`;
-            testMedia.style.width = `${ratioedWidth}px`;
-            testMedia.style.height = `${setHeight}px`;
+
+            
+            // testMedia.style.width = `${ratioedWidth}px`;
+            // testMedia.style.height = `${setHeight}px`;
             testMedia.style.border = `${border}px solid ${borderColor}`;
             testMedia.style['border-radius'] = `${borderRadius}px`;
             testMedia.style.zIndex = '2'; // Z-index for this element should be higher than its background border
@@ -983,6 +1028,18 @@ document.addEventListener('DOMContentLoaded', () => {
             testMediaPictures.forEach(testMediaPicture => {
             // Assuming there's a one-to-one correspondence between testMedia and testMediaPictures
               let setHeight = 200; // Fixed height
+              if (width === 'auto') {
+                // testMedia.style.width = `auto`;
+                testMediaPicture.style.width = `auto`;
+                testMediaPicture.style.height = `${setHeight}px`;
+              }
+              else {
+                ratio = width / height; // why does resetting the ratio effect the content?
+                ratioedWidth = setHeight * ratio;
+                testMediaPicture.style.width = `${ratioedWidth}px`;
+                // testMediaPictures.style.width = `${ratioedWidth}px`;
+              }
+              testMediaPicture.style.height = `${setHeight}px`;
               ratio = width / height; // why does resetting the ratio effect the content?
               ratioedWidth = setHeight * ratio;
               testMediaPicture.style.width = `${ratioedWidth}px`;

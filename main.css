@@ -665,17 +665,20 @@ p {
  }
 
 .settingsContainer {
-  height: fit-content;
+  height: 500px;
+  width: 250px;
   position: fixed;
-  top: 0px;
-  left: 200px;
-  right: 17px;
+  top: 100px;
+  /* left: 200px; */
+  right: 20px;
   display: flex;
   flex-direction: column;
-  padding-top: 50px;
+  /* padding-top: 50px; */
   z-index: 6;
   background-color: white;
   box-sizing: border-box;
+  overflow-y: scroll;
+  border: 1px solid black;
 }
 
 .settingsOption {
@@ -690,11 +693,12 @@ p {
 }
 
 .settingsOptionContainer {
+  width: fit-content;
   display: flex;
   flex-direction: row;
   margin-right: 1px;
-  width: 50%;
-  flex-wrap: nowrap;
+  /* width: 50%; */
+  flex-wrap: wrap;
 }
 
 #showTagSettings {
@@ -812,6 +816,9 @@ tbody {
 
 .testMediaValue {
   top: 0px;
+  position: absolute;
+  width: auto;
+  height: auto;
 }
 
 #testMediaContainer {
@@ -819,6 +826,7 @@ tbody {
   width: fit-content;
   flex-wrap: wrap;
   position: relative;
+  /* width: max-content; */
   /* left: 80px; */
   /* gap: 5px; */
 }
