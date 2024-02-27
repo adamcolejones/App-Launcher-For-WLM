@@ -159,9 +159,27 @@ body {
   /* width: fit-content; */
 }
 
+#editCategoryButton {
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
 #editCategorySettings {
   width: 100%;
   margin: 0 0;
+}
+
+#editCategoryMenu {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  right: 17px;
+  top: 0px;
+  background-color: rgba(223, 223, 223, 0.75);
+  display: none;
+  overflow: scroll;
+  z-index: 6;
 }
 
 /* .editContainer {
