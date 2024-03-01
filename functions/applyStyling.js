@@ -2,7 +2,7 @@ import { gapChange } from './gapChange.js';
 import { wrapChange } from './wrapChange.js';
 import { updateAspectRatio } from './updateAspectRatio.js';
 // import { updateHeight } from './updateHeight.js';
-import { updateMediaStyling } from './updateMediaStyling.js';
+// import { updateMediaStyling } from './updateMediaStyling.js';
 import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js';
 // import { settingsMenu } from './functions/settingsMenu.js';
 // import { simplifyRatio } from './simplifyRatio.js';
@@ -11,6 +11,9 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
   function applyStyling(tag, jsondata) {
     const selectedTag = jsondata.Tags.find(item => item.Name === tag);
     // IF THESE VALUES RETURN NULL, THEY WILL BREAK THE APP.  IF ANY RETURN NULL, SET DEFAULT VALUES FOR THEM HERE
+
+    // BACKGROUND STYLING
+    let backgroundColor = selectedTag.BackgroundColor || 'white';
 
     // Container Styling
     let gap = selectedTag.Gap || 1; // Replace 'defaultGapValue' with your actual default
@@ -30,16 +33,29 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
     let floatingBorderGap = selectedTag.FloatingBorderGap || 0; 
     let floatingBorderPadding; // value is determined later, needed to be initialized beforehand
 
+    let isUpdatingMediaStyling = false;
+
+
 
 
     // DEAD VALUES, MIGHT BE USED LATER
     // let ratio = width / height; // why does resetting the ratio effect the content?
     
     editCategoryMenu.innerHTML = `
+      <p>BACKGROUND</p>
+      <div class="settingsOptionContainer">
+        <div class="settingsOption">
+          <p id="backgroundColor">Background Color</p>
+          <input type="text" id="formBackgroundColor" name="formBackgroundColor" value=${backgroundColor}>
+        </div>
+      </div>
+      <br>
+
       <p>ASPECT RATIO / POSITION</p>
       <div class="settingsOptionContainer">
         <div class="settingsOption">
-          <p id="originalDimensionsValue">Original Dimensions</p><input id="originalDimensionsCheckbox" type="checkbox">
+          <p id="originalDimensionsValue">Original Dimensions</p>
+          <input id="originalDimensionsCheckbox" type="checkbox">
         </div>
         <div class="settingsOption">
           <p id="aspectRatioDisplay">Aspect Ratio: ${width}:${height}</p>
@@ -127,6 +143,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
     const gapCheckbox = document.getElementById('gapCheckbox');
     const wrapCheckbox = document.getElementById('wrapCheckbox');
     const borderCheckbox = document.getElementById('borderCheckbox');
+    const mediaDisplay = document.getElementById('mediaDisplay');
     const floatingBorderCheckbox = document.getElementById('floatingBorderCheckbox');
     const floatingBorderColorCheckbox = document.getElementById('floatingBorderColorCheckbox');
     const floatingBorderRadiusCheckbox = document.getElementById('floatingBorderRadiusCheckbox');
@@ -215,11 +232,11 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
     //  ██████  ██████  ██████ ██████████ ████████████       ██████     ██████  ██████ 
     //             
     // updateAspectRatio(width, height);
-    // updateMediaStyling(testMediaElements, width, height, border, borderColor, borderRadius, floatingBorder, floatingBorderColor, floatingBorderRadius, floatingBorderPadding, floatingBorderGap, floatingBorderGap);
+    // updateMediaStyling(, floatingBorderGap);
     // document.getElementById("formRatioWidth").addEventListener('change', updateAspectRatio);
     // document.getElementById("formRatioWidth").addEventListener('change', function() {
     //   updateAspectRatio(width, height);
-    //   updateMediaStyling(testMediaElements, width, height, border, borderColor, borderRadius, floatingBorder, floatingBorderColor, floatingBorderRadius, floatingBorderPadding, floatingBorderGap);
+    //   updateMediaStyling();
     // });
 
     document.getElementById("formRatioWidth").addEventListener("input", updateWidth);
@@ -233,7 +250,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       }
       width = widthValue;
       updateAspectRatio(width, height);
-      updateMediaStyling(testMediaElements, width, height, border, borderColor, borderRadius, floatingBorder, floatingBorderColor, floatingBorderRadius, floatingBorderPadding, floatingBorderGap);
+      updateMediaStyling();
 
     }
     //###################################################################################################################################################################
@@ -258,7 +275,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
     // document.getElementById("formRatioHeight").addEventListener('change', updateAspectRatio);
     // document.getElementById("formRatioHeight").addEventListener('change', function() {
     //   updateAspectRatio(width, height);
-    //   updateMediaStyling(testMediaElements, width, height, border, borderColor, borderRadius, floatingBorder, floatingBorderColor, floatingBorderRadius, floatingBorderPadding, floatingBorderGap);
+    //   updateMediaStyling();
     // });
     function updateHeight() {
       console.log('Function: Update Height');
@@ -270,7 +287,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       }
       height = heightValue; 
       updateAspectRatio(width, height);
-      updateMediaStyling(testMediaElements, width, height, border, borderColor, borderRadius, floatingBorder, floatingBorderColor, floatingBorderRadius, floatingBorderPadding, floatingBorderGap);
+      updateMediaStyling();
 
     }
     //###################################################################################################################################################################
@@ -322,7 +339,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         updateWidth();
         // document.getElementById("borderColorCheckbox").disabled = true;
       }
-      updateMediaStyling(testMediaElements, width, height, border, borderColor, borderRadius, floatingBorder, floatingBorderColor, floatingBorderRadius, floatingBorderPadding, floatingBorderGap);
+      updateMediaStyling();
     }
     //###################################################################################################################################################################
 
@@ -342,6 +359,8 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
     //                                                                                                      
     updateBorder();
     borderCheckbox.addEventListener('change', updateBorder);
+    // document.getElementById("formBorder").addEventListener("input", updateBorder); // input field update
+
     function updateBorder() {
       // console.log('Function: Update Border');
       if (borderCheckbox.checked) {
@@ -349,15 +368,13 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         document.getElementById("formBorder").disabled = false;
         document.getElementById("formBorderColor").disabled = false;
         document.getElementById("borderColorCheckbox").disabled = false;
-        // testMedia.style.border = `${border}px solid ${borderColor}`;
       } else {
-        // testMedia.style.border = `0px solid ${borderColor}`;
         border = 0;
         document.getElementById("formBorder").disabled = true;
         document.getElementById("formBorderColor").disabled = true;
         document.getElementById("borderColorCheckbox").disabled = true;
       }
-      updateMediaStyling(testMediaElements, width, height, border, borderColor, borderRadius, floatingBorder, floatingBorderColor, floatingBorderRadius, floatingBorderPadding, floatingBorderGap);
+      updateMediaStyling();
     }
 
     document.getElementById("formBorder").addEventListener("input", function() {
@@ -403,7 +420,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         // testMedia.style.border = `${border}px solid ${borderColor}`;
         document.getElementById("formBorderColor").disabled = true;
       }
-      updateMediaStyling(testMediaElements, width, height, border, borderColor, borderRadius, floatingBorder, floatingBorderColor, floatingBorderRadius, floatingBorderPadding, floatingBorderGap);
+      updateMediaStyling();
     }
 
     document.getElementById("formBorderColor").addEventListener("input", function() {
@@ -443,7 +460,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         document.getElementById("formBorderRadius").disabled = true;
       }
       updateTestMediaPicturesSizes();
-      updateMediaStyling(testMediaElements, width, height, border, borderColor, borderRadius, floatingBorder, floatingBorderColor, floatingBorderRadius, floatingBorderPadding, floatingBorderGap);
+      updateMediaStyling();
     }
 
     document.getElementById("formBorderRadius").addEventListener("input", function() {
@@ -461,7 +478,299 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       this.value = borderRadius;
       updateBorderRadius(); // apply to all media items
     });
-    //###################################################################################################################################################################    
+    //################################################################################################################################################################### 
+    //                                                                                               
+    //  ██████  ██████ ██████████████ ████████████   ██████████████ ██████████████ ██████████████    
+    //  ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░░░░░░░████ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██    
+    //  ██░░██  ██░░██ ██░░██████░░██ ██░░████░░░░██ ██░░██████░░██ ██████░░██████ ██░░██████████    
+    //  ██░░██  ██░░██ ██░░██  ██░░██ ██░░██  ██░░██ ██░░██  ██░░██     ██░░██     ██░░██            
+    //  ██░░██  ██░░██ ██░░██████░░██ ██░░██  ██░░██ ██░░██████░░██     ██░░██     ██░░██████████    
+    //  ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░░░░░░░░░██     ██░░██     ██░░░░░░░░░░██    
+    //  ██░░██  ██░░██ ██░░██████████ ██░░██  ██░░██ ██░░██████░░██     ██░░██     ██░░██████████    
+    //  ██░░██  ██░░██ ██░░██         ██░░██  ██░░██ ██░░██  ██░░██     ██░░██     ██░░██            
+    //  ██░░██████░░██ ██░░██         ██░░████░░░░██ ██░░██  ██░░██     ██░░██     ██░░██████████    
+    //  ██░░░░░░░░░░██ ██░░██         ██░░░░░░░░████ ██░░██  ██░░██     ██░░██     ██░░░░░░░░░░██    
+    //  ██████████████ ██████         ████████████   ██████  ██████     ██████     ██████████████    
+    //                                                                                               
+    //                                                                                                                   
+    //  ██████████████ ██████████████ ████████  ████████ ██████         ██████████ ██████          ██████ ██████████████ 
+    //  ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░██  ██░░░░██ ██░░██         ██░░░░░░██ ██░░██████████  ██░░██ ██░░░░░░░░░░██ 
+    //  ██░░██████████ ██████░░██████ ████░░██  ██░░████ ██░░██         ████░░████ ██░░░░░░░░░░██  ██░░██ ██░░██████████ 
+    //  ██░░██             ██░░██       ██░░░░██░░░░██   ██░░██           ██░░██   ██░░██████░░██  ██░░██ ██░░██         
+    //  ██░░██████████     ██░░██       ████░░░░░░████   ██░░██           ██░░██   ██░░██  ██░░██  ██░░██ ██░░██         
+    //  ██░░░░░░░░░░██     ██░░██         ████░░████     ██░░██           ██░░██   ██░░██  ██░░██  ██░░██ ██░░██  ██████ 
+    //  ██████████░░██     ██░░██           ██░░██       ██░░██           ██░░██   ██░░██  ██░░██  ██░░██ ██░░██  ██░░██ 
+    //          ██░░██     ██░░██           ██░░██       ██░░██           ██░░██   ██░░██  ██░░██████░░██ ██░░██  ██░░██ 
+    //  ██████████░░██     ██░░██           ██░░██       ██░░██████████ ████░░████ ██░░██  ██░░░░░░░░░░██ ██░░██████░░██ 
+    //  ██░░░░░░░░░░██     ██░░██           ██░░██       ██░░░░░░░░░░██ ██░░░░░░██ ██░░██  ██████████░░██ ██░░░░░░░░░░██ 
+    //  ██████████████     ██████           ██████       ██████████████ ██████████ ██████          ██████ ██████████████ 
+    //                                                                                                                   
+    function updateMediaStyling() {
+      console.log('Function: Update Media Styling');
+      const scrollableContent = document.querySelector('.scrollableContent');
+      const floatingBorderCheckbox = document.getElementById('floatingBorderCheckbox');
+      const floatingBorderColorCheckbox = document.getElementById('floatingBorderColorCheckbox');
+      const floatingBorderRadiusCheckbox = document.getElementById('floatingBorderRadiusCheckbox');
+      const floatingBorderGapCheckbox = document.getElementById('floatingBorderGapCheckbox'); // redeclaring these variables so that they do not reset
+      updateTestMediaPicturesSizes(width, height, border, borderRadius);
+      testMediaElements.forEach(testMedia => {
+          // functionCount += 1;
+          let setHeight = 200; // Fixed height for displayed media
+          if (width === 'auto') { // If width = auto, then skip the ratioed width and set it to auto
+              testMedia.style.width = `auto`;
+          }
+          else {
+              let ratio = width / height; // why does resetting the ratio effect the content?
+              let ratioedWidth = setHeight * ratio;
+              testMedia.style.width = `${ratioedWidth}px`;
+          }
+          testMedia.style.height = `${setHeight}px`;
+          testMedia.style.border = `${border}px solid ${borderColor}`;
+          testMedia.style['border-radius'] = `${borderRadius}px`;
+          testMedia.style.zIndex = '2'; // Z-index for this element should be higher than its background border 
+          testMedia.addEventListener('mouseenter', function() {
+              let floatingBorderElement = testMedia.parentNode.querySelector('.testMediaCopy');
+              // console.log('    before mouseEnter Border: ' + border);
+              // scope issue is not updating the border for the floating element's padding.
+              // if (!floatingBorderElement) { // borderColor is resetting here
+              testMedia.style.zIndex = '5'; // Z-index for this element should be higher than its background border
+              const rect = testMedia.getBoundingClientRect(); // Get position and size of original media item
+              let scrollDistanceLeft = scrollableContent.scrollLeft;
+              let scrollDistanceTop = scrollableContent.scrollTop;
+              const sideMenuWidth = 200; // Width of the side menu
+              floatingBorderElement = testMedia.cloneNode(true);
+              floatingBorderElement.classList.add('testMediaCopy');
+              floatingBorderElement.style.position = 'absolute';
+              floatingBorderElement.style.zIndex = '4';
+              floatingBorderElement.style['background-color'] = 'transparent';
+              floatingBorderElement.style.border = `${floatingBorder}px solid ${floatingBorderColor}`;
+              floatingBorderElement.style['border-radius'] = `${floatingBorderRadius}px`;
+              console.log('    after mouseEnter Border: ' + border); // border is not updating, causing non-bordered hover border to be off center
+              floatingBorderPadding = (border) + (floatingBorderGap) + 'px'; // border is not updating here?
+              let floatingBorderTopAdjustment = `${(rect.top) - (floatingBorder) - (floatingBorderGap) + (scrollDistanceTop) - 50}px`;
+              let floatingBorderLeftAdjustment = `${(rect.left) - (floatingBorder) - (floatingBorderGap) + (scrollDistanceLeft) - (sideMenuWidth) + 0}px`;
+              floatingBorderElement.style.padding = floatingBorderPadding;
+              floatingBorderElement.style.top = floatingBorderTopAdjustment;
+              floatingBorderElement.style.left = floatingBorderLeftAdjustment;
+              testMedia.parentNode.appendChild(floatingBorderElement);
+              // }
+          });
+          //-----------------------------------------------------------------------------------------
+          // These listeners are placed after the media conatiners and copy backgrounds have been identified.
+          // Revert back to default non-hoverable styling when mouse leaves
+          testMedia.addEventListener('mouseleave', function() {
+              testMedia.style.zIndex = '2'; // Z-index for this element should be higher than its background border
+              const copies = testMedia.parentNode.querySelectorAll('.testMediaCopy');
+              copies.forEach(copy => {
+                  copy.parentNode.removeChild(copy);
+              });
+          });
+          //###################################################################################################################################################################
+          // STYLE EVERYTHING HERE DOWN BEFORE LAUNCHING AGAIN
+          // FLOATING BORDER FOR SELECTED MATERIAL
+          // These hovered elements dont exist until the original is hovered, you can't reference them directly you have to use variables.
+          // Everything Floating or hovered HAS TO come after the code that creates the floating border                                                                                                                 
+          //  ██████████████ ██████         ██████████████ ██████████████ ██████████████ ██████████ ██████          ██████ ██████████████ 
+          //  ██░░░░░░░░░░██ ██░░██         ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░██ ██░░██████████  ██░░██ ██░░░░░░░░░░██ 
+          //  ██░░██████████ ██░░██         ██░░██████░░██ ██░░██████░░██ ██████░░██████ ████░░████ ██░░░░░░░░░░██  ██░░██ ██░░██████████ 
+          //  ██░░██         ██░░██         ██░░██  ██░░██ ██░░██  ██░░██     ██░░██       ██░░██   ██░░██████░░██  ██░░██ ██░░██         
+          //  ██░░██████████ ██░░██         ██░░██  ██░░██ ██░░██████░░██     ██░░██       ██░░██   ██░░██  ██░░██  ██░░██ ██░░██         
+          //  ██░░░░░░░░░░██ ██░░██         ██░░██  ██░░██ ██░░░░░░░░░░██     ██░░██       ██░░██   ██░░██  ██░░██  ██░░██ ██░░██  ██████ 
+          //  ██░░██████████ ██░░██         ██░░██  ██░░██ ██░░██████░░██     ██░░██       ██░░██   ██░░██  ██░░██  ██░░██ ██░░██  ██░░██ 
+          //  ██░░██         ██░░██         ██░░██  ██░░██ ██░░██  ██░░██     ██░░██       ██░░██   ██░░██  ██░░██████░░██ ██░░██  ██░░██ 
+          //  ██░░██         ██░░██████████ ██░░██████░░██ ██░░██  ██░░██     ██░░██     ████░░████ ██░░██  ██░░░░░░░░░░██ ██░░██████░░██ 
+          //  ██░░██         ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░██     ██░░██     ██░░░░░░██ ██░░██  ██████████░░██ ██░░░░░░░░░░██ 
+          //  ██████         ██████████████ ██████████████ ██████  ██████     ██████     ██████████ ██████          ██████ ██████████████ 
+          //                                                                                                                              
+          //                                                                                                      
+          //  ██████████████   ██████████████ ████████████████   ████████████   ██████████████ ████████████████   
+          //  ██░░░░░░░░░░██   ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   ██░░░░░░░░████ ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   
+          //  ██░░██████░░██   ██░░██████░░██ ██░░████████░░██   ██░░████░░░░██ ██░░██████████ ██░░████████░░██   
+          //  ██░░██  ██░░██   ██░░██  ██░░██ ██░░██    ██░░██   ██░░██  ██░░██ ██░░██         ██░░██    ██░░██   
+          //  ██░░██████░░████ ██░░██  ██░░██ ██░░████████░░██   ██░░██  ██░░██ ██░░██████████ ██░░████████░░██   
+          //  ██░░░░░░░░░░░░██ ██░░██  ██░░██ ██░░░░░░░░░░░░██   ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   
+          //  ██░░████████░░██ ██░░██  ██░░██ ██░░██████░░████   ██░░██  ██░░██ ██░░██████████ ██░░██████░░████   
+          //  ██░░██    ██░░██ ██░░██  ██░░██ ██░░██  ██░░██     ██░░██  ██░░██ ██░░██         ██░░██  ██░░██     
+          //  ██░░████████░░██ ██░░██████░░██ ██░░██  ██░░██████ ██░░████░░░░██ ██░░██████████ ██░░██  ██░░██████ 
+          //  ██░░░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░░░░░██ ██░░░░░░░░████ ██░░░░░░░░░░██ ██░░██  ██░░░░░░██ 
+          //  ████████████████ ██████████████ ██████  ██████████ ████████████   ██████████████ ██████  ██████████ 
+          // there may be an issue with these being on a seperate file from the app.js file
+          updateFloatingBorder();
+          floatingBorderCheckbox.addEventListener('change', updateFloatingBorder); //checkbox update
+          document.getElementById("formFloatingBorderColor").addEventListener("input", updateFloatingBorderColor); // input field update
+          function updateFloatingBorder() {
+          console.log('Function: updateFloatingBorder')
+          // console.log('Function: Update Floating Border');
+          if (floatingBorderCheckbox.checked) {
+              floatingBorder = parseInt(document.getElementById("formFloatingBorder").value);
+              document.getElementById("floatingBorderColorCheckbox").disabled = false;
+              document.getElementById("floatingBorderRadiusCheckbox").disabled = false;
+              document.getElementById("floatingBorderGapCheckbox").disabled = false;
+              document.getElementById("formFloatingBorder").disabled = false;
+              document.getElementById("formFloatingBorderColor").disabled = false;
+              updateFloatingBorderRadius(); // instead call these functions to check whether the checkbox has these inputs enabled or disabled
+              updateFloatingBorderGap();
+              floatingBorderPadding = border;
+          } else {
+              floatingBorder = 0;
+              document.getElementById("floatingBorderRadiusCheckbox").disabled = true;
+              document.getElementById("floatingBorderGapCheckbox").disabled = true;
+              document.getElementById("floatingBorderColorCheckbox").disabled = true;
+              document.getElementById("formFloatingBorder").disabled = true;
+              document.getElementById("formFloatingBorderColor").disabled = true;
+              document.getElementById("formFloatingBorderRadius").disabled = true;
+              document.getElementById("formFloatingBorderGap").disabled = true;
+          }
+          //   updateMediaStyling();
+          
+          }
+  
+          document.getElementById("formFloatingBorder").addEventListener("input", function() {
+          var inputValue = parseInt(this.value);
+          if (inputValue < 0) {
+              this.value = 0;
+              inputValue = 0; // Update inputValue as well
+          } // Check if the value is greater than 999
+          if (inputValue > 999) { // If so, set it to 999
+              this.value = 999;
+              inputValue = 999; // Update inputValue as well
+          } // Update the border variable with the input value
+          floatingBorder = inputValue;
+          floatingBorder = this.value !== null ? this.value : 0;
+          this.value = floatingBorder;
+          updateFloatingBorder(); // apply to all media items
+          });
+          //###################################################################################################################################################################
+  
+          //###################################################################################################################################################################
+          // FLOATING BORDER COLOR
+          // These hovered elements dont exist until the original is hovered, you can't reference them directly you have to use variables.
+          // ██████████████ ██████████████ ██████         ██████████████ ████████████████   
+          // ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██         ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   
+          // ██░░██████████ ██░░██████░░██ ██░░██         ██░░██████░░██ ██░░████████░░██   
+          // ██░░██         ██░░██  ██░░██ ██░░██         ██░░██  ██░░██ ██░░██    ██░░██   
+          // ██░░██         ██░░██  ██░░██ ██░░██         ██░░██  ██░░██ ██░░████████░░██   
+          // ██░░██         ██░░██  ██░░██ ██░░██         ██░░██  ██░░██ ██░░░░░░░░░░░░██   
+          // ██░░██         ██░░██  ██░░██ ██░░██         ██░░██  ██░░██ ██░░██████░░████   
+          // ██░░██         ██░░██  ██░░██ ██░░██         ██░░██  ██░░██ ██░░██  ██░░██     
+          // ██░░██████████ ██░░██████░░██ ██░░██████████ ██░░██████░░██ ██░░██  ██░░██████ 
+          // ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░░░░░██ 
+          // ██████████████ ██████████████ ██████████████ ██████████████ ██████  ██████████ 
+          updateFloatingBorderColor();
+          floatingBorderColorCheckbox.addEventListener('change', updateFloatingBorderColor);
+          function updateFloatingBorderColor() {
+          // console.log('Function: Update Floating Border Color');
+          if (floatingBorderColorCheckbox.checked) {
+              floatingBorderColor = document.getElementById("formFloatingBorderColor").value;
+              document.getElementById("formFloatingBorderColor").disabled = false;
+          } else {
+              floatingBorderColor = 'black';
+              document.getElementById("formFloatingBorderColor").disabled = true;
+          } // document.getElementById("floatingBorderColorValue").textContent = `Floating Border Color Size: ${floatingBorderColor}`;
+          //   updateMediaStyling();
+          }
+  
+          // document.getElementById("formFloatingBorderColor").addEventListener("input", function() {
+          //   var inputValue = this.value;
+          //   floatingBorderColor = inputValue;
+          //   floatingBorderColor = this.value !== null ? this.value : 'black';
+          //   this.value = floatingBorderColor;
+          //   updateFloatingBorderColor(); // apply to all media items
+          // });
+          //###################################################################################################################################################################
+  
+          //###################################################################################################################################################################
+          // FLOATING BORDER RADIUS FOR SELECTED MATERIAL
+          // These hovered elements dont exist until the original is hovered, you can't reference them directly you have to use variables.
+          //  ████████████████   ██████████████ ████████████   ██████████ ██████  ██████ ██████████████ 
+          //  ██░░░░░░░░░░░░██   ██░░░░░░░░░░██ ██░░░░░░░░████ ██░░░░░░██ ██░░██  ██░░██ ██░░░░░░░░░░██ 
+          //  ██░░████████░░██   ██░░██████░░██ ██░░████░░░░██ ████░░████ ██░░██  ██░░██ ██░░██████████ 
+          //  ██░░██    ██░░██   ██░░██  ██░░██ ██░░██  ██░░██   ██░░██   ██░░██  ██░░██ ██░░██         
+          //  ██░░████████░░██   ██░░██████░░██ ██░░██  ██░░██   ██░░██   ██░░██  ██░░██ ██░░██████████ 
+          //  ██░░░░░░░░░░░░██   ██░░░░░░░░░░██ ██░░██  ██░░██   ██░░██   ██░░██  ██░░██ ██░░░░░░░░░░██ 
+          //  ██░░██████░░████   ██░░██████░░██ ██░░██  ██░░██   ██░░██   ██░░██  ██░░██ ██████████░░██ 
+          //  ██░░██  ██░░██     ██░░██  ██░░██ ██░░██  ██░░██   ██░░██   ██░░██  ██░░██         ██░░██ 
+          //  ██░░██  ██░░██████ ██░░██  ██░░██ ██░░████░░░░██ ████░░████ ██░░██████░░██ ██████████░░██ 
+          //  ██░░██  ██░░░░░░██ ██░░██  ██░░██ ██░░░░░░░░████ ██░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ 
+          //  ██████  ██████████ ██████  ██████ ████████████   ██████████ ██████████████ ██████████████ 
+          updateFloatingBorderRadius();
+          floatingBorderRadiusCheckbox.addEventListener('change', updateFloatingBorderRadius);
+          function updateFloatingBorderRadius() {
+          // console.log('Function: Update Floating Border Radius');
+          if (floatingBorderRadiusCheckbox.checked) {
+              floatingBorderRadius = parseInt(document.getElementById("formFloatingBorderRadius").value);
+              document.getElementById("formFloatingBorderRadius").disabled = false;
+          } else {
+              floatingBorderRadius = 0;
+              document.getElementById("formFloatingBorderRadius").disabled = true;
+          } // document.getElementById("floatingBorderRadiusValue").textContent = `Floating Border Radius: ${floatingBorderRadius}`;
+          //   updateMediaStyling();
+          }
+  
+          document.getElementById("formFloatingBorderRadius").addEventListener("input", function() {
+          var inputValue = parseInt(this.value);
+          if (inputValue < 0) {
+              this.value = 0;
+              inputValue = 0; // Update inputValue as well
+          } // Check if the value is greater than 999
+          if (inputValue > 999) { // If so, set it to 999
+              this.value = 999;
+              inputValue = 999; // Update inputValue as well
+          } // Update the border variable with the input value
+          floatingBorderRadius = inputValue;
+          floatingBorderRadius = this.value !== null ? this.value : 0;
+          this.value = floatingBorderRadius;
+          updateFloatingBorderRadius(); // apply to all media items
+          });
+          //###################################################################################################################################################################
+  
+          //###################################################################################################################################################################
+          // FLOATING BORDER GAP FOR SELECTED MATERIAL
+          // These hovered elements dont exist until the original is hovered, you can't reference them directly you have to use variables.
+          //  ██████████████ ██████████████ ██████████████ 
+          //  ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ 
+          //  ██░░██████████ ██░░██████░░██ ██░░██████░░██ 
+          //  ██░░██         ██░░██  ██░░██ ██░░██  ██░░██ 
+          //  ██░░██         ██░░██████░░██ ██░░██████░░██ 
+          //  ██░░██  ██████ ██░░░░░░░░░░██ ██░░░░░░░░░░██ 
+          //  ██░░██  ██░░██ ██░░██████░░██ ██░░██████████ 
+          //  ██░░██  ██░░██ ██░░██  ██░░██ ██░░██         
+          //  ██░░██████░░██ ██░░██  ██░░██ ██░░██         
+          //  ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░██         
+          //  ██████████████ ██████  ██████ ██████         
+          updateFloatingBorderGap();
+          floatingBorderGapCheckbox.addEventListener('change', updateFloatingBorderGap);
+          function updateFloatingBorderGap() {
+          // console.log('Function: Update Floating Border Gap');
+          if (floatingBorderGapCheckbox.checked) {
+              floatingBorderGap = parseInt(document.getElementById("formFloatingBorderGap").value);
+              document.getElementById("formFloatingBorderGap").disabled = false;
+          } else {
+              floatingBorderGap = 0;
+              document.getElementById("formFloatingBorderGap").disabled = true;
+          } // document.getElementById("floatingBorderGapValue").textContent = `Floating Border Gap Size: ${floatingBorderGap}`;
+          //   updateMediaStyling();
+          }
+  
+          document.getElementById("formFloatingBorderGap").addEventListener("input", function() {
+          var inputValue = parseInt(this.value);
+          if (inputValue < 0) {
+              this.value = 0;
+              inputValue = 0; // Update inputValue as well
+          } // Check if the value is greater than 999
+          if (inputValue > 999) { // If so, set it to 999
+              this.value = 999;
+              inputValue = 999; // Update inputValue as well
+          } // Update the border variable with the input value
+          floatingBorderGap = inputValue;
+          floatingBorderGap = this.value !== null ? this.value : 0;
+          this.value = floatingBorderGap;
+          updateFloatingBorderGap(); // apply to all media items
+          });
+      //###################################################################################################################################################################
+      });
+      console.log('Function END: updateMediaStyling')
+  }
   }
   //###################################################################################################################################################################
 
