@@ -823,6 +823,10 @@ tbody {
   align-items: center; */
 }
 
+/* .testMedia:hover {
+  border: 1px solid white;
+} */
+
 .testMediaItemPicture {
   max-height: 100%;
   max-width: 100%;

@@ -33,7 +33,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
     let floatingBorderGap = selectedTag.FloatingBorderGap || 0; 
     let floatingBorderPadding; // value is determined later, needed to be initialized beforehand
 
-    let isUpdatingMediaStyling = false;
+    // let isUpdatingMediaStyling = false;
 
 
 
@@ -510,45 +510,46 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         // Create and append a new stylesheet link to the document
         // THIS IS A WORKING WAY TO UPDATE ALL MEDIA ITEMS AT ONCE WITHOUT HAVING TO CREATE LOOPS
         // DO THE SAME THING FOR FLOATING BORDER AND YOU SHOULDNT HAVE UNECCESSARY REPEATING LOOPS
-        const newLink = document.createElement('link');
-        newLink.rel = 'stylesheet';
-        newLink.href = './main.css'; // Path to new stylesheet
-        document.head.appendChild(newLink);
+        // Assume 'width', 'height', 'border', 'borderColor', and 'borderRadius' are defined somewhere in your script.
+        let selector = ".testMedia";
+        let setHeight = 200; // Fixed height for displayed media
+        let ratio = width / height; // Calculate the aspect ratio
+        let ratioedWidth = setHeight * ratio; // Apply the aspect ratio to the new fixed height
 
-        // Wait for the stylesheet to load before attempting to access its cssRules
-        newLink.onload = () => {
-            // Now we need to correctly reference the stylesheet we just added
-            const styleSheets = Array.from(document.styleSheets);
-            const styleSheet = styleSheets.find(sheet => sheet.href && sheet.href.includes('main.css'));
+        // Find the stylesheet already loaded in the document
+        const styleSheets = Array.from(document.styleSheets);
+        const styleSheet = styleSheets.find(sheet => sheet.href && sheet.href.endsWith('main.css'));
 
-            // Only proceed if the stylesheet was found
-            if (styleSheet) {
-                const selector = ".testMedia";
-                const width = 'auto'; // Assume 'width' is defined somewhere. Use 'auto' as an example
-                const height = 500; // Example height
-                const border = 5; // Example border width
-                const borderColor = 'yellow'; // Example border color
-                const borderRadius = 10; // Example border radius
-                const rule = `{ width: ${width === 'auto' ? 'auto' : height + 'px'}; height: ${height}px; border: ${border}px solid ${borderColor}; border-radius: ${borderRadius}px; }`;
+        // Determine the correct CSS rule based on 'width'
+        let ruleText;
+        if (width === 'auto') {
+            ruleText = `{ width: auto; height: ${setHeight}px; border: ${border}px solid ${borderColor}; border-radius: ${borderRadius}px; }`;
+        } else {
+            ruleText = `{ width: ${ratioedWidth}px; height: ${setHeight}px; border: ${border}px solid ${borderColor}; border-radius: ${borderRadius}px; }`;
+        }
 
-                let ruleFound = false;
-                // Check if the rule already exists and update it
-                for (let i = 0; i < styleSheet.cssRules.length; i++) {
-                    if (styleSheet.cssRules[i].selectorText === selector) {
-                        styleSheet.cssRules[i].style.width = width === 'auto' ? 'auto' : height + 'px';
-                        styleSheet.cssRules[i].style.height = `${height}px`;
-                        styleSheet.cssRules[i].style.border = `${border}px solid ${borderColor}`;
-                        styleSheet.cssRules[i].style.borderRadius = `${borderRadius}px`;
-                        ruleFound = true;
-                        break;
-                    }
-                }
-                // If the rule does not exist, add it
-                if (!ruleFound) {
-                    styleSheet.insertRule(`${selector} ${rule}`, styleSheet.cssRules.length);
+        // potentially create a dynaimc style sheet that is less crowded and easier to search through
+        if (styleSheet) {
+            let ruleFound = false;
+            for (let i = 0; i < styleSheet.cssRules.length; i++) {
+              // console.log(i);
+                if (styleSheet.cssRules[i].selectorText === selector) {
+                    // Rule exists, so update it
+                    styleSheet.deleteRule(i);
+                    styleSheet.insertRule(`${selector} ${ruleText}`, i);
+                    ruleFound = true;
+                    break;
                 }
             }
-        };
+
+            if (!ruleFound) {
+                // Rule does not exist, add it
+                styleSheet.insertRule(`${selector} ${ruleText}`, styleSheet.cssRules.length);
+            }
+        } else {
+            console.log('The specified stylesheet was not found in the document.');
+        }
+
       console.log('Function: Update Media Styling');
       const scrollableContent = document.querySelector('.scrollableContent');
       const floatingBorderCheckbox = document.getElementById('floatingBorderCheckbox');

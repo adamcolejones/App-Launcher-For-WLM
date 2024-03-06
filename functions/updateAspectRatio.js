@@ -2,7 +2,7 @@ import { simplifyRatio } from './simplifyRatio.js';
 
 function updateAspectRatio(width, height) {
     console.log('Function: Aspect Ratio');
-    console.log('    width / height: ' + width + '/' + height)
+    // console.log('    width / height: ' + width + '/' + height)
     width = parseInt(document.getElementById("formRatioWidth").value, 10);
     height = parseInt(document.getElementById("formRatioHeight").value, 10);
     ({width, height} = simplifyRatio(width, height));
