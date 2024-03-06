@@ -505,7 +505,50 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
     //  ██░░░░░░░░░░██     ██░░██           ██░░██       ██░░░░░░░░░░██ ██░░░░░░██ ██░░██  ██████████░░██ ██░░░░░░░░░░██ 
     //  ██████████████     ██████           ██████       ██████████████ ██████████ ██████          ██████ ██████████████ 
     //                                                                                                                   
-    function updateMediaStyling() {
+    // function updateMediaStyling() {
+      function updateMediaStyling() {
+        // Create and append a new stylesheet link to the document
+        // THIS IS A WORKING WAY TO UPDATE ALL MEDIA ITEMS AT ONCE WITHOUT HAVING TO CREATE LOOPS
+        // DO THE SAME THING FOR FLOATING BORDER AND YOU SHOULDNT HAVE UNECCESSARY REPEATING LOOPS
+        const newLink = document.createElement('link');
+        newLink.rel = 'stylesheet';
+        newLink.href = './main.css'; // Path to new stylesheet
+        document.head.appendChild(newLink);
+
+        // Wait for the stylesheet to load before attempting to access its cssRules
+        newLink.onload = () => {
+            // Now we need to correctly reference the stylesheet we just added
+            const styleSheets = Array.from(document.styleSheets);
+            const styleSheet = styleSheets.find(sheet => sheet.href && sheet.href.includes('main.css'));
+
+            // Only proceed if the stylesheet was found
+            if (styleSheet) {
+                const selector = ".testMedia";
+                const width = 'auto'; // Assume 'width' is defined somewhere. Use 'auto' as an example
+                const height = 500; // Example height
+                const border = 5; // Example border width
+                const borderColor = 'yellow'; // Example border color
+                const borderRadius = 10; // Example border radius
+                const rule = `{ width: ${width === 'auto' ? 'auto' : height + 'px'}; height: ${height}px; border: ${border}px solid ${borderColor}; border-radius: ${borderRadius}px; }`;
+
+                let ruleFound = false;
+                // Check if the rule already exists and update it
+                for (let i = 0; i < styleSheet.cssRules.length; i++) {
+                    if (styleSheet.cssRules[i].selectorText === selector) {
+                        styleSheet.cssRules[i].style.width = width === 'auto' ? 'auto' : height + 'px';
+                        styleSheet.cssRules[i].style.height = `${height}px`;
+                        styleSheet.cssRules[i].style.border = `${border}px solid ${borderColor}`;
+                        styleSheet.cssRules[i].style.borderRadius = `${borderRadius}px`;
+                        ruleFound = true;
+                        break;
+                    }
+                }
+                // If the rule does not exist, add it
+                if (!ruleFound) {
+                    styleSheet.insertRule(`${selector} ${rule}`, styleSheet.cssRules.length);
+                }
+            }
+        };
       console.log('Function: Update Media Styling');
       const scrollableContent = document.querySelector('.scrollableContent');
       const floatingBorderCheckbox = document.getElementById('floatingBorderCheckbox');
@@ -514,57 +557,95 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       const floatingBorderGapCheckbox = document.getElementById('floatingBorderGapCheckbox'); // redeclaring these variables so that they do not reset
       updateTestMediaPicturesSizes(width, height, border, borderRadius);
       testMediaElements.forEach(testMedia => {
+          // Remove existing event listeners to avoid duplicates
+          // testMedia.removeEventListener('mouseenter', handleMouseEnter);
+          // testMedia.removeEventListener('mouseleave', handleMouseLeave);
+
+          // // Add event listeners back
+          // testMedia.addEventListener('mouseenter', handleMouseEnter);
+          // testMedia.addEventListener('mouseleave', handleMouseLeave);
           // functionCount += 1;
-          let setHeight = 200; // Fixed height for displayed media
-          if (width === 'auto') { // If width = auto, then skip the ratioed width and set it to auto
-              testMedia.style.width = `auto`;
+          // let setHeight = 200; // Fixed height for displayed media
+          // if (width === 'auto') { // If width = auto, then skip the ratioed width and set it to auto
+          //     testMedia.style.width = `auto`;
+          // }
+          // else {
+          //     let ratio = width / height; // why does resetting the ratio effect the content?
+          //     let ratioedWidth = setHeight * ratio;
+          //     testMedia.style.width = `${ratioedWidth}px`;
+          // }
+          // testMedia.style.height = `${setHeight}px`;
+          // testMedia.style.border = `${border}px solid ${borderColor}`;
+          // testMedia.style['border-radius'] = `${borderRadius}px`;
+          // testMedia.style.zIndex = '2'; // Z-index for this element should be higher than its background border 
+          function handleMouseEnter() {
+            let floatingBorderElement = testMedia.parentNode.querySelector('.testMediaCopy');
+            testMedia.style.zIndex = '5'; // Z-index for this element should be higher than its background border
+            const rect = testMedia.getBoundingClientRect(); // Get position and size of original media item
+            let scrollDistanceLeft = scrollableContent.scrollLeft;
+            let scrollDistanceTop = scrollableContent.scrollTop;
+            const sideMenuWidth = 200; // Width of the side menu
+            floatingBorderElement = testMedia.cloneNode(true);
+            floatingBorderElement.classList.add('testMediaCopy');
+            floatingBorderElement.style.position = 'absolute';
+            floatingBorderElement.style.zIndex = '4';
+            floatingBorderElement.style['background-color'] = 'transparent';
+            floatingBorderElement.style.border = `${floatingBorder}px solid ${floatingBorderColor}`;
+            floatingBorderElement.style['border-radius'] = `${floatingBorderRadius}px`;
+            console.log('    after mouseEnter Border: ' + border); // border is not updating, causing non-bordered hover border to be off center
+            floatingBorderPadding = (border) + (floatingBorderGap) + 'px'; // border is not updating here?
+            let floatingBorderTopAdjustment = `${(rect.top) - (floatingBorder) - (floatingBorderGap) + (scrollDistanceTop) - 50}px`;
+            let floatingBorderLeftAdjustment = `${(rect.left) - (floatingBorder) - (floatingBorderGap) + (scrollDistanceLeft) - (sideMenuWidth) + 0}px`;
+            floatingBorderElement.style.padding = floatingBorderPadding;
+            floatingBorderElement.style.top = floatingBorderTopAdjustment;
+            floatingBorderElement.style.left = floatingBorderLeftAdjustment;
+            testMedia.parentNode.appendChild(floatingBorderElement);
           }
-          else {
-              let ratio = width / height; // why does resetting the ratio effect the content?
-              let ratioedWidth = setHeight * ratio;
-              testMedia.style.width = `${ratioedWidth}px`;
-          }
-          testMedia.style.height = `${setHeight}px`;
-          testMedia.style.border = `${border}px solid ${borderColor}`;
-          testMedia.style['border-radius'] = `${borderRadius}px`;
-          testMedia.style.zIndex = '2'; // Z-index for this element should be higher than its background border 
-          testMedia.addEventListener('mouseenter', function() {
-              let floatingBorderElement = testMedia.parentNode.querySelector('.testMediaCopy');
-              // console.log('    before mouseEnter Border: ' + border);
-              // scope issue is not updating the border for the floating element's padding.
-              // if (!floatingBorderElement) { // borderColor is resetting here
-              testMedia.style.zIndex = '5'; // Z-index for this element should be higher than its background border
-              const rect = testMedia.getBoundingClientRect(); // Get position and size of original media item
-              let scrollDistanceLeft = scrollableContent.scrollLeft;
-              let scrollDistanceTop = scrollableContent.scrollTop;
-              const sideMenuWidth = 200; // Width of the side menu
-              floatingBorderElement = testMedia.cloneNode(true);
-              floatingBorderElement.classList.add('testMediaCopy');
-              floatingBorderElement.style.position = 'absolute';
-              floatingBorderElement.style.zIndex = '4';
-              floatingBorderElement.style['background-color'] = 'transparent';
-              floatingBorderElement.style.border = `${floatingBorder}px solid ${floatingBorderColor}`;
-              floatingBorderElement.style['border-radius'] = `${floatingBorderRadius}px`;
-              console.log('    after mouseEnter Border: ' + border); // border is not updating, causing non-bordered hover border to be off center
-              floatingBorderPadding = (border) + (floatingBorderGap) + 'px'; // border is not updating here?
-              let floatingBorderTopAdjustment = `${(rect.top) - (floatingBorder) - (floatingBorderGap) + (scrollDistanceTop) - 50}px`;
-              let floatingBorderLeftAdjustment = `${(rect.left) - (floatingBorder) - (floatingBorderGap) + (scrollDistanceLeft) - (sideMenuWidth) + 0}px`;
-              floatingBorderElement.style.padding = floatingBorderPadding;
-              floatingBorderElement.style.top = floatingBorderTopAdjustment;
-              floatingBorderElement.style.left = floatingBorderLeftAdjustment;
-              testMedia.parentNode.appendChild(floatingBorderElement);
-              // }
-          });
-          //-----------------------------------------------------------------------------------------
-          // These listeners are placed after the media conatiners and copy backgrounds have been identified.
-          // Revert back to default non-hoverable styling when mouse leaves
-          testMedia.addEventListener('mouseleave', function() {
-              testMedia.style.zIndex = '2'; // Z-index for this element should be higher than its background border
-              const copies = testMedia.parentNode.querySelectorAll('.testMediaCopy');
+      
+          function handleMouseLeave() {
+              this.style.zIndex = '2'; // Reset zIndex
+              const copies = this.parentNode.querySelectorAll('.testMediaCopy');
               copies.forEach(copy => {
                   copy.parentNode.removeChild(copy);
               });
-          });
+          }
+          // testMedia.addEventListener('mouseenter', function() {
+          //     let floatingBorderElement = testMedia.parentNode.querySelector('.testMediaCopy');
+          //     // console.log('    before mouseEnter Border: ' + border);
+          //     // scope issue is not updating the border for the floating element's padding.
+          //     // if (!floatingBorderElement) { // borderColor is resetting here
+          //     // testMedia.style.zIndex = '5'; // Z-index for this element should be higher than its background border
+          //     // const rect = testMedia.getBoundingClientRect(); // Get position and size of original media item
+          //     // let scrollDistanceLeft = scrollableContent.scrollLeft;
+          //     // let scrollDistanceTop = scrollableContent.scrollTop;
+          //     // const sideMenuWidth = 200; // Width of the side menu
+          //     // floatingBorderElement = testMedia.cloneNode(true);
+          //     // floatingBorderElement.classList.add('testMediaCopy');
+          //     // floatingBorderElement.style.position = 'absolute';
+          //     // floatingBorderElement.style.zIndex = '4';
+          //     // floatingBorderElement.style['background-color'] = 'transparent';
+          //     // floatingBorderElement.style.border = `${floatingBorder}px solid ${floatingBorderColor}`;
+          //     // floatingBorderElement.style['border-radius'] = `${floatingBorderRadius}px`;
+          //     // console.log('    after mouseEnter Border: ' + border); // border is not updating, causing non-bordered hover border to be off center
+          //     // floatingBorderPadding = (border) + (floatingBorderGap) + 'px'; // border is not updating here?
+          //     // let floatingBorderTopAdjustment = `${(rect.top) - (floatingBorder) - (floatingBorderGap) + (scrollDistanceTop) - 50}px`;
+          //     // let floatingBorderLeftAdjustment = `${(rect.left) - (floatingBorder) - (floatingBorderGap) + (scrollDistanceLeft) - (sideMenuWidth) + 0}px`;
+          //     // floatingBorderElement.style.padding = floatingBorderPadding;
+          //     // floatingBorderElement.style.top = floatingBorderTopAdjustment;
+          //     // floatingBorderElement.style.left = floatingBorderLeftAdjustment;
+          //     // testMedia.parentNode.appendChild(floatingBorderElement);
+          //     // }
+          // });
+          //-----------------------------------------------------------------------------------------
+          // These listeners are placed after the media conatiners and copy backgrounds have been identified.
+          // Revert back to default non-hoverable styling when mouse leaves
+          // testMedia.addEventListener('mouseleave', function() {
+          //     testMedia.style.zIndex = '2'; // Z-index for this element should be higher than its background border
+          //     const copies = testMedia.parentNode.querySelectorAll('.testMediaCopy');
+          //     copies.forEach(copy => {
+          //         copy.parentNode.removeChild(copy);
+          //     });
+          // });
           //###################################################################################################################################################################
           // STYLE EVERYTHING HERE DOWN BEFORE LAUNCHING AGAIN
           // FLOATING BORDER FOR SELECTED MATERIAL
