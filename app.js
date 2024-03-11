@@ -35,8 +35,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorMessageElement = document.getElementById('error-message');
     const mediaSubmit = document.getElementById('mediaSubmit');
 
+
     // const gridDisplay = document.getElementById('gridDisplay');
-    const mediaDisplay = document.getElementById('mediaDisplay');
+    const mediaContainer = document.getElementById('mediaContainer');
+    // const mediaVisual = document.getElementById('mediaVisual');
     const contentDisplay = document.getElementById('contentDisplay');    
 
     // Fetch data from data.json
@@ -213,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //  ██████          ██████ ██████████████ ████████████   ██████████ ██████  ██████ 
     //
     function displayMedia(data) {
-      const dataDisplayDiv = document.getElementById('mediaDisplay');
+      const dataDisplayDiv = document.getElementById('mediaContainer');
       dataDisplayDiv.innerHTML = ''; // Clear any previous content
       
 
@@ -292,16 +294,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
       function displayContentForTag(tag, jsondata) {
           const scrollableContentDiv = document.querySelector('.scrollableContent');
-          const mediaDisplayDiv = document.getElementById('mediaDisplay');
+          const mediaContainerDiv = document.getElementById('mediaContainer');
+          const mediaVisual = document.getElementById('.mediaVisual');
+
           // Show media display and hide others
-          mediaDisplayDiv.style.display = 'block';
+          mediaContainerDiv.style.display = 'block';
           
           document.getElementById('showTagSettings').style.display = 'none';
           document.getElementById('contentDisplay').style.display = 'none';
           document.getElementById('editDisplay').style.display = 'none';
           document.getElementById('editCategoryMenu').style.display = 'none';
+          // document.getElementById('mediaVisual').style.display = 'block';
+
       
-          mediaDisplayDiv.innerHTML = `
+          mediaContainerDiv.innerHTML = `
               <div id="tagNameContainer">
                   <div id="tagSelection">${tag}</div>
                   <img src="assets/app/settings.svg" id="editCategoryButton">
@@ -311,14 +317,14 @@ document.addEventListener('DOMContentLoaded', () => {
           const mediaData = jsondata.Media || [];
           // If Tag selected is all, show all media data.  If not, only show media data where the media entries include the selected Tag.
           const items = tag === 'All' ? mediaData : mediaData.filter(item => item.Tags.includes(tag));
-          mediaDisplayDiv.innerHTML += createMedia(items);
+          mediaContainerDiv.innerHTML += createMedia(items);
           
       
           // Add event listener for the settings image/button
           // const editTagImage = document.getElementById('editTagImage');
           // editTagImage.addEventListener('click', () => {
           //     // displayTagSettings(tag, jsondata);
-          //     // editCategorySettings(tag, jsondata); // disabling for now, will only use if needed to migrate functionality to mediaDisplay
+          //     // editCategorySettings(tag, jsondata); // disabling for now, will only use if needed to migrate functionality to mediaContainer
           // });
 
           // Calling this function to trigger the styling on load
@@ -344,14 +350,14 @@ document.addEventListener('DOMContentLoaded', () => {
       tagDivs.forEach(tagDiv => {
           tagDiv.addEventListener('click', () => {
             const contentDisplayDiv = document.getElementById('contentDisplay');
-            const mediaDisplayDiv = document.getElementById('mediaDisplay');
+            const mediaContainerDiv = document.getElementById('mediaContainer');
             const editDisplayDiv = document.getElementById('editDisplay');
             const showTagSettingsDiv = document.getElementById('showTagSettings');
             const editCategorySettings = document.getElementById('editCategorySettings');
 
             // In the event user has the edit form up and clicks on the side menu to change the display
             // probably should look into some function that hides all unused divs
-            mediaDisplayDiv.style.display = 'block'; // show media again
+            mediaContainerDiv.style.display = 'block'; // show media again
             contentDisplayDiv.style.display = 'none'; // hide any other selected content within the media 
             document.getElementById('editCategoryMenu').style.display = 'none';
             contentDisplayDiv.innerHTML = '';
@@ -432,8 +438,8 @@ document.addEventListener('DOMContentLoaded', () => {
       function displayMediaItemData(item) {
         // console.log('Displaying media item data');
         const contentDisplayDiv = document.getElementById('contentDisplay');
-        const mediaDisplayDiv = document.getElementById('mediaDisplay');
-        mediaDisplayDiv.style.display = 'none'; // Hide mediaDisplay div
+        const mediaContainerDiv = document.getElementById('mediaContainer');
+        mediaContainerDiv.style.display = 'none'; // Hide mediaContainer div
         document.getElementById('editCategoryMenu').style.display = 'none';
         contentDisplayDiv.style.display = 'block'; // Or 'flex', 'media', etc. depending on your layout
         // This itemDataDiv might be unnecessary, just add inner html to contentDisplayDiv and append to scrollable content?  When I have more time
@@ -520,14 +526,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // const backMediaButton = document.getElementById('backtomedia');
         // backMediaButton.addEventListener('click', function () {
         //   // Show the original content
-        //   mediaDisplayDiv.style.display = 'block';
+        //   mediaContainerDiv.style.display = 'block';
         //   // Remove the edit form
         //   contentDisplayDiv.removeChild(itemDataDiv);
         // });
 
         const backContainer = document.getElementById('backContainer');
         backContainer.addEventListener('click', function () {
-          mediaDisplayDiv.style.display = 'block';
+          mediaContainerDiv.style.display = 'block';
           // Remove the edit form
           contentDisplayDiv.removeChild(itemDataDiv);
         });

@@ -351,21 +351,34 @@ li:last-child {
 ██████          ██████
 */
 
-.mediacontainer {
-  width: 100%;
-  display: block;
-  /* height: 100px; */
-  /* padding: 5px; */
-}
-
 .mediadata {
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 5;
 }
 
-#mediaDisplay {
+#mediaContainer {
   width: 100%;
+  min-height: 100%;
+  height: auto;
   margin: 0 0;
+  overflow: auto;
+}
+
+#mediaVisual {
+  width: calc(100vw - 217px);
+  height: 100%;
+  position: fixed;
+  z-index: 4;
+  top: 0;
+  overflow: hidden; /* This clips any overflow, including into the scrollbar area */
+}
+
+#mediaVisualVideo {
+  width: 100%; /* Ensure the video covers the width */
+  height: 100%;
+  object-fit: cover; /* Cover the container, clipping excess */
 }
 
 .mediaitem {
@@ -419,6 +432,7 @@ li:last-child {
   object-fit: cover; /* Use contain to ensure the entire image is visible */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   transition: box-shadow 0.1s ease-in-out, filter 0.1s ease-in-out, border 0.1s ease-in-out;
+  z-index: 6;
   /* cursor: pointer; */
 }
 
@@ -673,7 +687,7 @@ p {
  .scrollableContent {
   position: relative;
   overflow-y: auto;
-  overflow-x: none;
+  overflow-x: hidden;
   display: block;
   height: calc(100vh); /* 100 view height - 70px of menu height */
   width: calc(100% - 200px); /* 100% - sideMenu Width */
@@ -793,6 +807,8 @@ table {
 
 #tagNameContainer {
   height: 50px;
+  position: relative;
+  z-index: 5;
 }
 
 tbody {
@@ -818,6 +834,7 @@ tbody {
   background-color: rgb(255, 100, 100);
   background-size: cover;
   background-position: center;
+  z-index: 5;
   /* display: flex;
   flex-direction: column;
   align-items: center; */

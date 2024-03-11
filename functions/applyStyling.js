@@ -9,44 +9,60 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
 
 
   function applyStyling(tag, jsondata) {
+    // const mediaVisual = document.getElementById('mediaVisual');
     const selectedTag = jsondata.Tags.find(item => item.Name === tag);
     // IF THESE VALUES RETURN NULL, THEY WILL BREAK THE APP.  IF ANY RETURN NULL, SET DEFAULT VALUES FOR THEM HERE
 
-    // BACKGROUND STYLING
-    let backgroundColor = selectedTag.BackgroundColor || 'white';
+    // Meta
+    let name = selectedTag.Name !== undefined ? selectedTag.Name : 'Undefined';
 
     // Container Styling
-    let gap = selectedTag.Gap || 1; // Replace 'defaultGapValue' with your actual default
-    let wrap = selectedTag.Wrap || 'wrap'; // Replace 'defaultWrapValue' with your actual default
+    let backgroundVisual = selectedTag.BackgroundVisual !== undefined ? selectedTag.BackgroundVisual : false;
+    let backgroundColorCheck = selectedTag.BackgroundColorCheck !== undefined ? selectedTag.BackgroundColorCheck : false;
+    let backgroundColor = selectedTag.BackgroundColor !== undefined ? selectedTag.BackgroundColor : 'white';
+    let gap = selectedTag.Gap !== undefined ? selectedTag.Gap : 1; 
+    let wrap = selectedTag.Wrap !== undefined ? selectedTag.Wrap : 'wrap'; 
 
     // Media Styling
-    let width = selectedTag.Width || 1;
-    let height = selectedTag.Height || 1; 
-    let border = selectedTag.Border || 5; 
-    let borderColor = selectedTag.BorderColor || 'black'; 
-    let borderRadius = selectedTag.BorderRadius || 5; 
+    let originalDimensions = selectedTag.OriginalDimensions !== undefined ? selectedTag.OriginalDimensions : false;
+    let width = selectedTag.Width !== undefined ? selectedTag.Width : 1;
+    let height = selectedTag.Height !== undefined ? selectedTag.Height : 1;
+    let border = selectedTag.Border !== undefined ? selectedTag.Border : 5;
+    let borderColor = selectedTag.BorderColor !== undefined ? selectedTag.BorderColor : 'black';
+    let borderRadius = selectedTag.BorderRadius !== undefined ? selectedTag.BorderRadius : 5; 
 
     // Floating Border Values
-    let floatingBorder = selectedTag.FloatingBorder || 5; 
-    let floatingBorderColor = selectedTag.FloatingBorderColor || 'red'; 
-    let floatingBorderRadius = selectedTag.FloatingBorderRadius || 5; 
-    let floatingBorderGap = selectedTag.FloatingBorderGap || 0; 
+    let floatingBorder = selectedTag.FloatingBorder !== undefined ? selectedTag.FloatingBorder : 5;
+    let floatingBorderColor = selectedTag.FloatingBorderColor !== undefined ? selectedTag.FloatingBorderColor : 'red';
+    let floatingBorderRadius = selectedTag.FloatingBorderRadius !== undefined ? selectedTag.FloatingBorderRadius : 5;
+    let floatingBorderGap = selectedTag.FloatingBorderGap !== undefined ? selectedTag.FloatingBorderGap : 0;
     let floatingBorderPadding; // value is determined later, needed to be initialized beforehand
 
-    // let isUpdatingMediaStyling = false;
 
+    //###################################################################################################################################################################
 
-
-
-    // DEAD VALUES, MIGHT BE USED LATER
-    // let ratio = width / height; // why does resetting the ratio effect the content?
-    
     editCategoryMenu.innerHTML = `
+      
+      <p>Category Settings</p>
+      <p>General Settings</p>
+      <br>
+
       <p>BACKGROUND</p>
       <div class="settingsOptionContainer">
         <div class="settingsOption">
+          <p id="backgroundVisual">Background Visual</p>
+          <input id="backgroundVisualCheckbox" type="checkbox" checked>
+          <input type="text" id="formBackgroundVisual" name="formBackgroundVisual" value="tbd">
+        </div>
+        <div class="settingsOption">
           <p id="backgroundColor">Background Color</p>
+          <input id="backgroundColorCheckbox" type="checkbox" checked>
           <input type="text" id="formBackgroundColor" name="formBackgroundColor" value=${backgroundColor}>
+        </div>
+        <div class="settingsOption">
+          <p id="backgroundAudio">Background Audio</p>
+          <input id="backgroundAudioCheckbox" type="checkbox" checked>
+          <input type="text" id="formBackgroundAudio" name="formBackgroundAudio" value="tbd">
         </div>
       </div>
       <br>
@@ -63,11 +79,13 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
           <input type="number" id="formRatioHeight" name="formRatioHeight" value=${height}>
         </div>
         <div class="settingsOption">
-          <p id="gapValue">Gap</p><input id="gapCheckbox" type="checkbox" checked>
+          <p id="gapValue">Gap</p>
+          <input id="gapCheckbox" type="checkbox" checked>
           <input type="number" id="formGap" name="formGap" value=${gap}>
         </div>
         <div class="settingsOption">
-          <p id="wrapValue">Wrap</p><input id="wrapCheckbox" type="checkbox" checked>
+          <p id="wrapValue">Wrap</p>
+          <input id="wrapCheckbox" type="checkbox" checked>
         </div>
       </div>
       <br>
@@ -139,28 +157,163 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       <p>SAVE CHANGES</p>
 
     `;
-    const originalDimensionsCheckbox = document.getElementById('originalDimensionsCheckbox');
+    //###################################################################################################################################################################
+
+    //###################################################################################################################################################################                                                                                                    
+    //  ██████████████   ██████████████ ██████████████ ██████  ████████ ██████████████ ████████████████   ██████████████ ██████  ██████ ██████          ██████ ████████████   
+    //  ██░░░░░░░░░░██   ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░██████████  ██░░██ ██░░░░░░░░████ 
+    //  ██░░██████░░██   ██░░██████░░██ ██░░██████████ ██░░██  ██░░████ ██░░██████████ ██░░████████░░██   ██░░██████░░██ ██░░██  ██░░██ ██░░░░░░░░░░██  ██░░██ ██░░████░░░░██ 
+    //  ██░░██  ██░░██   ██░░██  ██░░██ ██░░██         ██░░██  ██░░██   ██░░██         ██░░██    ██░░██   ██░░██  ██░░██ ██░░██  ██░░██ ██░░██████░░██  ██░░██ ██░░██  ██░░██ 
+    //  ██░░██████░░████ ██░░██████░░██ ██░░██         ██░░██████░░██   ██░░██         ██░░████████░░██   ██░░██  ██░░██ ██░░██  ██░░██ ██░░██  ██░░██  ██░░██ ██░░██  ██░░██ 
+    //  ██░░░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██         ██░░░░░░░░░░██   ██░░██  ██████ ██░░░░░░░░░░░░██   ██░░██  ██░░██ ██░░██  ██░░██ ██░░██  ██░░██  ██░░██ ██░░██  ██░░██ 
+    //  ██░░████████░░██ ██░░██████░░██ ██░░██         ██░░██████░░██   ██░░██  ██░░██ ██░░██████░░████   ██░░██  ██░░██ ██░░██  ██░░██ ██░░██  ██░░██  ██░░██ ██░░██  ██░░██ 
+    //  ██░░██    ██░░██ ██░░██  ██░░██ ██░░██         ██░░██  ██░░██   ██░░██  ██░░██ ██░░██  ██░░██     ██░░██  ██░░██ ██░░██  ██░░██ ██░░██  ██░░██████░░██ ██░░██  ██░░██ 
+    //  ██░░████████░░██ ██░░██  ██░░██ ██░░██████████ ██░░██  ██░░████ ██░░██████░░██ ██░░██  ██░░██████ ██░░██████░░██ ██░░██████░░██ ██░░██  ██░░░░░░░░░░██ ██░░████░░░░██ 
+    //  ██░░░░░░░░░░░░██ ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░██  ██░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██████████░░██ ██░░░░░░░░████ 
+    //  ████████████████ ██████  ██████ ██████████████ ██████  ████████ ██████████████ ██████  ██████████ ██████████████ ██████████████ ██████          ██████ ████████████   
+                                                                                                                                                                           
+                                                                                           
+    //  ██████  ██████ ██████████ ██████████████ ██████  ██████ ██████████████ ██████         
+    //  ██░░██  ██░░██ ██░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░██         
+    //  ██░░██  ██░░██ ████░░████ ██░░██████████ ██░░██  ██░░██ ██░░██████░░██ ██░░██         
+    //  ██░░██  ██░░██   ██░░██   ██░░██         ██░░██  ██░░██ ██░░██  ██░░██ ██░░██         
+    //  ██░░██  ██░░██   ██░░██   ██░░██████████ ██░░██  ██░░██ ██░░██████░░██ ██░░██         
+    //  ██░░██  ██░░██   ██░░██   ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░██         
+    //  ██░░██  ██░░██   ██░░██   ██████████░░██ ██░░██  ██░░██ ██░░██████░░██ ██░░██         
+    //  ██░░░░██░░░░██   ██░░██           ██░░██ ██░░██  ██░░██ ██░░██  ██░░██ ██░░██         
+    //  ████░░░░░░████ ████░░████ ██████████░░██ ██░░██████░░██ ██░░██  ██░░██ ██░░██████████ 
+    //    ████░░████   ██░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░░░░░░░░░██ 
+    //      ██████     ██████████ ██████████████ ██████████████ ██████  ██████ ██████████████ 
+
+    
+
+    // Step 3: Set the innerHTML of the mediaVisual element with the video and paragraph
+    // mediaVisual.innerHTML = `
+    //   <video id="mediaVisualVideo" autoplay loop muted playsinline>
+    //     <source src="./assets/backgroundVisual/${name}.mp4" type="video/mp4">
+    //   </video>
+    // `;
+    // Replace 'name' with your variable that contains the file name
+
+    if (backgroundVisual) { // see if the value is true, don't bother running if false
+      const mediaContainer = document.getElementById('mediaContainer');
+      const mediaVisual = document.createElement('div');
+      mediaVisual.id = 'mediaVisual';
+      const filePath = `./assets/backgroundVisual/${name}.mp4`;
+
+      fetch(filePath)
+      .then(response => {
+        if (response.ok) {
+          // File exists, proceed to set the video in innerHTML
+          mediaVisual.innerHTML = `
+            <video id="mediaVisualVideo" autoplay loop muted playsinline>
+              <source src="${filePath}" type="video/mp4">
+            </video>
+          `;
+          mediaContainer.appendChild(mediaVisual);
+
+        } else {
+          // File does not exist, handle accordingly
+          console.log("File does not exist");
+        }
+      })
+      .catch(error => {
+        // Error fetching the file (possibly due to network issues or file not existing)
+        console.error("Error fetching the file bleh:", error);
+      });
+    }
+
+    // Append the mediaVisual element to the mediaContainer
+    // mediaContainer.appendChild(mediaVisual);
+                                                                
+    //###################################################################################################################################################################
+
+    //###################################################################################################################################################################
+    // container
+    const scrollableContent = document.querySelector('.scrollableContent');
+    // const mediaContainer = document.getElementById('mediaContainer');
+    const backgroundColorCheckbox = document.getElementById('backgroundColorCheckbox');
     const gapCheckbox = document.getElementById('gapCheckbox');
     const wrapCheckbox = document.getElementById('wrapCheckbox');
+    // const mediaVisual = document.getElementById('mediaVisual');
+
+    //media
+    const originalDimensionsCheckbox = document.getElementById('originalDimensionsCheckbox');
     const borderCheckbox = document.getElementById('borderCheckbox');
-    const mediaDisplay = document.getElementById('mediaDisplay');
+
+    // floating
     const floatingBorderCheckbox = document.getElementById('floatingBorderCheckbox');
     const floatingBorderColorCheckbox = document.getElementById('floatingBorderColorCheckbox');
     const floatingBorderRadiusCheckbox = document.getElementById('floatingBorderRadiusCheckbox');
     const floatingBorderGapCheckbox = document.getElementById('floatingBorderGapCheckbox');
-    const testMediaElements = document.querySelectorAll('.testMedia');
-    const scrollableContent = document.querySelector('.scrollableContent');
-    // const scrollableContent = document.querySelector('.scrollableContent');
     // const testMediaPictures = document.querySelectorAll('.testMediaItemPicture');
-    // const originalDimensionsCheckbox = document.getElementById('originalDimensionsCheckbox');
-    // const testMediaContainer = document.getElementById('testMediaContainer');
     // const otherNotes = document.getElementById('otherNotes');
     // topAdjustment = 50;
-    // testMediaContainer.style.top = '' + topAdjustment + 'px';
     // otherNotes.style.top = '' + topAdjustment + 'px';
+    // const testMediaElements = document.querySelectorAll('.testMedia');
+    //###################################################################################################################################################################
+
 
     gapChange(gap); // Default values for wrap and gap
     wrapChange(wrap);
+
+    
+
+
+    //###################################################################################################################################################################
+    // backgroundColor
+    // This should handle pictures and videos as well                                                                                                                                                      
+    //  ██████████████   ██████████████ ██████████████ ██████  ████████ ██████████████ ████████████████   ██████████████ ██████  ██████ ██████          ██████ ████████████   
+    //  ██░░░░░░░░░░██   ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░██████████  ██░░██ ██░░░░░░░░████ 
+    //  ██░░██████░░██   ██░░██████░░██ ██░░██████████ ██░░██  ██░░████ ██░░██████████ ██░░████████░░██   ██░░██████░░██ ██░░██  ██░░██ ██░░░░░░░░░░██  ██░░██ ██░░████░░░░██ 
+    //  ██░░██  ██░░██   ██░░██  ██░░██ ██░░██         ██░░██  ██░░██   ██░░██         ██░░██    ██░░██   ██░░██  ██░░██ ██░░██  ██░░██ ██░░██████░░██  ██░░██ ██░░██  ██░░██ 
+    //  ██░░██████░░████ ██░░██████░░██ ██░░██         ██░░██████░░██   ██░░██         ██░░████████░░██   ██░░██  ██░░██ ██░░██  ██░░██ ██░░██  ██░░██  ██░░██ ██░░██  ██░░██ 
+    //  ██░░░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██         ██░░░░░░░░░░██   ██░░██  ██████ ██░░░░░░░░░░░░██   ██░░██  ██░░██ ██░░██  ██░░██ ██░░██  ██░░██  ██░░██ ██░░██  ██░░██ 
+    //  ██░░████████░░██ ██░░██████░░██ ██░░██         ██░░██████░░██   ██░░██  ██░░██ ██░░██████░░████   ██░░██  ██░░██ ██░░██  ██░░██ ██░░██  ██░░██  ██░░██ ██░░██  ██░░██ 
+    //  ██░░██    ██░░██ ██░░██  ██░░██ ██░░██         ██░░██  ██░░██   ██░░██  ██░░██ ██░░██  ██░░██     ██░░██  ██░░██ ██░░██  ██░░██ ██░░██  ██░░██████░░██ ██░░██  ██░░██ 
+    //  ██░░████████░░██ ██░░██  ██░░██ ██░░██████████ ██░░██  ██░░████ ██░░██████░░██ ██░░██  ██░░██████ ██░░██████░░██ ██░░██████░░██ ██░░██  ██░░░░░░░░░░██ ██░░████░░░░██ 
+    //  ██░░░░░░░░░░░░██ ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░██  ██░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██████████░░██ ██░░░░░░░░████ 
+    //  ████████████████ ██████  ██████ ██████████████ ██████  ████████ ██████████████ ██████  ██████████ ██████████████ ██████████████ ██████          ██████ ████████████   
+    //                                                                                                                                                                        
+    //                                                                                 
+    //  ██████████████ ██████████████ ██████         ██████████████ ████████████████   
+    //  ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██         ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   
+    //  ██░░██████████ ██░░██████░░██ ██░░██         ██░░██████░░██ ██░░████████░░██   
+    //  ██░░██         ██░░██  ██░░██ ██░░██         ██░░██  ██░░██ ██░░██    ██░░██   
+    //  ██░░██         ██░░██  ██░░██ ██░░██         ██░░██  ██░░██ ██░░████████░░██   
+    //  ██░░██         ██░░██  ██░░██ ██░░██         ██░░██  ██░░██ ██░░░░░░░░░░░░██   
+    //  ██░░██         ██░░██  ██░░██ ██░░██         ██░░██  ██░░██ ██░░██████░░████   
+    //  ██░░██         ██░░██  ██░░██ ██░░██         ██░░██  ██░░██ ██░░██  ██░░██     
+    //  ██░░██████████ ██░░██████░░██ ██░░██████████ ██░░██████░░██ ██░░██  ██░░██████ 
+    //  ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░░░░░██ 
+    //  ██████████████ ██████████████ ██████████████ ██████████████ ██████  ██████████ 
+    backgroundColorCheckbox.checked = backgroundColorCheck;
+    updateBackgroundColor();
+    backgroundColorCheckbox.addEventListener('change', updateBackgroundColor);
+    function updateBackgroundColor() {
+      // console.log('Function: Update Background Color');
+      if (backgroundColorCheckbox.checked) {
+        backgroundColor = document.getElementById("formBackgroundColor").value;
+        document.getElementById("formBackgroundColor").disabled = false;
+        // testMedia.style.background = `${background}px solid ${backgroundColor}`;
+      } else {
+        backgroundColor = 'white';
+        // testMedia.style.background = `${background}px solid ${backgroundColor}`;
+        document.getElementById("formBackgroundColor").disabled = true;
+      }
+      mediaContainer.style.background = backgroundColor; // Directly update the background of mediaContainer
+    }
+
+    document.getElementById("formBackgroundColor").addEventListener("input", function() {
+      var inputValue = this.value;
+      backgroundColor = inputValue;
+      backgroundColor = this.value !== null ? this.value : 'black';
+      this.value = backgroundColor;
+      updateBackgroundColor(); // apply to all media items
+    });
+
+    //###################################################################################################################################################################
+
 
     //###################################################################################################################################################################
     // Placed before the media elements are created, as the container controls the gaps of the container, not the media itself                               
@@ -317,7 +470,9 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
     //  ██░░████░░░░██ ████░░████ ██░░██          ██░░██ ██░░██████████ ██░░██  ██░░░░░░░░░░██ ██████████░░██ ████░░████ ██░░██████░░██ ██░░██  ██░░░░░░░░░░██ ██████████░░██ 
     //  ██░░░░░░░░████ ██░░░░░░██ ██░░██          ██░░██ ██░░░░░░░░░░██ ██░░██  ██████████░░██ ██░░░░░░░░░░██ ██░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██████████░░██ ██░░░░░░░░░░██ 
     //  ████████████   ██████████ ██████          ██████ ██████████████ ██████          ██████ ██████████████ ██████████ ██████████████ ██████          ██████ ██████████████ 
-    //                                                                                                                                                                        
+                                                                                                                                            
+    originalDimensionsCheckbox.checked = originalDimensions;
+
     updateOriginalDimensions();
     originalDimensionsCheckbox.addEventListener('change', updateOriginalDimensions);
     function updateOriginalDimensions() {
@@ -587,6 +742,8 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
     //  ██████████████     ██████           ██████       ██████████████ ██████████ ██████          ██████ ██████████████ 
     //                                                                                                                   
     function updateMediaStyling() {
+      // console.log('Function: Update Media Styling');
+
       // THIS IS A WORKING WAY TO UPDATE ALL MEDIA ITEMS AT ONCE WITHOUT HAVING TO CREATE LOOPS
       // DO THE SAME THING FOR FLOATING BORDER AND YOU SHOULDNT HAVE UNECCESSARY REPEATING LOOPS
       let selector = ".testMedia";
@@ -621,7 +778,6 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
           console.log('The specified stylesheet was not found in the document.');
       }
 
-      console.log('Function: Update Media Styling');
       updateTestMediaPicturesSizes(width, height, border, borderRadius);
       // testMediaElements.forEach(testMedia => {
     }
