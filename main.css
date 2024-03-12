@@ -174,7 +174,7 @@ body {
   height: 100%;
   width: 250px;
   position: fixed;
-  right: 17px;
+  right: 0px;
   top: 0px;
   background-color: rgba(223, 223, 223, 0.75);
   display: none;
@@ -363,16 +363,18 @@ li:last-child {
   min-height: 100%;
   height: auto;
   margin: 0 0;
-  overflow: auto;
+  overflow: auto; /*This creates a scrollbar when media exceeds the x or y*/
 }
 
 #mediaVisual {
-  width: calc(100vw - 217px);
+  /* width: calc(100vw - 217px); */
+  width: 100vw;
   height: 100%;
   position: fixed;
   z-index: 4;
   top: 0;
   overflow: hidden; /* This clips any overflow, including into the scrollbar area */
+  object-fit: cover;
 }
 
 #mediaVisualVideo {
@@ -686,8 +688,8 @@ p {
 
  .scrollableContent {
   position: relative;
-  overflow-y: auto;
-  overflow-x: hidden;
+  /* overflow-y: auto; */
+  /* overflow-x: hidden; */
   display: block;
   height: calc(100vh); /* 100 view height - 70px of menu height */
   width: calc(100% - 200px); /* 100% - sideMenu Width */

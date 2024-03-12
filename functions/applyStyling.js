@@ -17,7 +17,9 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
     let name = selectedTag.Name !== undefined ? selectedTag.Name : 'Undefined';
 
     // Container Styling
+    let scrollbarWidth; // used later
     let backgroundVisual = selectedTag.BackgroundVisual !== undefined ? selectedTag.BackgroundVisual : false;
+    let backgroundAudio = selectedTag.BackgroundAudio !== undefined ? selectedTag.BackgroundAudio : false;
     let backgroundColorCheck = selectedTag.BackgroundColorCheck !== undefined ? selectedTag.BackgroundColorCheck : false;
     let backgroundColor = selectedTag.BackgroundColor !== undefined ? selectedTag.BackgroundColor : 'white';
     let gap = selectedTag.Gap !== undefined ? selectedTag.Gap : 1; 
@@ -157,6 +159,37 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       <p>SAVE CHANGES</p>
 
     `;
+    
+
+    //###################################################################################################################################################################
+    // container
+    const scrollableContent = document.querySelector('.scrollableContent');
+    // const mediaContainer = document.getElementById('mediaContainer');
+    const backgroundColorCheckbox = document.getElementById('backgroundColorCheckbox');
+    const gapCheckbox = document.getElementById('gapCheckbox');
+    const wrapCheckbox = document.getElementById('wrapCheckbox');
+    // const mediaVisual = document.getElementById('mediaVisual');
+
+    //media
+    const originalDimensionsCheckbox = document.getElementById('originalDimensionsCheckbox');
+    const borderCheckbox = document.getElementById('borderCheckbox');
+
+    // floating
+    const floatingBorderCheckbox = document.getElementById('floatingBorderCheckbox');
+    const floatingBorderColorCheckbox = document.getElementById('floatingBorderColorCheckbox');
+    const floatingBorderRadiusCheckbox = document.getElementById('floatingBorderRadiusCheckbox');
+    const floatingBorderGapCheckbox = document.getElementById('floatingBorderGapCheckbox');
+    // const testMediaPictures = document.querySelectorAll('.testMediaItemPicture');
+    // const otherNotes = document.getElementById('otherNotes');
+    // topAdjustment = 50;
+    // otherNotes.style.top = '' + topAdjustment + 'px';
+    // const testMediaElements = document.querySelectorAll('.testMedia');
+    //###################################################################################################################################################################
+
+
+    gapChange(gap); // Default values for wrap and gap
+    wrapChange(wrap);
+
     //###################################################################################################################################################################
 
     //###################################################################################################################################################################                                                                                                    
@@ -194,33 +227,54 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
     //   </video>
     // `;
     // Replace 'name' with your variable that contains the file name
+    // window.addEventListener('resize', adjustMediaVisualWidth);
+    // function adjustMediaVisualWidth() {
+    //   const scrollableContentDiv = document.querySelector('.scrollableContent');
+    //   scrollbarWidth = window.innerWidth - scrollableContentDiv.clientWidth; // this decides the width of the background media, whether it should have a scrollbar or not
+    //   // console.log(scrollbarWidth);
+    // }
 
-    if (backgroundVisual) { // see if the value is true, don't bother running if false
-      const mediaContainer = document.getElementById('mediaContainer');
-      const mediaVisual = document.createElement('div');
-      mediaVisual.id = 'mediaVisual';
-      const filePath = `./assets/backgroundVisual/${name}.mp4`;
-
-      fetch(filePath)
-      .then(response => {
-        if (response.ok) {
-          // File exists, proceed to set the video in innerHTML
-          mediaVisual.innerHTML = `
-            <video id="mediaVisualVideo" autoplay loop muted playsinline>
-              <source src="${filePath}" type="video/mp4">
-            </video>
-          `;
-          mediaContainer.appendChild(mediaVisual);
-
-        } else {
-          // File does not exist, handle accordingly
-          console.log("File does not exist");
+    updateBackgroundVisual()
+    function updateBackgroundVisual() {
+      if (backgroundVisual) { // see if the value is true, don't bother running if false
+        // const mediaContainer = document.getElementById('mediaContainer'); // now using scrollable media
+        const existingMediaVisual = document.getElementById('mediaVisual');
+    
+        // If a mediaVisual already exists, remove it
+        if (existingMediaVisual) {
+          existingMediaVisual.parentNode.removeChild(existingMediaVisual);
         }
-      })
-      .catch(error => {
-        // Error fetching the file (possibly due to network issues or file not existing)
-        console.error("Error fetching the file bleh:", error);
-      });
+
+        // create new element
+        const mediaVisual = document.createElement('video');
+        mediaVisual.id = 'mediaVisual';
+        mediaVisual.autoplay = true;
+        mediaVisual.loop = true;
+        mediaVisual.muted = true;
+        mediaVisual.playsInline = true; 
+        // adjustMediaVisualWidth();
+        // scrollbarWidth = window.innerWidth - scrollableContentDiv.clientWidth; // this decides the width of the background media, whether it should have a scrollbar or not
+        // mediaVisual.style.width = `calc(100vw - ${scrollbarWidth}px)`;
+        const filePath = `./assets/backgroundVisual/${name}.mp4`;
+
+        fetch(filePath)
+          .then(response => {
+            if (response.ok) {
+              // File exists, proceed to add source to video and append to mediaContainer
+              mediaVisual.innerHTML = `
+                <source src="${filePath}" type="video/mp4">
+              `;
+              scrollableContent.appendChild(mediaVisual);
+            } else {
+              // File does not exist, handle accordingly
+              console.log("File does not exist");
+            }
+          })
+          .catch(error => {
+            // Error fetching the file (possibly due to network issues or file not existing)
+            console.error("Error fetching the file:", error);
+          });
+      }
     }
 
     // Append the mediaVisual element to the mediaContainer
@@ -229,33 +283,67 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
     //###################################################################################################################################################################
 
     //###################################################################################################################################################################
-    // container
-    const scrollableContent = document.querySelector('.scrollableContent');
-    // const mediaContainer = document.getElementById('mediaContainer');
-    const backgroundColorCheckbox = document.getElementById('backgroundColorCheckbox');
-    const gapCheckbox = document.getElementById('gapCheckbox');
-    const wrapCheckbox = document.getElementById('wrapCheckbox');
-    // const mediaVisual = document.getElementById('mediaVisual');
+    //                                                                                                                                                                        
+    //  ██████████████   ██████████████ ██████████████ ██████  ████████ ██████████████ ████████████████   ██████████████ ██████  ██████ ██████          ██████ ████████████   
+    //  ██░░░░░░░░░░██   ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░██████████  ██░░██ ██░░░░░░░░████ 
+    //  ██░░██████░░██   ██░░██████░░██ ██░░██████████ ██░░██  ██░░████ ██░░██████████ ██░░████████░░██   ██░░██████░░██ ██░░██  ██░░██ ██░░░░░░░░░░██  ██░░██ ██░░████░░░░██ 
+    //  ██░░██  ██░░██   ██░░██  ██░░██ ██░░██         ██░░██  ██░░██   ██░░██         ██░░██    ██░░██   ██░░██  ██░░██ ██░░██  ██░░██ ██░░██████░░██  ██░░██ ██░░██  ██░░██ 
+    //  ██░░██████░░████ ██░░██████░░██ ██░░██         ██░░██████░░██   ██░░██         ██░░████████░░██   ██░░██  ██░░██ ██░░██  ██░░██ ██░░██  ██░░██  ██░░██ ██░░██  ██░░██ 
+    //  ██░░░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██         ██░░░░░░░░░░██   ██░░██  ██████ ██░░░░░░░░░░░░██   ██░░██  ██░░██ ██░░██  ██░░██ ██░░██  ██░░██  ██░░██ ██░░██  ██░░██ 
+    //  ██░░████████░░██ ██░░██████░░██ ██░░██         ██░░██████░░██   ██░░██  ██░░██ ██░░██████░░████   ██░░██  ██░░██ ██░░██  ██░░██ ██░░██  ██░░██  ██░░██ ██░░██  ██░░██ 
+    //  ██░░██    ██░░██ ██░░██  ██░░██ ██░░██         ██░░██  ██░░██   ██░░██  ██░░██ ██░░██  ██░░██     ██░░██  ██░░██ ██░░██  ██░░██ ██░░██  ██░░██████░░██ ██░░██  ██░░██ 
+    //  ██░░████████░░██ ██░░██  ██░░██ ██░░██████████ ██░░██  ██░░████ ██░░██████░░██ ██░░██  ██░░██████ ██░░██████░░██ ██░░██████░░██ ██░░██  ██░░░░░░░░░░██ ██░░████░░░░██ 
+    //  ██░░░░░░░░░░░░██ ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░██  ██░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██████████░░██ ██░░░░░░░░████ 
+    //  ████████████████ ██████  ██████ ██████████████ ██████  ████████ ██████████████ ██████  ██████████ ██████████████ ██████████████ ██████          ██████ ████████████   
+    //                                                                                                                                                                        
+    //                                                                         
+    //  ██████████████ ██████  ██████ ████████████   ██████████ ██████████████ 
+    //  ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░░░░░░░████ ██░░░░░░██ ██░░░░░░░░░░██ 
+    //  ██░░██████░░██ ██░░██  ██░░██ ██░░████░░░░██ ████░░████ ██░░██████░░██ 
+    //  ██░░██  ██░░██ ██░░██  ██░░██ ██░░██  ██░░██   ██░░██   ██░░██  ██░░██ 
+    //  ██░░██████░░██ ██░░██  ██░░██ ██░░██  ██░░██   ██░░██   ██░░██  ██░░██ 
+    //  ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░██  ██░░██   ██░░██   ██░░██  ██░░██ 
+    //  ██░░██████░░██ ██░░██  ██░░██ ██░░██  ██░░██   ██░░██   ██░░██  ██░░██ 
+    //  ██░░██  ██░░██ ██░░██  ██░░██ ██░░██  ██░░██   ██░░██   ██░░██  ██░░██ 
+    //  ██░░██  ██░░██ ██░░██████░░██ ██░░████░░░░██ ████░░████ ██░░██████░░██ 
+    //  ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░░░░░░░████ ██░░░░░░██ ██░░░░░░░░░░██ 
+    //  ██████  ██████ ██████████████ ████████████   ██████████ ██████████████ 
 
-    //media
-    const originalDimensionsCheckbox = document.getElementById('originalDimensionsCheckbox');
-    const borderCheckbox = document.getElementById('borderCheckbox');
+    updateBackgroundAudio()
+    function updateBackgroundAudio() {
+      if (backgroundAudio) { // see if the value is true, don't bother running if false
+        const mediaContainer = document.getElementById('mediaContainer');
+        const mediaAudio = document.createElement('audio'); // Create an audio element
+        mediaAudio.id = 'mediaAudio';
+        mediaAudio.autoplay = true;
+        mediaAudio.loop = true;
+        // mediaAudio.muted = true;
+        mediaAudio.playsinline = true;
+        const filePath = `./assets/backgroundAudio/${name}.mp3`; // Use .mp3 extension
 
-    // floating
-    const floatingBorderCheckbox = document.getElementById('floatingBorderCheckbox');
-    const floatingBorderColorCheckbox = document.getElementById('floatingBorderColorCheckbox');
-    const floatingBorderRadiusCheckbox = document.getElementById('floatingBorderRadiusCheckbox');
-    const floatingBorderGapCheckbox = document.getElementById('floatingBorderGapCheckbox');
-    // const testMediaPictures = document.querySelectorAll('.testMediaItemPicture');
-    // const otherNotes = document.getElementById('otherNotes');
-    // topAdjustment = 50;
-    // otherNotes.style.top = '' + topAdjustment + 'px';
-    // const testMediaElements = document.querySelectorAll('.testMedia');
+        // mediaAudio.src = filePath; // Set the source directly
+        // mediaContainer.appendChild(mediaAudio);
+
+        fetch(filePath)
+        .then(response => {
+            if (!response.ok) {
+                // File does not exist, handle accordingly
+                console.log("File does not exist");
+            }
+            mediaAudio.src = filePath; // Set the source directly
+            // mediaContainer.appendChild(mediaAudio);
+            scrollableContent.appendChild(mediaAudio); // assign to scrollable content to escape the parent container
+        })
+        .catch(error => {
+            // Error fetching the file (possibly due to network issues or file not existing)
+            console.error("Error fetching the file:", error);
+        });
+      }
+    }
+
+
+
     //###################################################################################################################################################################
-
-
-    gapChange(gap); // Default values for wrap and gap
-    wrapChange(wrap);
 
     
 
@@ -301,7 +389,8 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         // testMedia.style.background = `${background}px solid ${backgroundColor}`;
         document.getElementById("formBackgroundColor").disabled = true;
       }
-      mediaContainer.style.background = backgroundColor; // Directly update the background of mediaContainer
+      // mediaContainer.style.background = backgroundColor; // Directly update the background of scrollableContent
+      scrollableContent.style.background = backgroundColor; // Directly update the background of scrollableContent
     }
 
     document.getElementById("formBackgroundColor").addEventListener("input", function() {
@@ -743,9 +832,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
     //                                                                                                                   
     function updateMediaStyling() {
       // console.log('Function: Update Media Styling');
-
       // THIS IS A WORKING WAY TO UPDATE ALL MEDIA ITEMS AT ONCE WITHOUT HAVING TO CREATE LOOPS
-      // DO THE SAME THING FOR FLOATING BORDER AND YOU SHOULDNT HAVE UNECCESSARY REPEATING LOOPS
       let selector = ".testMedia";
       let setHeight = 200; // Fixed height for displayed media
       let ratio = width / height; // Calculate the aspect ratio

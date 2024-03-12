@@ -731,7 +731,7 @@
   "Tags": [
     {
       "Name": "All",
-      "BackgroundVisual": false,
+      "BackgroundVisual": true,
       "BackgroundColorCheck": true,
       "BackgroundColor": "gray",
       "OriginalDimensions": true,
@@ -833,6 +833,7 @@
     },
     {
       "Name": "Fall",
+      "BackgroundAudio": true,
       "BackgroundVisual": true,
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
