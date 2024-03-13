@@ -733,10 +733,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // This may be overwritten when the settings menu is clicked.  
   // the settings menu should only display the category settings menu, it should not be the cause of the styling being applied
     function createMedia(data) {
-      if (data.length === 0) {
-        return '<p>No data available.</p>';
-      }
       let mediaHTML = '<div class="mediadata">';
+      mediaHTML += '<div id="testMediaContainer">';
+
+
+      if (data.length === 0) { // create test media here so that the applystying page has something to edit and not crash for lack of data
+        mediaHTML += '<div class="testMedia">'; // Create a blank item
+        mediaHTML += '<p>No media exists in this category.</p>'; // Add the line of text
+        mediaHTML += '</div>'; // Close the div tags
+        return mediaHTML;
+      }
       // Collect all unique keys (field names) from the array
       const allKeys = new Set();
       for (const item of data) {
@@ -744,7 +750,6 @@ document.addEventListener('DOMContentLoaded', () => {
           allKeys.add(key);
         }
       }
-      mediaHTML += '<div id="testMediaContainer">';
       // Create data rows
       for (const item of data) {
         mediaHTML += `<div class="testMedia" data-item='${JSON.stringify(item).replace(/'/g, "&apos;")}'>`;
@@ -760,8 +765,8 @@ document.addEventListener('DOMContentLoaded', () => {
         mediaHTML += '<br></div>';
       }
       mediaHTML += '<br><p>Display Option to Add a category to this list, Example: Nintendo (Parent) N64, 3DS, GBC (Children)</p>'; // class="mediaitemcontainer"
-      mediaHTML += '</div>'; // class="mediaitemcontainer"
-      mediaHTML += '</div>'; // class="mediakeycontainer"
+      mediaHTML += '</div>'; // class="testMediaContainer"
+      mediaHTML += '</div>'; // class="mediadata"
       return mediaHTML;
     }
     

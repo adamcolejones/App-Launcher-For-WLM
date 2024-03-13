@@ -375,6 +375,7 @@ li:last-child {
   top: 0;
   overflow: hidden; /* This clips any overflow, including into the scrollbar area */
   object-fit: cover;
+  /* transition: opacity 0.5s ease-in-out; */
 }
 
 #mediaVisualVideo {

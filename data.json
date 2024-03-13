@@ -1457,26 +1457,6 @@
       "CustomValues": true
     },
     {
-      "Name": "DEF",
-      "BackgroundColorCheck": true,
-      "BackgroundColor": "white",
-      "OriginalDimensions": false,
-      "Gap": 1,
-      "Wrap": "wrap",
-      "Width": 1,
-      "Height": 1,
-      "Border": 10,
-      "BorderColor": "black",
-      "BorderRadius": 0,
-      "FloatingBorder": 5,
-      "FloatingBorderColor": "red",
-      "FloatingBorderRadius": 5,
-      "FloatingBorderGap": 0,
-      "Rows": 1,
-      "Columns": 15,
-      "CustomValues": true
-    },
-    {
       "Name": "ABC",
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",

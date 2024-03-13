@@ -9,6 +9,10 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
 
 
   function applyStyling(tag, jsondata) {
+
+    // If the list of items is empty, then you should avoid calling certain functions that use the items.
+    // There should still be a container even if the items are missing.
+
     // const mediaVisual = document.getElementById('mediaVisual');
     const selectedTag = jsondata.Tags.find(item => item.Name === tag);
     // IF THESE VALUES RETURN NULL, THEY WILL BREAK THE APP.  IF ANY RETURN NULL, SET DEFAULT VALUES FOR THEM HERE
@@ -218,64 +222,45 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
     //    ████░░████   ██░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░░░░░░░░░██ 
     //      ██████     ██████████ ██████████████ ██████████████ ██████  ██████ ██████████████ 
 
-    
-
-    // Step 3: Set the innerHTML of the mediaVisual element with the video and paragraph
-    // mediaVisual.innerHTML = `
-    //   <video id="mediaVisualVideo" autoplay loop muted playsinline>
-    //     <source src="./assets/backgroundVisual/${name}.mp4" type="video/mp4">
-    //   </video>
-    // `;
-    // Replace 'name' with your variable that contains the file name
-    // window.addEventListener('resize', adjustMediaVisualWidth);
-    // function adjustMediaVisualWidth() {
-    //   const scrollableContentDiv = document.querySelector('.scrollableContent');
-    //   scrollbarWidth = window.innerWidth - scrollableContentDiv.clientWidth; // this decides the width of the background media, whether it should have a scrollbar or not
-    //   // console.log(scrollbarWidth);
-    // }
-
+    // This function will cause the electron app to flicker black when swapping out the video content
+    // may need to consider loading videos elsewhere and then displaying them.  Would that not cause lag creating them all at once? 
+    // Create the videos when they are selected and preserve them or create them all at once if not taxing on the computer
     updateBackgroundVisual()
-    function updateBackgroundVisual() {
-      if (backgroundVisual) { // see if the value is true, don't bother running if false
-        // const mediaContainer = document.getElementById('mediaContainer'); // now using scrollable media
-        const existingMediaVisual = document.getElementById('mediaVisual');
+    function updateBackgroundVisual() { // Assuming `name` is a parameter representing the new video name
+      let mediaVisual = document.getElementById('mediaVisual');
     
-        // If a mediaVisual already exists, remove it
-        if (existingMediaVisual) {
-          existingMediaVisual.parentNode.removeChild(existingMediaVisual);
-        }
-
-        // create new element
-        const mediaVisual = document.createElement('video');
+      if (!mediaVisual && backgroundVisual) { // If there's no mediaVisual and backgroundVisual is true, create it
+        mediaVisual = document.createElement('video');
         mediaVisual.id = 'mediaVisual';
         mediaVisual.autoplay = true;
         mediaVisual.loop = true;
         mediaVisual.muted = true;
-        mediaVisual.playsInline = true; 
-        // adjustMediaVisualWidth();
-        // scrollbarWidth = window.innerWidth - scrollableContentDiv.clientWidth; // this decides the width of the background media, whether it should have a scrollbar or not
-        // mediaVisual.style.width = `calc(100vw - ${scrollbarWidth}px)`;
-        const filePath = `./assets/backgroundVisual/${name}.mp4`;
-
-        fetch(filePath)
-          .then(response => {
-            if (response.ok) {
-              // File exists, proceed to add source to video and append to mediaContainer
-              mediaVisual.innerHTML = `
-                <source src="${filePath}" type="video/mp4">
-              `;
-              scrollableContent.appendChild(mediaVisual);
-            } else {
-              // File does not exist, handle accordingly
-              console.log("File does not exist");
-            }
-          })
-          .catch(error => {
-            // Error fetching the file (possibly due to network issues or file not existing)
-            console.error("Error fetching the file:", error);
+        mediaVisual.playsInline = true;
+        mediaVisual.setAttribute('preload', 'auto');
+        scrollableContent.appendChild(mediaVisual); // Assuming scrollableContent is the container's ID
+      }
+    
+      if (mediaVisual) { // If a mediaVisual exists (either from before or newly created)
+        
+        // Update or set the video source
+        mediaVisual.innerHTML = `<source src="./assets/backgroundVisual/${name}.mp4" type="video/mp4">`;
+    
+        // Wait for the video to be ready to play
+        mediaVisual.onloadeddata = function() {
+          mediaVisual.play().catch(error => {
+            console.error("Video playback failed:", error);
           });
+        };
+
+        // Load the new source
+        mediaVisual.load();
+    
+        mediaVisual.onerror = function() {
+          console.error("Error loading the video file.");
+        };
       }
     }
+    
 
     // Append the mediaVisual element to the mediaContainer
     // mediaContainer.appendChild(mediaVisual);
@@ -311,6 +296,12 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
 
     updateBackgroundAudio()
     function updateBackgroundAudio() {
+
+      const existingMediaAudio = document.getElementById('mediaAudio');
+      if (existingMediaAudio) { // If a mediaAudio already exists, remove it
+        existingMediaAudio.parentNode.removeChild(existingMediaAudio);
+      }
+
       if (backgroundAudio) { // see if the value is true, don't bother running if false
         const mediaContainer = document.getElementById('mediaContainer');
         const mediaAudio = document.createElement('audio'); // Create an audio element
