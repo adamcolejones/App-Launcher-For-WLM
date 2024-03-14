@@ -1,3 +1,29 @@
+// ********************************************************
+// * A DESCRIPTION OF THE FUNCTIONALITY OF THE CODE BELOW *
+// ********************************************************
+// + To prevent new media from appearing blank for a brief moment, create a new container behind the old one, wait for it to load, then unhide it when the elements have loaded, then remove the old container
+// + 
+// + 
+// + 
+// + 
+// + 
+// + 
+// + 
+// + 
+// + 
+// + 
+// + 
+// + 
+// + 
+// + 
+// + 
+// + 
+// + 
+// + 
+// + 
+// + 
+
+// ********************************************************
 import { gapChange } from './gapChange.js';
 import { wrapChange } from './wrapChange.js';
 import { updateAspectRatio } from './updateAspectRatio.js';
@@ -225,10 +251,26 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
     // This function will cause the electron app to flicker black when swapping out the video content
     // may need to consider loading videos elsewhere and then displaying them.  Would that not cause lag creating them all at once? 
     // Create the videos when they are selected and preserve them or create them all at once if not taxing on the computer
+
+
+    // TRY THIS TO PREVENT BLACK STUTTER
+    // PLAY AN INVISIBLE MOVIE
     updateBackgroundVisual()
     function updateBackgroundVisual() { // Assuming `name` is a parameter representing the new video name
       let mediaVisual = document.getElementById('mediaVisual');
-    
+      if (mediaVisual) { // if exists, overwrite the previous one
+        // mediaVisual.parentNode.removeChild(mediaVisual); // Remove existing mediaVisual from the DOM
+        // let source = document.createElement('source');
+        source.src = `./assets/backgroundVisual/${name}.mp4`;
+        source.type = 'video/mp4';
+        source.setAttribute('poster', backgroundColor); // Set poster attribute for the source
+        mediaVisual.appendChild(source);
+        mediaContainer.appendChild(mediaVisual); // Assuming scrollableContent is the container's ID
+        mediaVisual.style.opacity = "0";
+        setTimeout(function() {
+          mediaVisual.style.opacity = "1";
+        }, 100); // Adjust the delay as needed
+      }
       if (!mediaVisual && backgroundVisual) { // If there's no mediaVisual and backgroundVisual is true, create it
         mediaVisual = document.createElement('video');
         mediaVisual.id = 'mediaVisual';
@@ -237,33 +279,18 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         mediaVisual.muted = true;
         mediaVisual.playsInline = true;
         mediaVisual.setAttribute('preload', 'auto');
-        scrollableContent.appendChild(mediaVisual); // Assuming scrollableContent is the container's ID
-      }
-    
-      if (mediaVisual) { // If a mediaVisual exists (either from before or newly created)
-        
-        // Update or set the video source
-        mediaVisual.innerHTML = `<source src="./assets/backgroundVisual/${name}.mp4" type="video/mp4">`;
-    
-        // Wait for the video to be ready to play
-        mediaVisual.onloadeddata = function() {
-          mediaVisual.play().catch(error => {
-            console.error("Video playback failed:", error);
-          });
-        };
-
-        // Load the new source
-        mediaVisual.load();
-    
-        mediaVisual.onerror = function() {
-          console.error("Error loading the video file.");
-        };
+        let source = document.createElement('source');
+        source.src = `./assets/backgroundVisual/${name}.mp4`;
+        source.type = 'video/mp4';
+        source.setAttribute('poster', backgroundColor); // Set poster attribute for the source
+        mediaVisual.appendChild(source);
+        mediaContainer.appendChild(mediaVisual); // Assuming scrollableContent is the container's ID
+        mediaVisual.style.opacity = "0";
+        setTimeout(function() {
+          mediaVisual.style.opacity = "1";
+        }, 100); // Adjust the delay as needed
       }
     }
-    
-
-    // Append the mediaVisual element to the mediaContainer
-    // mediaContainer.appendChild(mediaVisual);
                                                                 
     //###################################################################################################################################################################
 

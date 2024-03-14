@@ -366,7 +366,7 @@ li:last-child {
   overflow: auto; /*This creates a scrollbar when media exceeds the x or y*/
 }
 
-#mediaVisual {
+.mediaVisual {
   /* width: calc(100vw - 217px); */
   width: 100vw;
   height: 100%;
@@ -376,6 +376,18 @@ li:last-child {
   overflow: hidden; /* This clips any overflow, including into the scrollbar area */
   object-fit: cover;
   /* transition: opacity 0.5s ease-in-out; */
+}
+
+#mediaVisual {
+  /* width: calc(100vw - 217px); */
+  width: 100vw;
+  height: 100%;
+  position: fixed;
+  z-index: 4;
+  top: 0;
+  overflow: hidden; /* This clips any overflow, including into the scrollbar area */
+  object-fit: cover;
+  transition: opacity 0.5s ease-in-out;
 }
 
 #mediaVisualVideo {
