@@ -10,6 +10,11 @@ function gapChange(gap) {
       gap = 0;
       document.getElementById("formGap").disabled = true;
     }
+    // Update tag Settings
+    // window.updateBridge.updateTag(name, gap);
+    // window.updateBridge.updateTag = (tagName, newGap) => {
+    //   ipcRenderer.send("editTag", { Name: tagName, Gap: newGap });
+    // };  
     return gap;
 }
 

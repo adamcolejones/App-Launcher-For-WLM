@@ -58,7 +58,7 @@ a:hover {
   width: fit-content;
   background-color: #dfdfdf;
   cursor: pointer;
-  position: fixed;
+  /* position: fixed; */
   z-index: 7;
 }
 
@@ -163,6 +163,9 @@ body {
   display: inline-block;
   vertical-align: middle;
   cursor: pointer;
+  background: radial-gradient(circle, rgb(0, 0, 0) 50%, rgba(0, 0, 0, 0) 100%);
+  /* transform: translate(-50%, -50%); */
+  border-radius: 50%;
 }
 
 #editCategorySettings {
@@ -336,6 +339,16 @@ li:last-child {
     margin-right: 0;
 }
 
+#loadingScreen {
+  position:absolute; 
+  top:0; 
+  left:0; 
+  width:100%; 
+  height:100%; 
+  background-color:white; 
+  z-index:100;
+}
+
 /* ---------------------------------------------------------------------------------------------- M ---------------------------------------------------------------------------------------------- */
 /*
 ██████          ██████
@@ -379,6 +392,18 @@ li:last-child {
 }
 
 #mediaVisual {
+  /* width: calc(100vw - 217px); */
+  width: 100vw;
+  height: 100%;
+  position: fixed;
+  z-index: 4;
+  top: 0;
+  overflow: hidden; /* This clips any overflow, including into the scrollbar area */
+  object-fit: cover;
+  transition: opacity 0.5s ease-in-out;
+}
+
+#mediaVisualTemp {
   /* width: calc(100vw - 217px); */
   width: 100vw;
   height: 100%;
@@ -704,7 +729,19 @@ p {
   /* overflow-y: auto; */
   /* overflow-x: hidden; */
   display: block;
-  height: calc(100vh); /* 100 view height - 70px of menu height */
+  /* height: calc(100vh); 100 view height - 70px of menu height */
+  width: calc(100% - 200px); /* 100% - sideMenu Width */
+  /* top: calc(50px + 20px); nav height + nav Padding */
+  left: 200px; /* sideMenu Width */
+  /* overflow-y: scroll; */
+ }
+
+ #scrollableContent {
+  position: relative;
+  /* overflow-y: auto; */
+  /* overflow-x: hidden; */
+  display: block;
+  /* height: calc(100vh); 100 view height - 70px of menu height */
   width: calc(100% - 200px); /* 100% - sideMenu Width */
   /* top: calc(50px + 20px); nav height + nav Padding */
   left: 200px; /* sideMenu Width */
@@ -818,7 +855,14 @@ table {
   vertical-align: middle; /* Adjust vertical alignment as needed */
   margin-right: 20px; /* Adjust the margin between the tag and the image */
   padding: 0% 0% 0% 20px;
+  color: #FFFFFF; /* Make text color white */
+  text-shadow: 
+    -1px -1px 0 #000,  
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000; /* Solid black shadow around the text */
 }
+
 
 #tagNameContainer {
   height: 50px;

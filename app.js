@@ -216,8 +216,8 @@ document.addEventListener('DOMContentLoaded', () => {
     //
     function displayMedia(data) {
       const dataDisplayDiv = document.getElementById('mediaContainer');
-      dataDisplayDiv.innerHTML = ''; // Clear any previous content
-      
+      dataDisplayDiv.innerHTML = ''; // Clear any previous conten
+      console.log("Function: displayMedia: Clear mediaContainer")
 
       const tagSections = {}; // Create an object to store items by tags
 
@@ -306,8 +306,10 @@ document.addEventListener('DOMContentLoaded', () => {
           document.getElementById('editCategoryMenu').style.display = 'none';
           // document.getElementById('mediaVisual').style.display = 'block';
 
-      
+          // <div id="loadingScreen">Loading...</div>
           mediaContainerDiv.innerHTML = `
+
+              
               <div id="tagNameContainer">
                   <div id="tagSelection">${tag}</div>
                   <img src="assets/app/settings.svg" id="editCategoryButton">
@@ -392,7 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //
     //
       function addClickListenersToMediaItems() {
-        const mediaItemPictures = document.querySelectorAll('.mediaitempicture');
+        const mediaItemPictures = document.querySelectorAll('.testMediaItemPicture');
         mediaItemPictures.forEach(mediaItemPicture => {
           mediaItemPicture.addEventListener('click', () => {
             const itemData = JSON.parse(mediaItemPicture.parentElement.dataset.item); // Access data from parent element
@@ -440,6 +442,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const contentDisplayDiv = document.getElementById('contentDisplay');
         const mediaContainerDiv = document.getElementById('mediaContainer');
         mediaContainerDiv.style.display = 'none'; // Hide mediaContainer div
+        console.log("Function: displayMediaItemData: Clear mediaContainer")
         document.getElementById('editCategoryMenu').style.display = 'none';
         contentDisplayDiv.style.display = 'block'; // Or 'flex', 'media', etc. depending on your layout
         // This itemDataDiv might be unnecessary, just add inner html to contentDisplayDiv and append to scrollable content?  When I have more time
@@ -602,6 +605,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <img src="assets/app/back.svg">
               <div>Back</div>
             </div>
+            <br>
             <div id="saveContainer">
               <img src="assets/app/save.svg" id="saveButton">
               <div>Save</div>

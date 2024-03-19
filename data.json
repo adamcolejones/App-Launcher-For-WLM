@@ -731,7 +731,7 @@
   "Tags": [
     {
       "Name": "All",
-      "BackgroundVisual": true,
+      "BackgroundVisual": false,
       "BackgroundColorCheck": true,
       "BackgroundColor": "gray",
       "OriginalDimensions": true,
@@ -901,10 +901,10 @@
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
       "OriginalDimensions": false,
-      "Gap": 1,
+      "Gap": 20,
       "Wrap": "wrap",
       "Width": 1,
-      "Height": 1,
+      "Height": 2,
       "Border": 10,
       "BorderColor": "black",
       "BorderRadius": 0,
@@ -1081,8 +1081,7 @@
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
       "OriginalDimensions": false,
-      "Gap": 1,
-      "Wrap": "wrap",
+      "Wrap": "nowrap",
       "Width": 1,
       "Height": 1,
       "Border": 10,
@@ -1094,7 +1093,8 @@
       "FloatingBorderGap": 0,
       "Rows": 1,
       "Columns": 15,
-      "CustomValues": true
+      "CustomValues": true,
+      "Gap": 20
     },
     {
       "Name": "Nintendo Wii",

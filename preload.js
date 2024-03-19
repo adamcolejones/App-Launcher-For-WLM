@@ -27,8 +27,7 @@ const { contextBridge, ipcMain, ipcRenderer, shell} = require("electron");
 contextBridge.exposeInMainWorld('electron', {
   shell: shell,
 });
-// *************************************************************************************************************************************************
-// Expose the "saveData" function to the renderer process
+//###################################################################################################################################################################// Expose the "saveData" function to the renderer process
 let saveName = (firstName, middleName, lastName) => {
     let data = { firstName, middleName, lastName };
     console.log(data);
@@ -44,8 +43,7 @@ contextBridge.exposeInMainWorld("nameBridge", nameBridge);
 
 
 
-// *************************************************************************************************************************************************
-//
+//###################################################################################################################################################################//
 //
 //
 let saveMedia = (newId, Name, RunCommand, Tags, imagePath) => {
@@ -93,8 +91,7 @@ contextBridge.exposeInMainWorld("mediaBridge", mediaBridge);
 
 
 
-// *************************************************************************************************************************************************
-//
+//###################################################################################################################################################################//
 //
 //
 // function called to update existing media from data.json
@@ -121,9 +118,60 @@ let updateMedia = (id, Name, RunCommand, Tags, imagePath) => {
   ipcRenderer.send('reload-window');
 };
 
+//###################################################################################################################################################################
 
-// *************************************************************************************************************************************************
-//
+
+let updateTag = (
+  name, 
+  // backgroundAudio, 
+  // backgroundColorCheck, 
+  // backgroundColor, 
+  gap, 
+  wrap, 
+  originalDimensions, 
+  width, 
+  height, 
+  // border, 
+  // borderColor, 
+  // borderRadius, 
+  // floatingBorder, 
+  // floatingBorderColor, 
+  // floatingBorderRadius, 
+  // floatingBorderGap, 
+  // floatingBorderPadding
+) => {
+  let newData = {
+    "Name": name,
+    // "BackgroundAudio": backgroundAudio, 
+    // "BackgroundVisual": backgroundVisual,
+    // "BackgroundColorCheck": backgroundColorCheck,
+    // "BackgroundColor": backgroundColor,
+    "OriginalDimensions": originalDimensions,
+    "Gap": gap,
+    "Wrap": wrap,
+    "Width": width,
+    "Height": height,
+    // "Border": border,
+    // "BorderColor": borderColor,
+    // "BorderRadius": borderRadius,
+    // "FloatingBorder": floatingBorder,
+    // "FloatingBorderColor": floatingBorderColor,
+    // "FloatingBorderRadius": floatingBorderRadius,
+    // "FloatingBorderGap": floatingBorderGap,
+    // "Rows": 1,
+    // "Columns": 15,
+    // "CustomValues": true
+    // floatingBorderPadding
+  };
+  
+  console.log('New Data: ', newData);
+  ipcRenderer.send("updateTag", newData);
+  // ipcRenderer.send('reload-window');
+};
+
+
+
+//###################################################################################################################################################################//
 //
 //
 let editTag = (Tag) => {
@@ -134,8 +182,7 @@ let editTag = (Tag) => {
   ipcRenderer.send('reload-window');
 }
 
-// *************************************************************************************************************************************************
-//
+//###################################################################################################################################################################//
 //
 //
 let deleteMedia = (idToDelete) => {
@@ -144,12 +191,12 @@ let deleteMedia = (idToDelete) => {
 };
 
 
-// *************************************************************************************************************************************************
-//
+//###################################################################################################################################################################//
 //
 //
 let updateBridge = {
   updateMedia,
+  updateTag,
   deleteMedia,
   editTag,
 };
