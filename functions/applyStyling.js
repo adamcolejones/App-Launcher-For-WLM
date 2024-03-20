@@ -91,7 +91,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       let backgroundAudio = selectedTag.BackgroundAudio !== undefined ? selectedTag.BackgroundAudio : false;
       let backgroundColorCheck = selectedTag.BackgroundColorCheck !== undefined ? selectedTag.BackgroundColorCheck : false;
       let backgroundColor = selectedTag.BackgroundColor !== undefined ? selectedTag.BackgroundColor : 'white';
-      let gap = selectedTag.Gap !== undefined ? selectedTag.Gap : 1; 
+      let gap = selectedTag.Gap !== undefined ? selectedTag.Gap : 5; 
       let wrap = selectedTag.Wrap !== undefined ? selectedTag.Wrap : 'wrap'; 
       let wrapCheckboxValue = wrap === 'wrap' ? ' checked' : '';
 
@@ -236,7 +236,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       //###################################################################################################################################################################
       // container
       const scrollableContent = document.querySelector('.scrollableContent');
-      // const mediaContainer = document.getElementById('mediaContainer');
+      const mediaContainer = document.getElementById('mediaContainer');
       const backgroundColorCheckbox = document.getElementById('backgroundColorCheckbox');
       const gapCheckbox = document.getElementById('gapCheckbox');
       const wrapCheckbox = document.getElementById('wrapCheckbox');
@@ -387,7 +387,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         }
 
         if (backgroundAudio) { // see if the value is true, don't bother running if false
-          const mediaContainer = document.getElementById('mediaContainer');
+          // const mediaContainer = document.getElementById('mediaContainer');
           const mediaAudio = document.createElement('audio'); // Create an audio element
           mediaAudio.id = 'mediaAudio';
           mediaAudio.autoplay = true;
@@ -1009,8 +1009,8 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
           document.getElementById("formFloatingBorderRadius").disabled = true;
           document.getElementById("formFloatingBorderGap").disabled = true;
       }
-      //   updateMediaStyling();
-      
+        // updateMediaStyling();
+        saveStyling();
       }
 
       document.getElementById("formFloatingBorder").addEventListener("input", function() {
@@ -1047,15 +1047,16 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       updateFloatingBorderColor();
       floatingBorderColorCheckbox.addEventListener('change', updateFloatingBorderColor);
       function updateFloatingBorderColor() {
-      // console.log('Function: Update Floating Border Color');
-      if (floatingBorderColorCheckbox.checked) {
-          floatingBorderColor = document.getElementById("formFloatingBorderColor").value;
-          document.getElementById("formFloatingBorderColor").disabled = false;
-      } else {
-          floatingBorderColor = 'black';
-          document.getElementById("formFloatingBorderColor").disabled = true;
-      } // document.getElementById("floatingBorderColorValue").textContent = `Floating Border Color Size: ${floatingBorderColor}`;
-      //   updateMediaStyling();
+        // console.log('Function: Update Floating Border Color');
+        if (floatingBorderColorCheckbox.checked) {
+            floatingBorderColor = document.getElementById("formFloatingBorderColor").value;
+            document.getElementById("formFloatingBorderColor").disabled = false;
+        } else {
+            floatingBorderColor = 'black';
+            document.getElementById("formFloatingBorderColor").disabled = true;
+        } // document.getElementById("floatingBorderColorValue").textContent = `Floating Border Color Size: ${floatingBorderColor}`;
+        //   updateMediaStyling();
+        saveStyling();
       }
 
       // document.getElementById("formFloatingBorderColor").addEventListener("input", function() {
@@ -1084,15 +1085,16 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       updateFloatingBorderRadius();
       floatingBorderRadiusCheckbox.addEventListener('change', updateFloatingBorderRadius);
       function updateFloatingBorderRadius() {
-      // console.log('Function: Update Floating Border Radius');
-      if (floatingBorderRadiusCheckbox.checked) {
-          floatingBorderRadius = parseInt(document.getElementById("formFloatingBorderRadius").value);
-          document.getElementById("formFloatingBorderRadius").disabled = false;
-      } else {
-          floatingBorderRadius = 0;
-          document.getElementById("formFloatingBorderRadius").disabled = true;
-      } // document.getElementById("floatingBorderRadiusValue").textContent = `Floating Border Radius: ${floatingBorderRadius}`;
-      //   updateMediaStyling();
+        // console.log('Function: Update Floating Border Radius');
+        if (floatingBorderRadiusCheckbox.checked) {
+            floatingBorderRadius = parseInt(document.getElementById("formFloatingBorderRadius").value);
+            document.getElementById("formFloatingBorderRadius").disabled = false;
+        } else {
+            floatingBorderRadius = 0;
+            document.getElementById("formFloatingBorderRadius").disabled = true;
+        } // document.getElementById("floatingBorderRadiusValue").textContent = `Floating Border Radius: ${floatingBorderRadius}`;
+        //   updateMediaStyling();
+        saveStyling();
       }
 
       document.getElementById("formFloatingBorderRadius").addEventListener("input", function() {
@@ -1129,15 +1131,16 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       updateFloatingBorderGap();
       floatingBorderGapCheckbox.addEventListener('change', updateFloatingBorderGap);
       function updateFloatingBorderGap() {
-      // console.log('Function: Update Floating Border Gap');
-      if (floatingBorderGapCheckbox.checked) {
-          floatingBorderGap = parseInt(document.getElementById("formFloatingBorderGap").value);
-          document.getElementById("formFloatingBorderGap").disabled = false;
-      } else {
-          floatingBorderGap = 0;
-          document.getElementById("formFloatingBorderGap").disabled = true;
-      } // document.getElementById("floatingBorderGapValue").textContent = `Floating Border Gap Size: ${floatingBorderGap}`;
-      //   updateMediaStyling();
+        // console.log('Function: Update Floating Border Gap');
+        if (floatingBorderGapCheckbox.checked) {
+            floatingBorderGap = parseInt(document.getElementById("formFloatingBorderGap").value);
+            document.getElementById("formFloatingBorderGap").disabled = false;
+        } else {
+            floatingBorderGap = 0;
+            document.getElementById("formFloatingBorderGap").disabled = true;
+        } // document.getElementById("floatingBorderGapValue").textContent = `Floating Border Gap Size: ${floatingBorderGap}`;
+        //   updateMediaStyling();
+        saveStyling();
       }
 
       document.getElementById("formFloatingBorderGap").addEventListener("input", function() {
@@ -1196,14 +1199,14 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
           wrap, 
           originalDimensions, 
           width, 
-          height 
-          // border, 
-          // borderColor, 
-          // borderRadius, 
-          // floatingBorder, 
-          // floatingBorderColor, 
-          // floatingBorderRadius, 
-          // floatingBorderGap, 
+          height,
+          border, 
+          borderColor, 
+          borderRadius, 
+          floatingBorder, 
+          floatingBorderColor, 
+          floatingBorderRadius, 
+          floatingBorderGap, 
           // floatingBorderPadding
         );
       }
@@ -1211,6 +1214,11 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
     
     })
     .catch(error => console.error('Error fetching media data:', error));
+    mediaContainer.style.display = 'block'; // show styling after it has finished applying to media items
+    // setTimeout(() => {
+    //   testMediaContainer.style.display = 'flex';
+    // }, 250); // 500 milliseconds = 0.5 seconds
+
   }
   export { applyStyling };
 

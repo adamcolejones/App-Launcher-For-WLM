@@ -246,7 +246,7 @@ ipcMain.on("deleteMedia", (sender, idToDelete) => {
 //###################################################################################################################################################################                                                                                                    
 
 ipcMain.on("updateTag", (_, newData) => {
-  console.log("Test");
+  console.log("ipcMain: updateTag");
   try {
       let data = fs.existsSync("data.json") ? fs.readFileSync("data.json", "utf8") : '{}';
       let jsonData = JSON.parse(data);
@@ -257,13 +257,20 @@ ipcMain.on("updateTag", (_, newData) => {
         if (newData.Width !== 'auto') { jsonData.Tags[tagIndex].Width = newData.Width; }
         jsonData.Tags[tagIndex].Height = newData.Height;
         jsonData.Tags[tagIndex].OriginalDimensions = newData.OriginalDimensions;
+        jsonData.Tags[tagIndex].Border = newData.Border;
+        jsonData.Tags[tagIndex].BorderColor = newData.BorderColor;
+        jsonData.Tags[tagIndex].BorderRadius = newData.BorderRadius;
+        jsonData.Tags[tagIndex].FloatingBorder = newData.FloatingBorder;
+        jsonData.Tags[tagIndex].FloatingBorderColor = newData.FloatingBorderColor;
+        jsonData.Tags[tagIndex].FloatingBorderRadius = newData.FloatingBorderRadius;
+        jsonData.Tags[tagIndex].FloatingBorderGap = newData.FloatingBorderGap;
       } else {
           console.log(`Tag not found: ${newData.Name}`);
       }
       let updatedData = JSON.stringify(jsonData, null, 2);
       fs.writeFileSync("data.json", updatedData);
 
-      console.log(`Tag ${newData.Name} updated`);
+      // console.log(`Tag ${newData.Name} updated`);
   } catch (error) {
       console.error("Error while updating tag data:", error.message);
   }

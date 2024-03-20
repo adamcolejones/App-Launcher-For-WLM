@@ -216,8 +216,8 @@ document.addEventListener('DOMContentLoaded', () => {
     //
     function displayMedia(data) {
       const dataDisplayDiv = document.getElementById('mediaContainer');
-      dataDisplayDiv.innerHTML = ''; // Clear any previous conten
-      console.log("Function: displayMedia: Clear mediaContainer")
+      // dataDisplayDiv.innerHTML = ''; // Clear any previous conten
+      // console.log("Function: displayMedia: Clear mediaContainer")
 
       const tagSections = {}; // Create an object to store items by tags
 
@@ -351,6 +351,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const tagDivs = document.querySelectorAll('.sidemenu-item');
       tagDivs.forEach(tagDiv => {
           tagDiv.addEventListener('click', () => {
+
+            if (tagDiv.classList.contains('selected')) {
+              return; // Exit the function if already selected
+            }
+            
             const contentDisplayDiv = document.getElementById('contentDisplay');
             const mediaContainerDiv = document.getElementById('mediaContainer');
             const editDisplayDiv = document.getElementById('editDisplay');

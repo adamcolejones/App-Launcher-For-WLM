@@ -372,6 +372,7 @@ li:last-child {
 }
 
 #mediaContainer {
+  display: none;
   width: 100%;
   min-height: 100%;
   height: auto;
@@ -890,7 +891,7 @@ tbody {
   height: 200px; 
   width: 200px;
   /* background-color: transparent; */
-  background-color: rgb(255, 100, 100);
+  /* background-color: rgb(255, 100, 100); */
   background-size: cover;
   background-position: center;
   z-index: 5;
