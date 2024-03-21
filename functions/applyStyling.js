@@ -843,10 +843,10 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
 
         let floatingBorderElement = testMedia.parentNode.querySelector('.testMediaCopy');
         testMedia.style.zIndex = '5'; // Z-index for this element should be higher than its background border
-        let scrollDistanceLeft = document.documentElement.scrollLeft;
-        let scrollDistanceTop = document.documentElement.scrollTop;
-        // console.log("Rect: ", rect.top);
-        // console.log("ScrollDistance: ", scrollDistanceTop);
+        let scrollDistanceLeft;
+        let scrollDistanceTop;
+        scrollDistanceLeft = mediaContainer.scrollLeft;
+        scrollDistanceTop = mediaContainer.scrollTop;
         const sideMenuWidth = 200; // Width of the side menu
         floatingBorderElement = testMedia.cloneNode(true);
         floatingBorderElement.classList.add('testMediaCopy');

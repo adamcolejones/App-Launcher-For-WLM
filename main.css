@@ -376,6 +376,7 @@ li:last-child {
   width: 100%;
   min-height: 100%;
   height: auto;
+  max-height: 500px; /* Set a max-height or use a percentage based on the design */
   margin: 0 0;
   overflow: auto; /*This creates a scrollbar when media exceeds the x or y*/
 }
@@ -925,6 +926,8 @@ tbody {
   width: fit-content;
   flex-wrap: wrap;
   position: relative;
+  height: 100%;
+  width: 100%;
   /* width: max-content; */
   /* left: 80px; */
   /* gap: 5px; */
