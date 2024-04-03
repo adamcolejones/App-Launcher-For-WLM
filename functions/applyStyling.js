@@ -92,8 +92,8 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       let backgroundColorCheck = selectedTag.BackgroundColorCheck !== undefined ? selectedTag.BackgroundColorCheck : false;
       let backgroundColor = selectedTag.BackgroundColor !== undefined ? selectedTag.BackgroundColor : 'white';
       let gap = selectedTag.Gap !== undefined ? selectedTag.Gap : 5; 
-      let wrap = selectedTag.Wrap !== undefined ? selectedTag.Wrap : 'wrap'; 
-      let wrapCheckboxValue = wrap === 'wrap' ? ' checked' : '';
+      let wrap = selectedTag.Wrap !== undefined ? selectedTag.Wrap : 'wrap'; // check json value
+      let wrapCheckboxValue = wrap === 'wrap' ? ' checked' : ''; // assign input value
 
 
       // Media Styling
@@ -111,10 +111,13 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       let floatingBorderRadius = selectedTag.FloatingBorderRadius !== undefined ? selectedTag.FloatingBorderRadius : 5;
       let floatingBorderGap = selectedTag.FloatingBorderGap !== undefined ? selectedTag.FloatingBorderGap : 0;
       let floatingBorderPadding; // value is determined later, needed to be initialized beforehand
+      let matchBorder = selectedTag.MatchBorder !== undefined ? selectedTag.MatchBorder : false; 
+      let matchBorderCheckboxValue = matchBorder === true ? ' checked' : '';
+
 
 
       //###################################################################################################################################################################
-
+      // i don't think the <p> tags need ids
       editCategoryMenu.innerHTML = `
         
         <p>Category Settings</p>
@@ -184,6 +187,8 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         <p>HOVERED BORDER</p>
         <div class="settingsOptionContainer">
           <div class="settingsOption">
+            <p id="matchBorder">Match Border Settings</p><input id="matchBorderCheckbox" type="checkbox" ${matchBorderCheckboxValue}>          </div>
+          <div class="settingsOption">
             <p id="floatingBorderValue">Size</p><input id="floatingBorderCheckbox" type="checkbox" checked>
             <input type="number" id="formFloatingBorder" name="formFloatingBorder" value=${floatingBorder}>
           </div>
@@ -240,6 +245,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       const backgroundColorCheckbox = document.getElementById('backgroundColorCheckbox');
       const gapCheckbox = document.getElementById('gapCheckbox');
       const wrapCheckbox = document.getElementById('wrapCheckbox');
+      const matchBorderCheckbox = document.getElementById('matchBorderCheckbox');
       // const mediaVisual = document.getElementById('mediaVisual');
 
       //media
@@ -259,8 +265,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       //###################################################################################################################################################################
 
 
-      gapChange(gap); // Default values for wrap and gap
-      wrapChange(wrap);
+      
 
       //###################################################################################################################################################################
 
@@ -299,8 +304,8 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       // PLAY AN INVISIBLE MOVIE
       updateBackgroundVisual();
       function updateBackgroundVisual() { // Assuming `name` is a parameter representing the new video name
+        let mediaVisual = document.createElement('video');
         if (backgroundVisual) { // If there's no mediaVisual and backgroundVisual is true, create it
-          let mediaVisual = document.createElement('video');
           mediaVisual.id = 'mediaVisual';
           mediaVisual.loop = true;
           mediaVisual.muted = true;
@@ -311,7 +316,25 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
           mediaVisual.addEventListener('canplaythrough', function() {
             mediaVisual.play(); // Play the video when it's fully loaded
             mediaVisual.style.opacity = "1";
-        });
+          });
+        }
+        else {
+          if (backgroundColorCheckbox.checked) {
+            backgroundColor = document.getElementById("formBackgroundColor").value;
+            document.getElementById("formBackgroundColor").disabled = false;
+            // testMedia.style.background = `${background}px solid ${backgroundColor}`;
+          } else {
+            backgroundColor = 'white';
+            // testMedia.style.background = `${background}px solid ${backgroundColor}`;
+            document.getElementById("formBackgroundColor").disabled = true;
+          }
+          // mediaContainer.style.background = backgroundColor; // Directly update the background of scrollableContent
+          mediaVisual = document.createElement('div');
+          mediaVisual.id = 'mediaVisual';
+          mediaVisual.style.width = '100%'; // Set desired width
+          mediaVisual.style.height = '100%'; // Set desired height
+          mediaVisual.style.background = backgroundColor; // Directly update the background of scrollableContent
+          mediaContainer.appendChild(mediaVisual);
         }
       }
       
@@ -465,7 +488,9 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
           document.getElementById("formBackgroundColor").disabled = true;
         }
         // mediaContainer.style.background = backgroundColor; // Directly update the background of scrollableContent
-        scrollableContent.style.background = backgroundColor; // Directly update the background of scrollableContent
+        // scrollableContent.style.background = backgroundColor; // Directly update the background of scrollableContent
+        updateBackgroundVisual();
+        saveStyling();
       }
 
       document.getElementById("formBackgroundColor").addEventListener("input", function() {
@@ -492,7 +517,8 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       //  ██░░██████░░██ ██░░██  ██░░██ ██░░██         
       //  ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░██         
       //  ██████████████ ██████  ██████ ██████         
-      //                                               
+      // 
+      gapChange(gap); // Default value for gap                                           
       gapCheckbox.addEventListener('change', () => {
           gap = gapCheckbox.checked ? parseInt(document.getElementById('formGap').value) : 0;
           gapChange(gap); // Pass the gap value to the imported function
@@ -528,7 +554,9 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       //  ██░░░░░░░░░░░░░░░░░░██ ██░░██  ██░░██████ ██░░██  ██░░██ ██░░██         
       //  ██░░██████░░██████░░██ ██░░██  ██░░░░░░██ ██░░██  ██░░██ ██░░██         
       //  ██████  ██████  ██████ ██████  ██████████ ██████  ██████ ██████         
-      //                                                                          
+      //            
+      // default value for wrap
+      wrapChange(wrap);                                                                
       wrapCheckbox.addEventListener('change', () => {
           wrap = wrapCheckbox.checked ? 'wrap' : 'nowrap';
           // console.log(wrap);
@@ -835,14 +863,14 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       function onHover(event) {
         // console.log("Item hovered!");
         // Parse the JSON string from the data-item attribute
-        // const dataItem = JSON.parse(event.target.getAttribute('data-item'));
+        const dataItem = JSON.parse(event.target.getAttribute('data-item'));
         // Print the value of the id
-        // console.log("Hovered item ID:", dataItem.id);
+        console.log("Hovered item ID:", dataItem.id);
         const testMedia = event.target; // This is the hovered .testMedia element
         const rect = testMedia.getBoundingClientRect(); // Get position and size of original media item
 
         let floatingBorderElement = testMedia.parentNode.querySelector('.testMediaCopy');
-        testMedia.style.zIndex = '5'; // Z-index for this element should be higher than its background border
+        // testMedia.style.zIndex = '5'; // Z-index for this element should be higher than its background border
         let scrollDistanceLeft;
         let scrollDistanceTop;
         scrollDistanceLeft = mediaContainer.scrollLeft;
@@ -855,10 +883,12 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         floatingBorderElement.style['background-color'] = 'transparent';
         floatingBorderElement.style.border = `${floatingBorder}px solid ${floatingBorderColor}`;
         floatingBorderElement.style['border-radius'] = `${floatingBorderRadius}px`;
+        floatingBorderElement.style.pointerEvents = 'none'; // Ignore pointer events
         // console.log('    after mouseEnter Border: ' + border); // border is not updating, causing non-bordered hover border to be off center
-        floatingBorderPadding = (border) + (floatingBorderGap) + 'px'; // border is not updating here?
-        let floatingBorderTopAdjustment = `${(rect.top) - (floatingBorder) - (floatingBorderGap) + (scrollDistanceTop) - 50}px`;
-        let floatingBorderLeftAdjustment = `${(rect.left) - (floatingBorder) - (floatingBorderGap) + (scrollDistanceLeft) - (sideMenuWidth) + 0}px`;
+        // floatingBorderPadding = (border) + (floatingBorderGap) + 'px'; // border is not updating here?
+        floatingBorderPadding = (floatingBorderGap) + 'px'; // border is removed to have floating cover original
+        let floatingBorderTopAdjustment = `${(rect.top) - (floatingBorder) - (floatingBorderGap) + (border) + (scrollDistanceTop) - 50}px`;
+        let floatingBorderLeftAdjustment = `${(rect.left) - (floatingBorder) - (floatingBorderGap) + (border) + (scrollDistanceLeft) - (sideMenuWidth) + 0}px`;
         floatingBorderElement.style.padding = floatingBorderPadding;
         floatingBorderElement.style.top = floatingBorderTopAdjustment;
         floatingBorderElement.style.left = floatingBorderLeftAdjustment;
@@ -954,6 +984,78 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       //###################################################################################################################################################################
             
       //###################################################################################################################################################################
+      //                                                                                     
+      //  ██████          ██████ ██████████████ ██████████████ ██████████████ ██████  ██████ 
+      //  ██░░██████████████░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░██ 
+      //  ██░░░░░░░░░░░░░░░░░░██ ██░░██████░░██ ██████░░██████ ██░░██████████ ██░░██  ██░░██ 
+      //  ██░░██████░░██████░░██ ██░░██  ██░░██     ██░░██     ██░░██         ██░░██  ██░░██ 
+      //  ██░░██  ██░░██  ██░░██ ██░░██████░░██     ██░░██     ██░░██         ██░░██████░░██ 
+      //  ██░░██  ██░░██  ██░░██ ██░░░░░░░░░░██     ██░░██     ██░░██         ██░░░░░░░░░░██ 
+      //  ██░░██  ██████  ██░░██ ██░░██████░░██     ██░░██     ██░░██         ██░░██████░░██ 
+      //  ██░░██          ██░░██ ██░░██  ██░░██     ██░░██     ██░░██         ██░░██  ██░░██ 
+      //  ██░░██          ██░░██ ██░░██  ██░░██     ██░░██     ██░░██████████ ██░░██  ██░░██ 
+      //  ██░░██          ██░░██ ██░░██  ██░░██     ██░░██     ██░░░░░░░░░░██ ██░░██  ██░░██ 
+      //  ██████          ██████ ██████  ██████     ██████     ██████████████ ██████  ██████ 
+      //                                                                                     
+      //                                                                                                      
+      //  ██████████████   ██████████████ ████████████████   ████████████   ██████████████ ████████████████   
+      //  ██░░░░░░░░░░██   ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   ██░░░░░░░░████ ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   
+      //  ██░░██████░░██   ██░░██████░░██ ██░░████████░░██   ██░░████░░░░██ ██░░██████████ ██░░████████░░██   
+      //  ██░░██  ██░░██   ██░░██  ██░░██ ██░░██    ██░░██   ██░░██  ██░░██ ██░░██         ██░░██    ██░░██   
+      //  ██░░██████░░████ ██░░██  ██░░██ ██░░████████░░██   ██░░██  ██░░██ ██░░██████████ ██░░████████░░██   
+      //  ██░░░░░░░░░░░░██ ██░░██  ██░░██ ██░░░░░░░░░░░░██   ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   
+      //  ██░░████████░░██ ██░░██  ██░░██ ██░░██████░░████   ██░░██  ██░░██ ██░░██████████ ██░░██████░░████   
+      //  ██░░██    ██░░██ ██░░██  ██░░██ ██░░██  ██░░██     ██░░██  ██░░██ ██░░██         ██░░██  ██░░██     
+      //  ██░░████████░░██ ██░░██████░░██ ██░░██  ██░░██████ ██░░████░░░░██ ██░░██████████ ██░░██  ██░░██████ 
+      //  ██░░░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░░░░░██ ██░░░░░░░░████ ██░░░░░░░░░░██ ██░░██  ██░░░░░░██ 
+      //  ████████████████ ██████████████ ██████  ██████████ ████████████   ██████████████ ██████  ██████████ 
+      //      
+      // There is a conflict between the size checkbox and the matchBorderSettings Checkbox
+      // They can overwrite the disabling and re-enabling the other box has determined
+      // It might be better to remove the size checkbox disabler OR
+      // Check the values of the other boxes before applying changes in each function
+      // when this is checked, this does not automatically update when reg border or radius is changed, 
+      // when those border and radius functions are called, call the floating functions to update the floating values also
+      matchBorderSize();
+      matchBorderCheckbox.addEventListener('change', () => {
+        matchBorderSize();
+      });
+      function matchBorderSize() {
+        let floatingElements = [
+          "floatingBorderCheckbox",
+          "formFloatingBorder",
+          "floatingBorderRadiusCheckbox",
+          "formFloatingBorderRadius"
+        ];
+        if (matchBorderCheckbox.checked) {
+          floatingElements.forEach(elementId => {
+            document.getElementById(elementId).disabled = true;
+          });
+          floatingBorder = border;
+          // floatingBorderColor = borderColor;
+          floatingBorderRadius = borderRadius;
+          console.log('border / floating: ' + border + ' ' + floatingBorder);
+          floatingBorderGap = 0;
+        }
+        else {
+          floatingElements.forEach(elementId => {
+            document.getElementById(elementId).disabled = false;
+          });
+        }
+        // calling these functions re-enables the input fields
+        // updateFloatingBorder();
+        // updateFloatingBorderColor();
+        // updateFloatingBorderRadius();
+        // updateFloatingBorderGap();
+        saveStyling();
+      }
+        
+      
+
+
+      //###################################################################################################################################################################
+
+      //###################################################################################################################################################################
       // STYLE EVERYTHING HERE DOWN BEFORE LAUNCHING AGAIN
       // FLOATING BORDER FOR SELECTED MATERIAL
       // These hovered elements dont exist until the original is hovered, you can't reference them directly you have to use variables.
@@ -989,25 +1091,29 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       function updateFloatingBorder() {
       console.log('Function: updateFloatingBorder')
       // console.log('Function: Update Floating Border');
+      // check to see if anything previous match border is disabled or not
+      // Disabling boxes individually might make a mess.  
+      // instead create a value that controls wether or not variables can be re-enabled or not (a master switch)
       if (floatingBorderCheckbox.checked) {
           floatingBorder = parseInt(document.getElementById("formFloatingBorder").value);
-          document.getElementById("floatingBorderColorCheckbox").disabled = false;
-          document.getElementById("floatingBorderRadiusCheckbox").disabled = false;
-          document.getElementById("floatingBorderGapCheckbox").disabled = false;
-          document.getElementById("formFloatingBorder").disabled = false;
-          document.getElementById("formFloatingBorderColor").disabled = false;
+          // document.getElementById("floatingBorderColorCheckbox").disabled = false;
+          // document.getElementById("floatingBorderRadiusCheckbox").disabled = false;
+          // document.getElementById("floatingBorderGapCheckbox").disabled = false;
+          // document.getElementById("formFloatingBorder").disabled = false;
+          // document.getElementById("formFloatingBorderColor").disabled = false;
           updateFloatingBorderRadius(); // instead call these functions to check whether the checkbox has these inputs enabled or disabled
           updateFloatingBorderGap();
           floatingBorderPadding = border;
-      } else {
+      } 
+      if (!floatingBorderCheckbox.checked) {
           floatingBorder = 0;
-          document.getElementById("floatingBorderRadiusCheckbox").disabled = true;
-          document.getElementById("floatingBorderGapCheckbox").disabled = true;
-          document.getElementById("floatingBorderColorCheckbox").disabled = true;
-          document.getElementById("formFloatingBorder").disabled = true;
-          document.getElementById("formFloatingBorderColor").disabled = true;
-          document.getElementById("formFloatingBorderRadius").disabled = true;
-          document.getElementById("formFloatingBorderGap").disabled = true;
+          // document.getElementById("floatingBorderRadiusCheckbox").disabled = true;
+          // document.getElementById("floatingBorderGapCheckbox").disabled = true;
+          // document.getElementById("floatingBorderColorCheckbox").disabled = true;
+          // document.getElementById("formFloatingBorder").disabled = true;
+          // document.getElementById("formFloatingBorderColor").disabled = true;
+          // document.getElementById("formFloatingBorderRadius").disabled = true;
+          // document.getElementById("formFloatingBorderGap").disabled = true;
       }
         // updateMediaStyling();
         saveStyling();
@@ -1194,7 +1300,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
           // backgroundVisual, 
           // backgroundAudio, 
           // backgroundColorCheck, 
-          // backgroundColor, 
+          backgroundColor, 
           gap, 
           wrap, 
           originalDimensions, 

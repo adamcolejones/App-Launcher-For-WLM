@@ -264,6 +264,7 @@ ipcMain.on("updateTag", (_, newData) => {
         jsonData.Tags[tagIndex].FloatingBorderColor = newData.FloatingBorderColor;
         jsonData.Tags[tagIndex].FloatingBorderRadius = newData.FloatingBorderRadius;
         jsonData.Tags[tagIndex].FloatingBorderGap = newData.FloatingBorderGap;
+        jsonData.Tags[tagIndex].BackgroundColor = newData.BackgroundColor;
       } else {
           console.log(`Tag not found: ${newData.Name}`);
       }

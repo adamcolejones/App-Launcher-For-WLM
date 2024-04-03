@@ -270,22 +270,153 @@ document.addEventListener('DOMContentLoaded', () => {
           sortedTags.push("Uncategorized"); // Push "Uncategorized" to the end
       }
 
+
       // Display tags in the side menu
       const sideMenuDiv = document.getElementById('sideMenu');
       sideMenuDiv.innerHTML = ''; // Clear any previous content
-      for (const tag of sortedTags) {
-        const tagDiv = document.createElement('div');
-        tagDiv.classList.add('sidemenu-item');
-        tagDiv.textContent = tag;
-        // Add a class to the 'All' tag div to differentiate it
-        if (tag === "All") {
-          // tagDiv.classList.add('all-tag');
-          tagDiv.classList.add('selected');
-        }
-        sideMenuDiv.appendChild(tagDiv);
+
+      // *************************************************************************************************************************************************
+      // Side item Carousel
+      //                                                                                                                              
+      //  ██████████████ ██████████████ ████████████████   ██████████████ ██████  ██████ ██████████████ ██████████████ ██████         
+      //  ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██         
+      //  ██░░██████████ ██░░██████░░██ ██░░████████░░██   ██░░██████░░██ ██░░██  ██░░██ ██░░██████████ ██░░██████████ ██░░██         
+      //  ██░░██         ██░░██  ██░░██ ██░░██    ██░░██   ██░░██  ██░░██ ██░░██  ██░░██ ██░░██         ██░░██         ██░░██         
+      //  ██░░██         ██░░██████░░██ ██░░████████░░██   ██░░██  ██░░██ ██░░██  ██░░██ ██░░██████████ ██░░██████████ ██░░██         
+      //  ██░░██         ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   ██░░██  ██░░██ ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██         
+      //  ██░░██         ██░░██████░░██ ██░░██████░░████   ██░░██  ██░░██ ██░░██  ██░░██ ██████████░░██ ██░░██████████ ██░░██         
+      //  ██░░██         ██░░██  ██░░██ ██░░██  ██░░██     ██░░██  ██░░██ ██░░██  ██░░██         ██░░██ ██░░██         ██░░██         
+      //  ██░░██████████ ██░░██  ██░░██ ██░░██  ██░░██████ ██░░██████░░██ ██░░██████░░██ ██████████░░██ ██░░██████████ ██░░██████████ 
+      //  ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░██  ██░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ 
+      //  ██████████████ ██████  ██████ ██████  ██████████ ██████████████ ██████████████ ██████████████ ██████████████ ██████████████ 
+      //                                                                                                                              
+
+      const carousel = document.createElement("div");
+      carousel.id = "textCarousel";
+      carousel.className = "carousel";
+
+      // Create the left button
+      const leftButton = document.createElement("button");
+      leftButton.innerHTML = "&#10094;";
+      leftButton.onclick = () => changeText(-1);
+
+      // Create the text display element
+      const carouselText = document.createElement("div");
+      carouselText.id = "carouselText";
+      // carouselText.innerText = "Text 1";
+
+      // Create the right button
+      const rightButton = document.createElement("button");
+      rightButton.innerHTML = "&#10095;";
+      rightButton.onclick = () => changeText(1);
+
+      // Append elements to the carousel container
+      carousel.appendChild(leftButton);
+      carousel.appendChild(carouselText);
+      carousel.appendChild(rightButton);
+      sideMenuDiv.appendChild(carousel);
+
+      const texts = data.Tags.filter(item => item.Carousel).map(item => item.Name);
+      carouselText.innerText = texts.length > 0 ? texts[0] : "No text available";
+
+      let currentIndex = 0;
+      function changeText(step) {
+        currentIndex = (currentIndex + step + texts.length) % texts.length;
+        carouselText.innerText = texts[currentIndex];
+        updateSideMenu(texts[currentIndex]);
+        selectFirstSideMenuItem();
       }
 
-// *************************************************************************************************************************************************
+      leftButton.onclick = () => changeText(-1);
+      rightButton.onclick = () => changeText(1);
+
+      function updateSideMenu(currentName) {
+        sideMenuDiv.innerHTML = ''; // Clear the side menu
+        sideMenuDiv.appendChild(carousel); // Re-add the carousel to the side menu
+
+        const currentItem = data.Tags.find(item => item.Name === currentName);
+        if (currentItem && currentItem.CarouselOptions) {
+          currentItem.CarouselOptions.forEach(option => {
+              const optionDiv = document.createElement('div');
+              optionDiv.classList.add('sidemenu-item');
+              optionDiv.textContent = option;
+              sideMenuDiv.appendChild(optionDiv);
+              // Attach click event listener to each new side menu item
+              optionDiv.addEventListener('click', () => {
+                // Add logic here for what happens when a side menu item is clicked
+                if (optionDiv.classList.contains('selected')) {
+                  return; // Exit the function if already selected
+                }
+                
+                const contentDisplayDiv = document.getElementById('contentDisplay');
+                const mediaContainerDiv = document.getElementById('mediaContainer');
+                const editDisplayDiv = document.getElementById('editDisplay');
+                const showTagSettingsDiv = document.getElementById('showTagSettings');
+                const editCategorySettings = document.getElementById('editCategorySettings');
+    
+                // In the event user has the edit form up and clicks on the side menu to change the display
+                // probably should look into some function that hides all unused divs
+                mediaContainerDiv.style.display = 'block'; // show media again
+                contentDisplayDiv.style.display = 'none'; // hide any other selected content within the media 
+                document.getElementById('editCategoryMenu').style.display = 'none';
+                contentDisplayDiv.innerHTML = '';
+                editDisplayDiv.style.display = 'none';
+                editDisplayDiv.innerHTML = '';
+                showTagSettingsDiv.style.display = 'none';
+                showTagSettingsDiv.innerHTML = '';
+                editCategorySettings.style.display = 'none';
+                editCategorySettings.innerHTML = '';
+                // Remove the 'selected' class from all tags
+                document.querySelectorAll('.sidemenu-item').forEach(item => {
+                  item.classList.remove('selected');
+                });
+                optionDiv.classList.add('selected');
+                const selectedTag = optionDiv.textContent;
+                displayContentForTag(selectedTag, data);
+                // Any other logic needed on click
+              });
+          });
+        }
+      }
+
+      function selectFirstSideMenuItem() {
+        const firstItem = sideMenuDiv.querySelector('.sidemenu-item');
+        if (firstItem) {
+          firstItem.click();
+        }
+      }
+
+      updateSideMenu(texts[0]);
+
+      // Carousel text data and current index
+      // const texts = [];
+      // for (const item of data.Tags) {
+      //   if (item.Carousel) {  // Check if Carousel property is true
+      //       texts.push(item.Name);  // Add the item's name to the texts array
+      //   }
+      // }
+      // carouselText.innerText = texts.length > 0 ? texts[0] : "No text available";
+
+      // let currentIndex = 0;
+
+      // // Function to change text in the carousel
+      // function changeText(step) {
+      //     currentIndex = (currentIndex + step + texts.length) % texts.length;
+      //     document.getElementById("carouselText").innerText = texts[currentIndex];
+      // }
+      // for (const tag of sortedTags) {
+      //   const tagDiv = document.createElement('div');
+      //   tagDiv.classList.add('sidemenu-item');
+      //   tagDiv.textContent = tag;
+      //   // Add a class to the 'All' tag div to differentiate it
+      //   if (tag === "All") {
+      //     // tagDiv.classList.add('all-tag');
+      //     tagDiv.classList.add('selected');
+      //   }
+      //   sideMenuDiv.appendChild(tagDiv);
+      // }
+
+      // *************************************************************************************************************************************************
       // Function to display content based on the selected tag
       //
       //
@@ -340,7 +471,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
 
-//-----------------------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------
       
 
 // *************************************************************************************************************************************************
@@ -381,7 +512,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             
             // Add the 'selected' class to the clicked tag
-            tagDiv.classList.add('selected');
+            // tagDiv.classList.add('selected');
             const selectedTag = tagDiv.textContent;
             displayContentForTag(selectedTag, data);
             addClickListenersToMediaItems(); // Call the function to reapply click listeners to Media items

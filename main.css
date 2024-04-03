@@ -106,6 +106,21 @@ body {
  ██████████████
 */
 
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: rgb(223, 223, 223, 0.5); */
+  padding: 20px;
+}
+
+#carouselText {
+  width: 100px;
+  margin: 0 20px;
+  /* min-width: 200px; */
+  text-align: center;
+}
+
 #contentDisplay {
   display: none;
 }
@@ -403,6 +418,8 @@ li:last-child {
   overflow: hidden; /* This clips any overflow, including into the scrollbar area */
   object-fit: cover;
   transition: opacity 0.5s ease-in-out;
+  left: 0px;
+  z-index: 1;
 }
 
 #mediaVisualTemp {
@@ -793,11 +810,13 @@ p {
 }
 
  #sideMenu {
-  background-color: #dfdfdf;
+  /* background-color: #dfdfdf; */
+  background-color: rgb(223, 223, 223, 0.5);
   /* top: calc(50px + 20px); nav height + nav Padding */
   width: 200px;
   height: calc(100vh); /* full view height - nav height - nav padding */
   position: fixed;
+  z-index: 2;
  }
 
  .sidemenu-item {
