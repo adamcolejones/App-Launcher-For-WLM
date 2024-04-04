@@ -833,6 +833,13 @@ p {
   background-color: #ffffff; /* Lighter background color */
 }
 
+#sidemenu-itemContainer {
+  position: relative;
+  height: calc(100% - 63px);
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
 #simulatedCategory {
   position: fixed;
   background-color: white;

@@ -62,7 +62,34 @@ document.addEventListener('DOMContentLoaded', () => {
     // Hide the customFieldsContainer initially
     updateCustomFieldsVisibility();
 
-// *************************************************************************************************************************************************
+    // *************************************************************************************************************************************************
+    //                                                                                                    
+    //  ██████████████ ██████  ██████ ██████████████ ██████████████ ██████████████ ██████          ██████ 
+    //  ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██████████████░░██ 
+    //  ██░░██████████ ██░░██  ██░░██ ██░░██████████ ██████░░██████ ██░░██████░░██ ██░░░░░░░░░░░░░░░░░░██ 
+    //  ██░░██         ██░░██  ██░░██ ██░░██             ██░░██     ██░░██  ██░░██ ██░░██████░░██████░░██ 
+    //  ██░░██         ██░░██  ██░░██ ██░░██████████     ██░░██     ██░░██  ██░░██ ██░░██  ██░░██  ██░░██ 
+    //  ██░░██         ██░░██  ██░░██ ██░░░░░░░░░░██     ██░░██     ██░░██  ██░░██ ██░░██  ██░░██  ██░░██ 
+    //  ██░░██         ██░░██  ██░░██ ██████████░░██     ██░░██     ██░░██  ██░░██ ██░░██  ██████  ██░░██ 
+    //  ██░░██         ██░░██  ██░░██         ██░░██     ██░░██     ██░░██  ██░░██ ██░░██          ██░░██ 
+    //  ██░░██████████ ██░░██████░░██ ██████████░░██     ██░░██     ██░░██████░░██ ██░░██          ██░░██ 
+    //  ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██     ██░░██     ██░░░░░░░░░░██ ██░░██          ██░░██ 
+    //  ██████████████ ██████████████ ██████████████     ██████     ██████████████ ██████          ██████ 
+    //                                                                                                    
+    //                                                                                        
+    //  ██████████████ ██████████ ██████████████ ██████         ████████████   ██████████████ 
+    //  ██░░░░░░░░░░██ ██░░░░░░██ ██░░░░░░░░░░██ ██░░██         ██░░░░░░░░████ ██░░░░░░░░░░██ 
+    //  ██░░██████████ ████░░████ ██░░██████████ ██░░██         ██░░████░░░░██ ██░░██████████ 
+    //  ██░░██           ██░░██   ██░░██         ██░░██         ██░░██  ██░░██ ██░░██         
+    //  ██░░██████████   ██░░██   ██░░██████████ ██░░██         ██░░██  ██░░██ ██░░██████████ 
+    //  ██░░░░░░░░░░██   ██░░██   ██░░░░░░░░░░██ ██░░██         ██░░██  ██░░██ ██░░░░░░░░░░██ 
+    //  ██░░██████████   ██░░██   ██░░██████████ ██░░██         ██░░██  ██░░██ ██████████░░██ 
+    //  ██░░██           ██░░██   ██░░██         ██░░██         ██░░██  ██░░██         ██░░██ 
+    //  ██░░██         ████░░████ ██░░██████████ ██░░██████████ ██░░████░░░░██ ██████████░░██ 
+    //  ██░░██         ██░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░████ ██░░░░░░░░░░██ 
+    //  ██████         ██████████ ██████████████ ██████████████ ████████████   ██████████████ 
+    //                                                                                        
+    //                                                                         
     // Function to add a new custom field
     function addCustomField() {
       const customFieldsContainer = document.getElementById('customFieldsContainer');
@@ -129,7 +156,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const addCustomFieldButton = document.getElementById('addCustomField');
     addCustomFieldButton.addEventListener('click', addCustomField);
 
-// *************************************************************************************************************************************************
+    // // *************************************************************************************************************************************************
+    //                                                                                                  
+    //  ██████████████ ██████  ██████ ██████████████   ██████          ██████ ██████████ ██████████████ 
+    //  ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░░░░░░░░░██   ██░░██████████████░░██ ██░░░░░░██ ██░░░░░░░░░░██ 
+    //  ██░░██████████ ██░░██  ██░░██ ██░░██████░░██   ██░░░░░░░░░░░░░░░░░░██ ████░░████ ██████░░██████ 
+    //  ██░░██         ██░░██  ██░░██ ██░░██  ██░░██   ██░░██████░░██████░░██   ██░░██       ██░░██     
+    //  ██░░██████████ ██░░██  ██░░██ ██░░██████░░████ ██░░██  ██░░██  ██░░██   ██░░██       ██░░██     
+    //  ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░░░░░░░░░░░██ ██░░██  ██░░██  ██░░██   ██░░██       ██░░██     
+    //  ██████████░░██ ██░░██  ██░░██ ██░░████████░░██ ██░░██  ██████  ██░░██   ██░░██       ██░░██     
+    //          ██░░██ ██░░██  ██░░██ ██░░██    ██░░██ ██░░██          ██░░██   ██░░██       ██░░██     
+    //  ██████████░░██ ██░░██████░░██ ██░░████████░░██ ██░░██          ██░░██ ████░░████     ██░░██     
+    //  ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░░░██ ██░░██          ██░░██ ██░░░░░░██     ██░░██     
+    //  ██████████████ ██████████████ ████████████████ ██████          ██████ ██████████     ██████     
+    //                                                                                                  
+    //                                                                          
+    //  ██████████████ ██████████████ ████████████████   ██████          ██████ 
+    //  ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   ██░░██████████████░░██ 
+    //  ██░░██████████ ██░░██████░░██ ██░░████████░░██   ██░░░░░░░░░░░░░░░░░░██ 
+    //  ██░░██         ██░░██  ██░░██ ██░░██    ██░░██   ██░░██████░░██████░░██ 
+    //  ██░░██████████ ██░░██  ██░░██ ██░░████████░░██   ██░░██  ██░░██  ██░░██ 
+    //  ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░░░░░░░░░░░██   ██░░██  ██░░██  ██░░██ 
+    //  ██░░██████████ ██░░██  ██░░██ ██░░██████░░████   ██░░██  ██████  ██░░██ 
+    //  ██░░██         ██░░██  ██░░██ ██░░██  ██░░██     ██░░██          ██░░██ 
+    //  ██░░██         ██░░██████░░██ ██░░██  ██░░██████ ██░░██          ██░░██ 
+    //  ██░░██         ██░░░░░░░░░░██ ██░░██  ██░░░░░░██ ██░░██          ██░░██ 
+    //  ██████         ██████████████ ██████  ██████████ ██████          ██████ 
+    //                                                                          
     // Attach a submit event listener to the form
     mediaform.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -219,39 +272,39 @@ document.addEventListener('DOMContentLoaded', () => {
       // dataDisplayDiv.innerHTML = ''; // Clear any previous conten
       // console.log("Function: displayMedia: Clear mediaContainer")
 
+      // Gather all the categories from the data.json file
       const tagSections = {}; // Create an object to store items by tags
-
       if (data && Array.isArray(data.Tags)) {
         for (const item of data.Tags) {
-            // Check if the item has no tags or empty tags
-            const isUntagged = !item.Name || item.Name.trim() === "";
+          // Check if the item has no tags or empty tags
+          const isUntagged = !item.Name || item.Name.trim() === "";
 
-            // Add the item to the 'All' tag section
-            const allMediaKey = 'All';
-            if (!tagSections[allMediaKey]) {
-                tagSections[allMediaKey] = [];
-            }
-            tagSections[allMediaKey].push(item);
+          // Add the item to the 'All' tag section
+          const allMediaKey = 'All';
+          if (!tagSections[allMediaKey]) {
+              tagSections[allMediaKey] = [];
+          }
+          tagSections[allMediaKey].push(item);
 
-            if (isUntagged) {
-                // Categorize items without tags as 'Uncategorized'
-                const untaggedKey = 'Uncategorized';
-                if (!tagSections[untaggedKey]) {
-                    tagSections[untaggedKey] = [];
+          if (isUntagged) {
+              // Categorize items without tags as 'Uncategorized'
+              const untaggedKey = 'Uncategorized';
+              if (!tagSections[untaggedKey]) {
+                  tagSections[untaggedKey] = [];
+              }
+              tagSections[untaggedKey].push(item);
+          } else {
+            // Categorize items by their tags
+            if (item.Name) {
+              const tagNames = item.Name.split(',').map(Name => Name.trim());
+              for (const Name of tagNames) {
+                if (!tagSections[Name]) {
+                    tagSections[Name] = [];
                 }
-                tagSections[untaggedKey].push(item);
-            } else {
-                // Categorize items by their tags
-                if (item.Name) {
-                    const tagNames = item.Name.split(',').map(Name => Name.trim());
-                    for (const Name of tagNames) {
-                        if (!tagSections[Name]) {
-                            tagSections[Name] = [];
-                        }
-                        tagSections[Name].push(item);
-                    }
-                }
+                tagSections[Name].push(item);
+              }
             }
+          }
         }
       }
        
@@ -295,17 +348,12 @@ document.addEventListener('DOMContentLoaded', () => {
       carousel.id = "textCarousel";
       carousel.className = "carousel";
 
-      // Create the left button
+      // Create the left button, middle text, and right button
       const leftButton = document.createElement("button");
       leftButton.innerHTML = "&#10094;";
       leftButton.onclick = () => changeText(-1);
-
-      // Create the text display element
       const carouselText = document.createElement("div");
       carouselText.id = "carouselText";
-      // carouselText.innerText = "Text 1";
-
-      // Create the right button
       const rightButton = document.createElement("button");
       rightButton.innerHTML = "&#10095;";
       rightButton.onclick = () => changeText(1);
@@ -330,53 +378,95 @@ document.addEventListener('DOMContentLoaded', () => {
       leftButton.onclick = () => changeText(-1);
       rightButton.onclick = () => changeText(1);
 
+      //                                                                                                                                     
+      //                                                                                                                                      
+      //  ██████████████ ██████████ ████████████   ██████████████ ██████          ██████ ██████████████ ██████          ██████ ██████  ██████ 
+      //  ██░░░░░░░░░░██ ██░░░░░░██ ██░░░░░░░░████ ██░░░░░░░░░░██ ██░░██████████████░░██ ██░░░░░░░░░░██ ██░░██████████  ██░░██ ██░░██  ██░░██ 
+      //  ██░░██████████ ████░░████ ██░░████░░░░██ ██░░██████████ ██░░░░░░░░░░░░░░░░░░██ ██░░██████████ ██░░░░░░░░░░██  ██░░██ ██░░██  ██░░██ 
+      //  ██░░██           ██░░██   ██░░██  ██░░██ ██░░██         ██░░██████░░██████░░██ ██░░██         ██░░██████░░██  ██░░██ ██░░██  ██░░██ 
+      //  ██░░██████████   ██░░██   ██░░██  ██░░██ ██░░██████████ ██░░██  ██░░██  ██░░██ ██░░██████████ ██░░██  ██░░██  ██░░██ ██░░██  ██░░██ 
+      //  ██░░░░░░░░░░██   ██░░██   ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░██  ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░██  ██░░██  ██░░██ ██░░██  ██░░██ 
+      //  ██████████░░██   ██░░██   ██░░██  ██░░██ ██░░██████████ ██░░██  ██████  ██░░██ ██░░██████████ ██░░██  ██░░██  ██░░██ ██░░██  ██░░██ 
+      //          ██░░██   ██░░██   ██░░██  ██░░██ ██░░██         ██░░██          ██░░██ ██░░██         ██░░██  ██░░██████░░██ ██░░██  ██░░██ 
+      //  ██████████░░██ ████░░████ ██░░████░░░░██ ██░░██████████ ██░░██          ██░░██ ██░░██████████ ██░░██  ██░░░░░░░░░░██ ██░░██████░░██ 
+      //  ██░░░░░░░░░░██ ██░░░░░░██ ██░░░░░░░░████ ██░░░░░░░░░░██ ██░░██          ██░░██ ██░░░░░░░░░░██ ██░░██  ██████████░░██ ██░░░░░░░░░░██ 
+      //  ██████████████ ██████████ ████████████   ██████████████ ██████          ██████ ██████████████ ██████          ██████ ██████████████ 
+      //                                                                                                                                      
+      //                                                          
+      //  ██████         ██████████ ██████████████ ██████████████ 
+      //  ██░░██         ██░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ 
+      //  ██░░██         ████░░████ ██░░██████████ ██████░░██████ 
+      //  ██░░██           ██░░██   ██░░██             ██░░██     
+      //  ██░░██           ██░░██   ██░░██████████     ██░░██     
+      //  ██░░██           ██░░██   ██░░░░░░░░░░██     ██░░██     
+      //  ██░░██           ██░░██   ██████████░░██     ██░░██     
+      //  ██░░██           ██░░██           ██░░██     ██░░██     
+      //  ██░░██████████ ████░░████ ██████████░░██     ██░░██     
+      //  ██░░░░░░░░░░██ ██░░░░░░██ ██░░░░░░░░░░██     ██░░██     
+      //  ██████████████ ██████████ ██████████████     ██████     
+      //                                                            
+      //                                                          
+      // Set the categories to be displayed in the side bar
       function updateSideMenu(currentName) {
         sideMenuDiv.innerHTML = ''; // Clear the side menu
         sideMenuDiv.appendChild(carousel); // Re-add the carousel to the side menu
 
-        const currentItem = data.Tags.find(item => item.Name === currentName);
-        if (currentItem && currentItem.CarouselOptions) {
-          currentItem.CarouselOptions.forEach(option => {
-              const optionDiv = document.createElement('div');
-              optionDiv.classList.add('sidemenu-item');
-              optionDiv.textContent = option;
-              sideMenuDiv.appendChild(optionDiv);
-              // Attach click event listener to each new side menu item
-              optionDiv.addEventListener('click', () => {
-                // Add logic here for what happens when a side menu item is clicked
-                if (optionDiv.classList.contains('selected')) {
-                  return; // Exit the function if already selected
-                }
-                
-                const contentDisplayDiv = document.getElementById('contentDisplay');
-                const mediaContainerDiv = document.getElementById('mediaContainer');
-                const editDisplayDiv = document.getElementById('editDisplay');
-                const showTagSettingsDiv = document.getElementById('showTagSettings');
-                const editCategorySettings = document.getElementById('editCategorySettings');
-    
-                // In the event user has the edit form up and clicks on the side menu to change the display
-                // probably should look into some function that hides all unused divs
-                mediaContainerDiv.style.display = 'block'; // show media again
-                contentDisplayDiv.style.display = 'none'; // hide any other selected content within the media 
-                document.getElementById('editCategoryMenu').style.display = 'none';
-                contentDisplayDiv.innerHTML = '';
-                editDisplayDiv.style.display = 'none';
-                editDisplayDiv.innerHTML = '';
-                showTagSettingsDiv.style.display = 'none';
-                showTagSettingsDiv.innerHTML = '';
-                editCategorySettings.style.display = 'none';
-                editCategorySettings.innerHTML = '';
-                // Remove the 'selected' class from all tags
-                document.querySelectorAll('.sidemenu-item').forEach(item => {
-                  item.classList.remove('selected');
-                });
-                optionDiv.classList.add('selected');
-                const selectedTag = optionDiv.textContent;
-                displayContentForTag(selectedTag, data);
-                // Any other logic needed on click
-              });
+        const contentDisplayDiv = document.getElementById('contentDisplay');
+        const mediaContainerDiv = document.getElementById('mediaContainer');
+        const editDisplayDiv = document.getElementById('editDisplay');
+        const showTagSettingsDiv = document.getElementById('showTagSettings');
+        const editCategorySettings = document.getElementById('editCategorySettings');
+
+        // In the event user has the edit form up and clicks on the side menu to change the display
+        // probably should look into some function that hides all unused divs
+        mediaContainerDiv.style.display = 'block'; // show media again
+        contentDisplayDiv.style.display = 'none'; // hide any other selected content within the media 
+        document.getElementById('editCategoryMenu').style.display = 'none';
+        contentDisplayDiv.innerHTML = '';
+        editDisplayDiv.style.display = 'none';
+        editDisplayDiv.innerHTML = '';
+        showTagSettingsDiv.style.display = 'none';
+        showTagSettingsDiv.innerHTML = '';
+        editCategorySettings.style.display = 'none';
+        editCategorySettings.innerHTML = '';
+
+        // Display all categories associated with this parent (carouselOptions)
+        // Common setup for side menu items
+        let sideMenuContainer = document.createElement('div');
+        sideMenuContainer.id = 'sidemenu-itemContainer';
+        sideMenuDiv.appendChild(sideMenuContainer);
+        function createMenuItem(text) {
+          const itemDiv = document.createElement('div');
+          itemDiv.classList.add('sidemenu-item');
+          itemDiv.textContent = text;
+          // sideMenuDiv.appendChild(itemDiv);
+          sideMenuContainer.appendChild(itemDiv);
+
+          itemDiv.addEventListener('click', () => {
+            if (itemDiv.classList.contains('selected')) {
+                return; // Exit if already selected
+            }
+
+            document.querySelectorAll('.sidemenu-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            itemDiv.classList.add('selected');
+
+            displayContentForTag(text, data);
           });
         }
+
+        // Determine which items to display in the side menu
+        // If Category === All, then display all tags minus those already in the carousel
+        let itemsToDisplay;
+        if (currentName === "All") {
+            itemsToDisplay = ["All"].concat(data.Tags.filter(tag => !texts.includes(tag.Name)).map(tag => tag.Name));
+        } else {
+            const foundItem = data.Tags.find(item => item.Name === currentName);
+            itemsToDisplay = foundItem?.CarouselOptions || [];
+        }
+
+        itemsToDisplay.forEach(item => createMenuItem(item));
       }
 
       function selectFirstSideMenuItem() {
@@ -388,38 +478,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
       updateSideMenu(texts[0]);
 
-      // Carousel text data and current index
-      // const texts = [];
-      // for (const item of data.Tags) {
-      //   if (item.Carousel) {  // Check if Carousel property is true
-      //       texts.push(item.Name);  // Add the item's name to the texts array
-      //   }
-      // }
-      // carouselText.innerText = texts.length > 0 ? texts[0] : "No text available";
-
-      // let currentIndex = 0;
-
-      // // Function to change text in the carousel
-      // function changeText(step) {
-      //     currentIndex = (currentIndex + step + texts.length) % texts.length;
-      //     document.getElementById("carouselText").innerText = texts[currentIndex];
-      // }
-      // for (const tag of sortedTags) {
-      //   const tagDiv = document.createElement('div');
-      //   tagDiv.classList.add('sidemenu-item');
-      //   tagDiv.textContent = tag;
-      //   // Add a class to the 'All' tag div to differentiate it
-      //   if (tag === "All") {
-      //     // tagDiv.classList.add('all-tag');
-      //     tagDiv.classList.add('selected');
-      //   }
-      //   sideMenuDiv.appendChild(tagDiv);
-      // }
-
       // *************************************************************************************************************************************************
+      //                                                                                                                                  
+      //  ██████████████ ██████████████ ██████████████ ██████████████ ██████████████ ██████████████ ████████████████   ████████  ████████ 
+      //  ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   ██░░░░██  ██░░░░██ 
+      //  ██░░██████████ ██░░██████░░██ ██████░░██████ ██░░██████████ ██░░██████████ ██░░██████░░██ ██░░████████░░██   ████░░██  ██░░████ 
+      //  ██░░██         ██░░██  ██░░██     ██░░██     ██░░██         ██░░██         ██░░██  ██░░██ ██░░██    ██░░██     ██░░░░██░░░░██   
+      //  ██░░██         ██░░██████░░██     ██░░██     ██░░██████████ ██░░██         ██░░██  ██░░██ ██░░████████░░██     ████░░░░░░████   
+      //  ██░░██         ██░░░░░░░░░░██     ██░░██     ██░░░░░░░░░░██ ██░░██  ██████ ██░░██  ██░░██ ██░░░░░░░░░░░░██       ████░░████     
+      //  ██░░██         ██░░██████░░██     ██░░██     ██░░██████████ ██░░██  ██░░██ ██░░██  ██░░██ ██░░██████░░████         ██░░██       
+      //  ██░░██         ██░░██  ██░░██     ██░░██     ██░░██         ██░░██  ██░░██ ██░░██  ██░░██ ██░░██  ██░░██           ██░░██       
+      //  ██░░██████████ ██░░██  ██░░██     ██░░██     ██░░██████████ ██░░██████░░██ ██░░██████░░██ ██░░██  ██░░██████       ██░░██       
+      //  ██░░░░░░░░░░██ ██░░██  ██░░██     ██░░██     ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░░░░░██       ██░░██       
+      //  ██████████████ ██████  ██████     ██████     ██████████████ ██████████████ ██████████████ ██████  ██████████       ██████       
+      //                                                                                                                                  
+      //                                                                  
+      //  ██████████ ██████          ██████ ██████████████ ██████████████ 
+      //  ██░░░░░░██ ██░░██████████  ██░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ 
+      //  ████░░████ ██░░░░░░░░░░██  ██░░██ ██░░██████████ ██░░██████░░██ 
+      //    ██░░██   ██░░██████░░██  ██░░██ ██░░██         ██░░██  ██░░██ 
+      //    ██░░██   ██░░██  ██░░██  ██░░██ ██░░██████████ ██░░██  ██░░██ 
+      //    ██░░██   ██░░██  ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░██  ██░░██ 
+      //    ██░░██   ██░░██  ██░░██  ██░░██ ██░░██████████ ██░░██  ██░░██ 
+      //    ██░░██   ██░░██  ██░░██████░░██ ██░░██         ██░░██  ██░░██ 
+      //  ████░░████ ██░░██  ██░░░░░░░░░░██ ██░░██         ██░░██████░░██ 
+      //  ██░░░░░░██ ██░░██  ██████████░░██ ██░░██         ██░░░░░░░░░░██ 
+      //  ██████████ ██████          ██████ ██████         ██████████████ 
+      //                                                                  
       // Function to display content based on the selected tag
-      //
-      //
       // Initially, display the default data, The All Tag, that displays all media content
       displayContentForTag("All", data);
 
@@ -439,8 +525,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
           // <div id="loadingScreen">Loading...</div>
           mediaContainerDiv.innerHTML = `
-
-              
               <div id="tagNameContainer">
                   <div id="tagSelection">${tag}</div>
                   <img src="assets/app/settings.svg" id="editCategoryButton">
@@ -452,14 +536,6 @@ document.addEventListener('DOMContentLoaded', () => {
           const items = tag === 'All' ? mediaData : mediaData.filter(item => item.Tags.includes(tag));
           mediaContainerDiv.innerHTML += createMedia(items);
           
-      
-          // Add event listener for the settings image/button
-          // const editTagImage = document.getElementById('editTagImage');
-          // editTagImage.addEventListener('click', () => {
-          //     // displayTagSettings(tag, jsondata);
-          //     // editCategorySettings(tag, jsondata); // disabling for now, will only use if needed to migrate functionality to mediaContainer
-          // });
-
           // Calling this function to trigger the styling on load
           applyStyling(tag, jsondata); 
           const editCategoryButton = document.getElementById('editCategoryButton');
@@ -468,19 +544,40 @@ document.addEventListener('DOMContentLoaded', () => {
               // applyStyling(tag, jsondata);
               settingsMenu();
           });
+          initMenuClicks(data);
       }
 
-
-        //-----------------------------------------------------------------------------------------
-      
-
-// *************************************************************************************************************************************************
+      // *************************************************************************************************************************************************
+      //                                                                                                                                      
+      //  ██████████████ ██████████ ████████████   ██████████████ ██████          ██████ ██████████████ ██████          ██████ ██████  ██████ 
+      //  ██░░░░░░░░░░██ ██░░░░░░██ ██░░░░░░░░████ ██░░░░░░░░░░██ ██░░██████████████░░██ ██░░░░░░░░░░██ ██░░██████████  ██░░██ ██░░██  ██░░██ 
+      //  ██░░██████████ ████░░████ ██░░████░░░░██ ██░░██████████ ██░░░░░░░░░░░░░░░░░░██ ██░░██████████ ██░░░░░░░░░░██  ██░░██ ██░░██  ██░░██ 
+      //  ██░░██           ██░░██   ██░░██  ██░░██ ██░░██         ██░░██████░░██████░░██ ██░░██         ██░░██████░░██  ██░░██ ██░░██  ██░░██ 
+      //  ██░░██████████   ██░░██   ██░░██  ██░░██ ██░░██████████ ██░░██  ██░░██  ██░░██ ██░░██████████ ██░░██  ██░░██  ██░░██ ██░░██  ██░░██ 
+      //  ██░░░░░░░░░░██   ██░░██   ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░██  ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░██  ██░░██  ██░░██ ██░░██  ██░░██ 
+      //  ██████████░░██   ██░░██   ██░░██  ██░░██ ██░░██████████ ██░░██  ██████  ██░░██ ██░░██████████ ██░░██  ██░░██  ██░░██ ██░░██  ██░░██ 
+      //          ██░░██   ██░░██   ██░░██  ██░░██ ██░░██         ██░░██          ██░░██ ██░░██         ██░░██  ██░░██████░░██ ██░░██  ██░░██ 
+      //  ██████████░░██ ████░░████ ██░░████░░░░██ ██░░██████████ ██░░██          ██░░██ ██░░██████████ ██░░██  ██░░░░░░░░░░██ ██░░██████░░██ 
+      //  ██░░░░░░░░░░██ ██░░░░░░██ ██░░░░░░░░████ ██░░░░░░░░░░██ ██░░██          ██░░██ ██░░░░░░░░░░██ ██░░██  ██████████░░██ ██░░░░░░░░░░██ 
+      //  ██████████████ ██████████ ████████████   ██████████████ ██████          ██████ ██████████████ ██████          ██████ ██████████████ 
+      //                                                                                                                                      
+      //                                                                                                                                           
+      //  ██████████ ██████████████ ██████████████ ██████          ██████ ██████████████ ██████         ██████████ ██████████████ ██████  ████████ 
+      //  ██░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██████████████░░██ ██░░░░░░░░░░██ ██░░██         ██░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░░░██ 
+      //  ████░░████ ██████░░██████ ██░░██████████ ██░░░░░░░░░░░░░░░░░░██ ██░░██████████ ██░░██         ████░░████ ██░░██████████ ██░░██  ██░░████ 
+      //    ██░░██       ██░░██     ██░░██         ██░░██████░░██████░░██ ██░░██         ██░░██           ██░░██   ██░░██         ██░░██  ██░░██   
+      //    ██░░██       ██░░██     ██░░██████████ ██░░██  ██░░██  ██░░██ ██░░██         ██░░██           ██░░██   ██░░██         ██░░██████░░██   
+      //    ██░░██       ██░░██     ██░░░░░░░░░░██ ██░░██  ██░░██  ██░░██ ██░░██         ██░░██           ██░░██   ██░░██         ██░░░░░░░░░░██   
+      //    ██░░██       ██░░██     ██░░██████████ ██░░██  ██████  ██░░██ ██░░██         ██░░██           ██░░██   ██░░██         ██░░██████░░██   
+      //    ██░░██       ██░░██     ██░░██         ██░░██          ██░░██ ██░░██         ██░░██           ██░░██   ██░░██         ██░░██  ██░░██   
+      //  ████░░████     ██░░██     ██░░██████████ ██░░██          ██░░██ ██░░██████████ ██░░██████████ ████░░████ ██░░██████████ ██░░██  ██░░████ 
+      //  ██░░░░░░██     ██░░██     ██░░░░░░░░░░██ ██░░██          ██░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░░░██ 
+      //  ██████████     ██████     ██████████████ ██████          ██████ ██████████████ ██████████████ ██████████ ██████████████ ██████  ████████ 
+      //                                                                                                                                           
       // Add a click event listener to tagDivs to switch content
-      //
-      //
-      //
-      const tagDivs = document.querySelectorAll('.sidemenu-item');
-      tagDivs.forEach(tagDiv => {
+      function initMenuClicks(data) {
+        const tagDivs = document.querySelectorAll('.sidemenu-item');
+        tagDivs.forEach(tagDiv => {
           tagDiv.addEventListener('click', () => {
 
             if (tagDiv.classList.contains('selected')) {
@@ -514,6 +611,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Add the 'selected' class to the clicked tag
             // tagDiv.classList.add('selected');
             const selectedTag = tagDiv.textContent;
+            console.log("selectedTag" + selectedTag);
             displayContentForTag(selectedTag, data);
             addClickListenersToMediaItems(); // Call the function to reapply click listeners to Media items
             // Scroll to the top of the scrollable-content div
@@ -522,31 +620,45 @@ document.addEventListener('DOMContentLoaded', () => {
                 scrollableContentDiv.scrollTop = 0;
             }
           });
-      });
-
-// *************************************************************************************************************************************************
+        });
+      }
+    // *************************************************************************************************************************************************
     // When user clicks on a media image, display the media JSON information
     //
     //
     //
       function addClickListenersToMediaItems() {
-        const mediaItemPictures = document.querySelectorAll('.testMediaItemPicture');
-        mediaItemPictures.forEach(mediaItemPicture => {
-          mediaItemPicture.addEventListener('click', () => {
-            const itemData = JSON.parse(mediaItemPicture.parentElement.dataset.item); // Access data from parent element
+        const mediaContainerDiv = document.getElementById('mediaContainer');
+        mediaContainerDiv.addEventListener('click', (event) => {
+          const mediaItemPicture = event.target.closest('.testMediaItemPicture');
+          
+          if (mediaItemPicture) {
+            const itemData = JSON.parse(mediaItemPicture.parentElement.dataset.item);
             displayMediaItemData(itemData);
 
             const scrollableContentDiv = document.querySelector('.scrollableContent');
             if (scrollableContentDiv) {
               scrollableContentDiv.scrollTop = 0;
             }
-          });
+          }
         });
+        // const mediaItemPictures = document.querySelectorAll('.testMediaItemPicture');
+        // mediaItemPictures.forEach(mediaItemPicture => {
+        //   mediaItemPicture.addEventListener('click', () => {
+        //     const itemData = JSON.parse(mediaItemPicture.parentElement.dataset.item); // Access data from parent element
+        //     displayMediaItemData(itemData);
+
+        //     const scrollableContentDiv = document.querySelector('.scrollableContent');
+        //     if (scrollableContentDiv) {
+        //       scrollableContentDiv.scrollTop = 0;
+        //     }
+        //   });
+        // });
       }
       // ADD click listener when page initially loads
       addClickListenersToMediaItems();
 
-// *************************************************************************************************************************************************
+    // *************************************************************************************************************************************************
     // Function to display media item data in contentDisplay div              
     //  ██████          ██████ ██████████████ ████████████   ██████████ ██████████████ 
     //  ██░░██████████████░░██ ██░░░░░░░░░░██ ██░░░░░░░░████ ██░░░░░░██ ██░░░░░░░░░░██ 
@@ -879,7 +991,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (data.length === 0) { // create test media here so that the applystying page has something to edit and not crash for lack of data
         mediaHTML += '<div class="testMedia">'; // Create a blank item
-        mediaHTML += '<p>No media exists in this category.</p>'; // Add the line of text
+        mediaHTML += '<p>No media exists in this category.  Do I want to hide this category?</p>'; // Add the line of text
         mediaHTML += '</div>'; // Close the div tags
         return mediaHTML;
       }
