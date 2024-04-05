@@ -11,7 +11,7 @@
 // + mediaform.addEventListener('submit', (event) => {
 // + function displayData(data) {
 // + function displayMedia(data) {
-// + function displayContentForTag(tag) {
+// + function categoryItems(tag) {
 // + tagDiv.addEventListener('click', () => { (sidemenu-item)
 // + mediaItemPicture.addEventListener('click', () => { (mediaitempicture)
 // + function createMedia(data) {
@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const mediaform = document.getElementById('mediaForm');
     const errorMessageElement = document.getElementById('error-message');
     const mediaSubmit = document.getElementById('mediaSubmit');
+    let currentCarouselCategory; // needed to get the value for the categoryItems() function
 
 
     // const gridDisplay = document.getElementById('gridDisplay');
@@ -408,6 +409,8 @@ document.addEventListener('DOMContentLoaded', () => {
       //                                                          
       // Set the categories to be displayed in the side bar
       function updateSideMenu(currentName) {
+        console.log("updateSideMenu:" + currentName);
+        currentCarouselCategory = currentName;
         sideMenuDiv.innerHTML = ''; // Clear the side menu
         sideMenuDiv.appendChild(carousel); // Re-add the carousel to the side menu
 
@@ -438,7 +441,14 @@ document.addEventListener('DOMContentLoaded', () => {
         function createMenuItem(text) {
           const itemDiv = document.createElement('div');
           itemDiv.classList.add('sidemenu-item');
-          itemDiv.textContent = text;
+          // itemDiv.textContent = text; // Change the name to "All" if it's the current selection
+          if (text === currentName) {
+            itemDiv.textContent = "All"; // Change the name to "All" if it's the current selection
+            itemDiv.classList.add('selected'); // Optionally mark it as selected
+          } else {
+              itemDiv.textContent = text;
+              // itemDiv.classList.add('disabled'); // Disable other items
+          }
           // sideMenuDiv.appendChild(itemDiv);
           sideMenuContainer.appendChild(itemDiv);
 
@@ -446,24 +456,26 @@ document.addEventListener('DOMContentLoaded', () => {
             if (itemDiv.classList.contains('selected')) {
                 return; // Exit if already selected
             }
-
             document.querySelectorAll('.sidemenu-item').forEach(item => {
                 item.classList.remove('selected');
             });
             itemDiv.classList.add('selected');
 
-            displayContentForTag(text, data);
+            categoryItems(text, data);
           });
         }
 
         // Determine which items to display in the side menu
         // If Category === All, then display all tags minus those already in the carousel
         let itemsToDisplay;
+
+        // IF ALL, then display every category in the data.json file
+        // Else only display those found in the selected carousel's carouselOptions List
         if (currentName === "All") {
             itemsToDisplay = ["All"].concat(data.Tags.filter(tag => !texts.includes(tag.Name)).map(tag => tag.Name));
         } else {
             const foundItem = data.Tags.find(item => item.Name === currentName);
-            itemsToDisplay = foundItem?.CarouselOptions || [];
+            itemsToDisplay = ["All"].concat(foundItem?.CarouselOptions || []);
         }
 
         itemsToDisplay.forEach(item => createMenuItem(item));
@@ -492,28 +504,33 @@ document.addEventListener('DOMContentLoaded', () => {
       //  ██░░░░░░░░░░██ ██░░██  ██░░██     ██░░██     ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░░░░░██       ██░░██       
       //  ██████████████ ██████  ██████     ██████     ██████████████ ██████████████ ██████████████ ██████  ██████████       ██████       
       //                                                                                                                                  
-      //                                                                  
-      //  ██████████ ██████          ██████ ██████████████ ██████████████ 
-      //  ██░░░░░░██ ██░░██████████  ██░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ 
-      //  ████░░████ ██░░░░░░░░░░██  ██░░██ ██░░██████████ ██░░██████░░██ 
-      //    ██░░██   ██░░██████░░██  ██░░██ ██░░██         ██░░██  ██░░██ 
-      //    ██░░██   ██░░██  ██░░██  ██░░██ ██░░██████████ ██░░██  ██░░██ 
-      //    ██░░██   ██░░██  ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░██  ██░░██ 
-      //    ██░░██   ██░░██  ██░░██  ██░░██ ██░░██████████ ██░░██  ██░░██ 
-      //    ██░░██   ██░░██  ██░░██████░░██ ██░░██         ██░░██  ██░░██ 
-      //  ████░░████ ██░░██  ██░░░░░░░░░░██ ██░░██         ██░░██████░░██ 
-      //  ██░░░░░░██ ██░░██  ██████████░░██ ██░░██         ██░░░░░░░░░░██ 
-      //  ██████████ ██████          ██████ ██████         ██████████████ 
-      //                                                                  
+      //                                                                                
+      //  ██████████ ██████████████ ██████████████ ██████          ██████ ██████████████ 
+      //  ██░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██████████████░░██ ██░░░░░░░░░░██ 
+      //  ████░░████ ██████░░██████ ██░░██████████ ██░░░░░░░░░░░░░░░░░░██ ██░░██████████ 
+      //    ██░░██       ██░░██     ██░░██         ██░░██████░░██████░░██ ██░░██         
+      //    ██░░██       ██░░██     ██░░██████████ ██░░██  ██░░██  ██░░██ ██░░██████████ 
+      //    ██░░██       ██░░██     ██░░░░░░░░░░██ ██░░██  ██░░██  ██░░██ ██░░░░░░░░░░██ 
+      //    ██░░██       ██░░██     ██░░██████████ ██░░██  ██████  ██░░██ ██████████░░██ 
+      //    ██░░██       ██░░██     ██░░██         ██░░██          ██░░██         ██░░██ 
+      //  ████░░████     ██░░██     ██░░██████████ ██░░██          ██░░██ ██████████░░██ 
+      //  ██░░░░░░██     ██░░██     ██░░░░░░░░░░██ ██░░██          ██░░██ ██░░░░░░░░░░██ 
+      //  ██████████     ██████     ██████████████ ██████          ██████ ██████████████ 
+      //                                                                                                                                      
       // Function to display content based on the selected tag
       // Initially, display the default data, The All Tag, that displays all media content
-      displayContentForTag("All", data);
+      categoryItems("All", data); // TODO, this shouldn't be the default way to display all content
 
-      function displayContentForTag(tag, jsondata) {
+      function categoryItems(tag, jsondata) {
           const scrollableContentDiv = document.querySelector('.scrollableContent');
           const mediaContainerDiv = document.getElementById('mediaContainer');
           const mediaVisual = document.getElementById('.mediaVisual');
-
+          // get the value of Id carouselText
+          console.log("Carousel Selection: " + currentCarouselCategory);
+          
+          // if (tag === "All") {
+          //   tag = currentCarouselCategory;
+          // }
           // Show media display and hide others
           mediaContainerDiv.style.display = 'block';
           
@@ -612,7 +629,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // tagDiv.classList.add('selected');
             const selectedTag = tagDiv.textContent;
             console.log("selectedTag" + selectedTag);
-            displayContentForTag(selectedTag, data);
+            categoryItems(selectedTag, data);
             addClickListenersToMediaItems(); // Call the function to reapply click listeners to Media items
             // Scroll to the top of the scrollable-content div
             const scrollableContentDiv = document.querySelector('.scrollableContent');

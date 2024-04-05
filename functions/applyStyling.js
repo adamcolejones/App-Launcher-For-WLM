@@ -476,6 +476,8 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       backgroundColorCheckbox.checked = backgroundColorCheck;
       updateBackgroundColor();
       backgroundColorCheckbox.addEventListener('change', updateBackgroundColor);
+      backgroundColorCheckbox.addEventListener('change', saveStyling);
+
       function updateBackgroundColor() {
         // console.log('Function: Update Background Color');
         if (backgroundColorCheckbox.checked) {
@@ -490,7 +492,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         // mediaContainer.style.background = backgroundColor; // Directly update the background of scrollableContent
         // scrollableContent.style.background = backgroundColor; // Directly update the background of scrollableContent
         updateBackgroundVisual();
-        saveStyling();
+        // saveStyling();
       }
 
       document.getElementById("formBackgroundColor").addEventListener("input", function() {
@@ -522,8 +524,10 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       gapCheckbox.addEventListener('change', () => {
           gap = gapCheckbox.checked ? parseInt(document.getElementById('formGap').value) : 0;
           gapChange(gap); // Pass the gap value to the imported function
-          saveStyling();
+          // saveStyling();
       });
+      gapCheckbox.addEventListener('change', saveStyling);
+
 
       document.getElementById("formGap").addEventListener("input", function() {
           let inputValue = parseInt(this.value);
@@ -537,8 +541,10 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
           }
           gap = inputValue; // Update the border variable with the input value
           gapChange(gap); // apply to all media items
-          saveStyling();
+          // saveStyling();
       });
+      document.getElementById("formGap").addEventListener("input", saveStyling);
+
       //###################################################################################################################################################################
 
       //###################################################################################################################################################################
@@ -561,8 +567,10 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
           wrap = wrapCheckbox.checked ? 'wrap' : 'nowrap';
           // console.log(wrap);
           wrapChange(wrap); // Pass the gap value to the imported function
-          saveStyling();
+          // saveStyling();
       });
+      wrapCheckbox.addEventListener('change', saveStyling);
+
       //###################################################################################################################################################################
 
 
@@ -589,6 +597,8 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       // });
 
       document.getElementById("formRatioWidth").addEventListener("input", updateWidth);
+      document.getElementById("formRatioWidth").addEventListener("input", saveStyling);
+
       function updateWidth() {
         // console.log('Function: Update Width');
         var widthInput = document.getElementById("formRatioWidth");
@@ -618,6 +628,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       //  ██████  ██████ ██████████████ ██████████ ██████████████ ██████  ██████     ██████     
       //                                                                                        
       document.getElementById("formRatioHeight").addEventListener("input", updateHeight);
+      document.getElementById("formRatioHeight").addEventListener("input", saveStyling);
       // document.getElementById("formRatioHeight").addEventListener("input", function() {
       //   updateHeight(width, height);
       // });
@@ -627,7 +638,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       //   updateMediaStyling();
       // });
       function updateHeight() {
-        console.log('Function: Update Height');
+        // console.log('Function: Update Height');
         var heightInput = document.getElementById("formRatioHeight"); // this value can not be accessed outside of this file, this is needed for dynamic updates
         var heightValue = parseInt(heightInput.value);
         if (heightValue < 1) { // Ensure the height does not go below 1
@@ -671,6 +682,8 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
 
       updateOriginalDimensions();
       originalDimensionsCheckbox.addEventListener('change', updateOriginalDimensions);
+      originalDimensionsCheckbox.addEventListener('change', saveStyling);
+
       function updateOriginalDimensions() {
         // console.log('Function: Update Original Dimensions');
         if (originalDimensionsCheckbox.checked) {
@@ -865,7 +878,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         // Parse the JSON string from the data-item attribute
         const dataItem = JSON.parse(event.target.getAttribute('data-item'));
         // Print the value of the id
-        console.log("Hovered item ID:", dataItem.id);
+        // console.log("Hovered item ID:", dataItem.id);
         const testMedia = event.target; // This is the hovered .testMedia element
         const rect = testMedia.getBoundingClientRect(); // Get position and size of original media item
 
@@ -943,7 +956,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       //  ██████████████     ██████           ██████       ██████████████ ██████████ ██████          ██████ ██████████████ 
       //                                                                                                                   
       function updateMediaStyling() {
-        console.log('Function: Update Media Styling');
+        // console.log('Function: Update Media Styling');
         // THIS IS A WORKING WAY TO UPDATE ALL MEDIA ITEMS AT ONCE WITHOUT HAVING TO CREATE LOOPS
         let selector = ".testMedia";
         let setHeight = 200; // Fixed height for displayed media
@@ -979,7 +992,8 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
 
         updateTestMediaPicturesSizes(width, height, border, borderRadius);
         // testMediaElements.forEach(testMedia => {
-        saveStyling();
+        // saveStyling(); 
+        // height, width, original dimensions are saved here
       }
       //###################################################################################################################################################################
             
@@ -1020,6 +1034,9 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       matchBorderCheckbox.addEventListener('change', () => {
         matchBorderSize();
       });
+
+      matchBorderCheckbox.addEventListener('change', saveStyling);
+
       function matchBorderSize() {
         let floatingElements = [
           "floatingBorderCheckbox",
@@ -1034,7 +1051,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
           floatingBorder = border;
           // floatingBorderColor = borderColor;
           floatingBorderRadius = borderRadius;
-          console.log('border / floating: ' + border + ' ' + floatingBorder);
+          // console.log('border / floating: ' + border + ' ' + floatingBorder);
           floatingBorderGap = 0;
         }
         else {
@@ -1047,7 +1064,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         // updateFloatingBorderColor();
         // updateFloatingBorderRadius();
         // updateFloatingBorderGap();
-        saveStyling();
+        // saveStyling();
       }
         
       
@@ -1087,9 +1104,11 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       // there may be an issue with these being on a seperate file from the app.js file
       updateFloatingBorder();
       floatingBorderCheckbox.addEventListener('change', updateFloatingBorder); //checkbox update
+      floatingBorderCheckbox.addEventListener('change', saveStyling);
+
       document.getElementById("formFloatingBorderColor").addEventListener("input", updateFloatingBorderColor); // input field update
       function updateFloatingBorder() {
-      console.log('Function: updateFloatingBorder')
+      // console.log('Function: updateFloatingBorder')
       // console.log('Function: Update Floating Border');
       // check to see if anything previous match border is disabled or not
       // Disabling boxes individually might make a mess.  
@@ -1116,7 +1135,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
           // document.getElementById("formFloatingBorderGap").disabled = true;
       }
         // updateMediaStyling();
-        saveStyling();
+        // saveStyling();
       }
 
       document.getElementById("formFloatingBorder").addEventListener("input", function() {
@@ -1152,6 +1171,8 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       // ██████████████ ██████████████ ██████████████ ██████████████ ██████  ██████████ 
       updateFloatingBorderColor();
       floatingBorderColorCheckbox.addEventListener('change', updateFloatingBorderColor);
+      floatingBorderColorCheckbox.addEventListener('change', saveStyling);
+
       function updateFloatingBorderColor() {
         // console.log('Function: Update Floating Border Color');
         if (floatingBorderColorCheckbox.checked) {
@@ -1162,7 +1183,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
             document.getElementById("formFloatingBorderColor").disabled = true;
         } // document.getElementById("floatingBorderColorValue").textContent = `Floating Border Color Size: ${floatingBorderColor}`;
         //   updateMediaStyling();
-        saveStyling();
+        // saveStyling();
       }
 
       // document.getElementById("formFloatingBorderColor").addEventListener("input", function() {
@@ -1190,6 +1211,8 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       //  ██████  ██████████ ██████  ██████ ████████████   ██████████ ██████████████ ██████████████ 
       updateFloatingBorderRadius();
       floatingBorderRadiusCheckbox.addEventListener('change', updateFloatingBorderRadius);
+      floatingBorderRadiusCheckbox.addEventListener('change', saveStyling);
+
       function updateFloatingBorderRadius() {
         // console.log('Function: Update Floating Border Radius');
         if (floatingBorderRadiusCheckbox.checked) {
@@ -1200,7 +1223,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
             document.getElementById("formFloatingBorderRadius").disabled = true;
         } // document.getElementById("floatingBorderRadiusValue").textContent = `Floating Border Radius: ${floatingBorderRadius}`;
         //   updateMediaStyling();
-        saveStyling();
+        // saveStyling();
       }
 
       document.getElementById("formFloatingBorderRadius").addEventListener("input", function() {
@@ -1236,6 +1259,8 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       //  ██████████████ ██████  ██████ ██████         
       updateFloatingBorderGap();
       floatingBorderGapCheckbox.addEventListener('change', updateFloatingBorderGap);
+      floatingBorderGapCheckbox.addEventListener('change', saveStyling);
+
       function updateFloatingBorderGap() {
         // console.log('Function: Update Floating Border Gap');
         if (floatingBorderGapCheckbox.checked) {
@@ -1246,7 +1271,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
             document.getElementById("formFloatingBorderGap").disabled = true;
         } // document.getElementById("floatingBorderGapValue").textContent = `Floating Border Gap Size: ${floatingBorderGap}`;
         //   updateMediaStyling();
-        saveStyling();
+        // saveStyling();
       }
 
       document.getElementById("formFloatingBorderGap").addEventListener("input", function() {

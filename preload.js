@@ -164,7 +164,7 @@ let updateTag = (
     // floatingBorderPadding
   };
   
-  console.log('New Data: ', newData);
+  // console.log('New Data: ', newData);
   ipcRenderer.send("updateTag", newData);
   // ipcRenderer.send('reload-window');
 };
