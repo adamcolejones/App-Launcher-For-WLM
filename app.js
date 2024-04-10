@@ -409,7 +409,7 @@ document.addEventListener('DOMContentLoaded', () => {
       //                                                          
       // Set the categories to be displayed in the side bar
       function updateSideMenu(currentName) {
-        console.log("updateSideMenu:" + currentName);
+        // console.log("updateSideMenu:" + currentName);
         currentCarouselCategory = currentName;
         sideMenuDiv.innerHTML = ''; // Clear the side menu
         sideMenuDiv.appendChild(carousel); // Re-add the carousel to the side menu
@@ -438,18 +438,16 @@ document.addEventListener('DOMContentLoaded', () => {
         let sideMenuContainer = document.createElement('div');
         sideMenuContainer.id = 'sidemenu-itemContainer';
         sideMenuDiv.appendChild(sideMenuContainer);
-        function createMenuItem(text) {
+        function createMenuItem(text, index) {
           const itemDiv = document.createElement('div');
           itemDiv.classList.add('sidemenu-item');
-          // itemDiv.textContent = text; // Change the name to "All" if it's the current selection
-          if (text === currentName) {
-            itemDiv.textContent = "All"; // Change the name to "All" if it's the current selection
-            itemDiv.classList.add('selected'); // Optionally mark it as selected
-          } else {
-              itemDiv.textContent = text;
-              // itemDiv.classList.add('disabled'); // Disable other items
+          if (index === 0) {
+            itemDiv.textContent = "All";
           }
-          // sideMenuDiv.appendChild(itemDiv);
+          else {
+            itemDiv.textContent = text;
+          }
+          // itemDiv.textContent = text;
           sideMenuContainer.appendChild(itemDiv);
 
           itemDiv.addEventListener('click', () => {
@@ -471,14 +469,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // IF ALL, then display every category in the data.json file
         // Else only display those found in the selected carousel's carouselOptions List
-        if (currentName === "All") {
-            itemsToDisplay = ["All"].concat(data.Tags.filter(tag => !texts.includes(tag.Name)).map(tag => tag.Name));
-        } else {
-            const foundItem = data.Tags.find(item => item.Name === currentName);
-            itemsToDisplay = ["All"].concat(foundItem?.CarouselOptions || []);
-        }
-
-        itemsToDisplay.forEach(item => createMenuItem(item));
+        // if (currentName === "All") {
+        //     itemsToDisplay = ["All"].concat(data.Tags.filter(tag => !texts.includes(tag.Name)).map(tag => tag.Name));
+        //     // console.log("IFALL: " + itemsToDisplay);
+        //     // I think the error is here, has to do with how the itemsToDisplay array contain variable elements
+        // } else {
+        //     const foundItem = data.Tags.find(item => item.Name === currentName);
+        //     itemsToDisplay = ["All"].concat(foundItem?.CarouselOptions || []);
+        // }
+        // The first item will always be "All" use the carousel selection name and change it to "All" and display all content under the parent
+        const foundItem = data.Tags.find(item => item.Name === currentName);
+        itemsToDisplay = ["" + currentName].concat(foundItem?.CarouselOptions || []);
+        itemsToDisplay.forEach((item, index) => createMenuItem(item, index));
       }
 
       function selectFirstSideMenuItem() {
@@ -548,10 +550,33 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
           `;
       
-          const mediaData = jsondata.Media || [];
+          
           // If Tag selected is all, show all media data.  If not, only show media data where the media entries include the selected Tag.
-          const items = tag === 'All' ? mediaData : mediaData.filter(item => item.Tags.includes(tag));
-          mediaContainerDiv.innerHTML += createMedia(items);
+          // const items = tag === 'All' ? mediaData : mediaData.filter(item => item.Tags.includes(tag));
+
+          // This creates a list of Media IDs that will be displayed
+          const mediaData = jsondata.Media || [];
+          const tagData = jsondata.Tags || [];
+          // Find all the CarouselOptions for the selectedTag
+          let selectedTag = tagData.find(item => item.Name === tag);
+          let carouselOptions = selectedTag.CarouselOptions;
+          // Find every media item associated with the Options in the list (avoid dupes)
+          const matchingMedia = mediaData
+          .filter(mediaItem => 
+              mediaItem.Tags && carouselOptions.some(option => mediaItem.Tags.includes(option))
+          );
+          // console.log(matchingMedia);
+
+          console.log("Matching Media IDs: " + matchingMedia);
+
+          // const items = tag === currentCarouselCategory ?
+          //   mediaData :
+          //   mediaData.filter(item => item.Tags.includes(tag));
+          // console.log(items);
+
+          mediaContainerDiv.innerHTML += createMedia(matchingMedia);
+          // mediaContainerDiv.innerHTML += createMedia(items);
+
           
           // Calling this function to trigger the styling on load
           applyStyling(tag, jsondata); 
@@ -1002,6 +1027,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // This may be overwritten when the settings menu is clicked.  
   // the settings menu should only display the category settings menu, it should not be the cause of the styling being applied
     function createMedia(data) {
+      // console.log("Data: " + data);
       let mediaHTML = '<div class="mediadata">';
       mediaHTML += '<div id="testMediaContainer">';
 
@@ -1013,6 +1039,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return mediaHTML;
       }
       // Collect all unique keys (field names) from the array
+      // if data = "All", get all items from carousel selection
       const allKeys = new Set();
       for (const item of data) {
         for (const key in item) {
@@ -1021,6 +1048,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       // Create data rows
       for (const item of data) {
+        console.log("Item: " + item);
         mediaHTML += `<div class="testMedia" data-item='${JSON.stringify(item).replace(/'/g, "&apos;")}'>`;
         if (item.id && item.Image == true) {
           const imageUrl = item.id ? `assets/media/${item.id}.png` : 'assets/media/default.png';
