@@ -475,3 +475,47 @@
             //   });
             // }
             //-----------------------------------------------------------------------------------------
+
+
+//-----------------------------------------------------------------------------------------
+ // This works, but "All" is messed up
+        // const foundItem = data.Tags.find(item => item.Name === currentName);
+        // itemsToDisplay = [currentName].concat(foundItem?.CarouselOptions || []);
+        
+
+        // START HERE TO FIX CODE
+
+        // IF ALL, then display every category in the data.json file
+        // Else only display those found in the selected carousel's carouselOptions List
+        // if (currentCarouselCategory === "All") {
+        //     itemsToDisplay = data.Tags.filter(tag => !texts.includes(tag.Name)).map(tag => tag.Name);
+        //     // console.log("IFALL: " + itemsToDisplay);
+        //     // I think the error is here, has to do with how the itemsToDisplay array contain variable elements
+        // } 
+        // // else {
+        // //     const foundItem = data.Tags.find(item => item.Name === currentName);
+        // //     itemsToDisplay = ["All"].concat(foundItem?.CarouselOptions || []);
+        // // }
+        // // The first item will always be "All" use the carousel selection name and change it to "All" and display all content under the parent
+        // const foundItem = data.Tags.find(item => item.Name === currentName);
+        // itemsToDisplay = ["" + currentName].concat(foundItem?.CarouselOptions || []);
+//-----------------------------------------------------------------------------------------
+// if (tag === "All") {
+          //   items = mediaData;
+          // }
+          // console.log(items);
+
+
+          // const matchingMedia = mediaData.filter(mediaItem => 
+          //   mediaItem.Tags && carouselOptions.some(option => mediaItem.Tags.includes(option))
+          // );
+          // console.log("Matching Media IDs: " + matchingMedia);
+          // mediaContainerDiv.innerHTML += createMedia(matchingMedia);
+
+          // const items = tag === currentCarouselCategory ?
+          //   mediaData :
+          //   mediaData.filter(item => item.Tags.includes(tag));
+          // console.log(items);
+
+          // mediaContainerDiv.innerHTML += createMedia(items);
+//-----------------------------------------------------------------------------------------

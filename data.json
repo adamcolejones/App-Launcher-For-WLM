@@ -96,6 +96,17 @@
       ]
     },
     {
+      "id": 87,
+      "Name": "Cars",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Pixar",
+        "Movies",
+        "Disney"
+      ]
+    },
+    {
       "id": 27,
       "Name": "Dave and the Giant Pickle",
       "Image": true,
@@ -736,7 +747,7 @@
       "BackgroundVisual": false,
       "BackgroundColorCheck": true,
       "BackgroundColor": "lightblue",
-      "OriginalDimensions": false,
+      "OriginalDimensions": true,
       "Gap": 2,
       "Wrap": "wrap",
       "Width": 4,
@@ -1677,6 +1688,12 @@
       "Rows": 1,
       "Columns": 15,
       "CustomValues": true
+    },
+    {
+      "Name": "Pixar"
+    },
+    {
+      "Name": "Disney"
     }
   ],
   "Names": [
