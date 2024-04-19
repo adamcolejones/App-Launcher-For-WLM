@@ -190,9 +190,9 @@ body {
 
 #editCategoryMenu {
   height: 100%;
-  width: 250px;
+  width: 217px;
   position: fixed;
-  right: 0px;
+  left: 0px;
   top: 0px;
   background-color: rgba(223, 223, 223, 0.75);
   display: none;
@@ -629,7 +629,7 @@ nav {
   bottom: 20px;
   left: 20px;
   cursor: pointer;
-  z-index: 10;
+  z-index: 5;
 }
 
 #otherNotes {
@@ -767,6 +767,14 @@ p {
   left: 200px; /* sideMenu Width */
   /* overflow-y: scroll; */
  }
+
+ .searchbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: rgb(223, 223, 223, 0.5); */
+  padding: 20px;
+}
 
 .settingsContainer {
   height: 500px;

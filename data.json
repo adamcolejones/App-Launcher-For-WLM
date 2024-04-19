@@ -152,6 +152,46 @@
       ]
     },
     {
+      "id": 91,
+      "Name": "Godzilla",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Movies",
+        "Kathleen"
+      ]
+    },
+    {
+      "id": 94,
+      "Name": "Godzilla vs. Kong",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Movies",
+        "Kathleen"
+      ]
+    },
+    {
+      "id": 95,
+      "Name": "Godzilla x Kong: The New Empire",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Movies",
+        "Kathleen"
+      ]
+    },
+    {
+      "id": 92,
+      "Name": "Godzilla: King of the Monsters",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Movies",
+        "Kathleen"
+      ]
+    },
+    {
       "id": 68,
       "Name": "It's Christmastime Again, Charlie Brown",
       "Image": true,
@@ -190,6 +230,16 @@
         "Kirby",
         "Nintendo Switch",
         "Nintendo"
+      ]
+    },
+    {
+      "id": 93,
+      "Name": "Kong: Skull Island",
+      "Image": true,
+      "RunCommand": "C:\\Users\\adamc\\Downloads\\kong.jpg",
+      "Tags": [
+        "Movies",
+        "Kathleen"
       ]
     },
     {
@@ -480,7 +530,8 @@
       "RunCommand": null,
       "Tags": [
         "PlayStation 2",
-        "Peanuts"
+        "Peanuts",
+        "Fall"
       ]
     },
     {
@@ -602,6 +653,15 @@
       ]
     },
     {
+      "id": 99,
+      "Name": "Test",
+      "Image": false,
+      "RunCommand": null,
+      "Tags": [
+        "Search"
+      ]
+    },
+    {
       "id": 30,
       "Name": "The Chosen",
       "Image": true,
@@ -620,12 +680,72 @@
       ]
     },
     {
+      "id": 96,
+      "Name": "The Hobbit: An Unexpected Journey",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Movies",
+        "Kathleen"
+      ]
+    },
+    {
+      "id": 98,
+      "Name": "The Hobbit: The Battle of the Five Armies",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Movies",
+        "Kathleen"
+      ]
+    },
+    {
+      "id": 97,
+      "Name": "The Hobbit: The Desolation of Smaaug",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Movies",
+        "Kathleen"
+      ]
+    },
+    {
       "id": 43,
       "Name": "The Legend of Zelda: Link's Awakening",
       "Image": true,
       "RunCommand": null,
       "Tags": [
         "Wishlist"
+      ]
+    },
+    {
+      "id": 88,
+      "Name": "The Lord of the Rings Fellowship of the Ring",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Movies",
+        "Kathleen"
+      ]
+    },
+    {
+      "id": 90,
+      "Name": "The Lord of the Rings The Return of the King",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Movies",
+        "Kathleen"
+      ]
+    },
+    {
+      "id": 89,
+      "Name": "The Lord of the Rings The Two Towers",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Movies",
+        "Kathleen"
       ]
     },
     {
@@ -1125,7 +1245,7 @@
     {
       "Name": "Movies",
       "BackgroundColorCheck": true,
-      "BackgroundColor": "white",
+      "BackgroundColor": "black",
       "OriginalDimensions": false,
       "Gap": 0,
       "Wrap": "wrap",
@@ -1145,21 +1265,32 @@
     },
     {
       "Name": "Nintendo",
+      "Carousel": false,
+      "CarouselOptions": [
+        "Nintendo 3DS",
+        "Nintendo 64",
+        "Nintendo GameCube",
+        "Nintendo Gameboy Advance",
+        "Nintendo Gameboy Color",
+        "Nintendo Switch",
+        "Nintendo Wii"
+      ],
+      "BackgroundVisual": false,
       "BackgroundColorCheck": true,
-      "BackgroundColor": "white",
+      "BackgroundColor": "gray",
       "OriginalDimensions": false,
-      "Gap": 10,
-      "Wrap": "nowrap",
+      "Gap": 2,
+      "Wrap": "wrap",
       "Width": 2,
-      "Height": 2,
-      "Border": 4,
-      "BorderColor": "red",
-      "BorderRadius": 20,
-      "MatchBorder": false,
-      "FloatingBorder": 4,
-      "FloatingBorderColor": "black",
-      "FloatingBorderRadius": 20,
-      "FloatingBorderGap": 10,
+      "Height": 3,
+      "Border": 5,
+      "BorderColor": "black",
+      "BorderRadius": 0,
+      "MatchBorder": true,
+      "FloatingBorder": 5,
+      "FloatingBorderColor": "red",
+      "FloatingBorderRadius": 0,
+      "FloatingBorderGap": 0,
       "Rows": 1,
       "Columns": 15,
       "CustomValues": true
@@ -1694,6 +1825,39 @@
     },
     {
       "Name": "Disney"
+    },
+    {
+      "Name": "Kathleen",
+      "Gap": 5,
+      "Wrap": "wrap",
+      "Width": 2,
+      "Height": 3,
+      "OriginalDimensions": false,
+      "Border": 5,
+      "BorderColor": "black",
+      "BorderRadius": 5,
+      "FloatingBorder": 5,
+      "FloatingBorderColor": "red",
+      "FloatingBorderRadius": 5,
+      "FloatingBorderGap": 0,
+      "BackgroundColor": "green"
+    },
+    {
+      "Name": "Search",
+      "Gap": 5,
+      "Wrap": "wrap",
+      "Width": 1,
+      "Height": 1,
+      "OriginalDimensions": false,
+      "Border": 5,
+      "BorderColor": "black",
+      "BorderRadius": 5,
+      "FloatingBorder": 5,
+      "FloatingBorderColor": "red",
+      "FloatingBorderRadius": 5,
+      "FloatingBorderGap": 0,
+      "BackgroundColor": "white",
+      "BackgroundColorCheck": true
     }
   ],
   "Names": [

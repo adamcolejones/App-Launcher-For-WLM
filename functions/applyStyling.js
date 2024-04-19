@@ -90,6 +90,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       let backgroundVisual = selectedTag.BackgroundVisual !== undefined ? selectedTag.BackgroundVisual : false;
       let backgroundAudio = selectedTag.BackgroundAudio !== undefined ? selectedTag.BackgroundAudio : false;
       let backgroundColorCheck = selectedTag.BackgroundColorCheck !== undefined ? selectedTag.BackgroundColorCheck : false;
+      let backgroundColorCheckboxValue = backgroundColorCheck ? ' checked' : '';
       let backgroundColor = selectedTag.BackgroundColor !== undefined ? selectedTag.BackgroundColor : 'white';
       let gap = selectedTag.Gap !== undefined ? selectedTag.Gap : 5; 
       let wrap = selectedTag.Wrap !== undefined ? selectedTag.Wrap : 'wrap'; // check json value
@@ -133,7 +134,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
           </div>
           <div class="settingsOption">
             <p id="backgroundColor">Background Color</p>
-            <input id="backgroundColorCheckbox" type="checkbox" checked>
+            <input id="backgroundColorCheckbox" type="checkbox" ${backgroundColorCheckboxValue}>
             <input type="text" id="formBackgroundColor" name="formBackgroundColor" value=${backgroundColor}>
           </div>
           <div class="settingsOption">
@@ -243,6 +244,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       const scrollableContent = document.querySelector('.scrollableContent');
       const mediaContainer = document.getElementById('mediaContainer');
       const backgroundColorCheckbox = document.getElementById('backgroundColorCheckbox');
+      const formBackgroundColor = document.getElementById('formBackgroundColor');
       const gapCheckbox = document.getElementById('gapCheckbox');
       const wrapCheckbox = document.getElementById('wrapCheckbox');
       const matchBorderCheckbox = document.getElementById('matchBorderCheckbox');
@@ -483,11 +485,13 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         if (backgroundColorCheckbox.checked) {
           backgroundColor = document.getElementById("formBackgroundColor").value;
           document.getElementById("formBackgroundColor").disabled = false;
+          backgroundColorCheck = true;
           // testMedia.style.background = `${background}px solid ${backgroundColor}`;
         } else {
           backgroundColor = 'white';
-          // testMedia.style.background = `${background}px solid ${backgroundColor}`;
+          backgroundColorCheck = false;
           document.getElementById("formBackgroundColor").disabled = true;
+          // testMedia.style.background = `${background}px solid ${backgroundColor}`;
         }
         // mediaContainer.style.background = backgroundColor; // Directly update the background of scrollableContent
         // scrollableContent.style.background = backgroundColor; // Directly update the background of scrollableContent
@@ -495,13 +499,17 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         // saveStyling();
       }
 
-      document.getElementById("formBackgroundColor").addEventListener("input", function() {
+      // create a function here and the call the dunction and save styling seperately
+      formBackgroundColor.addEventListener('input', updateBackgroundColorForm);
+      formBackgroundColor.addEventListener('input', saveStyling);
+      // document.getElementById("formBackgroundColor").addEventListener("input", function() {
+      function updateBackgroundColorForm() {
         var inputValue = this.value;
         backgroundColor = inputValue;
         backgroundColor = this.value !== null ? this.value : 'black';
         this.value = backgroundColor;
-        updateBackgroundColor(); // apply to all media items
-      });
+        updateBackgroundColor(); 
+      }
 
       //###################################################################################################################################################################
 
@@ -1319,12 +1327,12 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
 
       function saveStyling() {
          // if user changes the value, do not run on initial load
-        console.log('Function: saveStyling');
+        console.log('Function: saveStyling: ' + backgroundColorCheck);
         window.updateBridge.updateTag(
           name, 
           // backgroundVisual, 
           // backgroundAudio, 
-          // backgroundColorCheck, 
+          backgroundColorCheck, 
           backgroundColor, 
           gap, 
           wrap, 

@@ -335,6 +335,50 @@ document.addEventListener('DOMContentLoaded', () => {
       const sideMenuDiv = document.getElementById('sideMenu');
       sideMenuDiv.innerHTML = ''; // Clear any previous content
 
+      // *************************************************************************************************************************************************                                                                             
+      //  ██████████████ ██████████████ ██████████████ ████████████████   ██████████████ ██████  ██████ 
+      //  ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   ██░░░░░░░░░░██ ██░░██  ██░░██ 
+      //  ██░░██████████ ██░░██████████ ██░░██████░░██ ██░░████████░░██   ██░░██████████ ██░░██  ██░░██ 
+      //  ██░░██         ██░░██         ██░░██  ██░░██ ██░░██    ██░░██   ██░░██         ██░░██  ██░░██ 
+      //  ██░░██████████ ██░░██████████ ██░░██████░░██ ██░░████████░░██   ██░░██         ██░░██████░░██ 
+      //  ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   ██░░██         ██░░░░░░░░░░██ 
+      //  ██████████░░██ ██░░██████████ ██░░██████░░██ ██░░██████░░████   ██░░██         ██░░██████░░██ 
+      //          ██░░██ ██░░██         ██░░██  ██░░██ ██░░██  ██░░██     ██░░██         ██░░██  ██░░██ 
+      //  ██████████░░██ ██░░██████████ ██░░██  ██░░██ ██░░██  ██░░██████ ██░░██████████ ██░░██  ██░░██ 
+      //  ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░██  ██░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░██ 
+      //  ██████████████ ██████████████ ██████  ██████ ██████  ██████████ ██████████████ ██████  ██████ 
+
+      // create the Searchbar and functionality
+      const searchbar = document.createElement("div");
+      searchbar.id = "searchbar";
+      searchbar.className = "searchbar";
+      searchbar.innerHTML = '<input type="text" placeholder="Search">';
+      const searchbarInput = searchbar.querySelector('input');
+      searchbarInput.addEventListener('input', searchbarSelect);
+      function searchbarSelect() {
+        var searchbarValue = this.value;
+        console.log('Function: searchbarSelect: ' + searchbarValue);
+        // deselect the current selection
+        // select the search category
+        // when user selects a new category, the app should function like normal
+      }
+
+      // if search bar is selected
+        // if empty do not change the content
+        // if search contains characters, change the selected category to "Search" and show "Search styling"
+        // transition from one style to another
+
+      // searches should look for any included string equal to the search 
+      // example: Searching "art" will show content with "smart" in the title
+
+      // if search bar has something in it but not selected, then display the clicked content
+      // searchbar.addEventListener('change', updateBackgroundColor);
+      // searchbar.addEventListener('change', saveStyling);
+
+      // searchbar.addEventListener('click', searchbarSelect);
+      // searchbar.addEventListener('click', () => {});
+                                                                                                     
+
       // *************************************************************************************************************************************************
       // Side item Carousel
       //                                                                                                                              
@@ -352,7 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
       //                                                                                                                              
 
       const carousel = document.createElement("div");
-      carousel.id = "textCarousel";
+      // carousel.id = "textCarousel";
       carousel.className = "carousel";
 
       // Create the left button, middle text, and right button
@@ -369,7 +413,7 @@ document.addEventListener('DOMContentLoaded', () => {
       carousel.appendChild(leftButton);
       carousel.appendChild(carouselText);
       carousel.appendChild(rightButton);
-      sideMenuDiv.appendChild(carousel);
+      // sideMenuDiv.appendChild(carousel); // gets reset later
 
       const texts = data.Tags.filter(item => item.Carousel).map(item => item.Name);
       carouselText.innerText = texts.length > 0 ? texts[0] : "No text available";
@@ -386,7 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
       rightButton.onclick = () => changeText(1);
 
       //                                                                                                                                     
-      //                                                                                                                                      
+      // *************************************************************************************************************************************************                                                                                                                            
       //  ██████████████ ██████████ ████████████   ██████████████ ██████          ██████ ██████████████ ██████          ██████ ██████  ██████ 
       //  ██░░░░░░░░░░██ ██░░░░░░██ ██░░░░░░░░████ ██░░░░░░░░░░██ ██░░██████████████░░██ ██░░░░░░░░░░██ ██░░██████████  ██░░██ ██░░██  ██░░██ 
       //  ██░░██████████ ████░░████ ██░░████░░░░██ ██░░██████████ ██░░░░░░░░░░░░░░░░░░██ ██░░██████████ ██░░░░░░░░░░██  ██░░██ ██░░██  ██░░██ 
@@ -418,6 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // console.log("updateSideMenu:" + currentName);
         currentCarouselCategory = currentName;
         sideMenuDiv.innerHTML = ''; // Clear the side menu
+        sideMenuDiv.appendChild(searchbar);
         sideMenuDiv.appendChild(carousel); // Re-add the carousel to the side menu
 
         const contentDisplayDiv = document.getElementById('contentDisplay');
@@ -578,7 +623,7 @@ document.addEventListener('DOMContentLoaded', () => {
               mediaData.filter(item => item.Tags.includes(tag));
           }
 
-          mediaContainerDiv.innerHTML += createMedia(items);
+          mediaContainerDiv.innerHTML += createMedia(items, selectedTag);
           
           // Calling this function to trigger the styling on load
           applyStyling(tag, jsondata); 
@@ -1028,28 +1073,29 @@ document.addEventListener('DOMContentLoaded', () => {
   // This is the default, there is no styling applied until the settings button is clicked.
   // This may be overwritten when the settings menu is clicked.  
   // the settings menu should only display the category settings menu, it should not be the cause of the styling being applied
-    function createMedia(data) {
+    function createMedia(items, selectedTag) {
+      // use the tag to find child categories, use the carousel option to determine if categories should be displayed again, under all
       // console.log("Data: " + data);
       let mediaHTML = '<div class="mediadata">';
       mediaHTML += '<div id="testMediaContainer">';
 
 
-      if (data.length === 0) { // create test media here so that the applystying page has something to edit and not crash for lack of data
+      if (items.length === 0) { // create test media here so that the applystying page has something to edit and not crash for lack of data
         mediaHTML += '<div class="testMedia">'; // Create a blank item
         mediaHTML += '<p>No media exists in this category.  Do I want to hide this category?</p>'; // Add the line of text
         mediaHTML += '</div>'; // Close the div tags
         return mediaHTML;
       }
       // Collect all unique keys (field names) from the array
-      // if data = "All", get all items from carousel selection
+      // if items = "All", get all items from carousel selection
       const allKeys = new Set();
-      for (const item of data) {
+      for (const item of items) {
         for (const key in item) {
           allKeys.add(key);
         }
       }
-      // Create data rows
-      for (const item of data) {
+      // Create items rows
+      for (const item of items) {
         console.log("Item: " + item);
         mediaHTML += `<div class="testMedia" data-item='${JSON.stringify(item).replace(/'/g, "&apos;")}'>`;
         if (item.id && item.Image == true) {
@@ -1063,7 +1109,15 @@ document.addEventListener('DOMContentLoaded', () => {
         // mediaHTML += `<div class="testMediavalue">${itemName}</div>`;
         mediaHTML += '<br></div>';
       }
-      mediaHTML += '<br><p>Display Option to Add a category to this list, Example: Nintendo (Parent) N64, 3DS, GBC (Children)</p>'; // class="mediaitemcontainer"
+      // List other child tags that belong to this category
+      if (selectedTag.Carousel === false) {
+        selectedTag.CarouselOptions.forEach(option => {
+          mediaHTML += `<div class="testMedia">${option}</div>`; // Adjust this line depending on the structure of `option`
+        });
+      }
+      
+      // mediaHTML += `<div>"${selectedTag.CarouselOptions}"</div>`; // 
+      mediaHTML += '<br><p>Toggle that filters child categories on and off</p>'; // class="mediaitemcontainer"
       mediaHTML += '</div>'; // class="testMediaContainer"
       mediaHTML += '</div>'; // class="mediadata"
       return mediaHTML;

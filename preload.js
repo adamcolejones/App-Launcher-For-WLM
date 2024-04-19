@@ -124,7 +124,7 @@ let updateMedia = (id, Name, RunCommand, Tags, imagePath) => {
 let updateTag = (
   name, 
   // backgroundAudio, 
-  // backgroundColorCheck, 
+  backgroundColorCheck, 
   backgroundColor, 
   gap, 
   wrap, 
@@ -144,7 +144,7 @@ let updateTag = (
     "Name": name,
     // "BackgroundAudio": backgroundAudio, 
     // "BackgroundVisual": backgroundVisual,
-    // "BackgroundColorCheck": backgroundColorCheck,
+    "BackgroundColorCheck": backgroundColorCheck,
     "BackgroundColor": backgroundColor,
     "OriginalDimensions": originalDimensions,
     "Gap": gap,
