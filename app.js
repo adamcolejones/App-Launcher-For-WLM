@@ -36,6 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const mediaSubmit = document.getElementById('mediaSubmit');
     let currentCarouselCategory; // needed to get the value for the categoryItems() function
     let mediaData;
+    let tagData;
+    
 
 
     // const gridDisplay = document.getElementById('gridDisplay');
@@ -47,7 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('data.json')
     .then(response => response.json())
     .then(data => {
-      mediaData = data;
+      mediaData = data.Media || [];
+      tagData = data.Tags || [];
       // Assuming the data in data.json is an object with user-named arrays.
       // displayData(data);
       displayMedia(data);
@@ -215,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Calculate the highest ID
       // Calculating the highest ID will allow us to add 1 and assign the new highest value to the new media giving it a unique value
       // This data exists outside of the displayMedia function, therefore you have to find another way to reference data, by pre-delcaring the value and having the value exist in this file universally
-      let mediaDataMap = mediaData.Media || [];
+      let mediaDataMap = mediaData || [];
       const existingIds = mediaDataMap.map(item => item.id);
 
       // const existingIds = data.Media.map(item => item.id);
@@ -333,7 +336,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Display tags in the side menu
       const sideMenuDiv = document.getElementById('sideMenu');
-      sideMenuDiv.innerHTML = ''; // Clear any previous content
+      
+      // sideMenuDiv.innerHTML = ''; // Clear any previous content
 
       // *************************************************************************************************************************************************                                                                             
       //  ██████████████ ██████████████ ██████████████ ████████████████   ██████████████ ██████  ██████ 
@@ -353,14 +357,32 @@ document.addEventListener('DOMContentLoaded', () => {
       searchbar.id = "searchbar";
       searchbar.className = "searchbar";
       searchbar.innerHTML = '<input type="text" placeholder="Search">';
+      sideMenuDiv.appendChild(searchbar);
       const searchbarInput = searchbar.querySelector('input');
       searchbarInput.addEventListener('input', searchbarSelect);
       function searchbarSelect() {
         var searchbarValue = this.value;
         console.log('Function: searchbarSelect: ' + searchbarValue);
-        // deselect the current selection
+        // Find all sidemenu-items where they have the "selected" class
+        var selectedSidemenuItems = document.querySelectorAll('.sidemenu-item.selected');
+        selectedSidemenuItems.forEach(item => { // Remove the 'selected' class from each item
+            item.classList.remove('selected');
+        });
+        // select the "Search" through the category selection function
+        categoryItems("Search", data, searchbarValue);
+        updateSideMenu(searchbarValue);
+        // if (searchbarValue.trim() != "") {
+        //   // create a list of all media items containing the search
+        //   console.log(data);
+        //   categoryItems("Search", data, searchbarValue);
+        // }
+
+
         // select the search category
         // when user selects a new category, the app should function like normal
+
+        // find all classes named ('sidemenu-item'), remove selected attribute
+        // add selected attribute to 
       }
 
       // if search bar is selected
@@ -380,7 +402,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                                                                                      
 
       // *************************************************************************************************************************************************
-      // Side item Carousel
+      // Side item Carouse.l
       //                                                                                                                              
       //  ██████████████ ██████████████ ████████████████   ██████████████ ██████  ██████ ██████████████ ██████████████ ██████         
       //  ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██         
@@ -395,39 +417,39 @@ document.addEventListener('DOMContentLoaded', () => {
       //  ██████████████ ██████  ██████ ██████  ██████████ ██████████████ ██████████████ ██████████████ ██████████████ ██████████████ 
       //                                                                                                                              
 
-      const carousel = document.createElement("div");
-      // carousel.id = "textCarousel";
-      carousel.className = "carousel";
+      // const carousel = document.createElement("div");
+      // // carouse.l.id = "textCarouse.l";
+      // carousel.className = "carousel";
 
-      // Create the left button, middle text, and right button
-      const leftButton = document.createElement("button");
-      leftButton.innerHTML = "&#10094;";
-      leftButton.onclick = () => changeText(-1);
-      const carouselText = document.createElement("div");
-      carouselText.id = "carouselText";
-      const rightButton = document.createElement("button");
-      rightButton.innerHTML = "&#10095;";
-      rightButton.onclick = () => changeText(1);
+      // // Create the left button, middle text, and right button
+      // const leftButton = document.createElement("button");
+      // leftButton.innerHTML = "&#10094;";
+      // leftButton.onclick = () => changeText(-1);
+      // const carouselText = document.createElement("div");
+      // carouselText.id = "carouselText";
+      // const rightButton = document.createElement("button");
+      // rightButton.innerHTML = "&#10095;";
+      // rightButton.onclick = () => changeText(1);
 
-      // Append elements to the carousel container
-      carousel.appendChild(leftButton);
-      carousel.appendChild(carouselText);
-      carousel.appendChild(rightButton);
-      // sideMenuDiv.appendChild(carousel); // gets reset later
+      // // Append elements to the carouse.l container
+      // // carouse.l.appendChild(leftButton);
+      // // carouse.l.appendChild(carouse.lText);
+      // // carouse.l.appendChild(rightButton);
+      // // sideMenuDiv.appendChild(carouse.l); // gets reset later
 
-      const texts = data.Tags.filter(item => item.Carousel).map(item => item.Name);
-      carouselText.innerText = texts.length > 0 ? texts[0] : "No text available";
+      // const texts = data.Tags.filter(item => item.Carousel).map(item => item.Name);
+      // carouselText.innerText = texts.length > 0 ? texts[0] : "No text available";
 
-      let currentIndex = 0;
-      function changeText(step) {
-        currentIndex = (currentIndex + step + texts.length) % texts.length;
-        carouselText.innerText = texts[currentIndex];
-        updateSideMenu(texts[currentIndex]);
-        selectFirstSideMenuItem();
-      }
+      // let currentIndex = 0;
+      // function changeText(step) {
+      //   currentIndex = (currentIndex + step + texts.length) % texts.length;
+      //   carouselText.innerText = texts[currentIndex];
+      //   updateSideMenu(texts[currentIndex]);
+      //   selectFirstSideMenuItem();
+      // }
 
-      leftButton.onclick = () => changeText(-1);
-      rightButton.onclick = () => changeText(1);
+      // leftButton.onclick = () => changeText(-1);
+      // rightButton.onclick = () => changeText(1);
 
       //                                                                                                                                     
       // *************************************************************************************************************************************************                                                                                                                            
@@ -458,12 +480,13 @@ document.addEventListener('DOMContentLoaded', () => {
       //                                                            
       //                                                          
       // Set the categories to be displayed in the side bar
-      function updateSideMenu(currentName) {
+      // function updateSideMenu(currentName) {
+      function updateSideMenu(searchbarValue) {
         // console.log("updateSideMenu:" + currentName);
-        currentCarouselCategory = currentName;
-        sideMenuDiv.innerHTML = ''; // Clear the side menu
-        sideMenuDiv.appendChild(searchbar);
-        sideMenuDiv.appendChild(carousel); // Re-add the carousel to the side menu
+        // currentCarouselCategory = currentName;
+        // sideMenuDiv.innerHTML = ''; // Clear the side menu
+        // sideMenuDiv.appendChild(searchbar); // this part is causing the searchbar to go unclicked when function is called
+        // sideMenuDiv.appendChild(carouse.l); // Re-add the carouse.l to the side menu
 
         const contentDisplayDiv = document.getElementById('contentDisplay');
         const mediaContainerDiv = document.getElementById('mediaContainer');
@@ -484,7 +507,7 @@ document.addEventListener('DOMContentLoaded', () => {
         editCategorySettings.style.display = 'none';
         editCategorySettings.innerHTML = '';
 
-        // Display all categories associated with this parent (carouselOptions)
+        // Display all categories associated with this parent (carouse.lOptions)
         // Common setup for side menu items
         let sideMenuContainer = document.createElement('div');
         sideMenuContainer.id = 'sidemenu-itemContainer';
@@ -492,7 +515,7 @@ document.addEventListener('DOMContentLoaded', () => {
         function createMenuItem(text, index) {
           const itemDiv = document.createElement('div');
           itemDiv.classList.add('sidemenu-item');
-          // This changes the category name of the carousel item to All, which shows all content belonging to a category under this carousel item
+          // This changes the category name of the carouse.l item to All, which shows all content belonging to a category under this carouse.l item
           if (index === 0) {
             itemDiv.textContent = "All";
           }
@@ -502,34 +525,34 @@ document.addEventListener('DOMContentLoaded', () => {
           // itemDiv.textContent = text;
           sideMenuContainer.appendChild(itemDiv);
 
-          itemDiv.addEventListener('click', () => {
+          // CREATE SELECTION TAG FOR SELECTED CATEGORY
+          itemDiv.addEventListener('click', setSelectedCategory);
+          // itemDiv.addEventListener('click', () => {
+          function setSelectedCategory() {
             if (itemDiv.classList.contains('selected')) {
-                return; // Exit if already selected
+              return; // Exit if already selected
             }
             document.querySelectorAll('.sidemenu-item').forEach(item => {
                 item.classList.remove('selected');
             });
-            itemDiv.classList.add('selected');
+            itemDiv.classList.add('selected'); // make it the current selecction
 
             categoryItems(text, data);
-          });
-          selectFirstSideMenuItem();
+          }
+          // selectFirstSideMenuItem(); // can I do this outside of this function?  It's being called when I update the searcfield and preventing continuos input
         }
 
         // Determine which items to display in the side menu
-        // If Category === All, then display all tags minus those already in the carousel
-        let itemsToDisplay = [];
-        if (currentCarouselCategory === "All") {
-          // Filter out tags that are in the 'texts' array and map the results to get the tag names
-          itemsToDisplay = [currentName].concat(data.Tags.filter(tag => !texts.includes(tag.Name)).map(tag => tag.Name));
-        } else {
-          // Find the specific tag that matches the currentName
-          // If foundItem exists, use its CarouselOptions, otherwise, use an empty array
-          // Ensure the first item is the currentName itself
-          const foundItem = data.Tags.find(item => item.Name === currentName);
-          itemsToDisplay = [currentName].concat(foundItem?.CarouselOptions || []);
-        }
+        // If search field has input data, then display all relevant categories
+        // if search field is blank, then display all categories in the list
+        // TODO
+        if (searchbarValue) {
+          console.log('SideBar Search value: ' + searchbarValue);
+        };
 
+        let itemsToDisplay = [];
+        
+        itemsToDisplay = data.Tags.map(tag => tag.Name);
         itemsToDisplay.forEach((item, index) => createMenuItem(item, index));
       }
 
@@ -540,7 +563,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      updateSideMenu(texts[0]);
+      // updateSideMenu(texts[0]);
+      updateSideMenu();
+      selectFirstSideMenuItem();
+
+        // If Category === All, then display all tags minus those already in the carouse.l
+      // if (currentCarouse.lCategory === "All") {
+        //   // Filter out tags that are in the 'texts' array and map the results to get the tag names
+        //   itemsToDisplay = [currentName].concat(data.Tags.filter(tag => !texts.includes(tag.Name)).map(tag => tag.Name));
+        // } else {
+        //   // Find the specific tag that matches the currentName
+        //   // If foundItem exists, use its Carouse.lOptions, otherwise, use an empty array
+        //   // Ensure the first item is the currentName itself
+        //   const foundItem = data.Tags.find(item => item.Name === currentName);
+        //   itemsToDisplay = [currentName].concat(foundItem?.Carouse.lOptions || []);
+        // }
+        // itemsToDisplay = [currentName].concat(data.Tags.filter(tag => !texts.includes(tag.Name)).map(tag => tag.Name));
+
 
       // *************************************************************************************************************************************************
       //                                                                                                                                  
@@ -574,15 +613,15 @@ document.addEventListener('DOMContentLoaded', () => {
       // categoryItems("All", data); // TODO, this shouldn't be the default way to display all content
       // instead have a function that selects the first item in the side menu list
 
-      function categoryItems(tag, jsondata) {
+      function categoryItems(tag, jsondata, searchbarValue) {
           const scrollableContentDiv = document.querySelector('.scrollableContent');
           const mediaContainerDiv = document.getElementById('mediaContainer');
           const mediaVisual = document.getElementById('.mediaVisual');
-          // get the value of Id carouselText
-          console.log("Carousel Selection: " + currentCarouselCategory);
+          // get the value of Id carouse.lText
+          // console.log("Carouse.l Selection: " + currentCarouse.lCategory);
           
           // if (tag === "All") {
-          //   tag = currentCarouselCategory;
+          //   tag = currentCarouse.lCategory;
           // }
           // Show media display and hide others
           mediaContainerDiv.style.display = 'block';
@@ -601,26 +640,47 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
           `;
       
-          
           // If Tag selected is all, show all media data.  If not, only show media data where the media entries include the selected Tag.
           // This creates a list of Media IDs that will be displayed
-          const mediaData = jsondata.Media || [];
-          const tagData = jsondata.Tags || [];
-          // Find all the CarouselOptions for the selectedTag
+          mediaData = jsondata.Media || [];
+          tagData = jsondata.Tags || [];
+          // Find all the Carouse.lOptions for the selectedTag
           let selectedTag = tagData.find(item => item.Name === tag);
-          let carouselOptions = selectedTag.CarouselOptions;
+          // let carouse.lOptions = selectedTag.Carouse.lOptions;
           // Find every media item associated with the Options in the list (avoid dupes)
           // create if statement for other categories 
           console.log('tag: ' + tag);
-          console.log('currentCarouselCategory: ' + currentCarouselCategory);
+          // console.log('currentCarouse.lCategory: ' + currentCarouse.lCategory);
           let items;
-          if (tag === "All" && currentCarouselCategory === "All")   {
+          // if (tag === "Search" && searchbarValue) {
+          if (tag === "Search") {
+            if (searchbarValue === "") {
+              selectFirstSideMenuItem();
+              // select the side menu item that matches "All"
+              // categoryItems("All", data);
+              return;
+              // items = mediaData; // if blank, show all content- search narrows results
+              // items = []; // if blank, show nothing at all- search finds results
+            }
+            else {
+              items = mediaData.filter(item => 
+                // item.Name && item.Name.toLowerCase().includes(searchbarValue.toLowerCase())
+                // Make search field and data results Lowercase and remove spaces
+                item.Name.replace(/\s+/g, '').toLowerCase().includes(searchbarValue.replace(/\s+/g, '').toLowerCase()) 
+              );
+              // console.log("searchbarValue: " + searchbarValue);
+              // console.log(items);
+            }
+          }
+          // else if (tag === "All" && currentCarouse.lCategory === "All")   {
+          else if (tag === "All")   {
             items = mediaData;
           }
           else {
-            items = tag === currentCarouselCategory ?
-              mediaData.filter(mediaItem => mediaItem.Tags && carouselOptions.some(option => mediaItem.Tags.includes(option))) :
-              mediaData.filter(item => item.Tags.includes(tag));
+            // items = tag === currentCarouse.lCategory ?
+            // items = tag ?
+              // mediaData.filter(mediaItem => mediaItem.Tags && carouse.lOptions.some(option => mediaItem.Tags.includes(option))) :
+              items = mediaData.filter(item => item.Tags.includes(tag));
           }
 
           mediaContainerDiv.innerHTML += createMedia(items, selectedTag);
@@ -667,8 +727,9 @@ document.addEventListener('DOMContentLoaded', () => {
       function initMenuClicks(data) {
         const tagDivs = document.querySelectorAll('.sidemenu-item');
         tagDivs.forEach(tagDiv => {
-          tagDiv.addEventListener('click', () => {
-
+          tagDiv.addEventListener('click', handleClick);
+          // tagDiv.addEventListener('click', () => {
+          function handleClick() {
             if (tagDiv.classList.contains('selected')) {
               return; // Exit the function if already selected
             }
@@ -708,7 +769,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (scrollableContentDiv) {
                 scrollableContentDiv.scrollTop = 0;
             }
-          });
+          }
+          // });
         });
       }
     // *************************************************************************************************************************************************
@@ -778,9 +840,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // console.log('Displaying media item data');
         const contentDisplayDiv = document.getElementById('contentDisplay');
         const mediaContainerDiv = document.getElementById('mediaContainer');
+        const editDisplayDiv = document.getElementById('editDisplay');
+
         mediaContainerDiv.style.display = 'none'; // Hide mediaContainer div
         console.log("Function: displayMediaItemData: Clear mediaContainer")
         document.getElementById('editCategoryMenu').style.display = 'none';
+
+        contentDisplayDiv.innerHTML = ``;
         contentDisplayDiv.style.display = 'block'; // Or 'flex', 'media', etc. depending on your layout
         // This itemDataDiv might be unnecessary, just add inner html to contentDisplayDiv and append to scrollable content?  When I have more time
         const itemDataDiv = document.createElement('div');
@@ -932,10 +998,12 @@ document.addEventListener('DOMContentLoaded', () => {
       function displayEditForm(updatedItem) {
         const contentDisplayDiv = document.getElementById('contentDisplay');
         const editDisplayDiv = document.getElementById('editDisplay');
+        editDisplayDiv.innerHTML = ``;
         contentDisplayDiv.style.display = 'none';
         document.getElementById('editCategoryMenu').style.display = 'none';
         editDisplayDiv.style.display = 'block';
         const editForm = document.createElement('div');
+        
         editForm.innerHTML = `
           <div id=buttonContainer>
             <div id="backContainer2">
@@ -1074,7 +1142,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // This may be overwritten when the settings menu is clicked.  
   // the settings menu should only display the category settings menu, it should not be the cause of the styling being applied
     function createMedia(items, selectedTag) {
-      // use the tag to find child categories, use the carousel option to determine if categories should be displayed again, under all
+      // use the tag to find child categories, use the carouse.l option to determine if categories should be displayed again, under all
       // console.log("Data: " + data);
       let mediaHTML = '<div class="mediadata">';
       mediaHTML += '<div id="testMediaContainer">';
@@ -1084,10 +1152,10 @@ document.addEventListener('DOMContentLoaded', () => {
         mediaHTML += '<div class="testMedia">'; // Create a blank item
         mediaHTML += '<p>No media exists in this category.  Do I want to hide this category?</p>'; // Add the line of text
         mediaHTML += '</div>'; // Close the div tags
-        return mediaHTML;
+        // return mediaHTML; // do not return incase there are child options (Nested)
       }
       // Collect all unique keys (field names) from the array
-      // if items = "All", get all items from carousel selection
+      // if items = "All", get all items from carouse.l selection
       const allKeys = new Set();
       for (const item of items) {
         for (const key in item) {
@@ -1110,13 +1178,13 @@ document.addEventListener('DOMContentLoaded', () => {
         mediaHTML += '<br></div>';
       }
       // List other child tags that belong to this category
-      if (selectedTag.Carousel === false) {
+      if (selectedTag.Name != 'All' && selectedTag.CarouselOptions) {
         selectedTag.CarouselOptions.forEach(option => {
           mediaHTML += `<div class="testMedia">${option}</div>`; // Adjust this line depending on the structure of `option`
         });
       }
       
-      // mediaHTML += `<div>"${selectedTag.CarouselOptions}"</div>`; // 
+      // mediaHTML += `<div>"${selectedTag.Carouse.lOptions}"</div>`; // 
       mediaHTML += '<br><p>Toggle that filters child categories on and off</p>'; // class="mediaitemcontainer"
       mediaHTML += '</div>'; // class="testMediaContainer"
       mediaHTML += '</div>'; // class="mediadata"

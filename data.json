@@ -1,6 +1,15 @@
 {
   "Media": [
     {
+      "id": 126,
+      "Name": "'Twas the Night Before Christmas",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Christmas"
+      ]
+    },
+    {
       "id": 54,
       "Name": "3-2-1 Penguins!",
       "Image": true,
@@ -69,6 +78,24 @@
       ]
     },
     {
+      "id": 114,
+      "Name": "Arthur Christmas",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Christmas"
+      ]
+    },
+    {
+      "id": 127,
+      "Name": "Beauty and the Beast: The Enchanted Christmas",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Christmas"
+      ]
+    },
+    {
       "id": 56,
       "Name": "Bibleman",
       "Image": true,
@@ -87,12 +114,30 @@
       ]
     },
     {
+      "id": 107,
+      "Name": "Big Breeze",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Artists"
+      ]
+    },
+    {
       "id": 70,
       "Name": "Buck Denver Asks...What's in the Bible?",
       "Image": true,
       "RunCommand": null,
       "Tags": [
         "Shows"
+      ]
+    },
+    {
+      "id": 108,
+      "Name": "Caleb Gordon",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Artists"
       ]
     },
     {
@@ -125,6 +170,24 @@
       ]
     },
     {
+      "id": 125,
+      "Name": "Disney's A Christmas Carol",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Christmas"
+      ]
+    },
+    {
+      "id": 116,
+      "Name": "Dr. Suess' The Grinch",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Christmas"
+      ]
+    },
+    {
       "id": 38,
       "Name": "Edited Media Test",
       "RunCommand": "C:\\Users\\adamc\\Documents\\Games\\Nintendo\\GameBoyAdvance\\Other\\CMD Files\\Pokemon Fire Red.cmd",
@@ -134,12 +197,39 @@
       "Image": true
     },
     {
+      "id": 118,
+      "Name": "Emmet Otter's Jug-Band Christmas",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Christmas"
+      ]
+    },
+    {
       "id": 47,
       "Name": "Epic Games",
       "Image": true,
       "RunCommand": null,
       "Tags": [
         "Launchers"
+      ]
+    },
+    {
+      "id": 102,
+      "Name": "Forrest Frank",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Artists"
+      ]
+    },
+    {
+      "id": 120,
+      "Name": "Frosty The Snowman",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Christmas"
       ]
     },
     {
@@ -192,6 +282,15 @@
       ]
     },
     {
+      "id": 117,
+      "Name": "Grandma Got Run Over by a Reindeer",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Christmas"
+      ]
+    },
+    {
       "id": 68,
       "Name": "It's Christmastime Again, Charlie Brown",
       "Image": true,
@@ -213,12 +312,30 @@
       ]
     },
     {
+      "id": 111,
+      "Name": "Jon Keith",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Artists"
+      ]
+    },
+    {
       "id": 51,
       "Name": "Joseph: King of Dreams",
       "Image": true,
       "RunCommand": null,
       "Tags": [
         "Movies"
+      ]
+    },
+    {
+      "id": 106,
+      "Name": "KB",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Artists"
       ]
     },
     {
@@ -230,6 +347,15 @@
         "Kirby",
         "Nintendo Switch",
         "Nintendo"
+      ]
+    },
+    {
+      "id": 115,
+      "Name": "Klaus",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Christmas"
       ]
     },
     {
@@ -258,6 +384,15 @@
       "RunCommand": null,
       "Tags": [
         "Shows"
+      ]
+    },
+    {
+      "id": 101,
+      "Name": "Lecrae",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Artists"
       ]
     },
     {
@@ -397,6 +532,42 @@
       ]
     },
     {
+      "id": 124,
+      "Name": "Mickey's Christmas Carol",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Christmas"
+      ]
+    },
+    {
+      "id": 122,
+      "Name": "Mickey's Once Upon a Christmas",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Christmas"
+      ]
+    },
+    {
+      "id": 123,
+      "Name": "Mickey's Twice Upon A Christmas",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Christmas"
+      ]
+    },
+    {
+      "id": 104,
+      "Name": "Mike Teezy",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Artists"
+      ]
+    },
+    {
       "id": 19,
       "Name": "New Super Mario Bros.",
       "Image": true,
@@ -411,6 +582,24 @@
     {
       "id": 74,
       "Name": "Newsboys",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Artists"
+      ]
+    },
+    {
+      "id": 100,
+      "Name": "NF",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Artists"
+      ]
+    },
+    {
+      "id": 109,
+      "Name": "NoBigDyl",
       "Image": true,
       "RunCommand": null,
       "Tags": [
@@ -521,6 +710,15 @@
       "RunCommand": null,
       "Tags": [
         "Veggie Tales"
+      ]
+    },
+    {
+      "id": 121,
+      "Name": "Rudolph The Red-Nosed Reindeer",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Christmas"
       ]
     },
     {
@@ -653,12 +851,21 @@
       ]
     },
     {
+      "id": 112,
+      "Name": "Tedashii",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Artists"
+      ]
+    },
+    {
       "id": 99,
       "Name": "Test",
       "Image": false,
       "RunCommand": null,
       "Tags": [
-        "Search"
+        ""
       ]
     },
     {
@@ -701,7 +908,7 @@
     },
     {
       "id": 97,
-      "Name": "The Hobbit: The Desolation of Smaaug",
+      "Name": "The Hobbit: The Desolation of Smaug",
       "Image": true,
       "RunCommand": null,
       "Tags": [
@@ -749,6 +956,15 @@
       ]
     },
     {
+      "id": 119,
+      "Name": "The Muppet Christmas Carol",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Christmas"
+      ]
+    },
+    {
       "id": 69,
       "Name": "The Peanuts Movie",
       "Image": true,
@@ -765,6 +981,15 @@
       "RunCommand": null,
       "Tags": [
         "Movies"
+      ]
+    },
+    {
+      "id": 113,
+      "Name": "The Polar Express",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Christmas"
       ]
     },
     {
@@ -841,6 +1066,24 @@
       ]
     },
     {
+      "id": 110,
+      "Name": "Torey D'Shaun",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Artists"
+      ]
+    },
+    {
+      "id": 103,
+      "Name": "Trip Lee",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Artists"
+      ]
+    },
+    {
       "id": 29,
       "Name": "Veggie Tales",
       "Image": true,
@@ -857,6 +1100,15 @@
       "Tags": [
         "Veggie Tales"
       ]
+    },
+    {
+      "id": 105,
+      "Name": "YB",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Artists"
+      ]
     }
   ],
   "Tags": [
@@ -866,7 +1118,7 @@
       "CarouselOptions": [],
       "BackgroundVisual": false,
       "BackgroundColorCheck": true,
-      "BackgroundColor": "lightblue",
+      "BackgroundColor": "gray",
       "OriginalDimensions": true,
       "Gap": 2,
       "Wrap": "wrap",
@@ -1101,17 +1353,17 @@
       "BackgroundVisual": true,
       "BackgroundColorCheck": false,
       "BackgroundColor": "white",
-      "OriginalDimensions": false,
-      "Gap": 1,
+      "OriginalDimensions": true,
+      "Gap": 25,
       "Wrap": "wrap",
       "Width": 1,
       "Height": 1,
-      "Border": 10,
+      "Border": 1,
       "BorderColor": "black",
       "BorderRadius": 5,
       "MatchBorder": false,
       "FloatingBorder": 5,
-      "FloatingBorderColor": "red",
+      "FloatingBorderColor": "white",
       "FloatingBorderRadius": 5,
       "FloatingBorderGap": 0,
       "Rows": 1,
@@ -1837,10 +2089,11 @@
       "BorderColor": "black",
       "BorderRadius": 5,
       "FloatingBorder": 5,
-      "FloatingBorderColor": "red",
+      "FloatingBorderColor": "lightgreen",
       "FloatingBorderRadius": 5,
       "FloatingBorderGap": 0,
-      "BackgroundColor": "green"
+      "BackgroundColor": "lightgreen",
+      "BackgroundColorCheck": true
     },
     {
       "Name": "Search",
