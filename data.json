@@ -152,6 +152,15 @@
       ]
     },
     {
+      "id": 128,
+      "Name": "Cloverton",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Artists"
+      ]
+    },
+    {
       "id": 27,
       "Name": "Dave and the Giant Pickle",
       "Image": true,
@@ -445,6 +454,17 @@
       ]
     },
     {
+      "id": 129,
+      "Name": "Mario Kart 8 Deluxe",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Mario Kart",
+        "Nintendo Switch",
+        "Nintendo"
+      ]
+    },
+    {
       "id": 20,
       "Name": "Mario Kart DS",
       "Image": true,
@@ -719,6 +739,16 @@
       "RunCommand": null,
       "Tags": [
         "Christmas"
+      ]
+    },
+    {
+      "id": 130,
+      "Name": "Sly Cooper and the Thievius Raccoonus",
+      "Image": true,
+      "RunCommand": null,
+      "Tags": [
+        "Sly Cooper",
+        "PlayStation"
       ]
     },
     {
@@ -2111,6 +2141,9 @@
       "FloatingBorderGap": 0,
       "BackgroundColor": "white",
       "BackgroundColorCheck": true
+    },
+    {
+      "Name": "Sly Cooper"
     }
   ],
   "Names": [

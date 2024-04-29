@@ -519,3 +519,82 @@
 
           // mediaContainerDiv.innerHTML += createMedia(items);
 //-----------------------------------------------------------------------------------------
+ // if (searchbarValue.trim() != "") {
+        //   // create a list of all media items containing the search
+        //   console.log(data);
+        //   categoryItems("Search", data, searchbarValue);
+        // }
+
+
+        // select the search category
+        // when user selects a new category, the app should function like normal
+
+        // find all classes named ('sidemenu-item'), remove selected attribute
+        // add selected attribute to 
+
+      // if search bar is selected
+        // if empty do not change the content
+        // if search contains characters, change the selected category to "Search" and show "Search styling"
+        // transition from one style to another
+
+      // searches should look for any included string equal to the search 
+      // example: Searching "art" will show content with "smart" in the title
+
+      // if search bar has something in it but not selected, then display the clicked content
+      // searchbar.addEventListener('change', updateBackgroundColor);
+      // searchbar.addEventListener('change', saveStyling);
+
+      // searchbar.addEventListener('click', searchbarSelect);
+      // searchbar.addEventListener('click', () => {});
+
+//-----------------------------------------------------------------------------------------
+
+// *************************************************************************************************************************************************
+      // Side item Carouse.l
+      //                                                                                                                              
+      //  ██████████████ ██████████████ ████████████████   ██████████████ ██████  ██████ ██████████████ ██████████████ ██████         
+      //  ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██         
+      //  ██░░██████████ ██░░██████░░██ ██░░████████░░██   ██░░██████░░██ ██░░██  ██░░██ ██░░██████████ ██░░██████████ ██░░██         
+      //  ██░░██         ██░░██  ██░░██ ██░░██    ██░░██   ██░░██  ██░░██ ██░░██  ██░░██ ██░░██         ██░░██         ██░░██         
+      //  ██░░██         ██░░██████░░██ ██░░████████░░██   ██░░██  ██░░██ ██░░██  ██░░██ ██░░██████████ ██░░██████████ ██░░██         
+      //  ██░░██         ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   ██░░██  ██░░██ ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██         
+      //  ██░░██         ██░░██████░░██ ██░░██████░░████   ██░░██  ██░░██ ██░░██  ██░░██ ██████████░░██ ██░░██████████ ██░░██         
+      //  ██░░██         ██░░██  ██░░██ ██░░██  ██░░██     ██░░██  ██░░██ ██░░██  ██░░██         ██░░██ ██░░██         ██░░██         
+      //  ██░░██████████ ██░░██  ██░░██ ██░░██  ██░░██████ ██░░██████░░██ ██░░██████░░██ ██████████░░██ ██░░██████████ ██░░██████████ 
+      //  ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░██  ██░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ 
+      //  ██████████████ ██████  ██████ ██████  ██████████ ██████████████ ██████████████ ██████████████ ██████████████ ██████████████ 
+      //                                                                                                                              
+
+      // const carousel = document.createElement("div");
+      // // carouse.l.id = "textCarouse.l";
+      // carousel.className = "carousel";
+
+      // // Create the left button, middle text, and right button
+      // const leftButton = document.createElement("button");
+      // leftButton.innerHTML = "&#10094;";
+      // leftButton.onclick = () => changeText(-1);
+      // const carouselText = document.createElement("div");
+      // carouselText.id = "carouselText";
+      // const rightButton = document.createElement("button");
+      // rightButton.innerHTML = "&#10095;";
+      // rightButton.onclick = () => changeText(1);
+
+      // // Append elements to the carouse.l container
+      // // carouse.l.appendChild(leftButton);
+      // // carouse.l.appendChild(carouse.lText);
+      // // carouse.l.appendChild(rightButton);
+      // // sideMenuDiv.appendChild(carouse.l); // gets reset later
+
+      // const texts = data.Tags.filter(item => item.Carousel).map(item => item.Name);
+      // carouselText.innerText = texts.length > 0 ? texts[0] : "No text available";
+
+      // let currentIndex = 0;
+      // function changeText(step) {
+      //   currentIndex = (currentIndex + step + texts.length) % texts.length;
+      //   carouselText.innerText = texts[currentIndex];
+      //   updateSideMenu(texts[currentIndex]);
+      //   selectFirstSideMenuItem();
+      // }
+
+      // leftButton.onclick = () => changeText(-1);
+      // rightButton.onclick = () => changeText(1);

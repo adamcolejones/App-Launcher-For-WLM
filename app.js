@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentCarouselCategory; // needed to get the value for the categoryItems() function
     let mediaData;
     let tagData;
+    let searchbarValue; // this is declared earlier to create a global variable that is referencable outside of specific functions
     
 
 
@@ -356,102 +357,22 @@ document.addEventListener('DOMContentLoaded', () => {
       const searchbar = document.createElement("div");
       searchbar.id = "searchbar";
       searchbar.className = "searchbar";
-      searchbar.innerHTML = '<input type="text" placeholder="Search">';
+      searchbar.innerHTML = '<input type="text" placeholder="Search"> <button type="button" id="clearSearchButton">X</button>';
       sideMenuDiv.appendChild(searchbar);
       const searchbarInput = searchbar.querySelector('input');
       searchbarInput.addEventListener('input', searchbarSelect);
       function searchbarSelect() {
-        var searchbarValue = this.value;
+        searchbarValue = this.value;
         console.log('Function: searchbarSelect: ' + searchbarValue);
         // Find all sidemenu-items where they have the "selected" class
         var selectedSidemenuItems = document.querySelectorAll('.sidemenu-item.selected');
         selectedSidemenuItems.forEach(item => { // Remove the 'selected' class from each item
             item.classList.remove('selected');
         });
-        // select the "Search" through the category selection function
-        categoryItems("Search", data, searchbarValue);
+        categoryItems("Search", data); // select the "Search" through the category selection function
         updateSideMenu(searchbarValue);
-        // if (searchbarValue.trim() != "") {
-        //   // create a list of all media items containing the search
-        //   console.log(data);
-        //   categoryItems("Search", data, searchbarValue);
-        // }
-
-
-        // select the search category
-        // when user selects a new category, the app should function like normal
-
-        // find all classes named ('sidemenu-item'), remove selected attribute
-        // add selected attribute to 
-      }
-
-      // if search bar is selected
-        // if empty do not change the content
-        // if search contains characters, change the selected category to "Search" and show "Search styling"
-        // transition from one style to another
-
-      // searches should look for any included string equal to the search 
-      // example: Searching "art" will show content with "smart" in the title
-
-      // if search bar has something in it but not selected, then display the clicked content
-      // searchbar.addEventListener('change', updateBackgroundColor);
-      // searchbar.addEventListener('change', saveStyling);
-
-      // searchbar.addEventListener('click', searchbarSelect);
-      // searchbar.addEventListener('click', () => {});
-                                                                                                     
-
-      // *************************************************************************************************************************************************
-      // Side item Carouse.l
-      //                                                                                                                              
-      //  ██████████████ ██████████████ ████████████████   ██████████████ ██████  ██████ ██████████████ ██████████████ ██████         
-      //  ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██         
-      //  ██░░██████████ ██░░██████░░██ ██░░████████░░██   ██░░██████░░██ ██░░██  ██░░██ ██░░██████████ ██░░██████████ ██░░██         
-      //  ██░░██         ██░░██  ██░░██ ██░░██    ██░░██   ██░░██  ██░░██ ██░░██  ██░░██ ██░░██         ██░░██         ██░░██         
-      //  ██░░██         ██░░██████░░██ ██░░████████░░██   ██░░██  ██░░██ ██░░██  ██░░██ ██░░██████████ ██░░██████████ ██░░██         
-      //  ██░░██         ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   ██░░██  ██░░██ ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██         
-      //  ██░░██         ██░░██████░░██ ██░░██████░░████   ██░░██  ██░░██ ██░░██  ██░░██ ██████████░░██ ██░░██████████ ██░░██         
-      //  ██░░██         ██░░██  ██░░██ ██░░██  ██░░██     ██░░██  ██░░██ ██░░██  ██░░██         ██░░██ ██░░██         ██░░██         
-      //  ██░░██████████ ██░░██  ██░░██ ██░░██  ██░░██████ ██░░██████░░██ ██░░██████░░██ ██████████░░██ ██░░██████████ ██░░██████████ 
-      //  ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░██  ██░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ 
-      //  ██████████████ ██████  ██████ ██████  ██████████ ██████████████ ██████████████ ██████████████ ██████████████ ██████████████ 
-      //                                                                                                                              
-
-      // const carousel = document.createElement("div");
-      // // carouse.l.id = "textCarouse.l";
-      // carousel.className = "carousel";
-
-      // // Create the left button, middle text, and right button
-      // const leftButton = document.createElement("button");
-      // leftButton.innerHTML = "&#10094;";
-      // leftButton.onclick = () => changeText(-1);
-      // const carouselText = document.createElement("div");
-      // carouselText.id = "carouselText";
-      // const rightButton = document.createElement("button");
-      // rightButton.innerHTML = "&#10095;";
-      // rightButton.onclick = () => changeText(1);
-
-      // // Append elements to the carouse.l container
-      // // carouse.l.appendChild(leftButton);
-      // // carouse.l.appendChild(carouse.lText);
-      // // carouse.l.appendChild(rightButton);
-      // // sideMenuDiv.appendChild(carouse.l); // gets reset later
-
-      // const texts = data.Tags.filter(item => item.Carousel).map(item => item.Name);
-      // carouselText.innerText = texts.length > 0 ? texts[0] : "No text available";
-
-      // let currentIndex = 0;
-      // function changeText(step) {
-      //   currentIndex = (currentIndex + step + texts.length) % texts.length;
-      //   carouselText.innerText = texts[currentIndex];
-      //   updateSideMenu(texts[currentIndex]);
-      //   selectFirstSideMenuItem();
-      // }
-
-      // leftButton.onclick = () => changeText(-1);
-      // rightButton.onclick = () => changeText(1);
-
-      //                                                                                                                                     
+      }                                                                                              
+                                                                                                                                      
       // *************************************************************************************************************************************************                                                                                                                            
       //  ██████████████ ██████████ ████████████   ██████████████ ██████          ██████ ██████████████ ██████          ██████ ██████  ██████ 
       //  ██░░░░░░░░░░██ ██░░░░░░██ ██░░░░░░░░████ ██░░░░░░░░░░██ ██░░██████████████░░██ ██░░░░░░░░░░██ ██░░██████████  ██░░██ ██░░██  ██░░██ 
@@ -493,6 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const editDisplayDiv = document.getElementById('editDisplay');
         const showTagSettingsDiv = document.getElementById('showTagSettings');
         const editCategorySettings = document.getElementById('editCategorySettings');
+        const sideMenuItemContainer = document.getElementById('sidemenu-itemContainer');
 
         // In the event user has the edit form up and clicks on the side menu to change the display
         // probably should look into some function that hides all unused divs
@@ -509,15 +431,65 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Display all categories associated with this parent (carouse.lOptions)
         // Common setup for side menu items
-        let sideMenuContainer = document.createElement('div');
-        sideMenuContainer.id = 'sidemenu-itemContainer';
-        sideMenuDiv.appendChild(sideMenuContainer);
+        // I want to generate this dynamically in the event the user wants to display the sidebar content in a different way.  This will allow me to perform checks in js without working with hardcoded html
+        let sideMenuContainer = document.getElementById('sidemenu-itemContainer');
+
+        if (sideMenuContainer) { // Check if the element already exists.  If it exists, clear its content
+            sideMenuContainer.innerHTML = '';
+        } else { // If it does not exist, create a new div and set its ID
+            sideMenuContainer = document.createElement('div');
+            sideMenuContainer.id = 'sidemenu-itemContainer';
+            sideMenuDiv.appendChild(sideMenuContainer); // Assuming sideMenuDiv is already defined and accessible
+        }
+
+        // let sideMenuContainer = document.createElement('div');
+        // sideMenuContainer.id = 'sidemenu-itemContainer';
+        // sideMenuDiv.appendChild(sideMenuContainer);
+        let itemsToDisplay = [];
+        // itemsToDisplay = data.Tags.map(tag => tag.Name);
+        // itemsToDisplay.forEach((item, index) => createMenuItem(item, index));
+        // Determine which items to display in the side menu
+        // If search field has input data, then display all relevant categories
+        // if search field is blank, then display all categories in the list
+        // TODO
+        if (searchbarValue) {
+          console.log('SideBar Search value: ' + searchbarValue);
+          // Make search field and data results Lowercase and remove spaces
+          itemsToDisplay = data.Tags
+            .filter(item => item.Name.replace(/\s+/g, '').toLowerCase().includes(searchbarValue.replace(/\s+/g, '').toLowerCase()))
+            .map(item => item.Name);
+
+          itemsToDisplay = itemsToDisplay.filter(item => item !== "All"); // remove the all tag from the array, as it will be replaced with the "Search / All" filtered category
+          itemsToDisplay = itemsToDisplay.filter(item => item !== "Search"); // remove the all tag from the array, as it will be replaced with the "Search / All" filtered category
+          itemsToDisplay = ["Search", ...itemsToDisplay];
+          // if (!itemsToDisplay.includes("All")) {
+          //   // Concat "All" at the beginning of the list
+          //   itemsToDisplay = ["All", ...itemsToDisplay];
+          // }
+
+          itemsToDisplay.forEach((item, index) => createMenuItem(item, index));
+          // console.log("SearchbarValue for Categories: " + searchbarValue)
+          // console.log("SearchbarValue items to display: " + itemsToDisplay)
+          // these find the results, but are not updating the Sidemenu, need to update the side menu
+          // CONTINUE HERE TODO
+        }
+        else {
+          itemsToDisplay = data.Tags.map(tag => tag.Name);
+          itemsToDisplay.forEach((item, index) => createMenuItem(item, index));  
+          // console.log("SearchbarValue for Categories: " + searchbarValue)
+          // console.log("SearchbarValue items to display: " + itemsToDisplay)
+        }
+
         function createMenuItem(text, index) {
+          console.log('Text: ' + text)
+          console.log('index: ' + index)
           const itemDiv = document.createElement('div');
           itemDiv.classList.add('sidemenu-item');
           // This changes the category name of the carouse.l item to All, which shows all content belonging to a category under this carouse.l item
+          // itemDiv.textContent = text;
+          // This former code would change the carousel name to "All", showing all content in that carousel option
           if (index === 0) {
-            itemDiv.textContent = "All";
+            itemDiv.textContent = "All"; // rename the search field as All 
           }
           else {
             itemDiv.textContent = text;
@@ -539,21 +511,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             categoryItems(text, data);
           }
-          // selectFirstSideMenuItem(); // can I do this outside of this function?  It's being called when I update the searcfield and preventing continuos input
+          selectFirstSideMenuItem(); // can I do this outside of this function?  It's being called when I update the searcfield and preventing continuos input
         }
 
-        // Determine which items to display in the side menu
-        // If search field has input data, then display all relevant categories
-        // if search field is blank, then display all categories in the list
-        // TODO
-        if (searchbarValue) {
-          console.log('SideBar Search value: ' + searchbarValue);
-        };
-
-        let itemsToDisplay = [];
         
-        itemsToDisplay = data.Tags.map(tag => tag.Name);
-        itemsToDisplay.forEach((item, index) => createMenuItem(item, index));
+
+        // let itemsToDisplay = [];
+        
+        // itemsToDisplay = data.Tags.map(tag => tag.Name);
+        // itemsToDisplay.forEach((item, index) => createMenuItem(item, index));
       }
 
       function selectFirstSideMenuItem() {
@@ -613,7 +579,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // categoryItems("All", data); // TODO, this shouldn't be the default way to display all content
       // instead have a function that selects the first item in the side menu list
 
-      function categoryItems(tag, jsondata, searchbarValue) {
+      function categoryItems(tag, jsondata) {
           const scrollableContentDiv = document.querySelector('.scrollableContent');
           const mediaContainerDiv = document.getElementById('mediaContainer');
           const mediaVisual = document.getElementById('.mediaVisual');
@@ -679,8 +645,8 @@ document.addEventListener('DOMContentLoaded', () => {
           else {
             // items = tag === currentCarouse.lCategory ?
             // items = tag ?
-              // mediaData.filter(mediaItem => mediaItem.Tags && carouse.lOptions.some(option => mediaItem.Tags.includes(option))) :
-              items = mediaData.filter(item => item.Tags.includes(tag));
+            // mediaData.filter(mediaItem => mediaItem.Tags && carouse.lOptions.some(option => mediaItem.Tags.includes(option))) :
+            items = mediaData.filter(item => item.Tags.includes(tag));
           }
 
           mediaContainerDiv.innerHTML += createMedia(items, selectedTag);
@@ -1164,7 +1130,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       // Create items rows
       for (const item of items) {
-        console.log("Item: " + item);
+        // console.log("Item: " + item);
         mediaHTML += `<div class="testMedia" data-item='${JSON.stringify(item).replace(/'/g, "&apos;")}'>`;
         if (item.id && item.Image == true) {
           const imageUrl = item.id ? `assets/media/${item.id}.png` : 'assets/media/default.png';

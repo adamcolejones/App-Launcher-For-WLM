@@ -121,6 +121,11 @@ body {
   text-align: center;
 }
 
+#clearSearchButton {
+  position: absolute;
+  right: 16px;
+}
+
 #contentDisplay {
   display: none;
 }
@@ -774,6 +779,13 @@ p {
   justify-content: center;
   /* background-color: rgb(223, 223, 223, 0.5); */
   padding: 20px;
+  /* width: 200px; */
+}
+
+.searchbar input {
+  width: 140px;
+  position: absolute;
+  left: 10px;
 }
 
 .settingsContainer {
