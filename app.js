@@ -28,9 +28,11 @@
 // 4. Backend Communication
 
 import { applyStyling } from './functions/applyStyling.js';
+// import { createMedia } from './functions/applyStyling.js';
 import { settingsMenu } from './functions/settingsMenu.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+    // applyStyling();
     const mediaform = document.getElementById('mediaForm');
     const errorMessageElement = document.getElementById('error-message');
     const mediaSubmit = document.getElementById('mediaSubmit');
@@ -202,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const Tags = document.getElementById('Tags').value || null;
 
       // Prevent user from using 'All' or 'Uncategorized' Tags
-      if (Tags && (Tags.includes("All") || Tags.includes("Uncategorized"))) {
+      if (Tags && (Tags.includes("All") || Tags.includes("Uncategorized") || Tags.includes("Search"))) {
         let errorMessage = "Tags cannot include '";
         if (Tags.includes("All")) { errorMessage += "All"; }
         if (Tags.includes("Uncategorized")) { errorMessage += errorMessage.includes("All") ? " or 'Uncategorized'" : "Uncategorized"; }
@@ -221,11 +223,10 @@ document.addEventListener('DOMContentLoaded', () => {
       // This data exists outside of the displayMedia function, therefore you have to find another way to reference data, by pre-delcaring the value and having the value exist in this file universally
       let mediaDataMap = mediaData || [];
       const existingIds = mediaDataMap.map(item => item.id);
-
-      // const existingIds = data.Media.map(item => item.id);
-
       const highestId = Math.max(...existingIds);
-      const newId = highestId + 1;
+      const newMediaId = highestId + 1;
+
+      // GET HIGHEST TAG ID WHEN POSSIBLY CREATING THEM, HERE WE DON'T KNOW IF WE NEED TO OR NOT
 
       // Get the selected image file
       const imageInput = document.getElementById('inputimage');
@@ -243,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // console.log("Release Date:", ReleaseDate);
       // console.log("System:", System);
 
-      window.mediaBridge.saveMedia(newId, Name, RunCommandPath, Tags, imagePath); 
+      window.mediaBridge.saveMedia(newMediaId, Name, RunCommandPath, Tags, imagePath); 
       // window.location.reload();
 
       // For the sake of this example, we'll just reset the form.
@@ -353,12 +354,22 @@ document.addEventListener('DOMContentLoaded', () => {
       //  ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░██  ██░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░██ 
       //  ██████████████ ██████████████ ██████  ██████ ██████  ██████████ ██████████████ ██████  ██████ 
 
-      // create the Searchbar and functionality
+      // CREATE THE SEARCHBAR HTML
       const searchbar = document.createElement("div");
       searchbar.id = "searchbar";
       searchbar.className = "searchbar";
       searchbar.innerHTML = '<input type="text" placeholder="Search"> <button type="button" id="clearSearchButton">X</button>';
       sideMenuDiv.appendChild(searchbar);
+
+      // CLEAR BUTTON
+      const clearButton = document.getElementById('clearSearchButton');
+      clearButton.addEventListener('click', function() {
+        searchbarInput.value = ""; // Clear the text field
+        searchbarInput.focus(); // Optionally, focus the input field after clearing
+        searchbarSelect.call(searchbarInput); // Trigger the search handling function after clearing
+      });
+    
+      // SEARCHBAR INPUT
       const searchbarInput = searchbar.querySelector('input');
       searchbarInput.addEventListener('input', searchbarSelect);
       function searchbarSelect() {
@@ -370,7 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
             item.classList.remove('selected');
         });
         categoryItems("Search", data); // select the "Search" through the category selection function
-        updateSideMenu(searchbarValue);
+        updateSideMenu(searchbarValue); // update the list in the sidemenu to match searchbarValue
       }                                                                                              
                                                                                                                                       
       // *************************************************************************************************************************************************                                                                                                                            
@@ -462,27 +473,24 @@ document.addEventListener('DOMContentLoaded', () => {
           itemsToDisplay = itemsToDisplay.filter(item => item !== "All"); // remove the all tag from the array, as it will be replaced with the "Search / All" filtered category
           itemsToDisplay = itemsToDisplay.filter(item => item !== "Search"); // remove the all tag from the array, as it will be replaced with the "Search / All" filtered category
           itemsToDisplay = ["Search", ...itemsToDisplay];
-          // if (!itemsToDisplay.includes("All")) {
-          //   // Concat "All" at the beginning of the list
-          //   itemsToDisplay = ["All", ...itemsToDisplay];
-          // }
-
-          itemsToDisplay.forEach((item, index) => createMenuItem(item, index));
           // console.log("SearchbarValue for Categories: " + searchbarValue)
           // console.log("SearchbarValue items to display: " + itemsToDisplay)
-          // these find the results, but are not updating the Sidemenu, need to update the side menu
-          // CONTINUE HERE TODO
         }
         else {
           itemsToDisplay = data.Tags.map(tag => tag.Name);
-          itemsToDisplay.forEach((item, index) => createMenuItem(item, index));  
+          itemsToDisplay = itemsToDisplay.filter(item => item !== "All"); //remove "All" from non-alphabetized list, will re-add it at the top later
+          itemsToDisplay.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase())); // sort seperate from searchBarValue as "All" category should remain
+          itemsToDisplay = ["All", ...itemsToDisplay]; //after removing All and alphabetizing the list, add "All" back to the top
           // console.log("SearchbarValue for Categories: " + searchbarValue)
           // console.log("SearchbarValue items to display: " + itemsToDisplay)
         }
 
+        itemsToDisplay.forEach((item, index) => createMenuItem(item, index));  
+
+
         function createMenuItem(text, index) {
-          console.log('Text: ' + text)
-          console.log('index: ' + index)
+          // console.log('Text: ' + text)
+          // console.log('index: ' + index)
           const itemDiv = document.createElement('div');
           itemDiv.classList.add('sidemenu-item');
           // This changes the category name of the carouse.l item to All, which shows all content belonging to a category under this carouse.l item
@@ -580,6 +588,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // instead have a function that selects the first item in the side menu list
 
       function categoryItems(tag, jsondata) {
+          // applyStyling(tag); 
           const scrollableContentDiv = document.querySelector('.scrollableContent');
           const mediaContainerDiv = document.getElementById('mediaContainer');
           const mediaVisual = document.getElementById('.mediaVisual');
@@ -615,7 +624,7 @@ document.addEventListener('DOMContentLoaded', () => {
           // let carouse.lOptions = selectedTag.Carouse.lOptions;
           // Find every media item associated with the Options in the list (avoid dupes)
           // create if statement for other categories 
-          console.log('tag: ' + tag);
+          // console.log('tag: ' + tag);
           // console.log('currentCarouse.lCategory: ' + currentCarouse.lCategory);
           let items;
           // if (tag === "Search" && searchbarValue) {
@@ -648,11 +657,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // mediaData.filter(mediaItem => mediaItem.Tags && carouse.lOptions.some(option => mediaItem.Tags.includes(option))) :
             items = mediaData.filter(item => item.Tags.includes(tag));
           }
-
-          mediaContainerDiv.innerHTML += createMedia(items, selectedTag);
+          // applyStyling(tag); 
+          mediaContainerDiv.innerHTML += createMedia(items, selectedTag, jsondata);
           
           // Calling this function to trigger the styling on load
-          applyStyling(tag, jsondata); 
+          // applyStyling(tag, jsondata); 
           const editCategoryButton = document.getElementById('editCategoryButton');
           editCategoryButton.addEventListener('click', () => {
               // displayTagSettings(tag, jsondata);
@@ -1107,13 +1116,34 @@ document.addEventListener('DOMContentLoaded', () => {
   // This is the default, there is no styling applied until the settings button is clicked.
   // This may be overwritten when the settings menu is clicked.  
   // the settings menu should only display the category settings menu, it should not be the cause of the styling being applied
+  // Probably want to combine nested categories and media items in one array to have them interwoven if necessary
     function createMedia(items, selectedTag) {
       // use the tag to find child categories, use the carouse.l option to determine if categories should be displayed again, under all
       // console.log("Data: " + data);
       let mediaHTML = '<div class="mediadata">';
       mediaHTML += '<div id="testMediaContainer">';
+      let categoryDisplay = "";
 
+      // List other child tags that belong to this category
+      if (selectedTag.Name != 'All' && selectedTag.NestedCategories) {
+        selectedTag.NestedCategories.forEach(option => {
+          // find the category in question
+          let category = tagData.find(tag => tag.Name === option);
+          let categoryUrl = category.CoverImage ? `assets/categories/${option}.png` : 'assets/categories/default.png';
+          // const categoryUrl = option ? `assets/categories/${option}.png` : 'assets/categories/default.png';
 
+          categoryDisplay += `<div class="testMedia">
+            <img src="${categoryUrl}" loading="lazy" alt="Image ${option}" class="testMediaItemPicture" draggable="false"/>
+          </div>`; // Adjust this line depending on the structure of `option`
+        });
+      }
+
+      // Check to see if user wants to display the nested categories before other media or not, then check again after media displayed
+      if (selectedTag.DisplayNestedTop) {
+        mediaHTML += categoryDisplay;
+      }
+
+      // CHECK TO SEE IF ANY MEDIA WILL BE DISPLAYED
       if (items.length === 0) { // create test media here so that the applystying page has something to edit and not crash for lack of data
         mediaHTML += '<div class="testMedia">'; // Create a blank item
         mediaHTML += '<p>No media exists in this category.  Do I want to hide this category?</p>'; // Add the line of text
@@ -1121,42 +1151,52 @@ document.addEventListener('DOMContentLoaded', () => {
         // return mediaHTML; // do not return incase there are child options (Nested)
       }
       // Collect all unique keys (field names) from the array
-      // if items = "All", get all items from carouse.l selection
-      const allKeys = new Set();
-      for (const item of items) {
-        for (const key in item) {
-          allKeys.add(key);
-        }
-      }
+      // const allKeys = new Set();
+      // for (const item of items) {
+      //   for (const key in item) {
+      //     allKeys.add(key);
+      //   }
+      // }
+      // SORT ITEMS ALPHABETICALLY BY SORTEDNAME OR NAME
+      items.sort((a, b) => {
+        let nameA = a.SortedName || a.Name; // "" considered false
+        let nameB = b.SortedName || b.Name;
+        return nameA.localeCompare(nameB);
+      });
       // Create items rows
       for (const item of items) {
         // console.log("Item: " + item);
         mediaHTML += `<div class="testMedia" data-item='${JSON.stringify(item).replace(/'/g, "&apos;")}'>`;
-        if (item.id && item.Image == true) {
-          const imageUrl = item.id ? `assets/media/${item.id}.png` : 'assets/media/default.png';
-          mediaHTML += `<img src="${imageUrl}" alt="Image ${item.id}" class="testMediaItemPicture" draggable="false"/>`;
-        } else {
-          const defaultImageUrl = 'assets/media/default.png';
-          mediaHTML += `<img src="${defaultImageUrl}" alt="Default Image" class="testMediaItemPicture" />`;
+        let imageUrl;
+
+        if (item.Image == true) { 
+          imageUrl = `assets/media/${item.id}.png`; 
+        } 
+        else { 
+          imageUrl = 'assets/media/default.png'; 
         }
+
+        mediaHTML += `<img src="${imageUrl}" loading="lazy" alt="Image ${item.id}" class="testMediaItemPicture" draggable="false"/>`;
         const itemName = item.Name.replace(/'/g, "&apos;");
         // mediaHTML += `<div class="testMediavalue">${itemName}</div>`;
         mediaHTML += '<br></div>';
       }
-      // List other child tags that belong to this category
-      if (selectedTag.Name != 'All' && selectedTag.CarouselOptions) {
-        selectedTag.CarouselOptions.forEach(option => {
-          mediaHTML += `<div class="testMedia">${option}</div>`; // Adjust this line depending on the structure of `option`
-        });
+
+      // Check to see if user wants to display the nested categories before other media or not, then check again after media displayed
+      if (!selectedTag.DisplayNestedTop) {
+        mediaHTML += categoryDisplay;
       }
+      
       
       // mediaHTML += `<div>"${selectedTag.Carouse.lOptions}"</div>`; // 
       mediaHTML += '<br><p>Toggle that filters child categories on and off</p>'; // class="mediaitemcontainer"
       mediaHTML += '</div>'; // class="testMediaContainer"
       mediaHTML += '</div>'; // class="mediadata"
+      mediaHTML += applyStyling(selectedTag.Name);
       return mediaHTML;
     }
     
 // *************************************************************************************************************************************************
+
 // This is the closing section of the doc listener up at the top of the page // document.addEventListener('DOMContentLoaded', () => { 
 })

@@ -45,10 +45,7 @@
       "Name": "abc",
       "Image": false,
       "RunCommand": null,
-      "Tags": [
-        "abc",
-        "ABC"
-      ]
+      "Tags": []
     },
     {
       "id": 50,
@@ -392,7 +389,8 @@
       "Image": true,
       "RunCommand": null,
       "Tags": [
-        "Shows"
+        "Shows",
+        "Veggie Tales"
       ]
     },
     {
@@ -435,6 +433,7 @@
     {
       "id": 22,
       "Name": "Mario Kart 64",
+      "SortedName": "Mario Kart 2",
       "Image": true,
       "RunCommand": null,
       "Tags": [
@@ -446,6 +445,7 @@
     {
       "id": 84,
       "Name": "Mario Kart 7",
+      "SortedName": "Mario Kart 7",
       "Image": true,
       "RunCommand": "C:\\Users\\adamc\\Documents\\Games\\Nintendo\\3DS\\Other\\CMD Files\\Mario Kart 7.cmd",
       "Tags": [
@@ -467,6 +467,7 @@
     {
       "id": 20,
       "Name": "Mario Kart DS",
+      "SortedName": "Mario Kart 5",
       "Image": true,
       "RunCommand": null,
       "Tags": [
@@ -478,6 +479,7 @@
     {
       "id": 85,
       "Name": "Mario Kart Super Circuit",
+      "SortedName": "Mario Kart 3",
       "Image": true,
       "RunCommand": "C:\\Users\\adamc\\Documents\\Games\\Nintendo\\GameBoyAdvance\\Other\\CMD Files\\Mario Kart Super Circuit.cmd",
       "Tags": [
@@ -488,6 +490,7 @@
     {
       "id": 1,
       "Name": "Mario Kart Wii",
+      "SortedName": "Mario Kart 6",
       "Image": true,
       "RunCommand": "C:\\Users\\adamc\\Documents\\Games\\Nintendo\\Wii\\Other\\CMD Files\\MarioKartWii.cmd",
       "Tags": [
@@ -500,6 +503,7 @@
     {
       "id": 80,
       "Name": "Mario Kart Wii Deluxe v8",
+      "SortedName": "Mario Kart 6 Deluxe v8",
       "Image": true,
       "RunCommand": "C:\\Users\\adamc\\Documents\\Games\\Nintendo\\Wii\\Other\\CMD Files\\MarioKartWiiDeluxe.cmd",
       "Tags": [
@@ -586,6 +590,13 @@
       "Tags": [
         "Artists"
       ]
+    },
+    {
+      "id": 131,
+      "Name": "New Cat",
+      "Image": false,
+      "RunCommand": null,
+      "Tags": []
     },
     {
       "id": 19,
@@ -811,6 +822,7 @@
     {
       "id": 83,
       "Name": "Super Mario Kart",
+      "SortedName": "Mario Kart 1",
       "Image": true,
       "RunCommand": "C:\\Users\\adamc\\Documents\\Games\\Nintendo\\SNES\\Other\\CMD Files\\SuperMarioKart.cmd",
       "Tags": [
@@ -887,6 +899,38 @@
       "RunCommand": null,
       "Tags": [
         "Artists"
+      ]
+    },
+    {
+      "id": 132,
+      "Name": "test",
+      "Image": false,
+      "RunCommand": null,
+      "Tags": []
+    },
+    {
+      "id": 133,
+      "Name": "test",
+      "Image": false,
+      "RunCommand": null,
+      "Tags": []
+    },
+    {
+      "id": 134,
+      "Name": "test",
+      "Image": false,
+      "RunCommand": null,
+      "Tags": [
+        "test"
+      ]
+    },
+    {
+      "id": 135,
+      "Name": "test",
+      "Image": false,
+      "RunCommand": null,
+      "Tags": [
+        "test"
       ]
     },
     {
@@ -1119,7 +1163,8 @@
       "Image": true,
       "RunCommand": null,
       "Tags": [
-        "Shows"
+        "Shows",
+        "Veggie Tales"
       ]
     },
     {
@@ -1143,14 +1188,14 @@
   ],
   "Tags": [
     {
+      "id": 1,
       "Name": "All",
-      "Carousel": true,
-      "CarouselOptions": [],
-      "BackgroundVisual": false,
+      "NestedCategories": [],
+      "BackgroundVisual": "",
       "BackgroundColorCheck": true,
       "BackgroundColor": "gray",
       "OriginalDimensions": true,
-      "Gap": 2,
+      "Gap": 1,
       "Wrap": "wrap",
       "Width": 4,
       "Height": 4,
@@ -1167,9 +1212,9 @@
       "CustomValues": true
     },
     {
+      "id": 2,
       "Name": "Games",
-      "Carousel": true,
-      "CarouselOptions": [
+      "NestedCategories": [
         "Kirby",
         "Mario",
         "Mario Kart",
@@ -1210,9 +1255,9 @@
       "CustomValues": true
     },
     {
+      "id": 3,
       "Name": "Videos",
-      "Carousel": true,
-      "CarouselOptions": [
+      "NestedCategories": [
         "Movies",
         "Shows",
         "Veggie Tales"
@@ -1238,9 +1283,9 @@
       "CustomValues": true
     },
     {
+      "id": 4,
       "Name": "Audio",
-      "Carousel": true,
-      "CarouselOptions": [
+      "NestedCategories": [
         "Albums",
         "Artists",
         "Songs"
@@ -1266,9 +1311,9 @@
       "CustomValues": true
     },
     {
+      "id": 5,
       "Name": "Photos",
-      "Carousel": true,
-      "CarouselOptions": [],
+      "NestedCategories": [],
       "BackgroundVisual": false,
       "BackgroundColorCheck": true,
       "BackgroundColor": "gray",
@@ -1290,9 +1335,9 @@
       "CustomValues": true
     },
     {
+      "id": 6,
       "Name": "Reading",
-      "Carousel": true,
-      "CarouselOptions": [
+      "NestedCategories": [
         "Books"
       ],
       "BackgroundVisual": false,
@@ -1316,6 +1361,7 @@
       "CustomValues": true
     },
     {
+      "id": 7,
       "Name": "Albums",
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
@@ -1337,6 +1383,7 @@
       "CustomValues": true
     },
     {
+      "id": 8,
       "Name": "Artists",
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
@@ -1358,9 +1405,10 @@
       "CustomValues": true
     },
     {
+      "id": 9,
       "Name": "Books",
       "BackgroundColorCheck": true,
-      "BackgroundColor": "pink",
+      "BackgroundColor": "red",
       "OriginalDimensions": true,
       "Gap": 20,
       "Wrap": "wrap",
@@ -1376,20 +1424,22 @@
       "FloatingBorderGap": 1,
       "Rows": 1,
       "Columns": 15,
-      "CustomValues": true
+      "CustomValues": true,
+      "BackgroundVisual": ""
     },
     {
+      "id": 10,
       "Name": "Christmas",
-      "BackgroundVisual": true,
-      "BackgroundColorCheck": false,
-      "BackgroundColor": "white",
+      "BackgroundVisual": "checked",
+      "BackgroundColorCheck": true,
+      "BackgroundColor": "red",
       "OriginalDimensions": true,
       "Gap": 25,
       "Wrap": "wrap",
       "Width": 1,
       "Height": 1,
       "Border": 1,
-      "BorderColor": "black",
+      "BorderColor": "red",
       "BorderRadius": 5,
       "MatchBorder": false,
       "FloatingBorder": 5,
@@ -1401,11 +1451,12 @@
       "CustomValues": true
     },
     {
+      "id": 11,
       "Name": "Fall",
-      "BackgroundAudio": true,
-      "BackgroundVisual": true,
+      "BackgroundAudio": "checked",
+      "BackgroundVisual": "checked",
       "BackgroundColorCheck": true,
-      "BackgroundColor": "white",
+      "BackgroundColor": "orange",
       "OriginalDimensions": false,
       "Gap": 5,
       "Wrap": "nowrap",
@@ -1424,6 +1475,7 @@
       "CustomValues": true
     },
     {
+      "id": 12,
       "Name": "Kirby",
       "Gap": 1,
       "Wrap": "wrap",
@@ -1441,6 +1493,7 @@
       "BackgroundColor": "white"
     },
     {
+      "id": 13,
       "Name": "Launchers",
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
@@ -1462,6 +1515,7 @@
       "CustomValues": true
     },
     {
+      "id": 14,
       "Name": "Mario",
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
@@ -1483,6 +1537,7 @@
       "CustomValues": true
     },
     {
+      "id": 15,
       "Name": "Mario Kart",
       "BackgroundColorCheck": true,
       "BackgroundColor": "lightblue",
@@ -1504,6 +1559,7 @@
       "CustomValues": true
     },
     {
+      "id": 16,
       "Name": "Mario Party",
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
@@ -1525,6 +1581,7 @@
       "CustomValues": true
     },
     {
+      "id": 17,
       "Name": "Movies",
       "BackgroundColorCheck": true,
       "BackgroundColor": "black",
@@ -1546,9 +1603,9 @@
       "CustomValues": true
     },
     {
+      "id": 18,
       "Name": "Nintendo",
-      "Carousel": false,
-      "CarouselOptions": [
+      "NestedCategories": [
         "Nintendo 3DS",
         "Nintendo 64",
         "Nintendo GameCube",
@@ -1557,6 +1614,7 @@
         "Nintendo Switch",
         "Nintendo Wii"
       ],
+      "DisplayNestedTop": true,
       "BackgroundVisual": false,
       "BackgroundColorCheck": true,
       "BackgroundColor": "gray",
@@ -1578,7 +1636,9 @@
       "CustomValues": true
     },
     {
+      "id": 19,
       "Name": "Nintendo 3DS",
+      "CoverImage": true,
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
       "OriginalDimensions": true,
@@ -1599,7 +1659,9 @@
       "CustomValues": true
     },
     {
+      "id": 20,
       "Name": "Nintendo 64",
+      "CoverImage": true,
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
       "OriginalDimensions": true,
@@ -1620,7 +1682,9 @@
       "CustomValues": true
     },
     {
+      "id": 21,
       "Name": "Nintendo GameCube",
+      "CoverImage": false,
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
       "OriginalDimensions": false,
@@ -1641,7 +1705,9 @@
       "CustomValues": true
     },
     {
+      "id": 22,
       "Name": "Nintendo Gameboy Advance",
+      "CoverImage": true,
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
       "OriginalDimensions": false,
@@ -1662,7 +1728,9 @@
       "CustomValues": true
     },
     {
+      "id": 23,
       "Name": "Nintendo Gameboy Color",
+      "CoverImage": false,
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
       "OriginalDimensions": false,
@@ -1683,7 +1751,9 @@
       "CustomValues": true
     },
     {
+      "id": 24,
       "Name": "Nintendo Switch",
+      "CoverImage": false,
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
       "OriginalDimensions": false,
@@ -1704,7 +1774,9 @@
       "Gap": 15
     },
     {
+      "id": 25,
       "Name": "Nintendo Wii",
+      "CoverImage": false,
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
       "OriginalDimensions": true,
@@ -1725,6 +1797,7 @@
       "CustomValues": true
     },
     {
+      "id": 26,
       "Name": "Paper Mario",
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
@@ -1746,6 +1819,7 @@
       "CustomValues": true
     },
     {
+      "id": 27,
       "Name": "Peanuts",
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
@@ -1767,6 +1841,7 @@
       "CustomValues": true
     },
     {
+      "id": 28,
       "Name": "PlayStation",
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
@@ -1788,6 +1863,7 @@
       "CustomValues": true
     },
     {
+      "id": 29,
       "Name": "PlayStation 2",
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
@@ -1809,6 +1885,7 @@
       "CustomValues": true
     },
     {
+      "id": 30,
       "Name": "Pokemon",
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
@@ -1830,27 +1907,30 @@
       "CustomValues": true
     },
     {
+      "id": 31,
       "Name": "Playable",
+      "BackgroundVisualCheckbox": "",
       "BackgroundColorCheck": true,
-      "BackgroundColor": "white",
+      "BackgroundColor": "red",
       "OriginalDimensions": false,
-      "Gap": 1,
+      "Gap": 5,
       "Wrap": "wrap",
-      "Width": 1,
-      "Height": 1,
-      "Border": 10,
+      "Width": 2,
+      "Height": 3,
+      "Border": 5,
       "BorderColor": "black",
       "BorderRadius": 0,
       "MatchBorder": false,
-      "FloatingBorder": 5,
-      "FloatingBorderColor": "red",
-      "FloatingBorderRadius": 5,
-      "FloatingBorderGap": 0,
+      "FloatingBorder": 15,
+      "FloatingBorderColor": "black",
+      "FloatingBorderRadius": 0,
+      "FloatingBorderGap": 10,
       "Rows": 1,
       "Columns": 15,
       "CustomValues": true
     },
     {
+      "id": 32,
       "Name": "Shows",
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
@@ -1872,6 +1952,7 @@
       "CustomValues": true
     },
     {
+      "id": 33,
       "Name": "Songs",
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
@@ -1893,6 +1974,7 @@
       "CustomValues": true
     },
     {
+      "id": 34,
       "Name": "Super Nintendo Entertainment System",
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
@@ -1914,6 +1996,7 @@
       "CustomValues": true
     },
     {
+      "id": 35,
       "Name": "Uncategorized",
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
@@ -1935,6 +2018,7 @@
       "CustomValues": true
     },
     {
+      "id": 36,
       "Name": "Veggie Tales",
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
@@ -1956,6 +2040,7 @@
       "CustomValues": true
     },
     {
+      "id": 37,
       "Name": "Wishlist",
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
@@ -1977,6 +2062,7 @@
       "CustomValues": true
     },
     {
+      "id": 38,
       "Name": "Updating Tag Test4",
       "BackgroundColorCheck": true,
       "BackgroundColor": "white",
@@ -1998,117 +2084,15 @@
       "CustomValues": true
     },
     {
-      "Name": "DEF",
-      "BackgroundColorCheck": true,
-      "BackgroundColor": "white",
-      "OriginalDimensions": false,
-      "Gap": 1,
-      "Wrap": "wrap",
-      "Width": 1,
-      "Height": 1,
-      "Border": 10,
-      "BorderColor": "black",
-      "BorderRadius": 0,
-      "MatchBorder": false,
-      "FloatingBorder": 5,
-      "FloatingBorderColor": "red",
-      "FloatingBorderRadius": 5,
-      "FloatingBorderGap": 0,
-      "Rows": 1,
-      "Columns": 15,
-      "CustomValues": true
-    },
-    {
-      "Name": "ABC",
-      "BackgroundColorCheck": true,
-      "BackgroundColor": "white",
-      "OriginalDimensions": false,
-      "Gap": 1,
-      "Wrap": "wrap",
-      "Width": 1,
-      "Height": 1,
-      "Border": 10,
-      "BorderColor": "black",
-      "BorderRadius": 0,
-      "MatchBorder": false,
-      "FloatingBorder": 5,
-      "FloatingBorderColor": "red",
-      "FloatingBorderRadius": 5,
-      "FloatingBorderGap": 0,
-      "Rows": 1,
-      "Columns": 15,
-      "CustomValues": true
-    },
-    {
-      "Name": "abc",
-      "BackgroundColorCheck": true,
-      "BackgroundColor": "white",
-      "OriginalDimensions": false,
-      "Gap": 1,
-      "Wrap": "wrap",
-      "Width": 1,
-      "Height": 1,
-      "Border": 10,
-      "BorderColor": "black",
-      "BorderRadius": 0,
-      "MatchBorder": false,
-      "FloatingBorder": 5,
-      "FloatingBorderColor": "red",
-      "FloatingBorderRadius": 5,
-      "FloatingBorderGap": 0,
-      "Rows": 1,
-      "Columns": 15,
-      "CustomValues": true
-    },
-    {
-      "Name": "def",
-      "BackgroundColorCheck": true,
-      "BackgroundColor": "white",
-      "OriginalDimensions": false,
-      "Gap": 1,
-      "Wrap": "wrap",
-      "Width": 1,
-      "Height": 1,
-      "Border": 10,
-      "BorderColor": "black",
-      "BorderRadius": 0,
-      "MatchBorder": false,
-      "FloatingBorder": 5,
-      "FloatingBorderColor": "red",
-      "FloatingBorderRadius": 5,
-      "FloatingBorderGap": 0,
-      "Rows": 1,
-      "Columns": 15,
-      "CustomValues": true
-    },
-    {
-      "Name": "ABC",
-      "BackgroundColorCheck": true,
-      "BackgroundColor": "white",
-      "OriginalDimensions": false,
-      "Gap": 1,
-      "Wrap": "wrap",
-      "Width": 1,
-      "Height": 1,
-      "Border": 10,
-      "BorderColor": "black",
-      "BorderRadius": 0,
-      "MatchBorder": false,
-      "FloatingBorder": 5,
-      "FloatingBorderColor": "red",
-      "FloatingBorderRadius": 5,
-      "FloatingBorderGap": 0,
-      "Rows": 1,
-      "Columns": 15,
-      "CustomValues": true
-    },
-    {
+      "id": 39,
       "Name": "Pixar"
     },
     {
+      "id": 40,
       "Name": "Disney"
     },
     {
+      "id": 41,
       "Name": "Kathleen",
       "Gap": 5,
       "Wrap": "wrap",
@@ -2116,16 +2100,18 @@
       "Height": 3,
       "OriginalDimensions": false,
       "Border": 5,
-      "BorderColor": "black",
+      "BorderColor": "darkgreen",
       "BorderRadius": 5,
       "FloatingBorder": 5,
-      "FloatingBorderColor": "lightgreen",
+      "FloatingBorderColor": "turquoise",
       "FloatingBorderRadius": 5,
       "FloatingBorderGap": 0,
       "BackgroundColor": "lightgreen",
-      "BackgroundColorCheck": true
+      "BackgroundColorCheck": true,
+      "BackgroundVisual": ""
     },
     {
+      "id": 42,
       "Name": "Search",
       "Gap": 5,
       "Wrap": "wrap",
@@ -2143,7 +2129,12 @@
       "BackgroundColorCheck": true
     },
     {
+      "id": 43,
       "Name": "Sly Cooper"
+    },
+    {
+      "id": 44,
+      "Name": "test"
     }
   ],
   "Names": [

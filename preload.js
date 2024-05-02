@@ -123,6 +123,7 @@ let updateMedia = (id, Name, RunCommand, Tags, imagePath) => {
 
 let updateTag = (
   name, 
+  backgroundVisual,
   // backgroundAudio, 
   backgroundColorCheck, 
   backgroundColor, 
@@ -143,7 +144,7 @@ let updateTag = (
   let newData = {
     "Name": name,
     // "BackgroundAudio": backgroundAudio, 
-    // "BackgroundVisual": backgroundVisual,
+    "BackgroundVisual": backgroundVisual,
     "BackgroundColorCheck": backgroundColorCheck,
     "BackgroundColor": backgroundColor,
     "OriginalDimensions": originalDimensions,

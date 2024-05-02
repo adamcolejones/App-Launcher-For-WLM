@@ -195,7 +195,7 @@ body {
 
 #editCategoryMenu {
   height: 100%;
-  width: 217px;
+  width: 200px;
   position: fixed;
   left: 0px;
   top: 0px;
@@ -403,6 +403,18 @@ li:last-child {
 
 .mediaVisual {
   /* width: calc(100vw - 217px); */
+  /* width: 100vw; */
+  /* height: 100%; */
+  /* position: fixed; */
+  /* z-index: 4; */
+  /* top: 0; */
+  /* overflow: hidden; This clips any overflow, including into the scrollbar area */
+  /* object-fit: cover; */
+  /* transition: opacity 0.5s ease-in-out; */
+}
+
+#mediaVisualVideo {
+  /* width: calc(100vw - 217px); */
   width: 100vw;
   height: 100%;
   position: fixed;
@@ -410,10 +422,12 @@ li:last-child {
   top: 0;
   overflow: hidden; /* This clips any overflow, including into the scrollbar area */
   object-fit: cover;
-  /* transition: opacity 0.5s ease-in-out; */
+  transition: opacity 0.5s ease-in-out;
+  left: 0px;
+  z-index: 1;
 }
 
-#mediaVisual {
+#mediaVisualColor {
   /* width: calc(100vw - 217px); */
   width: 100vw;
   height: 100%;
@@ -439,11 +453,6 @@ li:last-child {
   transition: opacity 0.5s ease-in-out;
 }
 
-#mediaVisualVideo {
-  width: 100%; /* Ensure the video covers the width */
-  height: 100%;
-  object-fit: cover; /* Cover the container, clipping excess */
-}
 
 .mediaitem {
   /* 135 + 2(border pxs) = 137 */
@@ -807,13 +816,17 @@ p {
 
 .settingsOption {
   height: 60px;
-  width: 175px;
+  width: 161px;
   padding: 10px;
   background-color: #cccccc;
   /* width: fit-content; */
   /* height: fit-content; */
   border: 1px solid black;
   margin-right: -1px;
+}
+
+.settingsOption input{
+  width: inherit;
 }
 
 .settingsOptionContainer {

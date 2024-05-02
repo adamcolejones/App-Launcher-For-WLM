@@ -121,9 +121,14 @@ ipcMain.on("saveMedia", (sender, newData, imagePath) => {
     let mediaArray = jsonData.Media;
 
     // Check if any tags from newData already exist, if not, add them to the Tags array
+    // TAGS ARE CATEGORIES
+    
+
     newData.Tags.forEach((newTag) => {
       if (!jsonData.Tags.some((existingTag) => existingTag.Name === newTag)) {
-        jsonData.Tags.push({ "Name": newTag });
+        let highestId = jsonData.Tags.reduce((max, tag) => Math.max(max, tag.id), 0);
+        highestId += 1;
+        jsonData.Tags.push({ "id": highestId, "Name": newTag });
       }
     });
 
@@ -246,12 +251,13 @@ ipcMain.on("deleteMedia", (sender, idToDelete) => {
 //###################################################################################################################################################################                                                                                                    
 
 ipcMain.on("updateTag", (_, newData) => {
-  console.log("ipcMain: updateTag");
+  console.log("ipcMain: Updated " + newData.Name + " Category");
   try {
       let data = fs.existsSync("data.json") ? fs.readFileSync("data.json", "utf8") : '{}';
       let jsonData = JSON.parse(data);
       let tagIndex = jsonData.Tags.findIndex(tag => tag.Name === newData.Name); // Find the index of the tag to update
       if (tagIndex !== -1) { // Update the tag properties if the tag exists
+        jsonData.Tags[tagIndex].BackgroundVisual = newData.BackgroundVisual;
         jsonData.Tags[tagIndex].Gap = newData.Gap;
         jsonData.Tags[tagIndex].Wrap = newData.Wrap;
         if (newData.Width !== 'auto') { jsonData.Tags[tagIndex].Width = newData.Width; }
@@ -265,7 +271,7 @@ ipcMain.on("updateTag", (_, newData) => {
         jsonData.Tags[tagIndex].FloatingBorderRadius = newData.FloatingBorderRadius;
         jsonData.Tags[tagIndex].FloatingBorderGap = newData.FloatingBorderGap;
         jsonData.Tags[tagIndex].BackgroundColor = newData.BackgroundColor;
-        console.log('BackgroundColorCheck: ' + newData.BackgroundColorCheck);
+        // console.log('BackgroundColorCheck: ' + newData.BackgroundColorCheck);
         jsonData.Tags[tagIndex].BackgroundColorCheck = newData.BackgroundColorCheck; // not working?
       } else {
           console.log(`Tag not found: ${newData.Name}`);
