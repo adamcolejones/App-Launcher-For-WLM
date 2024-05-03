@@ -117,8 +117,8 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         // BACKGROUND AUDIO
         let backgroundAudio = selectedTag.BackgroundAudio !== undefined ? selectedTag.BackgroundAudio : false;
         // BACKGROUND COLOR
-        let backgroundColorCheck = selectedTag.BackgroundColorCheck !== undefined ? selectedTag.BackgroundColorCheck : false;
-        let backgroundColorCheckboxValue = backgroundColorCheck ? ' checked' : '';
+        // BACKGROUNDCOLOR AND BACKGROUNDCOLORCHECK ARE BOTH REQUIRED VARIABLES TO HAVE DYNAMIC COLOR CHANGES WHILE PRESERVING USER'S LAST INPUT
+        let backgroundColorCheck = selectedTag.BackgroundColorCheck !== undefined ? selectedTag.BackgroundColorCheck : ""; // "checked", or "" (blank)
         let backgroundColor = selectedTag.BackgroundColor !== undefined ? selectedTag.BackgroundColor : 'white';
         // GAP
         let gap = selectedTag.Gap !== undefined ? selectedTag.Gap : 5; 
@@ -164,7 +164,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
           </div>
           <div class="settingsOption">
             <p id="backgroundColor">Background Color</p>
-            <input id="backgroundColorCheckbox" type="checkbox" ${backgroundColorCheckboxValue}>
+            <input id="backgroundColorCheckbox" type="checkbox" ${backgroundColorCheck}>
             <input type="text" id="formBackgroundColor" name="formBackgroundColor" value=${backgroundColor}>
           </div>
           <div class="settingsOption">
@@ -272,7 +272,8 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       //###################################################################################################################################################################
       // CONTAINER
         const scrollableContent = document.querySelector('.scrollableContent');
-        const mediaContainer = document.getElementById('mediaContainer');
+        let mediaContainer = document.getElementById('mediaContainer');
+        mediaContainer.style.display = 'none';
         
         const backgroundVisualCheckbox = document.getElementById('backgroundVisualCheckbox');
         const backgroundColorCheckbox = document.getElementById('backgroundColorCheckbox');
@@ -342,15 +343,9 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         let mediaVisual;
 
         let mediaVisualVideo = document.getElementById('mediaVisualVideo');
-        let mediaVisualColor = document.getElementById('mediaVisualColor');
-        // GET THE VALUE OF 
-        // backgroundVisualCheckbox.removeEventListener('change', updateBackgroundVisual); // Remove listener temporarily
-        // backgroundVisualCheckbox.removeEventListener('change', saveStyling); // Remove listener temporarily
+        // Update the value of background visual
         backgroundVisual = backgroundVisualCheckbox.checked ? "checked" : "";
-        // backgroundVisualCheckbox.addEventListener('change', updateBackgroundVisual); // Add listener back after updates
-        // backgroundVisualCheckbox.addEventListener('change', saveStyling); // Add listener back after updates
-        
-        // console.log("backgroundVisualCheckbox.checked ?: " + backgroundVisual)
+        // IF VIDEO BOX IS CHECKED, FIND THE BACKGROUND VIDEO AND DISPLAY IT
         if (backgroundVisual === "checked") {
           if (mediaVisualVideo) {
               mediaContainer.removeChild(mediaVisualVideo); // Remove the existing div if present
@@ -377,26 +372,6 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
             mediaVisualVideo.style.opacity = "0"; // Set video transparency to 0
             mediaContainer.removeChild(mediaVisualVideo); // Optionally remove if not needed
           }
-          if (mediaVisualColor) {
-              mediaContainer.removeChild(mediaVisualColor); // Remove the video if it exists
-          }
-          // Create a new div for the background color
-          mediaVisualColor = document.createElement('div');
-          mediaVisualColor.id = 'mediaVisualColor';
-          mediaVisualColor.style.width = '100%'; // Set width to cover the container
-          mediaVisualColor.style.height = '100%'; // Set height to cover the container
-  
-          // Update background color based on checkbox
-          let backgroundColor;
-          if (backgroundColorCheckbox.checked) {
-              backgroundColor = document.getElementById("formBackgroundColor").value;
-              document.getElementById("formBackgroundColor").disabled = false;
-          } else {
-              backgroundColor = 'white';
-              document.getElementById("formBackgroundColor").disabled = true;
-          }
-          mediaVisualColor.style.background = backgroundColor;
-          mediaContainer.appendChild(mediaVisualColor); // Re-add the mediaVisual div to the mediaContainer
         }
       }
       
@@ -433,31 +408,58 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       //  ██░░██████████ ██░░██████░░██ ██░░██████████ ██░░██████░░██ ██░░██  ██░░██████ 
       //  ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░░░░░██ 
       //  ██████████████ ██████████████ ██████████████ ██████████████ ██████  ██████████ 
+
+      // BACKGROUNDCOLOR AND BACKGROUNDCOLOR CHECK ARE BOTH REQUIRED VARIABLES TO HAVE DYNAMIC COLOR CHANGES WHILE PRESERVING USER'S LAST INPUT
       backgroundColorCheckbox.checked = backgroundColorCheck;
       updateBackgroundColor();
       backgroundColorCheckbox.addEventListener('change', updateBackgroundColor);
       backgroundColorCheckbox.addEventListener('change', saveStyling);
 
       function updateBackgroundColor() {
-        // console.log('Function: Update Background Color');
-        if (backgroundColorCheckbox.checked) {
-          backgroundColor = document.getElementById("formBackgroundColor").value;
-          document.getElementById("formBackgroundColor").disabled = false;
-          backgroundColorCheck = true;
-          // testMedia.style.background = `${background}px solid ${backgroundColor}`;
-        } else {
-          backgroundColor = 'white';
-          backgroundColorCheck = false;
-          document.getElementById("formBackgroundColor").disabled = true;
-          // testMedia.style.background = `${background}px solid ${backgroundColor}`;
+
+        //NEW CODE
+        let mediaVisualColor = document.getElementById('mediaVisualColor');
+        let TEMPbackgroundColor;
+        if (mediaVisualColor) {
+          mediaContainer.removeChild(mediaVisualColor); // Remove the video if it exists
         }
+        // Create a new div for the background color
+        mediaVisualColor = document.createElement('div');
+        mediaVisualColor.id = 'mediaVisualColor';
+        mediaVisualColor.style.width = '100%'; // Set width to cover the container
+        mediaVisualColor.style.height = '100%'; // Set height to cover the container
+
+        // Update background color based on checkbox
+        if (backgroundColorCheckbox.checked) {
+            TEMPbackgroundColor = document.getElementById("formBackgroundColor").value;
+            document.getElementById("formBackgroundColor").disabled = false;
+            backgroundColorCheck = "checked";
+        } else {
+            TEMPbackgroundColor = 'white';
+            document.getElementById("formBackgroundColor").disabled = true;
+            backgroundColorCheck = "";
+        }
+        mediaVisualColor.style.background = TEMPbackgroundColor;
+        mediaContainer.appendChild(mediaVisualColor); // Re-add the mediaVisual div to the mediaContainer
+
+        // if (backgroundColorCheckbox.checked) {
+        //   TEMPbackgroundColor = document.getElementById("formBackgroundColor").value;
+        //   document.getElementById("formBackgroundColor").disabled = false;
+        //   backgroundColorCheck = true;
+        //   // testMedia.style.background = `${background}px solid ${backgroundColor}`;
+        // } else {
+        //   TEMPbackgroundColor = 'white';
+        //   backgroundColorCheck = false;
+        //   document.getElementById("formBackgroundColor").disabled = true;
+        //   // testMedia.style.background = `${background}px solid ${backgroundColor}`;
+        // }
         // mediaContainer.style.background = backgroundColor; // Directly update the background of scrollableContent
         // scrollableContent.style.background = backgroundColor; // Directly update the background of scrollableContent
 
         // if background visual checkbox is checked, do not run this - it causes video to restart
-        if (!backgroundVisualCheckbox.checked) {
-          updateBackgroundVisual();
-        }
+        // if (!backgroundVisualCheckbox.checked) {
+        //   updateBackgroundVisual();
+        // }
       }
 
       // create a function here and the call the dunction and save styling seperately
@@ -510,7 +512,6 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
               }
 
               if (backgroundAudio) { // see if the value is true, don't bother running if false
-                // const mediaContainer = document.getElementById('mediaContainer');
                 const mediaAudio = document.createElement('audio'); // Create an audio element
                 mediaAudio.id = 'mediaAudio';
                 mediaAudio.autoplay = true;
@@ -1408,14 +1409,9 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         );
       }
       //###################################################################################################################################################################
-    
+      mediaContainer.style.display = 'block'; // show styling after it has finished applying to media items
     })
     .catch(error => console.error('Error fetching media data:', error));
-    mediaContainer.style.display = 'block'; // show styling after it has finished applying to media items
-    // setTimeout(() => {
-    //   testMediaContainer.style.display = 'flex';
-    // }, 250); // 500 milliseconds = 0.5 seconds
-
   }
   export { applyStyling };
 

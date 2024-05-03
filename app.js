@@ -588,18 +588,12 @@ document.addEventListener('DOMContentLoaded', () => {
       // instead have a function that selects the first item in the side menu list
 
       function categoryItems(tag, jsondata) {
-          // applyStyling(tag); 
+          
           const scrollableContentDiv = document.querySelector('.scrollableContent');
           const mediaContainerDiv = document.getElementById('mediaContainer');
+          mediaContainerDiv.style.display = 'none';
+          applyStyling(tag); // when this completes, then mediaContainer display = block
           const mediaVisual = document.getElementById('.mediaVisual');
-          // get the value of Id carouse.lText
-          // console.log("Carouse.l Selection: " + currentCarouse.lCategory);
-          
-          // if (tag === "All") {
-          //   tag = currentCarouse.lCategory;
-          // }
-          // Show media display and hide others
-          mediaContainerDiv.style.display = 'block';
           
           document.getElementById('showTagSettings').style.display = 'none';
           document.getElementById('contentDisplay').style.display = 'none';
@@ -658,6 +652,7 @@ document.addEventListener('DOMContentLoaded', () => {
             items = mediaData.filter(item => item.Tags.includes(tag));
           }
           // applyStyling(tag); 
+          // applyStyling(selectedTag.Name);
           mediaContainerDiv.innerHTML += createMedia(items, selectedTag, jsondata);
           
           // Calling this function to trigger the styling on load
@@ -717,7 +712,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // In the event user has the edit form up and clicks on the side menu to change the display
             // probably should look into some function that hides all unused divs
-            mediaContainerDiv.style.display = 'block'; // show media again
+            // mediaContainerDiv.style.display = 'none'; // show media again
             contentDisplayDiv.style.display = 'none'; // hide any other selected content within the media 
             document.getElementById('editCategoryMenu').style.display = 'none';
             contentDisplayDiv.innerHTML = '';
@@ -1120,6 +1115,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function createMedia(items, selectedTag) {
       // use the tag to find child categories, use the carouse.l option to determine if categories should be displayed again, under all
       // console.log("Data: " + data);
+      // applyStyling(selectedTag.Name);
       let mediaHTML = '<div class="mediadata">';
       mediaHTML += '<div id="testMediaContainer">';
       let categoryDisplay = "";
@@ -1192,7 +1188,7 @@ document.addEventListener('DOMContentLoaded', () => {
       mediaHTML += '<br><p>Toggle that filters child categories on and off</p>'; // class="mediaitemcontainer"
       mediaHTML += '</div>'; // class="testMediaContainer"
       mediaHTML += '</div>'; // class="mediadata"
-      mediaHTML += applyStyling(selectedTag.Name);
+      // mediaHTML += applyStyling(selectedTag.Name);
       return mediaHTML;
     }
     
