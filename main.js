@@ -258,21 +258,34 @@ ipcMain.on("updateTag", (_, newData) => {
       let tagIndex = jsonData.Tags.findIndex(tag => tag.Name === newData.Name); // Find the index of the tag to update
       if (tagIndex !== -1) { // Update the tag properties if the tag exists
         jsonData.Tags[tagIndex].BackgroundVisual = newData.BackgroundVisual;
+
         jsonData.Tags[tagIndex].Gap = newData.Gap;
+        jsonData.Tags[tagIndex].GapCheck = newData.GapCheck;
+
         jsonData.Tags[tagIndex].Wrap = newData.Wrap;
         if (newData.Width !== 'auto') { jsonData.Tags[tagIndex].Width = newData.Width; }
         jsonData.Tags[tagIndex].Height = newData.Height;
         jsonData.Tags[tagIndex].OriginalDimensions = newData.OriginalDimensions;
+
         jsonData.Tags[tagIndex].Border = newData.Border;
+        jsonData.Tags[tagIndex].BorderCheck = newData.BorderCheck;
+
         jsonData.Tags[tagIndex].BorderColor = newData.BorderColor;
+        jsonData.Tags[tagIndex].BorderColorCheck = newData.BorderColorCheck;
+
         jsonData.Tags[tagIndex].BorderRadius = newData.BorderRadius;
+        jsonData.Tags[tagIndex].BorderRadiusCheck = newData.BorderRadiusCheck;
+
         jsonData.Tags[tagIndex].FloatingBorder = newData.FloatingBorder;
+
         jsonData.Tags[tagIndex].FloatingBorderColor = newData.FloatingBorderColor;
+
         jsonData.Tags[tagIndex].FloatingBorderRadius = newData.FloatingBorderRadius;
+
         jsonData.Tags[tagIndex].FloatingBorderGap = newData.FloatingBorderGap;
+
         jsonData.Tags[tagIndex].BackgroundColor = newData.BackgroundColor;
-        // console.log('BackgroundColorCheck: ' + newData.BackgroundColorCheck);
-        jsonData.Tags[tagIndex].BackgroundColorCheck = newData.BackgroundColorCheck; // not working?
+        jsonData.Tags[tagIndex].BackgroundColorCheck = newData.BackgroundColorCheck; 
       } else {
           console.log(`Tag not found: ${newData.Name}`);
       }

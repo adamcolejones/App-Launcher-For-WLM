@@ -1,4 +1,4 @@
-function updateTestMediaPicturesSizes(width, height, border, borderRadius) {
+function updateTestMediaPicturesSizes(width, height, borderTemp, borderRadiusTemp) {
     // console.log('Function: updateTestMediaPicturesSizes');
     let testMediaPictures = document.querySelectorAll('.testMediaItemPicture');
     testMediaPictures.forEach(testMediaPicture => {
@@ -23,7 +23,7 @@ function updateTestMediaPicturesSizes(width, height, border, borderRadius) {
       testMediaPicture.style.height = `${setHeight}px`;
       // testMediaPicture.style.width = width;
       // testMediaPicture.style.height = height;
-      let testBorderRadius = borderRadius - border - 1;
+      let testBorderRadius = borderRadiusTemp - borderTemp - 1; // what is happening here? The curve of the radius minus the border size minus 1 ????
       if (testBorderRadius < 0) {
         testBorderRadius = 0;
       }
