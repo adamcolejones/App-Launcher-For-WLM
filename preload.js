@@ -119,7 +119,7 @@ let updateMedia = (id, Name, RunCommand, Tags, imagePath) => {
 };
 
 //###################################################################################################################################################################
-
+// Take JS Values and change them into a format that JSON can understand.
 
 let updateTag = (
   name, 
@@ -140,9 +140,15 @@ let updateTag = (
   borderRadius, 
   borderRadiusCheck,
   floatingBorder, 
+  floatingBorderCheck, 
   floatingBorderColor, 
-  floatingBorderRadius, 
+  floatingBorderColorCheck,
+  floatingBorderRadius,
+  floatingBorderRadiusCheck, 
   floatingBorderGap, 
+  floatingBorderGapCheck,
+  matchBorderCheck,
+  matchBorderGapCheck,
   // floatingBorderPadding
 ) => {
   let newData = {
@@ -164,9 +170,15 @@ let updateTag = (
     "BorderRadius": borderRadius,
     "BorderRadiusCheck": borderRadiusCheck,
     "FloatingBorder": floatingBorder,
+    "FloatingBorderCheck": floatingBorderCheck,
     "FloatingBorderColor": floatingBorderColor,
+    "FloatingBorderColorCheck": floatingBorderColorCheck,
     "FloatingBorderRadius": floatingBorderRadius,
+    "FloatingBorderRadiusCheck": floatingBorderRadiusCheck,
     "FloatingBorderGap": floatingBorderGap,
+    "FloatingBorderGapCheck": floatingBorderGapCheck,
+    "MatchBorderCheck": matchBorderCheck,
+    "MatchBorderGapCheck": matchBorderGapCheck,
     // "Rows": 1,
     // "Columns": 15,
     // "CustomValues": true

@@ -249,7 +249,7 @@ ipcMain.on("deleteMedia", (sender, idToDelete) => {
 
 
 //###################################################################################################################################################################                                                                                                    
-
+// This function will actually place the JSON data into the JSON file Where the Category name matches up
 ipcMain.on("updateTag", (_, newData) => {
   console.log("ipcMain: Updated " + newData.Name + " Category");
   try {
@@ -259,33 +259,53 @@ ipcMain.on("updateTag", (_, newData) => {
       if (tagIndex !== -1) { // Update the tag properties if the tag exists
         jsonData.Tags[tagIndex].BackgroundVisual = newData.BackgroundVisual;
 
+        // Gap
         jsonData.Tags[tagIndex].Gap = newData.Gap;
         jsonData.Tags[tagIndex].GapCheck = newData.GapCheck;
 
+        // Wrap
         jsonData.Tags[tagIndex].Wrap = newData.Wrap;
+
+        // Dimensions
         if (newData.Width !== 'auto') { jsonData.Tags[tagIndex].Width = newData.Width; }
         jsonData.Tags[tagIndex].Height = newData.Height;
         jsonData.Tags[tagIndex].OriginalDimensions = newData.OriginalDimensions;
 
+        // Border Size
         jsonData.Tags[tagIndex].Border = newData.Border;
         jsonData.Tags[tagIndex].BorderCheck = newData.BorderCheck;
 
+        // Border Color
         jsonData.Tags[tagIndex].BorderColor = newData.BorderColor;
         jsonData.Tags[tagIndex].BorderColorCheck = newData.BorderColorCheck;
 
+        // Border Radius
         jsonData.Tags[tagIndex].BorderRadius = newData.BorderRadius;
         jsonData.Tags[tagIndex].BorderRadiusCheck = newData.BorderRadiusCheck;
 
+        // Floating Border
         jsonData.Tags[tagIndex].FloatingBorder = newData.FloatingBorder;
+        jsonData.Tags[tagIndex].FloatingBorderCheck = newData.FloatingBorderCheck;
 
+        // Floating Border Color
         jsonData.Tags[tagIndex].FloatingBorderColor = newData.FloatingBorderColor;
+        jsonData.Tags[tagIndex].FloatingBorderColorCheck = newData.FloatingBorderColorCheck;
 
+        // Floating Border Radius
         jsonData.Tags[tagIndex].FloatingBorderRadius = newData.FloatingBorderRadius;
+        jsonData.Tags[tagIndex].FloatingBorderRadiusCheck = newData.FloatingBorderRadiusCheck;
 
+        // Floating Border Gap
         jsonData.Tags[tagIndex].FloatingBorderGap = newData.FloatingBorderGap;
+        jsonData.Tags[tagIndex].FloatingBorderGapCheck = newData.FloatingBorderGapCheck;
 
+        // Background Color
         jsonData.Tags[tagIndex].BackgroundColor = newData.BackgroundColor;
         jsonData.Tags[tagIndex].BackgroundColorCheck = newData.BackgroundColorCheck; 
+
+        // Match Border Settings
+        jsonData.Tags[tagIndex].MatchBorderCheck = newData.MatchBorderCheck;
+        jsonData.Tags[tagIndex].MatchBorderGapCheck = newData.MatchBorderGapCheck;
       } else {
           console.log(`Tag not found: ${newData.Name}`);
       }
