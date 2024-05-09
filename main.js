@@ -305,7 +305,12 @@ ipcMain.on("updateTag", (_, newData) => {
 
         // Match Border Settings
         jsonData.Tags[tagIndex].MatchBorderCheck = newData.MatchBorderCheck;
-        jsonData.Tags[tagIndex].MatchBorderGapCheck = newData.MatchBorderGapCheck;
+        jsonData.Tags[tagIndex].WrapBorderCheck = newData.WrapBorderCheck;
+
+        // Margins
+        jsonData.Tags[tagIndex].AutoMarginCheck = newData.AutoMarginCheck;
+        jsonData.Tags[tagIndex].TopMargin = newData.TopMargin;
+        jsonData.Tags[tagIndex].LeftMargin = newData.LeftMargin;
       } else {
           console.log(`Tag not found: ${newData.Name}`);
       }

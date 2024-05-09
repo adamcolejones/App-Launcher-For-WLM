@@ -188,10 +188,21 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         let floatingBorderPadding; // value is determined later, needed to be initialized beforehand
 
         let matchBorderCheck = selectedTag.MatchBorderCheck !== undefined ? selectedTag.MatchBorderCheck : ""; // "checked", or "" (blank)
-        let matchBorderGapCheck = selectedTag.MatchBorderGapCheck !== undefined ? selectedTag.MatchBorderGapCheck : ""; // "checked", or "" (blank)
+        let wrapBorderCheck = selectedTag.WrapBorderCheck !== undefined ? selectedTag.WrapBorderCheck : ""; // "checked", or "" (blank)
 
+      // GLOBAL MARGIN VALUES
+        let borderSizeTemp = border; // need to implement in the event borderSize is disabled after having a value above 0 to prevent incorrect hover image positioning
+        let borderRadiusTemp = borderRadius; // should I do this for radius as well? Once you find a reason for it.  I don't think its necessary at the moment
+        let floatingBorderTemp = floatingBorder;
+        let floatingBorderSizeTemp = floatingBorder; // repetitive, change to only have one ctrl f
+        let floatingBorderColorTemp = floatingBorderColor;
+        let floatingBorderRadiusTemp = floatingBorderRadius;
+        let floatingBorderGapTemp = floatingBorderGap;
 
-
+        // let test = 1;
+        let autoMarginCheck = selectedTag.AutoMarginCheck !== undefined ? selectedTag.AutoMarginCheck : ""; // "checked", or "" (blank)
+        let topMargin = selectedTag.TopMargin !== undefined ? selectedTag.TopMargin : 0; // value or 0 margin
+        let leftMargin = selectedTag.LeftMargin !== undefined ? selectedTag.LeftMargin : 0; // value or 0 margin
 
       //###################################################################################################################################################################
       //                                                                                                                                                    
@@ -221,11 +232,8 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       //                                                                                                                                                                                                                                                                    
       editCategoryMenu.innerHTML = `
         
-        <p>Category Settings</p>
-        <p>General Settings</p>
         <br>
-
-        <p>BACKGROUND</p>
+        <div class='settingsHeader'>BACKGROUND</div>
         <div class="settingsOptionContainer">
           <div class="settingsOption">
             <p>Background Visual</p>
@@ -234,8 +242,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
           </div>
           <div class="settingsOption">
             <p>Background Color</p>
-            <input id="backgroundColorCheckbox" type="checkbox" ${backgroundColorCheck}>
-            <input type="text" id="formBackgroundColor" name="formBackgroundColor" value=${backgroundColor}>
+            <input type="text" id="formBackgroundColor" name="formBackgroundColor" value=${backgroundColor}><input id="backgroundColorCheckbox" type="checkbox" ${backgroundColorCheck}>
           </div>
           <div class="settingsOption">
             <p>Background Audio</p>
@@ -245,7 +252,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         </div>
         <br>
 
-        <p>ASPECT RATIO / POSITION</p>
+        <div class='settingsHeader'>ASPECT RATIO / POSITION</div>
         <div class="settingsOptionContainer">
           <div class="settingsOption">
             <p>Original Dimensions</p>
@@ -258,86 +265,97 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
           </div>
           <div class="settingsOption">
             <p>Gap</p>
-            <input id="gapCheckbox" type="checkbox" ${gapCheck}>
-            <input type="number" id="formGap" name="formGap" value=${gap}>
+            <input type="number" id="formGap" name="formGap" value=${gap}><input id="gapCheckbox" type="checkbox" ${gapCheck}>
           </div>
           <div class="settingsOption">
             <p id="wrapValue">Wrap</p>
             <input id="wrapCheckbox" type="checkbox" ${wrapCheckboxValue}>
           </div>
-        </div>
-        <br>
-
-        <p>BORDER</p>
-        <div class="settingsOptionContainer">
           <div class="settingsOption">
-            <p>Size</p><input id="borderCheckbox" type="checkbox" ${borderCheck}>
-            <input type="number" id="formBorder" name="formBorder" value=${border}>
+            <p>Auto Margin</p>
+            <input id="autoMarginCheckbox" type="checkbox" ${autoMarginCheck}>
           </div>
           <div class="settingsOption">
-            <p>Color</p><input id="borderColorCheckbox" type="checkbox" ${borderColorCheck}>
-            <input type="text" id="formBorderColor" name="formBorderColor" value=${borderColor}>
-          </div>
-          <div class="settingsOption">
-            <p>Radius</p><input id="borderRadiusCheckbox" type="checkbox" ${borderRadiusCheck}>
-            <input type="number" id="formBorderRadius" name="formBorderRadius" value=${borderRadius}>
+            <p>Marginal Spacing</p>
+            <input type="number" id="formTopMargin" name="formTopMargin" value=${topMargin}>
+            <input type="number" id="formLeftMargin" name="formLeftMargin" value=${leftMargin}>
           </div>
         </div>
         <br>
 
-        <p>HOVERED BORDER</p>
+        <div class='settingsHeader'>BORDER</div>
         <div class="settingsOptionContainer">
           <div class="settingsOption">
-            <p>Match Border Settings</p><input id="matchBorderCheckbox" type="checkbox" ${matchBorderCheck}>
+            <p>Size</p>
+            <input type="number" id="formBorder" name="formBorder" value=${border}><input id="borderCheckbox" type="checkbox" ${borderCheck}>
           </div>
           <div class="settingsOption">
-            <p>Match Border Gap Settings</p><input id="matchBorderGapCheckbox" type="checkbox" ${matchBorderGapCheck}>
+            <p>Color</p>
+            <input type="text" id="formBorderColor" name="formBorderColor" value=${borderColor}><input id="borderColorCheckbox" type="checkbox" ${borderColorCheck}>
           </div>
           <div class="settingsOption">
-            <p>Size</p><input id="floatingBorderCheckbox" type="checkbox" ${floatingBorderCheck}>
-            <input type="number" id="formFloatingBorder" name="formFloatingBorder" value=${floatingBorder}>
-          </div>
-          <div class="settingsOption">
-            <p>Color</p><input id="floatingBorderColorCheckbox" type="checkbox" ${floatingBorderColorCheck}>
-            <input type="text" id="formFloatingBorderColor" name="formFloatingBorderColor" value=${floatingBorderColor}>
-          </div>
-          <div class="settingsOption">
-            <p>Radius</p><input id="floatingBorderRadiusCheckbox" type="checkbox" ${floatingBorderRadiusCheck}>
-            <input type="number" id="formFloatingBorderRadius" name="formFloatingBorderRadius" value=${floatingBorderRadius}>
-          </div>
-          <div class="settingsOption">
-            <p id="floatingBorderGapValue">Gap</p><input id="floatingBorderGapCheckbox" type="checkbox" ${floatingBorderGapCheck}>
-            <input type="number" id="formFloatingBorderGap" name="formFloatingBorderGap" value=${floatingBorderGap}>
+            <p>Radius</p>
+            <input type="number" id="formBorderRadius" name="formBorderRadius" value=${borderRadius}><input id="borderRadiusCheckbox" type="checkbox" ${borderRadiusCheck}>
           </div>
         </div>
         <br>
 
-        <p>THEMES</p>
+        <div class='settingsHeader'>HOVERED BORDER</div>
         <div class="settingsOptionContainer">
           <div class="settingsOption">
-            <p>Startup Video</p><input id="test" type="checkbox" checked>
-            <input type="number" id="test" name="test" value=${border}>
+            <p>Match Base Border</p><input id="matchBorderCheckbox" type="checkbox" ${matchBorderCheck}>
           </div>
           <div class="settingsOption">
-            <p>Background Visual</p><input id="test" type="checkbox" checked>
-            <input type="text" id="test" name="test" value=${border}>
+            <p>Wrap Base Border</p><input id="wrapBorderCheckbox" type="checkbox" ${wrapBorderCheck}>
           </div>
           <div class="settingsOption">
-            <p>Background Audio</p><input id="test" type="checkbox" checked>
-            <input type="text" id="test" name="test" value=${border}>
+            <p>Size</p>
+            <input type="number" id="formFloatingBorder" name="formFloatingBorder" value=${floatingBorder}><input id="floatingBorderCheckbox" type="checkbox" ${floatingBorderCheck}>
           </div>
           <div class="settingsOption">
-            <p>Selection Sound</p><input id="test" type="checkbox" checked>
-            <input type="number" id="test" name="test" value=${border}>
+            <p>Color</p>
+            <input type="text" id="formFloatingBorderColor" name="formFloatingBorderColor" value=${floatingBorderColor}><input id="floatingBorderColorCheckbox" type="checkbox" ${floatingBorderColorCheck}>
           </div>
           <div class="settingsOption">
-            <p>Font</p><input id="test" type="checkbox" checked>
-            <input type="number" id="test" name="test" value=${border}>
+            <p>Radius</p>
+            <input type="number" id="formFloatingBorderRadius" name="formFloatingBorderRadius" value=${floatingBorderRadius}><input id="floatingBorderRadiusCheckbox" type="checkbox" ${floatingBorderRadiusCheck}>
+          </div>
+          <div class="settingsOption">
+            <p id="floatingBorderGapValue">Gap</p>
+            <input type="number" id="formFloatingBorderGap" name="formFloatingBorderGap" value=${floatingBorderGap}><input id="floatingBorderGapCheckbox" type="checkbox" ${floatingBorderGapCheck}>
+          </div>
+        </div>
+        <br>
+
+        <div class='settingsHeader'>THEMES</div>
+        <div class="settingsOptionContainer">
+          <div class="settingsOption">
+            <p>Startup Video</p>
+            <input type="number" id="test" name="test" value=${border}><input id="test" type="checkbox" checked>
+          </div>
+          <div class="settingsOption">
+            <p>Background Visual</p>
+            <input type="text" id="test" name="test" value=${border}><input id="test" type="checkbox" checked>
+          </div>
+          <div class="settingsOption">
+            <p>Background Audio</p>
+            <input type="text" id="test" name="test" value=${border}><input id="test" type="checkbox" checked>
+          </div>
+          <div class="settingsOption">
+            <p>Selection Sound</p>
+            <input type="number" id="test" name="test" value=${border}><input id="test" type="checkbox" checked>
+          </div>
+          <div class="settingsOption">
+            <p>Font</p>
+            <input type="number" id="test" name="test" value=${border}><input id="test" type="checkbox" checked>
           </div>
         </div>
         <br>
 
         <p>RESTORE DEFAULT SETTINGS</p>
+        <p>Category Settings</p>
+        <p>General Settings</p>
+        <br>
 
       `;
       
@@ -372,6 +390,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       //                                           
       // CONTAINER
         const scrollableContent = document.querySelector('.scrollableContent');
+        let mediaDataDisplay = document.getElementById("mediadata");
         let mediaContainer = document.getElementById('mediaContainer');
         mediaContainer.style.display = 'none';
         
@@ -382,8 +401,12 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         const formGapInput = document.getElementById('formGap');
         const wrapCheckbox = document.getElementById('wrapCheckbox');
         const matchBorderCheckbox = document.getElementById('matchBorderCheckbox');
-        const matchBorderGapCheckbox = document.getElementById('matchBorderGapCheckbox');
+        const wrapBorderCheckbox = document.getElementById('wrapBorderCheckbox');
         // const mediaVisual = document.getElementById('mediaVisual');
+        // MARGINS
+        const autoMarginCheckbox = document.getElementById('autoMarginCheckbox');
+        const formTopMargin = document.getElementById('formTopMargin');
+        const formLeftMargin = document.getElementById('formLeftMargin');
 
       // MEDIA
         const originalDimensionsCheckbox = document.getElementById('originalDimensionsCheckbox');
@@ -463,7 +486,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
           mediaVisualVideo = document.createElement('video');
           mediaVisualVideo.id = 'mediaVisualVideo';
           mediaVisualVideo.loop = true;
-          mediaVisualVideo.muted = true;
+          mediaVisualVideo.muted = false;
           mediaVisualVideo.playsInline = true;
           mediaContainer.appendChild(mediaVisualVideo);
           
@@ -1098,6 +1121,10 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       //  ██████████████     ██████           ██████       ██████████████ ██████████ ██████          ██████ ██████████████ 
       //                                                                                                                   
       // Function to be called when an item is hovered
+      // This function relies on comparing values and changing them based on user settings.
+      // I have created temporary variables to prevent this function from overwritting user's prior values in the event a checkbox was temporarily disabled and will be reverted to later.
+      // If I want to shift content to the right based on hovered value sizes, then I can't do this within the hovered styling onHover event.  It would need to check outside of it.
+      // These variables found inside of onHover are crucial, they will need to be moved or redeclared.  I like seeing the variables next to their functionality but I want optimized code.
       function onHover(event) {
         const dataItem = JSON.parse(event.target.getAttribute('data-item'));
         // Print the value of the id
@@ -1114,39 +1141,55 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         scrollDistanceLeft = mediaContainer.scrollLeft;
         scrollDistanceTop = mediaContainer.scrollTop;
         const sideMenuWidth = 200; // Width of the side menu
-        // TEMPORARY VALUES TO PREVENT OVERWRITING PRIOR VALUES IN JSON
-        let floatingBorderTemp;
-        let floatingBorderColorTemp;
-        let floatingBorderRadiusTemp;
-        let floatingBorderGapTemp;
+
+        // TEMPORARY VALUES TO PREVENT OVERWRITING PRIOR VALUES IN JSON, THESE VALUES AND FUNCTION CHECKS ARE IN A SPECIFIC ORDER SO IF THEY ARE REFERENCED ELSEWHERE THEN THEY WOULD NEED TO BE DECLARED AS A SEPERATE VARIABLE
+        // let borderSizeTemp; // need to implement in the event borderSize is disabled after having a value above 0 to prevent incorrect hover image positioning
+        // let borderRadiusTemp; // should I do this for radius as well? Once you find a reason for it.  I don't think its necessary at the moment
+        // let floatingBorderTemp;
+        // let floatingBorderColorTemp;
+        // let floatingBorderRadiusTemp;
+        // let floatingBorderGapTemp;
         // BORDER SIZE
-        if (floatingBorderCheck) { floatingBorderTemp = floatingBorder; } // This prevents the value of floating border being overwritten while still removing it if necessary
-        else { floatingBorderTemp = 0; } // This prevents the value of floating border being overwritten while still removing it if necessary
+        // if (borderCheck) { borderSizeTemp = border; } // This prevents the value of floating border being overwritten while still removing it if necessary
+        // else { borderSizeTemp = 0; } // This prevents the value of floating border being overwritten while still removing it if necessary
+
+        // if (floatingBorderCheck) { floatingBorderTemp = floatingBorder; } // This prevents the value of floating border being overwritten while still removing it if necessary
+        // else { floatingBorderTemp = 0; } // This prevents the value of floating border being overwritten while still removing it if necessary
         
-        // BORDER COLOR
-        if (floatingBorderColorCheck) { floatingBorderColorTemp = floatingBorderColor; } // This prevents the value of floating border Color being overwritten while still removing it if necessary
-        else { floatingBorderColorTemp = 'black'; } // This prevents the value of floating border being overwritten while still removing it if necessary
+        // // BORDER COLOR
+        // if (floatingBorderColorCheck) { floatingBorderColorTemp = floatingBorderColor; } // This prevents the value of floating border Color being overwritten while still removing it if necessary
+        // else { floatingBorderColorTemp = 'black'; } // This prevents the value of floating border being overwritten while still removing it if necessary
 
-        // BORDER RADIUS
-        if (floatingBorderRadiusCheck) { floatingBorderRadiusTemp = floatingBorderRadius; } // This prevents the value of floating border Color being overwritten while still removing it if necessary
-        else { floatingBorderRadiusTemp = 0; } // This prevents the value of floating border being overwritten while still removing it if necessary
+        // // BORDER RADIUS
+        // if (borderRadiusCheck) { borderRadiusTemp = borderRadius; } // This prevents the value of floating border being overwritten while still removing it if necessary
+        // else { borderRadiusTemp = 0; } // This prevents the value of floating border being overwritten while still removing it if necessary
 
-        // BORDER GAP
-        if (floatingBorderGapCheck) { floatingBorderGapTemp = floatingBorderGap; } // This prevents the value of floating border Color being overwritten while still removing it if necessary
-        else { floatingBorderGapTemp = 0; } // This prevents the value of floating border being overwritten while still removing it if necessary
+        // if (floatingBorderRadiusCheck) { floatingBorderRadiusTemp = floatingBorderRadius; } // This prevents the value of floating border Color being overwritten while still removing it if necessary
+        // else { floatingBorderRadiusTemp = 0; } // This prevents the value of floating border being overwritten while still removing it if necessary
+
+        // // BORDER GAP
+        // if (floatingBorderGapCheck) { floatingBorderGapTemp = floatingBorderGap; } // This prevents the value of floating border Color being overwritten while still removing it if necessary
+        // else { floatingBorderGapTemp = 0; } // This prevents the value of floating border being overwritten while still removing it if necessary
         
-        // SIMULATANEOUSLY CHECK TO SEE IF MATCH GAP IS APPLIED, AFTER OTHER CHECKBOXES
-        if (matchBorderGapCheck) { // This prevents the value of floating border Color being overwritten while still removing it if necessary
-          // floatingBorderRadiusTemp = borderRadius; // keep for later incase I want to match radius as well.
-          floatingBorderGapTemp = border;
-        } else { } // DO NOTHING, KEEP THE VALUES SET ABOVE
+        // // SIMULATANEOUSLY CHECK TO SEE IF WRAPBORDER IS APPLIED, AFTER OTHER CHECKBOXES
+        // if (wrapBorderCheck) { // This prevents the value of floating border Color being overwritten while still removing it if necessary
+        //   floatingBorderRadiusTemp = borderRadiusTemp; // keep for later incase I want to match radius as well.
+        //   floatingBorderGapTemp = borderSizeTemp; 
+        //   if (!borderCheck) { floatingBorderGapTemp = 0; } // if unchecked, assign 0 // Check to see if bordersize or radius are disabled, then wrap the hovered border around the content itself
+        //   if (!borderRadiusCheck) { floatingBorderRadiusTemp = 0; } // if unchecked, assign 0
+        //   // This will not work if the hovered border size is disabled.  I think the user should be notified that the size is off.  Keep this default, maybe change size to 1 if its set to 0
+        // } else { } // DO NOTHING, KEEP THE VALUES SET ABOVE 
 
-        // SIMULATANEOUSLY CHECK TO SEE IF MATCH BORDER IS APPLIED, AFTER OTHER CHECKBOXES
-        if (matchBorderCheck) { // This prevents the value of floating border Color being overwritten while still removing it if necessary
-          floatingBorderTemp = border;
-          floatingBorderRadiusTemp = borderRadius;
-          floatingBorderGapTemp = 0;
-        } else { } // DO NOTHING, KEEP THE VALUES SET ABOVE
+        // // SIMULATANEOUSLY CHECK TO SEE IF MATCH BORDER IS APPLIED, AFTER OTHER CHECKBOXES
+        // if (matchBorderCheck) { // This prevents the value of floating border Color being overwritten while still removing it if necessary
+        //   floatingBorderTemp = borderSizeTemp;
+        //   floatingBorderGapTemp = 0;
+        //   floatingBorderRadiusTemp = borderRadiusTemp; // when base radius is disabled, it should read 0, this is done above
+        //   // checking the value again as it may have been overwritten above in the wrap check // when base radius is enabled it should match base but the wrap check changes the value
+        //   // if (borderRadiusCheck) { floatingBorderRadiusTemp = borderRadius; } // This prevents the value of floating border Color being overwritten while still removing it if necessary
+        //   // else { floatingBorderRadiusTemp = 0; } // This prevents the value of floating border being overwritten while still removing it if necessary
+          
+        // } else { } // DO NOTHING, KEEP THE VALUES SET ABOVE
 
         floatingBorderElement = testMedia.cloneNode(true);
         floatingBorderElement.classList.add('testMediaCopy');
@@ -1159,8 +1202,8 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         // console.log('    after mouseEnter Border: ' + border); // border is not updating, causing non-bordered hover border to be off center
         // floatingBorderPadding = (border) + (floatingBorderGap) + 'px'; // border is not updating here?
         floatingBorderPadding = (floatingBorderGapTemp) + 'px'; // border is removed to have floating cover original
-        let floatingBorderTopAdjustment = `${(rect.top) - (floatingBorderTemp) - (floatingBorderGapTemp) + (border) + (scrollDistanceTop) - 50}px`;
-        let floatingBorderLeftAdjustment = `${(rect.left) - (floatingBorderTemp) - (floatingBorderGapTemp) + (border) + (scrollDistanceLeft) - (sideMenuWidth) + 0}px`;
+        let floatingBorderTopAdjustment = `${(rect.top) - (floatingBorderTemp) - (floatingBorderGapTemp) + (borderSizeTemp) + (scrollDistanceTop) - 50}px`;
+        let floatingBorderLeftAdjustment = `${(rect.left) - (floatingBorderTemp) - (floatingBorderGapTemp) + (borderSizeTemp) + (scrollDistanceLeft) - (sideMenuWidth) + 0}px`;
         floatingBorderElement.style.padding = floatingBorderPadding;
         floatingBorderElement.style.top = floatingBorderTopAdjustment;
         floatingBorderElement.style.left = floatingBorderLeftAdjustment;
@@ -1227,15 +1270,15 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
 
         // Temporary values that won't update the json file, but still allow for dynamic changes on the page.
         // I want to avoid the checkbox's from updating the values of border and borderColor
-        let borderTemp = borderCheck === "checked" ? border : 0; // default is 0
+        let borderSizeTemp = borderCheck === "checked" ? border : 0; // default is 0
         let borderColorTemp = borderColorCheck === "checked" ? borderColor : `black`; // default is black
         let borderRadiusTemp = borderRadiusCheck === "checked" ? borderRadius : 0; // default is black
 
         let ruleText;         // Determine the correct CSS rule based on 'width'
         if (width === 'auto') {
-            ruleText = `{ width: auto; height: ${setHeight}px; border: ${borderTemp}px solid ${borderColorTemp}; border-radius: ${borderRadiusTemp}px; }`;
+            ruleText = `{ width: auto; height: ${setHeight}px; border: ${borderSizeTemp}px solid ${borderColorTemp}; border-radius: ${borderRadiusTemp}px; }`;
         } else {
-            ruleText = `{ width: ${ratioedWidth}px; height: ${setHeight}px; border: ${borderTemp}px solid ${borderColorTemp}; border-radius: ${borderRadiusTemp}px; }`;
+            ruleText = `{ width: ${ratioedWidth}px; height: ${setHeight}px; border: ${borderSizeTemp}px solid ${borderColorTemp}; border-radius: ${borderRadiusTemp}px; }`;
         }
         if (styleSheet) { // potentially create a dynaimc style sheet that is less crowded and easier to search through
             let ruleFound = false;
@@ -1254,15 +1297,193 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
             console.log('The specified stylesheet was not found in the document.');
         }
 
-        updateTestMediaPicturesSizes(width, height, borderTemp, borderRadiusTemp);
+        // HAVING AN ISSUE WITH THE HOVERED BORDER EXCEEDING THE DISPLAY WINDOW ON THE LEFT SIDE.  IMPLEMENT PADDING FOR FLOATING BORDER ACCOMODATION HERE
+        // let floatingBorderSizeTemp = floatingBorderCheck === "checked" ? floatingBorder : 0; // if yes, assign the value for floatingBorder, if no assign 0
+        // let floatingBorderGapTemp = floatingBorderGapCheck === "checked" ? floatingBorderGap : 0; // if yes, assign the value for floatingBorderGap, if no assign 0
+        // if (wrapBorderCheck === "checked") { floatingBorderGapTemp = borderSizeTemp; } // wrapBorderCheck would change the value of the gap between the content and the hovered border.
+
+        // // Calculate the amount of padding that should be applied.
+        // let floatingBorderShift = floatingBorderSizeTemp + floatingBorderGapTemp;
+        // if (matchBorderCheck === "checked") { floatingBorderShift = 0; } // if matchBorderCheck is checked at all, there will be no padding required to contain the hovered border in the media display window
+        // // what if the user makes the border gap 1000+ ? I don't want to shift the content that far off the page.  
+        // // Trying to balance user customization with an ugly user experience.  If the user makes the app that ugly that's on them.  Be different from other apps, give user as much control as possible while trying to guide them to make smart choices.
+        // console.log('floatingBorderSizeTemp: ' + floatingBorderSizeTemp);
+        // console.log('floatingBorderGapTemp: ' + floatingBorderGapTemp);
+        // console.log('mediaDisplayShift: ' + floatingBorderShift);
+        // mediaDataDisplay.style.margin = '' + floatingBorderShift + 'px'; // need to save this value globally so that it can be applied to the hover settings. // also this is not updating dynamically yet.  Will need to fix that.
+        // left, right, auto margin checkbox settings
+        // Do I need to create a new section of code?
+
+        // shift the media content over based on the size and gap of the floating border + shift over just for the sake of space between the edge of the floating border and the side menu
+        
+
+        updateTestMediaPicturesSizes(width, height, borderSizeTemp, borderRadiusTemp);
         // testMediaElements.forEach(testMedia => {
         // saveStyling(); 
         // height, width, original dimensions are saved here
       }
       //###################################################################################################################################################################
+
+      //###################################################################################################################################################################
+      //  ██████          ██████ ██████████████ ████████████████   ██████████████ ██████████ ██████          ██████ ██████████████ 
+      //  ██░░██████████████░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   ██░░░░░░░░░░██ ██░░░░░░██ ██░░██████████  ██░░██ ██░░░░░░░░░░██ 
+      //  ██░░░░░░░░░░░░░░░░░░██ ██░░██████░░██ ██░░████████░░██   ██░░██████████ ████░░████ ██░░░░░░░░░░██  ██░░██ ██░░██████████ 
+      //  ██░░██████░░██████░░██ ██░░██  ██░░██ ██░░██    ██░░██   ██░░██           ██░░██   ██░░██████░░██  ██░░██ ██░░██         
+      //  ██░░██  ██░░██  ██░░██ ██░░██████░░██ ██░░████████░░██   ██░░██           ██░░██   ██░░██  ██░░██  ██░░██ ██░░██████████ 
+      //  ██░░██  ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   ██░░██  ██████   ██░░██   ██░░██  ██░░██  ██░░██ ██░░░░░░░░░░██ 
+      //  ██░░██  ██████  ██░░██ ██░░██████░░██ ██░░██████░░████   ██░░██  ██░░██   ██░░██   ██░░██  ██░░██  ██░░██ ██████████░░██ 
+      //  ██░░██          ██░░██ ██░░██  ██░░██ ██░░██  ██░░██     ██░░██  ██░░██   ██░░██   ██░░██  ██░░██████░░██         ██░░██ 
+      //  ██░░██          ██░░██ ██░░██  ██░░██ ██░░██  ██░░██████ ██░░██████░░██ ████░░████ ██░░██  ██░░░░░░░░░░██ ██████████░░██ 
+      //  ██░░██          ██░░██ ██░░██  ██░░██ ██░░██  ██░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░██ ██░░██  ██████████░░██ ██░░░░░░░░░░██ 
+      //  ██████          ██████ ██████  ██████ ██████  ██████████ ██████████████ ██████████ ██████          ██████ ██████████████ 
+      //   
+      // In the event the user's hovered border extends the width of the screen, we need to set custom margins to keep the entire content on the screen.
+      // Set the hovered border values, then set the margin values based on that.
+
+      // check for updates with autoMargin Checkbox and top,left margin input boxes.  If they trigger, then run the function updateMargin
+      autoMarginCheckbox.addEventListener('change', updateMargin); //checkbox update
+      autoMarginCheckbox.addEventListener('change', saveStyling);
+
+      formTopMargin.addEventListener('input', updateMargin); // if top or left margin values are changed update margin settings.
+      formTopMargin.addEventListener('input', saveStyling); // if top or left margin values are changed update margin settings.
+      formLeftMargin.addEventListener('input', updateMargin); // if top or left margin values are changed update margin settings.
+      formLeftMargin.addEventListener('input', saveStyling); // if top or left margin values are changed update margin settings.
+
+      updateMargin();
+      function updateMargin() {
+        // TEMPORARY VALUES TO PREVENT OVERWRITING PRIOR VALUES IN JSON, THESE VALUES AND FUNCTION CHECKS ARE IN A SPECIFIC ORDER SO IF THEY ARE REFERENCED ELSEWHERE THEN THEY WOULD NEED TO BE DECLARED AS A SEPERATE VARIABLE
+        // let borderSizeTemp; // need to implement in the event borderSize is disabled after having a value above 0 to prevent incorrect hover image positioning
+        // let borderRadiusTemp; // should I do this for radius as well? Once you find a reason for it.  I don't think its necessary at the moment
+        // let floatingBorderTemp;
+        // let floatingBorderColorTemp;
+        // let floatingBorderRadiusTemp;
+        // let floatingBorderGapTemp;
+        if (borderCheck) { borderSizeTemp = border; } // This prevents the value of floating border being overwritten while still removing it if necessary
+        else { borderSizeTemp = 0; } // This prevents the value of floating border being overwritten while still removing it if necessary
+
+        if (floatingBorderCheck) { floatingBorderTemp = floatingBorder; } // This prevents the value of floating border being overwritten while still removing it if necessary
+        else { floatingBorderTemp = 0; } // This prevents the value of floating border being overwritten while still removing it if necessary
+        
+        // BORDER COLOR
+        if (floatingBorderColorCheck) { floatingBorderColorTemp = floatingBorderColor; } // This prevents the value of floating border Color being overwritten while still removing it if necessary
+        else { floatingBorderColorTemp = 'black'; } // This prevents the value of floating border being overwritten while still removing it if necessary
+
+        // BORDER RADIUS
+        if (borderRadiusCheck) { borderRadiusTemp = borderRadius; } // This prevents the value of floating border being overwritten while still removing it if necessary
+        else { borderRadiusTemp = 0; } // This prevents the value of floating border being overwritten while still removing it if necessary
+
+        if (floatingBorderRadiusCheck) { floatingBorderRadiusTemp = floatingBorderRadius; } // This prevents the value of floating border Color being overwritten while still removing it if necessary
+        else { floatingBorderRadiusTemp = 0; } // This prevents the value of floating border being overwritten while still removing it if necessary
+
+        // BORDER GAP
+        if (floatingBorderGapCheck) { floatingBorderGapTemp = floatingBorderGap; } // This prevents the value of floating border Color being overwritten while still removing it if necessary
+        else { floatingBorderGapTemp = 0; } // This prevents the value of floating border being overwritten while still removing it if necessary
+        
+        // SIMULATANEOUSLY CHECK TO SEE IF WRAPBORDER IS APPLIED, AFTER OTHER CHECKBOXES
+        if (wrapBorderCheck) { // This prevents the value of floating border Color being overwritten while still removing it if necessary
+          floatingBorderRadiusTemp = borderRadiusTemp; // keep for later incase I want to match radius as well.
+          floatingBorderGapTemp = borderSizeTemp; 
+          if (!borderCheck) { floatingBorderGapTemp = 0; } // if unchecked, assign 0 // Check to see if bordersize or radius are disabled, then wrap the hovered border around the content itself
+          if (!borderRadiusCheck) { floatingBorderRadiusTemp = 0; } // if unchecked, assign 0
+          // This will not work if the hovered border size is disabled.  I think the user should be notified that the size is off.  Keep this default, maybe change size to 1 if its set to 0
+        } else { } // DO NOTHING, KEEP THE VALUES SET ABOVE 
+
+        // SIMULATANEOUSLY CHECK TO SEE IF MATCH BORDER IS APPLIED, AFTER OTHER CHECKBOXES
+        if (matchBorderCheck) { // This prevents the value of floating border Color being overwritten while still removing it if necessary
+          floatingBorderTemp = borderSizeTemp;
+          floatingBorderGapTemp = 0;
+          floatingBorderRadiusTemp = borderRadiusTemp; // when base radius is disabled, it should read 0, this is done above
+          // checking the value again as it may have been overwritten above in the wrap check // when base radius is enabled it should match base but the wrap check changes the value
+          // if (borderRadiusCheck) { floatingBorderRadiusTemp = borderRadius; } // This prevents the value of floating border Color being overwritten while still removing it if necessary
+          // else { floatingBorderRadiusTemp = 0; } // This prevents the value of floating border being overwritten while still removing it if necessary
+          
+        } else { } // DO NOTHING, KEEP THE VALUES SET ABOVE
+
+        // CALCULATING MARGIN SIZE
+        floatingBorderSizeTemp = floatingBorderCheck === "checked" ? floatingBorder : 0; // if yes, assign the value for floatingBorder, if no assign 0
+        floatingBorderGapTemp = floatingBorderGapCheck === "checked" ? floatingBorderGap : 0; // if yes, assign the value for floatingBorderGap, if no assign 0
+        if (wrapBorderCheck === "checked") { floatingBorderGapTemp = borderSizeTemp; } // wrapBorderCheck would change the value of the gap between the content and the hovered border.
+
+        // Calculate the amount of padding that should be applied.
+        let autoMarginAmount = floatingBorderSizeTemp + floatingBorderGapTemp;
+        if (matchBorderCheck === "checked") { autoMarginAmount = 0; } // if matchBorderCheck is checked at all, there will be no padding required to contain the hovered border in the media display window
+        // what if the user makes the border gap 1000+ ? I don't want to shift the content that far off the page.  
+        // Trying to balance user customization with an ugly user experience.  If the user makes the app that ugly that's on them.  Be different from other apps, give user as much control as possible while trying to guide them to make smart choices.
+        // console.log('floatingBorderSizeTemp: ' + floatingBorderSizeTemp);
+        // console.log('floatingBorderGapTemp: ' + floatingBorderGapTemp);
+        // console.log('mediaDisplayShift: ' + floatingBorderShift);
+        // mediaDataDisplay.style.margin = '' + floatingBorderShift + 'px'; // need to save this value globally so that it can be applied to the hover settings. // also this is not updating dynamically yet.  Will need to fix that.
+
+        // NEW VALUES
+        // const autoMarginCheckbox = document.getElementById('autoMarginCheckbox');
+        // floatingBorderSizeTemp = floatingBorderCheck === "checked" ? floatingBorder : 0;
+        // const formTopMargin = document.getElementById('formTopMargin');
+        // const formLeftMargin = document.getElementById('formLeftMargin');
+        // TOP MARGIN
+          topMargin =  formTopMargin.value; // I need to verify these values.
+          let topMargininputValue = parseInt(formTopMargin.value);
+          if (topMargininputValue < 0) {
+            formTopMargin.value = 0; // this keeps the input from exceeding the limit
+            topMargininputValue = 0; // Update inputValue as well
+          } // Check if the value is greater than 999
+          if (topMargininputValue > 999) { // If so, set it to 999
+            formTopMargin.value = 999; // this keeps the input from exceeding the limit
+              topMargininputValue = 999; // Update inputValue as well
+          } // Update the border variable with the input value
+          topMargin = topMargininputValue;
+          // in the event the value is empty or contains letters
+          topMargin = formTopMargin.value !== null ? formTopMargin.value : 0;
+          formTopMargin.value = topMargin;
+        // LEFT MARGIN
+          leftMargin = formLeftMargin.value;
+          let leftMargininputValue = parseInt(formLeftMargin.value);
+          if (leftMargininputValue < 0) {
+            formLeftMargin.value = 0; // this keeps the input from exceeding the limit
+            leftMargininputValue = 0; // Update inputValue as well
+          } // Check if the value is greater than 999
+          if (leftMargininputValue > 999) { // If so, set it to 999
+            formLeftMargin.value = 999; // this keeps the input from exceeding the limit
+            leftMargininputValue = 999; // Update inputValue as well
+          } // Update the border variable with the input value
+          leftMargin = leftMargininputValue;
+          // in the event the value is empty or contains letters
+          leftMargin = formLeftMargin.value !== null ? formLeftMargin.value : 0;
+          formLeftMargin.value = leftMargin;
+        // 
+        if (autoMarginCheckbox.checked) {
+          formTopMargin.disabled = true;
+          formLeftMargin.disabled = true;
+          mediaDataDisplay.style['margin-top'] = '' + autoMarginAmount + 'px';
+          mediaDataDisplay.style['margin-left'] = '' + autoMarginAmount + 'px';
+          autoMarginCheck = "checked";
+        }
+        else {
+          formTopMargin.disabled = false;
+          formLeftMargin.disabled = false;
+          mediaDataDisplay.style['margin-top'] = '' + topMargin + 'px';
+          mediaDataDisplay.style['margin-left'] = '' + leftMargin + 'px';
+          autoMarginCheck = "";
+        }
+      }
+      // let borderSizeTemp = borderCheck === "checked" ? border : 0; // default is 0
+      // let borderColorTemp = borderColorCheck === "checked" ? borderColor : `black`; // default is black
+      // let borderRadiusTemp = borderRadiusCheck === "checked" ? borderRadius : 0; // default is black
+
+      
+
+      // HOVERED CODE
+      // let borderSizeTemp; // need to implement in the event borderSize is disabled after having a value above 0 to prevent incorrect hover image positioning
+      // let borderRadiusTemp; // should I do this for radius as well? Once you find a reason for it.  I don't think its necessary at the moment
+      // let floatingBorderTemp;
+      // let floatingBorderColorTemp;
+      // let floatingBorderRadiusTemp;
+      // let floatingBorderGapTemp;
+      // BORDER SIZE
+      
+
+
+      //###################################################################################################################################################################                                                                                                                        
             
-
-
       //###################################################################################################################################################################
       // STYLE EVERYTHING HERE DOWN BEFORE LAUNCHING AGAIN
       // FLOATING BORDER FOR SELECTED MATERIAL
@@ -1590,7 +1811,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
           "formFloatingBorderRadius",
           "floatingBorderGapCheckbox",
           "formFloatingBorderGap", 
-          "matchBorderGapCheckbox" // also disable the surrounding gap check
+          "wrapBorderCheckbox" // also disable the surrounding gap check
         ];
         if (matchBorderCheckbox.checked) {
           matchBorderCheck = "checked";
@@ -1621,58 +1842,59 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       }
       //###################################################################################################################################################################
 
-            //###################################################################################################################################################################
-      //                                                                                     
-      //  ██████          ██████ ██████████████ ██████████████ ██████████████ ██████  ██████ 
-      //  ██░░██████████████░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░██ 
-      //  ██░░░░░░░░░░░░░░░░░░██ ██░░██████░░██ ██████░░██████ ██░░██████████ ██░░██  ██░░██ 
-      //  ██░░██████░░██████░░██ ██░░██  ██░░██     ██░░██     ██░░██         ██░░██  ██░░██ 
-      //  ██░░██  ██░░██  ██░░██ ██░░██████░░██     ██░░██     ██░░██         ██░░██████░░██ 
-      //  ██░░██  ██░░██  ██░░██ ██░░░░░░░░░░██     ██░░██     ██░░██         ██░░░░░░░░░░██ 
-      //  ██░░██  ██████  ██░░██ ██░░██████░░██     ██░░██     ██░░██         ██░░██████░░██ 
-      //  ██░░██          ██░░██ ██░░██  ██░░██     ██░░██     ██░░██         ██░░██  ██░░██ 
-      //  ██░░██          ██░░██ ██░░██  ██░░██     ██░░██     ██░░██████████ ██░░██  ██░░██ 
-      //  ██░░██          ██░░██ ██░░██  ██░░██     ██░░██     ██░░░░░░░░░░██ ██░░██  ██░░██ 
-      //  ██████          ██████ ██████  ██████     ██████     ██████████████ ██████  ██████ 
-      //                                                                                     
-      //      
-      //  ██████████████ ██████████████ ██████████████ 
-      //  ██░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░██ 
-      //  ██░░██████████ ██░░██████░░██ ██░░██████░░██ 
-      //  ██░░██         ██░░██  ██░░██ ██░░██  ██░░██ 
-      //  ██░░██         ██░░██████░░██ ██░░██████░░██ 
-      //  ██░░██  ██████ ██░░░░░░░░░░██ ██░░░░░░░░░░██ 
-      //  ██░░██  ██░░██ ██░░██████░░██ ██░░██████████ 
-      //  ██░░██  ██░░██ ██░░██  ██░░██ ██░░██         
-      //  ██░░██████░░██ ██░░██  ██░░██ ██░░██         
-      //  ██░░░░░░░░░░██ ██░░██  ██░░██ ██░░██         
-      //  ██████████████ ██████  ██████ ██████ 
+      //###################################################################################################################################################################
+                                                                               
+      //  ██████          ██████ ████████████████   ██████████████ ██████████████ 
+      //  ██░░██          ██░░██ ██░░░░░░░░░░░░██   ██░░░░░░░░░░██ ██░░░░░░░░░░██ 
+      //  ██░░██          ██░░██ ██░░████████░░██   ██░░██████░░██ ██░░██████░░██ 
+      //  ██░░██          ██░░██ ██░░██    ██░░██   ██░░██  ██░░██ ██░░██  ██░░██ 
+      //  ██░░██  ██████  ██░░██ ██░░████████░░██   ██░░██████░░██ ██░░██████░░██ 
+      //  ██░░██  ██░░██  ██░░██ ██░░░░░░░░░░░░██   ██░░░░░░░░░░██ ██░░░░░░░░░░██ 
+      //  ██░░██  ██░░██  ██░░██ ██░░██████░░████   ██░░██████░░██ ██░░██████████ 
+      //  ██░░██████░░██████░░██ ██░░██  ██░░██     ██░░██  ██░░██ ██░░██         
+      //  ██░░░░░░░░░░░░░░░░░░██ ██░░██  ██░░██████ ██░░██  ██░░██ ██░░██         
+      //  ██░░██████░░██████░░██ ██░░██  ██░░░░░░██ ██░░██  ██░░██ ██░░██         
+      //  ██████  ██████  ██████ ██████  ██████████ ██████  ██████ ██████         
+                                                                               
+                                                                                                           
+      //  ██████████████   ██████████████ ████████████████   ████████████   ██████████████ ████████████████   
+      //  ██░░░░░░░░░░██   ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   ██░░░░░░░░████ ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   
+      //  ██░░██████░░██   ██░░██████░░██ ██░░████████░░██   ██░░████░░░░██ ██░░██████████ ██░░████████░░██   
+      //  ██░░██  ██░░██   ██░░██  ██░░██ ██░░██    ██░░██   ██░░██  ██░░██ ██░░██         ██░░██    ██░░██   
+      //  ██░░██████░░████ ██░░██  ██░░██ ██░░████████░░██   ██░░██  ██░░██ ██░░██████████ ██░░████████░░██   
+      //  ██░░░░░░░░░░░░██ ██░░██  ██░░██ ██░░░░░░░░░░░░██   ██░░██  ██░░██ ██░░░░░░░░░░██ ██░░░░░░░░░░░░██   
+      //  ██░░████████░░██ ██░░██  ██░░██ ██░░██████░░████   ██░░██  ██░░██ ██░░██████████ ██░░██████░░████   
+      //  ██░░██    ██░░██ ██░░██  ██░░██ ██░░██  ██░░██     ██░░██  ██░░██ ██░░██         ██░░██  ██░░██     
+      //  ██░░████████░░██ ██░░██████░░██ ██░░██  ██░░██████ ██░░████░░░░██ ██░░██████████ ██░░██  ██░░██████ 
+      //  ██░░░░░░░░░░░░██ ██░░░░░░░░░░██ ██░░██  ██░░░░░░██ ██░░░░░░░░████ ██░░░░░░░░░░██ ██░░██  ██░░░░░░██ 
+      //  ████████████████ ██████████████ ██████  ██████████ ████████████   ██████████████ ██████  ██████████ 
+                                                                                                           
       // There is a conflict between the size checkbox and the matchBorderSettings Checkbox
       // They can overwrite the disabling and re-enabling the other box has determined
       // It might be better to remove the size checkbox disabler OR
       // Check the values of the other boxes before applying changes in each function
       // when this is checked, this does not automatically update when reg border or radius is changed, 
       // when those border and radius functions are called, call the floating functions to update the floating values also
-      matchBorderGap();
-      matchBorderGapCheckbox.addEventListener('change', matchBorderGap);
-      matchBorderGapCheckbox.addEventListener('change', saveStyling);
+      wrapBorder();
+      wrapBorderCheckbox.addEventListener('change', wrapBorder);
+      wrapBorderCheckbox.addEventListener('change', saveStyling);
 
-      function matchBorderGap() {
+      function wrapBorder() {
         // Disable other floating border settings / inputs
         let floatingElements = [
-          // "floatingBorderRadiusCheckbox",
-          // "formFloatingBorderRadius", // consider the radius for later
+          "floatingBorderRadiusCheckbox",
+          "formFloatingBorderRadius", // consider the radius for later
           "floatingBorderGapCheckbox",
           "formFloatingBorderGap"
         ];
-        if (matchBorderGapCheckbox.checked) {
-          matchBorderGapCheck = "checked";
+        if (wrapBorderCheckbox.checked) {
+          wrapBorderCheck = "checked";
           floatingElements.forEach(elementId => {
             document.getElementById(elementId).disabled = true;
           });
         }
         else {
-          matchBorderGapCheck = "";
+          wrapBorderCheck = "";
           floatingElements.forEach(elementId => {
             document.getElementById(elementId).disabled = false;
           });
@@ -1739,7 +1961,10 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
           'floatingBorderGap: ' + floatingBorderGap + '\n' +
           'floatingBorderGapCheck: ' + floatingBorderGapCheck + '\n' +
           'matchBorderCheck: ' + matchBorderCheck + '\n' +
-          'matchBorderGapCheck: ' + matchBorderGapCheck 
+          'wrapBorderCheck: ' + wrapBorderCheck + '\n' +
+          'autoMarginCheck: ' + autoMarginCheck + '\n' +
+          'topMargin: ' + topMargin + '\n' + 
+          'leftMargin: ' + leftMargin
         )
         // PASS VALUES TO NEXT FUNCTION
         window.updateBridge.updateTag(
@@ -1769,7 +1994,10 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
           floatingBorderGap, 
           floatingBorderGapCheck,
           matchBorderCheck,
-          matchBorderGapCheck,
+          wrapBorderCheck,
+          autoMarginCheck,
+          topMargin,
+          leftMargin,
           // floatingBorderPadding
           //matchBorder
         );

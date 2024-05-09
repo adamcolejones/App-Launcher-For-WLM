@@ -384,7 +384,14 @@ li:last-child {
 ██████          ██████
 */
 
-.mediadata {
+/* .mediadata {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 5;
+} */
+
+#mediadata {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -814,8 +821,15 @@ p {
   border: 1px solid black;
 }
 
+.settingsHeader {
+  font-weight: bolder;  /* Makes the text bold */
+  text-align: center; /* Centers the text horizontally */
+  background-color: black;
+  color: white;
+}
+
 .settingsOption {
-  height: 60px;
+  /* height: 60px; */
   width: 161px;
   padding: 10px;
   background-color: #cccccc;
@@ -823,10 +837,35 @@ p {
   /* height: fit-content; */
   border: 1px solid black;
   margin-right: -1px;
+  position: relative;
 }
 
-.settingsOption input{
+/* .settingsOption input{
   width: inherit;
+} */
+
+.settingsOption input[type="checkbox"] {
+  /* margin: 10px; */
+  cursor: pointer;
+  width: 10%;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.settingsOption input[type="text"] {
+  border: 1px solid gray;
+  width: 80%;
+}
+
+.settingsOption input[type="number"] {
+  border: 1px solid gray;
+  width: 80%;
+}
+
+.settingsOption input[type="file"] {
+  border: 1px solid gray;
+  width: 80%;
 }
 
 .settingsOptionContainer {

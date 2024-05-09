@@ -148,7 +148,10 @@ let updateTag = (
   floatingBorderGap, 
   floatingBorderGapCheck,
   matchBorderCheck,
-  matchBorderGapCheck,
+  wrapBorderCheck,
+  autoMarginCheck,
+  topMargin,
+  leftMargin,
   // floatingBorderPadding
 ) => {
   let newData = {
@@ -178,7 +181,10 @@ let updateTag = (
     "FloatingBorderGap": floatingBorderGap,
     "FloatingBorderGapCheck": floatingBorderGapCheck,
     "MatchBorderCheck": matchBorderCheck,
-    "MatchBorderGapCheck": matchBorderGapCheck,
+    "WrapBorderCheck": wrapBorderCheck,
+    "AutoMarginCheck": autoMarginCheck,
+    "TopMargin": topMargin,
+    "LeftMargin": leftMargin,
     // "Rows": 1,
     // "Columns": 15,
     // "CustomValues": true

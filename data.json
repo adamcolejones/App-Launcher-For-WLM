@@ -314,7 +314,8 @@
       "RunCommand": null,
       "Tags": [
         "Movies",
-        "Peanuts"
+        "Peanuts",
+        "Christmas"
       ]
     },
     {
@@ -1225,20 +1226,23 @@
       "BorderColorCheck": "",
       "BorderRadius": 0,
       "BorderRadiusCheck": "checked",
-      "MatchBorderCheck": "",
-      "MatchBorderGapCheck": "",
+      "MatchBorderCheck": "checked",
+      "WrapBorderCheck": "",
       "FloatingBorder": 5,
       "FloatingBorderCheck": "checked",
       "FloatingBorderColor": "turquoise",
       "FloatingBorderColorCheck": "checked",
       "FloatingBorderRadius": 0,
       "FloatingBorderRadiusCheck": "checked",
-      "FloatingBorderGap": 0,
+      "FloatingBorderGap": 1,
       "FloatingBorderGapCheck": "checked",
       "Rows": 1,
       "Columns": 15,
       "CustomValues": true,
-      "BorderCheck": "checked"
+      "BorderCheck": "checked",
+      "AutoMarginCheck": "checked",
+      "TopMargin": "0",
+      "LeftMargin": "0"
     },
     {
       "id": 2,
@@ -1480,12 +1484,12 @@
       "Wrap": "wrap",
       "Width": 2,
       "Height": 3,
-      "Border": 5,
+      "Border": 7,
       "BorderColor": "red",
       "BorderRadius": 100,
-      "MatchBorderCheck": "",
+      "MatchBorderCheck": "checked",
       "FloatingBorder": 5,
-      "FloatingBorderColor": "blue",
+      "FloatingBorderColor": "green",
       "FloatingBorderRadius": 10,
       "FloatingBorderGap": 10,
       "Rows": 1,
@@ -1498,7 +1502,10 @@
       "FloatingBorderColorCheck": "checked",
       "FloatingBorderRadiusCheck": "checked",
       "FloatingBorderGapCheck": "checked",
-      "MatchBorderGapCheck": "checked"
+      "WrapBorderCheck": "checked",
+      "AutoMarginCheck": "checked",
+      "TopMargin": "0",
+      "LeftMargin": "0"
     },
     {
       "id": 11,
@@ -1508,7 +1515,7 @@
       "BackgroundColorCheck": "",
       "BackgroundColor": "orange",
       "OriginalDimensions": false,
-      "Gap": 5,
+      "Gap": 10,
       "GapCheck": "checked",
       "Wrap": "nowrap",
       "Width": 1,
@@ -1517,13 +1524,21 @@
       "BorderColor": "black",
       "BorderRadius": 300,
       "MatchBorderCheck": "",
-      "FloatingBorder": 5,
+      "FloatingBorder": 10,
       "FloatingBorderColor": "orange",
       "FloatingBorderRadius": 300,
       "FloatingBorderGap": 0,
       "Rows": 1,
       "Columns": 15,
-      "CustomValues": true
+      "CustomValues": true,
+      "BorderCheck": "checked",
+      "BorderColorCheck": "checked",
+      "BorderRadiusCheck": "checked",
+      "FloatingBorderCheck": "checked",
+      "FloatingBorderColorCheck": "checked",
+      "FloatingBorderRadiusCheck": "checked",
+      "FloatingBorderGapCheck": "checked",
+      "WrapBorderCheck": "checked"
     },
     {
       "id": 12,
@@ -1544,7 +1559,15 @@
       "FloatingBorderGap": 0,
       "BackgroundColor": "white",
       "BackgroundVisual": "",
-      "BackgroundColorCheck": ""
+      "BackgroundColorCheck": "",
+      "BorderCheck": "checked",
+      "BorderColorCheck": "checked",
+      "BorderRadiusCheck": "checked",
+      "FloatingBorderCheck": "checked",
+      "FloatingBorderColorCheck": "checked",
+      "FloatingBorderRadiusCheck": "",
+      "FloatingBorderGapCheck": "checked",
+      "WrapBorderCheck": ""
     },
     {
       "id": 13,
@@ -1592,7 +1615,15 @@
       "Rows": 1,
       "Columns": 15,
       "CustomValues": true,
-      "BackgroundVisual": ""
+      "BackgroundVisual": "",
+      "BorderCheck": "checked",
+      "BorderColorCheck": "checked",
+      "BorderRadiusCheck": "checked",
+      "FloatingBorderCheck": "checked",
+      "FloatingBorderColorCheck": "checked",
+      "FloatingBorderRadiusCheck": "checked",
+      "FloatingBorderGapCheck": "checked",
+      "WrapBorderCheck": ""
     },
     {
       "id": 15,
@@ -1615,7 +1646,16 @@
       "FloatingBorderGap": 0,
       "Rows": 1,
       "Columns": 15,
-      "CustomValues": true
+      "CustomValues": true,
+      "BackgroundVisual": "",
+      "BorderCheck": "checked",
+      "BorderColorCheck": "",
+      "BorderRadiusCheck": "",
+      "FloatingBorderCheck": "checked",
+      "FloatingBorderColorCheck": "checked",
+      "FloatingBorderRadiusCheck": "",
+      "FloatingBorderGapCheck": "",
+      "WrapBorderCheck": "checked"
     },
     {
       "id": 16,
@@ -1638,7 +1678,16 @@
       "FloatingBorderGap": 0,
       "Rows": 1,
       "Columns": 15,
-      "CustomValues": true
+      "CustomValues": true,
+      "BackgroundVisual": "",
+      "BorderCheck": "checked",
+      "BorderColorCheck": "checked",
+      "BorderRadiusCheck": "checked",
+      "FloatingBorderCheck": "checked",
+      "FloatingBorderColorCheck": "checked",
+      "FloatingBorderRadiusCheck": "checked",
+      "FloatingBorderGapCheck": "checked",
+      "WrapBorderCheck": ""
     },
     {
       "id": 17,
@@ -1661,7 +1710,16 @@
       "FloatingBorderGap": 0,
       "Rows": 1,
       "Columns": 15,
-      "CustomValues": true
+      "CustomValues": true,
+      "BackgroundVisual": "",
+      "BorderCheck": "checked",
+      "BorderColorCheck": "checked",
+      "BorderRadiusCheck": "checked",
+      "FloatingBorderCheck": "checked",
+      "FloatingBorderColorCheck": "checked",
+      "FloatingBorderRadiusCheck": "checked",
+      "FloatingBorderGapCheck": "checked",
+      "WrapBorderCheck": "checked"
     },
     {
       "id": 18,
@@ -1676,7 +1734,7 @@
         "Nintendo Wii"
       ],
       "DisplayNestedTop": true,
-      "BackgroundVisual": false,
+      "BackgroundVisual": "",
       "BackgroundColorCheck": "checked",
       "BackgroundColor": "gray",
       "OriginalDimensions": false,
@@ -1695,7 +1753,15 @@
       "FloatingBorderGap": 0,
       "Rows": 1,
       "Columns": 15,
-      "CustomValues": true
+      "CustomValues": true,
+      "BorderCheck": "checked",
+      "BorderColorCheck": "checked",
+      "BorderRadiusCheck": "checked",
+      "FloatingBorderCheck": "checked",
+      "FloatingBorderColorCheck": "checked",
+      "FloatingBorderRadiusCheck": "checked",
+      "FloatingBorderGapCheck": "checked",
+      "WrapBorderCheck": ""
     },
     {
       "id": 19,
@@ -1767,7 +1833,16 @@
       "FloatingBorderGap": 0,
       "Rows": 1,
       "Columns": 15,
-      "CustomValues": true
+      "CustomValues": true,
+      "BackgroundVisual": "",
+      "BorderCheck": "checked",
+      "BorderColorCheck": "",
+      "BorderRadiusCheck": "",
+      "FloatingBorderCheck": "checked",
+      "FloatingBorderColorCheck": "checked",
+      "FloatingBorderRadiusCheck": "",
+      "FloatingBorderGapCheck": "",
+      "WrapBorderCheck": "checked"
     },
     {
       "id": 22,
@@ -1791,7 +1866,16 @@
       "FloatingBorderGap": 0,
       "Rows": 1,
       "Columns": 15,
-      "CustomValues": true
+      "CustomValues": true,
+      "BackgroundVisual": "",
+      "BorderCheck": "checked",
+      "BorderColorCheck": "checked",
+      "BorderRadiusCheck": "checked",
+      "FloatingBorderCheck": "checked",
+      "FloatingBorderColorCheck": "checked",
+      "FloatingBorderRadiusCheck": "",
+      "FloatingBorderGapCheck": "checked",
+      "WrapBorderCheck": ""
     },
     {
       "id": 23,
@@ -1815,7 +1899,16 @@
       "FloatingBorderGap": 0,
       "Rows": 1,
       "Columns": 15,
-      "CustomValues": true
+      "CustomValues": true,
+      "BackgroundVisual": "",
+      "BorderCheck": "checked",
+      "BorderColorCheck": "checked",
+      "BorderRadiusCheck": "checked",
+      "FloatingBorderCheck": "checked",
+      "FloatingBorderColorCheck": "checked",
+      "FloatingBorderRadiusCheck": "checked",
+      "FloatingBorderGapCheck": "checked",
+      "WrapBorderCheck": ""
     },
     {
       "id": 24,
@@ -1827,7 +1920,7 @@
       "Wrap": "nowrap",
       "Width": 1,
       "Height": 1,
-      "Border": 0,
+      "Border": 1,
       "BorderColor": "lightgray",
       "BorderRadius": 0,
       "MatchBorderCheck": "",
@@ -1840,7 +1933,15 @@
       "CustomValues": true,
       "Gap": 15,
       "GapCheck": "checked",
-      "BackgroundVisual": ""
+      "BackgroundVisual": "checked",
+      "BorderCheck": "",
+      "BorderColorCheck": "checked",
+      "BorderRadiusCheck": "",
+      "FloatingBorderCheck": "checked",
+      "FloatingBorderColorCheck": "checked",
+      "FloatingBorderRadiusCheck": "checked",
+      "FloatingBorderGapCheck": "checked",
+      "WrapBorderCheck": ""
     },
     {
       "id": 25,
@@ -2237,8 +2338,18 @@
       "FloatingBorderColor": "red",
       "FloatingBorderRadius": 5,
       "FloatingBorderGap": 0,
-      "BackgroundColor": "white",
-      "BackgroundColorCheck": true
+      "BackgroundColor": "",
+      "BackgroundColorCheck": "checked",
+      "BackgroundVisual": "",
+      "BorderCheck": "checked",
+      "BorderColorCheck": "checked",
+      "BorderRadiusCheck": "checked",
+      "FloatingBorderCheck": "checked",
+      "FloatingBorderColorCheck": "checked",
+      "FloatingBorderRadiusCheck": "checked",
+      "FloatingBorderGapCheck": "checked",
+      "MatchBorderCheck": "",
+      "WrapBorderCheck": ""
     },
     {
       "id": 43,

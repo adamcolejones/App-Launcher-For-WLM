@@ -1116,7 +1116,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // use the tag to find child categories, use the carouse.l option to determine if categories should be displayed again, under all
       // console.log("Data: " + data);
       // applyStyling(selectedTag.Name);
-      let mediaHTML = '<div class="mediadata">';
+      let mediaHTML = '<div id="mediadata">';
       mediaHTML += '<div id="testMediaContainer">';
       let categoryDisplay = "";
 
