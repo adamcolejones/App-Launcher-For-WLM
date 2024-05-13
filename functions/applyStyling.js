@@ -193,7 +193,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       // GLOBAL MARGIN VALUES
         let borderSizeTemp = border; // need to implement in the event borderSize is disabled after having a value above 0 to prevent incorrect hover image positioning
         let borderRadiusTemp = borderRadius; // should I do this for radius as well? Once you find a reason for it.  I don't think its necessary at the moment
-        let floatingBorderTemp = floatingBorder;
+        // let floatingBorderTemp = floatingBorder;
         let floatingBorderSizeTemp = floatingBorder; // repetitive, change to only have one ctrl f
         let floatingBorderColorTemp = floatingBorderColor;
         let floatingBorderRadiusTemp = floatingBorderRadius;
@@ -203,6 +203,8 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         let autoMarginCheck = selectedTag.AutoMarginCheck !== undefined ? selectedTag.AutoMarginCheck : ""; // "checked", or "" (blank)
         let topMargin = selectedTag.TopMargin !== undefined ? selectedTag.TopMargin : 0; // value or 0 margin
         let leftMargin = selectedTag.LeftMargin !== undefined ? selectedTag.LeftMargin : 0; // value or 0 margin
+        let topMarginTemp;
+        let leftMarginTemp;
 
       //###################################################################################################################################################################
       //                                                                                                                                                    
@@ -1196,17 +1198,46 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         floatingBorderElement.style.position = 'absolute';
         floatingBorderElement.style.zIndex = '4';
         floatingBorderElement.style['background-color'] = 'transparent';
-        floatingBorderElement.style.border = `${floatingBorderTemp}px solid ${floatingBorderColorTemp}`;
+        floatingBorderElement.style.border = `${floatingBorderSizeTemp}px solid ${floatingBorderColorTemp}`;
         floatingBorderElement.style['border-radius'] = `${floatingBorderRadiusTemp}px`;
         floatingBorderElement.style.pointerEvents = 'none'; // Ignore pointer events
         // console.log('    after mouseEnter Border: ' + border); // border is not updating, causing non-bordered hover border to be off center
         // floatingBorderPadding = (border) + (floatingBorderGap) + 'px'; // border is not updating here?
         floatingBorderPadding = (floatingBorderGapTemp) + 'px'; // border is removed to have floating cover original
-        let floatingBorderTopAdjustment = `${(rect.top) - (floatingBorderTemp) - (floatingBorderGapTemp) + (borderSizeTemp) + (scrollDistanceTop) - 50}px`;
-        let floatingBorderLeftAdjustment = `${(rect.left) - (floatingBorderTemp) - (floatingBorderGapTemp) + (borderSizeTemp) + (scrollDistanceLeft) - (sideMenuWidth) + 0}px`;
         floatingBorderElement.style.padding = floatingBorderPadding;
+
+        // MARGINAL ADJUSTMENTS
+        let floatingBorderTopAdjustment = (rect.top) - (floatingBorderSizeTemp) - (floatingBorderGapTemp) + (borderSizeTemp) + (scrollDistanceTop) - (topMarginTemp) - 50;
+        let floatingBorderLeftAdjustment = (rect.left) - (floatingBorderSizeTemp) - (floatingBorderGapTemp) + (borderSizeTemp) + (scrollDistanceLeft) - (leftMarginTemp) - (sideMenuWidth) + 0;
+        let topMarginAdjustment = 0; // additional values to be added onto the floatingBorderAdjustment based on various checkboxes
+        let leftMarginAdjustment = 0; // additional values to be added onto the floatingBorderAdjustment based on various checkboxes
+        //if autoMargin is not checked and match base is, only use base border for margin size
+        if (autoMarginCheck) {
+          topMarginAdjustment = 0 - floatingBorderSizeTemp;
+          leftMarginAdjustment = 0 - floatingBorderSizeTemp;
+        }
+        // if autoMargin is Checked and wrapbase border is checked, account for floating border size and gap in marginTemp Values
+        if (autoMarginCheck && wrapBorderCheck) {
+          topMarginAdjustment = 0; // if condition is true, reset the values.
+          leftMarginAdjustment = 0; // if condition is true, reset the values.
+          topMarginAdjustment = ((0 - floatingBorderSizeTemp - borderSizeTemp));
+          leftMarginAdjustment = ((0 - floatingBorderSizeTemp - borderSizeTemp));
+        }
+        // this uses the same variable that was changed previously.  Need to create new temp variables that hold the predicted changed value then add them to the total at the end of the checks
+        if (autoMarginCheck && matchBorderCheck) {
+          topMarginAdjustment = 0; // if condition is true, reset the values.
+          leftMarginAdjustment = 0; // if condition is true, reset the values.
+          // topMarginAdjustment = ((floatingBorderSizeTemp + borderSizeTemp));
+          // leftMarginAdjustment = ((floatingBorderSizeTemp + borderSizeTemp));
+        }
+        // Add 'px' to the end for value to be correctly added as string and contain px unit
+        floatingBorderTopAdjustment = `${floatingBorderTopAdjustment + topMarginAdjustment}px`;
+        floatingBorderLeftAdjustment = `${floatingBorderLeftAdjustment + leftMarginAdjustment}px`;
+
         floatingBorderElement.style.top = floatingBorderTopAdjustment;
         floatingBorderElement.style.left = floatingBorderLeftAdjustment;
+        // END MARGINAL ADJUSTMENTS
+
         testMedia.parentNode.appendChild(floatingBorderElement);
       }
 
@@ -1298,16 +1329,13 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         }
 
         // HAVING AN ISSUE WITH THE HOVERED BORDER EXCEEDING THE DISPLAY WINDOW ON THE LEFT SIDE.  IMPLEMENT PADDING FOR FLOATING BORDER ACCOMODATION HERE
-        // let floatingBorderSizeTemp = floatingBorderCheck === "checked" ? floatingBorder : 0; // if yes, assign the value for floatingBorder, if no assign 0
         // let floatingBorderGapTemp = floatingBorderGapCheck === "checked" ? floatingBorderGap : 0; // if yes, assign the value for floatingBorderGap, if no assign 0
         // if (wrapBorderCheck === "checked") { floatingBorderGapTemp = borderSizeTemp; } // wrapBorderCheck would change the value of the gap between the content and the hovered border.
 
         // // Calculate the amount of padding that should be applied.
-        // let floatingBorderShift = floatingBorderSizeTemp + floatingBorderGapTemp;
         // if (matchBorderCheck === "checked") { floatingBorderShift = 0; } // if matchBorderCheck is checked at all, there will be no padding required to contain the hovered border in the media display window
         // // what if the user makes the border gap 1000+ ? I don't want to shift the content that far off the page.  
         // // Trying to balance user customization with an ugly user experience.  If the user makes the app that ugly that's on them.  Be different from other apps, give user as much control as possible while trying to guide them to make smart choices.
-        // console.log('floatingBorderSizeTemp: ' + floatingBorderSizeTemp);
         // console.log('floatingBorderGapTemp: ' + floatingBorderGapTemp);
         // console.log('mediaDisplayShift: ' + floatingBorderShift);
         // mediaDataDisplay.style.margin = '' + floatingBorderShift + 'px'; // need to save this value globally so that it can be applied to the hover settings. // also this is not updating dynamically yet.  Will need to fix that.
@@ -1351,18 +1379,14 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
 
       updateMargin();
       function updateMargin() {
-        // TEMPORARY VALUES TO PREVENT OVERWRITING PRIOR VALUES IN JSON, THESE VALUES AND FUNCTION CHECKS ARE IN A SPECIFIC ORDER SO IF THEY ARE REFERENCED ELSEWHERE THEN THEY WOULD NEED TO BE DECLARED AS A SEPERATE VARIABLE
-        // let borderSizeTemp; // need to implement in the event borderSize is disabled after having a value above 0 to prevent incorrect hover image positioning
-        // let borderRadiusTemp; // should I do this for radius as well? Once you find a reason for it.  I don't think its necessary at the moment
-        // let floatingBorderTemp;
-        // let floatingBorderColorTemp;
-        // let floatingBorderRadiusTemp;
-        // let floatingBorderGapTemp;
+        // TEMPORARY VALUES TO PREVENT OVERWRITING PRIOR VALUES IN JSON, 
+        // THESE VALUES AND FUNCTION CHECKS ARE IN A SPECIFIC ORDER SO IF THEY ARE REFERENCED ELSEWHERE THEN THEY WOULD NEED TO BE DECLARED AS A SEPERATE VARIABLE
+        
         if (borderCheck) { borderSizeTemp = border; } // This prevents the value of floating border being overwritten while still removing it if necessary
         else { borderSizeTemp = 0; } // This prevents the value of floating border being overwritten while still removing it if necessary
 
-        if (floatingBorderCheck) { floatingBorderTemp = floatingBorder; } // This prevents the value of floating border being overwritten while still removing it if necessary
-        else { floatingBorderTemp = 0; } // This prevents the value of floating border being overwritten while still removing it if necessary
+        if (floatingBorderCheck) { floatingBorderSizeTemp = floatingBorder; } // This prevents the value of floating border being overwritten while still removing it if necessary
+        else { floatingBorderSizeTemp = 0; } // This prevents the value of floating border being overwritten while still removing it if necessary
         
         // BORDER COLOR
         if (floatingBorderColorCheck) { floatingBorderColorTemp = floatingBorderColor; } // This prevents the value of floating border Color being overwritten while still removing it if necessary
@@ -1390,7 +1414,8 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
 
         // SIMULATANEOUSLY CHECK TO SEE IF MATCH BORDER IS APPLIED, AFTER OTHER CHECKBOXES
         if (matchBorderCheck) { // This prevents the value of floating border Color being overwritten while still removing it if necessary
-          floatingBorderTemp = borderSizeTemp;
+          console.log("matchBorder: Check");
+          floatingBorderSizeTemp = borderSizeTemp;
           floatingBorderGapTemp = 0;
           floatingBorderRadiusTemp = borderRadiusTemp; // when base radius is disabled, it should read 0, this is done above
           // checking the value again as it may have been overwritten above in the wrap check // when base radius is enabled it should match base but the wrap check changes the value
@@ -1400,9 +1425,9 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         } else { } // DO NOTHING, KEEP THE VALUES SET ABOVE
 
         // CALCULATING MARGIN SIZE
-        floatingBorderSizeTemp = floatingBorderCheck === "checked" ? floatingBorder : 0; // if yes, assign the value for floatingBorder, if no assign 0
-        floatingBorderGapTemp = floatingBorderGapCheck === "checked" ? floatingBorderGap : 0; // if yes, assign the value for floatingBorderGap, if no assign 0
-        if (wrapBorderCheck === "checked") { floatingBorderGapTemp = borderSizeTemp; } // wrapBorderCheck would change the value of the gap between the content and the hovered border.
+        // floatingBorderSizeTemp = floatingBorderCheck === "checked" ? floatingBorder : 0; // if yes, assign the value for floatingBorder, if no assign 0
+        // floatingBorderGapTemp = floatingBorderGapCheck === "checked" ? floatingBorderGap : 0; // if yes, assign the value for floatingBorderGap, if no assign 0
+        // if (wrapBorderCheck === "checked") { floatingBorderGapTemp = borderSizeTemp; } // wrapBorderCheck would change the value of the gap between the content and the hovered border.
 
         // Calculate the amount of padding that should be applied.
         let autoMarginAmount = floatingBorderSizeTemp + floatingBorderGapTemp;
@@ -1456,6 +1481,9 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
           mediaDataDisplay.style['margin-top'] = '' + autoMarginAmount + 'px';
           mediaDataDisplay.style['margin-left'] = '' + autoMarginAmount + 'px';
           autoMarginCheck = "checked";
+          topMarginTemp = 0;
+          leftMarginTemp = 0;
+          
         }
         else {
           formTopMargin.disabled = false;
@@ -1463,7 +1491,10 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
           mediaDataDisplay.style['margin-top'] = '' + topMargin + 'px';
           mediaDataDisplay.style['margin-left'] = '' + leftMargin + 'px';
           autoMarginCheck = "";
+          topMarginTemp = topMargin;
+          leftMarginTemp = leftMargin;
         }
+        // updateMediaStyling();
       }
       // let borderSizeTemp = borderCheck === "checked" ? border : 0; // default is 0
       // let borderColorTemp = borderColorCheck === "checked" ? borderColor : `black`; // default is black
@@ -1568,6 +1599,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         }
           // updateMediaStyling();
           // saveStyling();
+          updateMargin(); // update margin settings before expecting to see new value changes.
         }
 
       // formFloatingBorder.addEventListener("input", function() {
@@ -1745,6 +1777,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         } // document.getElementById("floatingBorderGapValue").textContent = `Floating Border Gap Size: ${floatingBorderGap}`;
         //   updateMediaStyling();
         // saveStyling();
+        updateMargin();
       }
 
       
@@ -1839,6 +1872,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         // updateFloatingBorderRadius();
         // updateFloatingBorderGap();
         // saveStyling();
+        updateMargin();
       }
       //###################################################################################################################################################################
 
@@ -1889,6 +1923,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
         ];
         if (wrapBorderCheckbox.checked) {
           wrapBorderCheck = "checked";
+          floatingBorderRadius = borderRadiusTemp;
           floatingElements.forEach(elementId => {
             document.getElementById(elementId).disabled = true;
           });
@@ -1899,6 +1934,7 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
             document.getElementById(elementId).disabled = false;
           });
         }
+        updateMargin();
       }
 
       //###################################################################################################################################################################
@@ -1934,14 +1970,16 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
       function saveStyling() {
          // if user changes the value, do not run on initial load
         // PRINT SAVED SETTINGS TO CONSOLE 
-        console.log('***************************************' + '\n' +
-          'Function: saveStyling: ' + '\n' + 
+        console.log(
+          '***************************************' + '\n' +
+          'Function: saveStyling: ' + '\n' +
+          ' _____________________________ ' + '\n' +
+          '|            VALUES           |' + '\n' +
+          '|_____________________________|' + '\n' + 
           'name: ' + name + '\n' +
           'backgroundVisual: ' + backgroundVisual + '\n' +
-          'backgroundColorCheck: ' + backgroundColorCheck + '\n' +
           'backgroundColor: ' + backgroundColor + '\n' +
           'gap: ' + gap + '\n' +
-          'gapCheck: ' + gapCheck + '\n' +
           'wrap: ' + wrap + '\n' + 
           'originalDimensions: ' + originalDimensions + '\n' + 
           'width: ' + width + '\n' +
@@ -1949,22 +1987,28 @@ import { updateTestMediaPicturesSizes } from './updateTestMediaPicturesSizes.js'
           'border: ' + border + '\n' + 
           'borderCheck: ' + borderCheck + '\n' + 
           'borderColor: ' + borderColor + '\n' + 
-          'borderColorCheck: ' + borderColorCheck + '\n' + 
           'borderRadius: ' + borderRadius + '\n' +
-          'borderRadiusCheck: ' + borderRadiusCheck + '\n' +
+          'floatingBorderRadius: ' + floatingBorderRadius + '\n' +
+          'floatingBorderGap: ' + floatingBorderGap + '\n' +
+          'topMargin: ' + topMargin + '\n' + 
+          'leftMargin: ' + leftMargin + '\n' + 
           'floatingBorder: ' + floatingBorder + '\n' +
+          ' _____________________________ ' + '\n' +
+          '|         CHECK BOXES         |' + '\n' +
+          '|_____________________________|' + '\n' +
+          'gapCheck: ' + gapCheck + '\n' +
+          'backgroundColorCheck: ' + backgroundColorCheck + '\n' +
+          'borderColorCheck: ' + borderColorCheck + '\n' + 
+          'borderRadiusCheck: ' + borderRadiusCheck + '\n' +
           'floatingBorderCheck: ' + floatingBorderCheck + '\n' +
           'floatingBorderColor: ' + floatingBorderColor + '\n' +
           'floatingBorderColorCheck: ' + floatingBorderColorCheck + '\n' +
-          'floatingBorderRadius: ' + floatingBorderRadius + '\n' +
           'floatingBorderRadiusCheck: ' + floatingBorderRadiusCheck + '\n' +
-          'floatingBorderGap: ' + floatingBorderGap + '\n' +
           'floatingBorderGapCheck: ' + floatingBorderGapCheck + '\n' +
           'matchBorderCheck: ' + matchBorderCheck + '\n' +
           'wrapBorderCheck: ' + wrapBorderCheck + '\n' +
           'autoMarginCheck: ' + autoMarginCheck + '\n' +
-          'topMargin: ' + topMargin + '\n' + 
-          'leftMargin: ' + leftMargin
+          '***************************************'
         )
         // PASS VALUES TO NEXT FUNCTION
         window.updateBridge.updateTag(
