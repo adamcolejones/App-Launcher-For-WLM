@@ -805,7 +805,9 @@ document.addEventListener('DOMContentLoaded', () => {
     //  ████░░████ ██░░██  ██░░░░░░░░░░██ ██░░██         ██░░██████░░██ 
     //  ██░░░░░░██ ██░░██  ██████████░░██ ██░░██         ██░░░░░░░░░░██ 
     //  ██████████ ██████          ██████ ██████         ██████████████ 
-    //                                                                  
+    //       
+    // Show clicked media information, game description, categories, records etc
+
       function displayMediaItemData(item) {
         // console.log('Displaying media item data');
         const contentDisplayDiv = document.getElementById('contentDisplay');

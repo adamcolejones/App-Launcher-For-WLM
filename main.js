@@ -308,7 +308,7 @@ ipcMain.on("updateTag", (_, newData) => {
         jsonData.Tags[tagIndex].WrapBorderCheck = newData.WrapBorderCheck;
 
         // Margins
-        jsonData.Tags[tagIndex].AutoMarginCheck = newData.AutoMarginCheck;
+        jsonData.Tags[tagIndex].CustomMarginCheck = newData.CustomMarginCheck;
         jsonData.Tags[tagIndex].TopMargin = newData.TopMargin;
         jsonData.Tags[tagIndex].LeftMargin = newData.LeftMargin;
       } else {
